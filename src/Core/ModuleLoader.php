@@ -91,7 +91,7 @@ class ModuleLoader {
 
 		// Initialize and register the environment mapping utility early.
 		$mapper = new \DeWittePrins\Core\Services\EnvironmentMapper();
-		Core::register_service( 'platform_mapper', $mapper );
+		Core::register_service( 'environment_mapper', $mapper );
 
 		// Schedule the final module evaluation and loading sequence.
 		add_action( $hook, function() use ( $modules_config ) {
