@@ -55,7 +55,7 @@ if ( ! function_exists( __NAMESPACE__ . '\call_when_ready' ) ) {
 			if ( \DeWittePrins\Core::is_cf_ready() ) {
 				call_user_func( $callback );
 			} else {
-				// We luisteren blind naar de volwaardige, zelfverklarende hooknaam! 📢
+				// if not yet ready, defer execution to the core's reactive state queue.
 				add_action( 'dwp_core_functionality_ready', $callback );
 			}
 		}
