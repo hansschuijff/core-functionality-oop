@@ -31,7 +31,7 @@ class Woocommerce {
 	 * @return bool True if fully accessible, false otherwise.
 	 */
 	public function is_available(): bool {
-		$mapper   = Core::get_service( 'platform_mapper' );
+		$mapper   = Core::get_service( 'environment_mapper' );
 		$basename = $mapper ? $mapper->get_basename( 'woocommerce' ) : '';
 
 		// CIRCUIT BREAKER: Halt execution instantly if the allocation mapping is missing.

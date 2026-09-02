@@ -48,9 +48,9 @@ class Module implements ModuleInterface {
 	public function get_preflight_checks(): array {
 		return array(
 			'and' => array(
-				'woocommerce',                   // Roept automatisch src/Platform/Woocommerce.php aan!
-				'the_events_calendar',           // Roept src/Platform/TheEventsCalendar.php aan!
-				'event_tickets_plus',            // Roept src/Platform/EventTicketsPlus.php aan!
+				'woocommerce',                   // Roept automatisch src/Environment/Woocommerce.php aan!
+				'the_events_calendar',           // Roept src/Environment/TheEventsCalendar.php aan!
+				'event_tickets_plus',            // Roept src/Environment/EventTicketsPlus.php aan!
 				'mollie_payments_for_woocommerce', // De loader vertaalt dit naar \DeWittePrins\Environment\Themes\MolliePaymentsForWoocommerce.
 				'any_genesis_theme',             // De loader vertaalt dit naar \DeWittePrins\Environment\Themes\AnyGenesis.
 			),

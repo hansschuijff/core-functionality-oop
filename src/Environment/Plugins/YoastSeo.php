@@ -31,7 +31,7 @@ class YoastSeo {
 	 * @return bool True if active and matching core references, false otherwise.
 	 */
 	public function is_available(): bool {
-		$mapper   = Core::get_service( 'platform_mapper' );
+		$mapper   = Core::get_service( 'environment_mapper' );
 		$basename = $mapper ? $mapper->get_basename( 'yoast_seo' ) : '';
 
 		// CIRCUIT BREAKER: Immediate exit if mapping allocation strings are vacant.

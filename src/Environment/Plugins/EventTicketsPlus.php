@@ -6,7 +6,7 @@
  * @since   4.0.0
  */
 
-namespace DeWittePrins\Platform;
+namespace DeWittePrins\Environment;
 
 use DeWittePrins\Core;
 
@@ -31,7 +31,7 @@ class EventTicketsPlus {
 	 * @return bool True if accessible and activated, false otherwise.
 	 */
 	public function is_available(): bool {
-		$mapper   = Core::get_service( 'platform_mapper' );
+		$mapper   = Core::get_service( 'environment_mapper' );
 		$basename = $mapper ? $mapper->get_basename( 'event_tickets_plus' ) : '';
 
 		// CIRCUIT BREAKER: Avoid empty system lookups if mapping keys are absent.
