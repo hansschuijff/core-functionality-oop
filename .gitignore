@@ -41,6 +41,9 @@ Thumbs.db
 /.vscode/
 /.idea/
 
+# htaccess
+/.htaccess
+
 # development
 /dev-notes/
 /dev-notes-local/
