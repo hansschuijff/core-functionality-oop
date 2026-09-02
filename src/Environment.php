@@ -92,7 +92,7 @@ class Environment {
 		$namespace = self::get_dependency_namespace( $dependency_id );
 
 		// 4. EXECUTION: Target the exact fully qualified namespace path.
-		$class = $namespace . "\\" . $class_name;
+		$class = $namespace . '\\' . $class_name;
 
 		if ( class_exists( $class ) ) {
 			return ( new $class() )->is_ready();
@@ -110,7 +110,7 @@ class Environment {
 	 */
 	private static function get_dependency_namespace( string $dependency_id ): string {
 
-		$prefix = "\\DeWittePrins\\Environment\\";
+		$prefix = '\\DeWittePrins\\Environment\\';
 
 		if ( str_ends_with( $dependency_id, '_theme' ) ) {
 			return $prefix . 'Themes';

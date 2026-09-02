@@ -110,14 +110,16 @@ class ComponentRegistry {
 	private function render_node( array $node_data ): void {
 		global $wp_admin_bar;
 
-		$wp_admin_bar->add_node( array(
-			'id'     => $node_data['id'],
-			'title'  => $node_data['title'],
-			'parent' => $node_data['parent'] ?? false,
-			'href'   => admin_url( $node_data['slug'] ),
-			'meta'   => array(
-				'class' => $node_data['css_class'] ?? '',
-			),
-		) );
+		$wp_admin_bar->add_node(
+			array(
+				'id'     => $node_data['id'],
+				'title'  => $node_data['title'],
+				'parent' => $node_data['parent'] ?? false,
+				'href'   => admin_url( $node_data['slug'] ),
+				'meta'   => array(
+					'class' => $node_data['css_class'] ?? '',
+				),
+			)
+		);
 	}
 }

@@ -20,23 +20,97 @@
  * Dat is voor jouw snelle workflow pure overhead.
  * Mocht je ooit willen overstappen op een zware syslog-server,
  * dan kun je je eigen Logger altijd nog deze interface geven.
+ *
+ * @package DeWittePrins\Core\Contracts
  */
-namespace DeWittePrins\Core\Contracts;
 
+namespace DeWittePrins\Core\Contracts;
+/**
+ * De PSR-3 Logger interface
+ */
 interface LoggerInterface {
-	// De RFC 5424 Log-niveaus (Van kritiek naar detail)
+
+	// De RFC 5424 Log-niveaus (Van kritiek naar detail).
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function emergency( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function alert( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function critical( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function error( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function warning( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function notice( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function info( string $message, array $context = array() ): void;
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
+	 */
 	public function debug( string $message, array $context = array() ): void;
 
 	/**
 	 * De centrale methode waar alle bovenstaande functies naartoe sluizen.
 	 * Hier geef je het niveau dynamisch mee als string (bijv. 'error' of 'debug').
+	 *
+	 * @param string $level Het logniveau.
+	 * @param string $message Een message.
+	 * @param array  $context De context.
+	 * @return void
 	 */
 	public function log( string $level, string $message, array $context = array() ): void;
 }

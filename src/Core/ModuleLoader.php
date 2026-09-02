@@ -65,10 +65,13 @@ class ModuleLoader {
 		$this->plugin = $plugin;
 
 		// Fetch dynamic core loading configuration with a reliable system fallback.
-		$this->load_timing = get_option( 'dwp_flight_timing', array(
-			'hook'     => 'init',
-			'priority' => 11,
-		));
+		$this->load_timing = get_option(
+			'dwp_flight_timing',
+			array(
+				'hook'     => 'init',
+				'priority' => 11,
+			)
+		);
 
 		// Hook core setup immediately during the standard WordPress plugin loading sequence.
 		add_action( 'plugins_loaded', array( $this, 'init' ), 1 );
@@ -84,7 +87,7 @@ class ModuleLoader {
 		$this->enabled_features_settings = get_option( 'dwp_enabled_features', array() );
 
 		// Load the central mapping file containing all active module classes.
-		$modules_config = include dirname( dirname( __DIR__ ) ) . '/config/modules.php';
+		$modules_config = $this->plugin->get_config( 'modules' );
 
 		$hook     = $this->load_timing['hook'];
 		$priority = $this->load_timing['priority'];
@@ -94,10 +97,14 @@ class ModuleLoader {
 		Core::register_service( 'environment_mapper', $mapper );
 
 		// Schedule the final module evaluation and loading sequence.
-		add_action( $hook, function() use ( $modules_config ) {
-			Core::set_cf_ready();
-			$this->load_active_modules( $modules_config );
-		}, $priority );
+		add_action(
+			$hook,
+			function () use ( $modules_config ) {
+				Core::set_cf_ready();
+				$this->load_active_modules( $modules_config );
+			},
+			$priority
+		);
 	}
 
 	/**
@@ -114,8 +121,11 @@ class ModuleLoader {
 				continue;
 			}
 
-			// Pass the root plugin object via Dependency Injection to the module.
-			/** @var ModuleInterface $module */
+			/**
+			 * Initialize the target module class instance using dependency injection.
+			 *
+			 * @var ModuleInterface $module
+			 */
 			$module      = new $module_class( $this->plugin );
 			$base_checks = $module->get_preflight_checks();
 
@@ -134,7 +144,11 @@ class ModuleLoader {
 					continue;
 				}
 
-				/** @var FeatureInterface $feature */
+				/**
+				 * Initialize the sub-feature context layout profile.
+				 *
+				 * @var FeatureInterface $feature
+				 */
 				$feature    = new $feature_class( $module );
 				$feature_id = $feature->get_id();
 

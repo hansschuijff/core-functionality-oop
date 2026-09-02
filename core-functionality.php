@@ -6,10 +6,14 @@
  * Author:            Hans Schuijff
  * Text Domain:       core-functionality-dwp
  * Domain Path:       /languages
+ *
+ * @package DeWittePrins\Core
  */
 
+namespace DeWittePrins\Core;
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Onwrikbare poortwachter
+	exit; // Onwrikbare poortwachter.
 }
 
 // 1. Laat Composer de complete klasse-distributie (PSR-4) beheren

@@ -38,7 +38,7 @@ class EnvironmentMapper {
 	 * @param \DeWittePrins\Core\Plugin $plugin De globale hoofd-plugin container shell.
 	 */
 	public function __construct( Plugin $plugin ) {
-		// PURE BLISS: The service simply requests the config. What happens under the hood is a black box! 💎🚀
+		// PURE BLISS: The service simply requests the config. What happens under the hood is a black box!
 		$this->mapping = $plugin->get_config( 'environment-mapping' );
 	}
 
