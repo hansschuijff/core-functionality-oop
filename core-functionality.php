@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name:       Core Functionality DWP
+ * Plugin Name:       Core Functionality OOP
  * Description:       Central Microkernel framework managing standalone modules and contextual guards.
  * Version:           4.0.0
  * Author:            Hans Schuijff
  * Text Domain:       core-functionality-dwp
  * Domain Path:       /languages
  *
- * @package DeWittePrins\Core
+ * @package DeWittePrins\CoreFunctionality
  */
 
-namespace DeWittePrins\Core;
+namespace DeWittePrins\CoreFunctionality;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Onwrikbare poortwachter.
@@ -22,5 +22,4 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 // 2. Start de gelaagde machinekamer loepzuiver op
-$plugin = new \DeWittePrins\Core\Plugin( __FILE__ );
-$loader = new \DeWittePrins\Core\ModuleLoader( $plugin );
+$plugin = new Plugin( __FILE__ );
