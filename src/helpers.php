@@ -5,10 +5,10 @@
  * This file is loaded automatically by Composer before any classes are initialized.
  * Managed under the uniform Core namespace to avoid function prefixes.
  *
- * @package DeWittePrins\Core
+ * @package DeWittePrins\CoreFunctionality
  */
 
-namespace DeWittePrins\Core;
+namespace DeWittePrins\CoreFunctionality;
 
 if ( ! function_exists( __NAMESPACE__ . '\is_cf_ready' ) ) {
 	/**
@@ -22,7 +22,7 @@ if ( ! function_exists( __NAMESPACE__ . '\is_cf_ready' ) ) {
 	 * @return bool True if fully operational and clear for execution, false otherwise.
 	 */
 	function is_cf_ready( ?string $target = null ): bool {
-		if ( ! class_exists( '\DeWittePrins\Core' ) || ! \DeWittePrins\Core::is_alive() ) {
+		if ( ! class_exists( '\DeWittePrins\CoreFunctionality' ) || ! \DeWittePrins\CoreFunctionality\Core::is_alive() ) {
 			return false;
 		}
 
@@ -32,10 +32,10 @@ if ( ! function_exists( __NAMESPACE__ . '\is_cf_ready' ) ) {
 
 		if ( false !== strpos( $target, ':' ) ) {
 			list( $module, $feature ) = explode( ':', $target, 2 );
-			return \DeWittePrins\Core::is_feature_active( $module, $feature );
+			return \DeWittePrins\CoreFunctionality\Core::is_feature_active( $module, $feature );
 		}
 
-		return \DeWittePrins\Core::is_active( $target );
+		return \DeWittePrins\CoreFunctionality\Core::is_active( $target );
 	}
 }
 
@@ -51,8 +51,8 @@ if ( ! function_exists( __NAMESPACE__ . '\call_when_ready' ) ) {
 	 * @return void
 	 */
 	function call_when_ready( callable $callback ): void {
-		if ( class_exists( '\DeWittePrins\Core' ) ) {
-			if ( \DeWittePrins\Core::is_cf_ready() ) {
+		if ( class_exists( '\DeWittePrins\CoreFunctionality' ) ) {
+			if ( \DeWittePrins\CoreFunctionality\Core::is_cf_ready() ) {
 				call_user_func( $callback );
 			} else {
 				// if not yet ready, defer execution to the core's reactive state queue.
@@ -78,7 +78,7 @@ if ( ! function_exists( __NAMESPACE__ . '\log' ) ) {
 	 */
 	function log( array $data ): void {
 		if ( is_cf_ready() ) {
-			$logger = new \DeWittePrins\Core\Services\Logger();
+			$logger = new \DeWittePrins\CoreFunctionality\Services\Logger();
 			$logger->write( $data );
 		}
 	}

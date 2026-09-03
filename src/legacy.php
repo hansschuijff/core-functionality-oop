@@ -24,12 +24,12 @@ if ( ! function_exists( __NAMESPACE__ . '\log' ) ) {
 			_deprecated_function(
 				__NAMESPACE__ . '\log',
 				'4.0.0',
-				'\DeWittePrins\Core\log'
+				'\DeWittePrins\CoreFunctionality\log'
 			);
 		}
 
-		if ( function_exists( '\DeWittePrins\Core\is_cf_ready' ) && \DeWittePrins\Core\is_cf_ready() ) {
-			\DeWittePrins\Core\log( $data );
+		if ( function_exists( '\DeWittePrins\CoreFunctionality\is_cf_ready' ) && \DeWittePrins\CoreFunctionality\is_cf_ready() ) {
+			\DeWittePrins\CoreFunctionality\log( $data );
 		}
 	}
 }

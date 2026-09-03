@@ -2,11 +2,11 @@
 /**
  * Central Service Locator and Runtime Registry for De Witte Prins Core Functionality.
  *
- * @package DeWittePrins\Core
+ * @package DeWittePrins\CoreFunctionality
  * @since   4.0.0
  */
 
-namespace DeWittePrins;
+namespace DeWittePrins\CoreFunctionality;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
