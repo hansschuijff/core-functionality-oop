@@ -2,13 +2,14 @@
 /**
  * Event Tickets Plus Premium Extension Verification Guard.
  *
- * @package DeWittePrins\Environment\Plugins
+ * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  * @since   4.0.0
  */
 
-namespace DeWittePrins\Environment;
+namespace DeWittePrins\CoreFunctionality\Environment;
 
-use DeWittePrins\Core;
+use DeWittePrins\CoreFunctionality\Core;
+use DeWittePrins\CoreFunctionality\Contracts\EnvironmentInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -22,7 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 4.0.0
  */
-class EventTicketsPlus {
+class EventTicketsPlus implements EnvironmentInterface {
+
+	/**
+	 * Unique identifier token for this specific ecosystem component.
+	 *
+	 * @since 4.0.0
+	 * @return string The blueprint identification token.
+	 */
+	public function get_id(): string {
+		return 'event_tickets_plus';
+	}
 
 	/**
 	 * Performs runtime active validation tracking on premium parameters.
@@ -30,7 +41,7 @@ class EventTicketsPlus {
 	 * @since 4.0.0
 	 * @return bool True if accessible and activated, false otherwise.
 	 */
-	public function is_available(): bool {
+	public function is_ready(): bool {
 		$mapper   = Core::get_service( 'environment_mapper' );
 		$basename = $mapper ? $mapper->get_basename( 'event_tickets_plus' ) : '';
 
@@ -44,5 +55,20 @@ class EventTicketsPlus {
 		}
 
 		return is_plugin_active( $basename );
+	}
+
+	/**
+	 * Returns custom administration bar node attributes for immediate rendering.
+	 *
+	 * @since 4.0.0
+	 * @return array The admin toolbar node data.
+	 */
+	public function get_node_data(): array {
+		return array(
+			'id'     => 'event_tickets_plus',
+			'title'  => __( 'Event Tickets Plus', 'core-functionality-oop' ),
+			'parent' => 'plugins',
+			'href'   => admin_url( 'plugins.php#event-tickets-plus' ),
+		);
 	}
 }

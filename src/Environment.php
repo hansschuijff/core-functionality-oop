@@ -2,11 +2,11 @@
 /**
  * Environment Orchestrator and Pre-Flight Evaluation Engine.
  *
- * @package DeWittePrins\Environment
+ * @package DeWittePrins\CoreFunctionality\Environment
  * @since   4.0.0
  */
 
-namespace DeWittePrins;
+namespace DeWittePrins\CoreFunctionality;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -82,6 +82,28 @@ class Environment {
 	 */
 	private static function dependency_is_ready( string $dependency_id ): bool {
 
+		$class = self::get_dependency_class_name( $dependency_id );
+
+		if ( class_exists( $class ) ) {
+			return ( new $class() )->is_ready();
+		}
+
+		return false; // Guard not found, default to safe abort.
+	}
+
+	/**
+	 * Determines the fully qualified class name for a given dependency identifier.
+	 *
+	 * @since 4.0.0
+	 * @param string $dependency_id The identifier of a theme, plugin or server environment (e.g., 'any_genesis_theme', 'production_environment' or 'woocommerce').
+	 * @return string The fully qualified class name for the dependency.
+	 */
+	private static function get_dependency_class_name( string $dependency_id ): string {
+
+		if ( 'wordpress_core' === $dependency_id ) {
+			return \DeWittePrins\CoreFunctionality\Environment\WordPressCore::class;
+		}
+
 		// 1. CLEANING: Remove the suffix descriptor.
 		$clean_id = self::get_clean( $dependency_id );
 
@@ -92,13 +114,7 @@ class Environment {
 		$namespace = self::get_dependency_namespace( $dependency_id );
 
 		// 4. EXECUTION: Target the exact fully qualified namespace path.
-		$class = $namespace . '\\' . $class_name;
-
-		if ( class_exists( $class ) ) {
-			return ( new $class() )->is_ready();
-		}
-
-		return false; // Guard not found, default to safe abort.
+		return $namespace . '\\' . $class_name;
 	}
 
 	/**

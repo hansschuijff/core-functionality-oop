@@ -2,13 +2,14 @@
 /**
  * The Events Calendar Verification Guard.
  *
- * @package DeWittePrins\Environment\Plugins
+ * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  * @since   4.0.0
  */
 
-namespace DeWittePrins\Environment\Plugins;
+namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
-use DeWittePrins\Core;
+use DeWittePrins\CoreFunctionality\Core;
+use DeWittePrins\CoreFunctionality\Contracts\EnvironmentInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -22,7 +23,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 4.0.0
  */
-class TheEventsCalendar {
+class TheEventsCalendar implements EnvironmentInterface {
+
+	/**
+	 * Unique identifier token for this specific ecosystem component.
+	 *
+	 * @since 4.0.0
+	 * @return string The blueprint identification token.
+	 */
+	public function get_id(): string {
+		return 'the_events_calendar';
+	}
 
 	/**
 	 * Verifies if the plugin is operational and its functional endpoints exist.
@@ -30,7 +41,7 @@ class TheEventsCalendar {
 	 * @since 4.0.0
 	 * @return bool True if fully accessible, false otherwise.
 	 */
-	public function is_available(): bool {
+	public function is_ready(): bool {
 		$mapper   = Core::get_service( 'environment_mapper' );
 		$basename = $mapper ? $mapper->get_basename( 'the_events_calendar' ) : '';
 
@@ -49,5 +60,20 @@ class TheEventsCalendar {
 
 		// Core method verification checks preventing deep autoloader deception.
 		return function_exists( 'tribe_get_events' );
+	}
+
+	/**
+	 * Returns custom administration bar node attributes for immediate rendering.
+	 *
+	 * @since 4.0.0
+	 * @return array The node data array.
+	 */
+	public function get_node_data(): array {
+		return array(
+			'id'     => 'the_events_calendar',
+			'title'  => __( 'The Events Calendar', 'core-functionality-oop' ),
+			'parent' => 'plugins',
+			'href'   => admin_url( 'plugins.php#the-events-calendar' ),
+		);
 	}
 }

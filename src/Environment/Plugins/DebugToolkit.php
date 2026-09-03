@@ -2,14 +2,14 @@
 /**
  * Debug Toolkit Application Guard and Dashboard Component.
  *
- * @package DeWittePrins\Environment\Plugins
+ * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  * @since   4.0.0
  */
 
-namespace DeWittePrins\Environment\Plugins;
+namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
-use DeWittePrins\Core;
-use DeWittePrins\Core\Contracts\ComponentInterface;
+use DeWittePrins\CoreFunctionality\Core;
+use DeWittePrins\CoreFunctionality\Contracts\EnvironmentInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -23,7 +23,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 4.0.0
  */
-class DebugToolkit implements ComponentInterface {
+class DebugToolkit implements EnvironmentInterface {
+
+	/**
+	 * Unique identifier token for this specific ecosystem component.
+	 *
+	 * @return string The blueprint identification token.
+	 */
+	public function get_id(): string {
+		return 'debug_toolkit';
+	}
 
 	/**
 	 * Verifies if the diagnostic toolkit is active on the server instance.
@@ -31,7 +40,7 @@ class DebugToolkit implements ComponentInterface {
 	 * @since 4.0.0
 	 * @return bool True if accessible, false otherwise.
 	 */
-	public function is_available(): bool {
+	public function is_ready(): bool {
 		$mapper   = Core::get_service( 'environment_mapper' );
 		$basename = $mapper ? $mapper->get_basename( 'debug_toolkit' ) : '';
 
@@ -50,7 +59,7 @@ class DebugToolkit implements ComponentInterface {
 	/**
 	 * Returns custom administration bar node attributes for immediate rendering.
 	 *
-	 * Called dynamically by the orchestrator registry only when is_available returns true.
+	 * Called dynamically by the orchestrator registry only when is_ready returns true.
 	 *
 	 * @since 4.0.0
 	 * @return array Required layout keys mapping ID, title, parent, and destination slug.

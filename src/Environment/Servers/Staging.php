@@ -2,11 +2,13 @@
 /**
  * Staging Environment Verification Guard.
  *
- * @package DeWittePrins\Environment\Server
+ * @package DeWittePrins\CoreFunctionality\Environment\Server
  * @since   4.0.0
  */
 
-namespace DeWittePrins\Environment\Servers;
+namespace DeWittePrins\CoreFunctionality\Environment\Servers;
+
+use DeWittePrins\CoreFunctionality\Contracts\DependencyInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -20,7 +22,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 4.0.0
  */
-class Staging {
+class Staging implements DependencyInterface {
+
+	/**
+	 * Unique identifier token for this specific ecosystem component.
+	 *
+	 * @return string The blueprint identification token.
+	 */
+	public function get_id(): string {
+		return 'staging_server';
+	}
 
 	/**
 	 * Checks the native WordPress environment status metrics.
@@ -28,7 +39,7 @@ class Staging {
 	 * @since 4.0.0
 	 * @return bool True if matching staging setups, false otherwise.
 	 */
-	public function is_available(): bool {
+	public function is_ready(): bool {
 		if ( function_exists( 'wp_get_environment_type' ) ) {
 			return 'staging' === wp_get_environment_type();
 		}
