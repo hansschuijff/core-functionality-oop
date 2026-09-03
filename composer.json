@@ -17,7 +17,7 @@
             "src/legacy.php"
         ],
         "psr-4": {
-            "DeWittePrins\\": "src/"
+            "DeWittePrins\\CoreFunctionality\\": "src/"
         }
     }
 }
