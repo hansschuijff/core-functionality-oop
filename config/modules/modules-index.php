@@ -13,5 +13,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
-	'admin-toolbar' => 'modules/admin-toolbar/',
+	'admin_toolbar' => 'modules/admin-toolbar/',
 );

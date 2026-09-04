@@ -32,8 +32,8 @@ return array(
 			'plugin' => 'woocommerce',
 		),
 	),
-	...$this->get_config( 'admin-toolbar-add-shop-settings-woocommerce', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-shop-settings-activewoo', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-shop-settings-pdf-invoices', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-shop-settings-eu-vat-assistant', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-settings-woocommerce', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-settings-activewoo', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-settings-pdf-invoices', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-settings-eu-vat-assistant', AdminToolbar::get_id() ),
 );

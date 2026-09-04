@@ -38,9 +38,9 @@ return array(
 		),
 	),
 	// Shop -> Shop Front.
-	...$this->get_config( 'admin-toolbar-add-shop-front', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-front', AdminToolbar::get_id() ),
 	// Shop -> Shop Admin.
-	...$this->get_config( 'admin-toolbar-add-shop-admin', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-admin', AdminToolbar::get_id() ),
 	// Shop -> Settings.
-	...$this->get_config( 'admin-toolbar-add-shop-settings', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop-settings', AdminToolbar::get_id() ),
 );

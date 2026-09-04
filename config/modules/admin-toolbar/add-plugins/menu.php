@@ -29,8 +29,8 @@ return array(
 			),
 		'visibility' => 'both',
 	),
-	...$this->get_config( 'admin-toolbar-add-plugins-wp-core', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-plugins-github', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-plugins-festinger-vault', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-plugins-nobuna', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-plugins-wp-core', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-plugins-github', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-plugins-festinger-vault', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-plugins-nobuna', AdminToolbar::get_id() ),
 );

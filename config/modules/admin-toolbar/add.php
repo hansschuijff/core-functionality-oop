@@ -24,14 +24,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 return array(
 	// Pull the sub-repositories dynamically with inheritance of the module context!
-	...$this->get_config( 'admin-toolbar-add-plugins', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-site', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-shop', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-events', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-courses', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-posts', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-other-edits', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-settings', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-tools', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-view', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-plugins', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-site', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-shop', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-events', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-courses', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-posts', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-other-edits', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-settings', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-tools', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-view', AdminToolbar::get_id() ),
 );

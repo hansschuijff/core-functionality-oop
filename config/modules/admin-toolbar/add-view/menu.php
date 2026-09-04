@@ -29,9 +29,9 @@ return array(
 			),
 		'visibility' => 'both',
 	),
-	...$this->get_config( 'admin-toolbar-add-view-courses', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-view-shop', AdminToolbar::get_id() ),
-	...$this->get_config( 'admin-toolbar-add-view-events', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-view-courses', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-view-shop', AdminToolbar::get_id() ),
+	...$this->get( 'admin-toolbar-add-view-events', AdminToolbar::get_id() ),
 	// View -> Posts.
 	array(
 		'node_args'  =>
