@@ -21,5 +21,5 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once __DIR__ . '/vendor/autoload.php';
 }
 
-// 2. Start de gelaagde machinekamer loepzuiver op
-$plugin = new Plugin( __FILE__ );
+// 2. Start de verkeersleider.
+new \DeWittePrins\CoreFunctionality\Plugin( __FILE__ );
