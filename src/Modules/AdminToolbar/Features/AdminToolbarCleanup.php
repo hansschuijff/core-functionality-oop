@@ -11,7 +11,7 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features;
 use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\AdminToolbar;
 use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
 use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Traits\OperationalStateTrait;
+use DeWittePrins\CoreFunctionality\Traits\OperationalState;
 use DeWittePrins\CoreFunctionality\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class AdminToolbarCleanup implements FeatureInterface {
 
-	use OperationalStateTrait;
+	use OperationalState;
 
 	/**
 	 * Central root plugin container object.
@@ -44,6 +44,44 @@ class AdminToolbarCleanup implements FeatureInterface {
 	private ModuleInterface $module;
 
 	/**
+	 * Returns the unique identification string for this feature toggle.
+	 *
+	 * @return string The unique micro-feature string key.
+	 */
+	public static function get_id(): string {
+		return 'admin_toolbar_cleanup';
+	}
+
+	/**
+	 * Retrieves the human-readable name of the feature.
+	 *
+	 * @since  1.0.0
+	 * @return string Module title.
+	 */
+	public static function get_name(): string {
+		return 'Admin Toolbar Cleanup Feature.';
+	}
+
+	/**
+	 * Retrieves the contextual description of what the feature provides.
+	 *
+	 * @since  1.0.0
+	 * @return string Module description.
+	 */
+	public static function get_description(): string {
+		return 'The Admin Toolbar Cleanup Feature moves unwanted Admin Toolbar shortcuts to an overvlow submenu, based on a runtime config.';
+	}
+
+	/**
+	 * Retrieves feature-specific environment prerequisites.
+	 *
+	 * @return array Multi-dimensional preflight checks matrix.
+	 */
+	public static function get_preflight_checks(): array {
+		return array();
+	}
+
+	/**
 	 * AdminToolbarCleanup constructor.
 	 *
 	 * @param \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface $module Parent module context.
@@ -51,26 +89,6 @@ class AdminToolbarCleanup implements FeatureInterface {
 	public function __construct( ModuleInterface $module ) {
 		$this->module = $module;
 		$this->plugin = $module->get_plugin();
-
-		$this->plugin->register_config_setting( 'toolbar-move', 'dwp_toolbar_move_settings' );
-	}
-
-	/**
-	 * Returns the unique identification string for this feature toggle.
-	 *
-	 * @return string The unique micro-feature string key.
-	 */
-	public function get_id(): string {
-		return 'admin_toolbar_cleanup';
-	}
-
-	/**
-	 * Exposes the parent module instance.
-	 *
-	 * @return \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
-	 */
-	public function get_module(): ModuleInterface {
-		return $this->module;
 	}
 
 	/**
@@ -106,7 +124,7 @@ class AdminToolbarCleanup implements FeatureInterface {
 		);
 
 		// Pass $this as context to automatically pull from the module subfolder!
-		$nodes_to_move = $this->plugin->get_config( 'toolbar-move', AdminToolbar::get_id() );
+		$nodes_to_move = $this->plugin->config->get( 'toolbar-move', AdminToolbar::get_id() );
 
 		if ( ! is_array( $nodes_to_move ) ) {
 			return;
@@ -152,11 +170,11 @@ class AdminToolbarCleanup implements FeatureInterface {
 	}
 
 	/**
-	 * Retrieves feature-specific environment prerequisites.
+	 * Exposes the parent module instance.
 	 *
-	 * @return array Multi-dimensional preflight checks matrix.
+	 * @return \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
 	 */
-	public function get_preflight_checks(): array {
-		return array();
+	public function get_module(): ModuleInterface {
+		return $this->module;
 	}
 }

@@ -24,43 +24,54 @@ if ( ! interface_exists( __NAMESPACE__ . '\FeatureInterface' ) ) {
 	interface FeatureInterface {
 
 		/**
-		 * Retrieves the unique identifier key for automated dashboard mapping.
+		 * Retrieves the absolute, fully qualified system identifier key for this live instance.
 		 *
-		 * Used directly by the options configuration builder to render management fields.
-		 * Example: 'tec_remove_comment_support'
+		 * Combines parent module ID with the local feature ID to guarantee absolute uniqueness.
+		 * Example: 'ticket_system-pdf_export'
+		 *
+		 * @since  4.0.0
+		 * @return string Unique compound system identifier token.
+		 */
+		public static function get_id(): string;
+
+		/**
+		 * Retrieves the human-readable name of the feature.
+		 *
+		 * Used directly by the configuration builder to render dashboard labels.
+		 *
+		 * @since  4.0.0
+		 * @return string Feature title.
+		 */
+		public static function get_name(): string;
+
+		/**
+		 * FeatureInterface Constructor.
+		 *
+		 * Receives its parent module dependency early for runtime contextual reference.
 		 *
 		 * @since 4.0.0
-		 * @return string Unique snake_case alphanumeric setting identifier token.
+		 * @param ModuleInterface $module The instantiating parent module object layer.
 		 */
-		public function get_id(): string;
+		public function __construct( ModuleInterface $module );
 
 		/**
 		 * Requests additional structural dependencies unique to this specific functionality.
 		 *
-		 * Merged recursively with the parent module checks to perform a combined validation pass.
-		 * Example: array( 'and' => array( 'event_tickets_plus' ) )
+		 * Note: Made static so pre-flights can be inspected statically.
 		 *
-		 * @since 4.0.0
+		 * @since  4.0.0
 		 * @return array Multi-dimensional array tracking environmental requirements.
 		 */
-		public function get_preflight_checks(): array;
+		public static function get_preflight_checks(): array;
 
 		/**
 		 * Initiates the specific filters, action hooks, and layout alterations.
 		 *
-		 * Executed exclusively by the central loader orchestrator once the feature's
-		 * combined pre-flight evaluation and database activation conditions clear successfully.
+		 * Executed exclusively once user preferences and environments clear validation.
 		 *
-		 * @since 4.0.0
+		 * @since  4.0.0
 		 * @return void
 		 */
 		public function launch(): void;
-
-		/**
-		 * Evaluates if the feature is operationally active based on database options and factory states.
-		 *
-		 * @return bool True if active, false otherwise.
-		 */
-		public function is_active(): bool;
 	}
 }

@@ -10,7 +10,7 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features;
 
 use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
 use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
-use DeWittePrins\CoreFunctionality\Traits\OperationalStateTrait;
+use DeWittePrins\CoreFunctionality\Traits\OperationalState;
 use DeWittePrins\CoreFunctionality\Plugin;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class FixAdminBarStyles implements FeatureInterface {
 
-	use OperationalStateTrait;
+	use OperationalState;
 
 	/**
 	 * Central root plugin container object.
@@ -43,6 +43,44 @@ class FixAdminBarStyles implements FeatureInterface {
 	private ModuleInterface $module;
 
 	/**
+	 * Returns the unique identification string for this feature toggle.
+	 *
+	 * @return string The unique micro-feature string key.
+	 */
+	public static function get_id(): string {
+		return 'fix_admin_bar_styles';
+	}
+
+	/**
+	 * Retrieves the human-readable name of the feature.
+	 *
+	 * @since  1.0.0
+	 * @return string Module title.
+	 */
+	public static function get_name(): string {
+		return 'Admin Toolbar Styles Fixer Feature.';
+	}
+
+	/**
+	 * Retrieves the contextual description of what the feature provides.
+	 *
+	 * @since  1.0.0
+	 * @return string Module description.
+	 */
+	public static function get_description(): string {
+		return 'The Admin Toolbar Styles Fixer Feature solves some styling issues in the admin toolbar.';
+	}
+
+	/**
+	 * Retrieves feature-specific environment prerequisites.
+	 *
+	 * @return array Multi-dimensional preflight checks matrix.
+	 */
+	public static function get_preflight_checks(): array {
+		return array();
+	}
+
+	/**
 	 * FixAdminBarStyles constructor.
 	 *
 	 * @param \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface $module Parent module context.
@@ -53,12 +91,13 @@ class FixAdminBarStyles implements FeatureInterface {
 	}
 
 	/**
-	 * Returns the unique identification string for this feature toggle.
+	 * Launches the operational execution lifecycle for this micro-feature.
 	 *
-	 * @return string The unique micro-feature string key.
+	 * @return void
 	 */
-	public function get_id(): string {
-		return 'fix_admin_bar_styles';
+	public function launch(): void {
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_fix_styles' ), 9999 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_fix_styles' ), 9999 );
 	}
 
 	/**
@@ -68,16 +107,6 @@ class FixAdminBarStyles implements FeatureInterface {
 	 */
 	public function get_module(): ModuleInterface {
 		return $this->module;
-	}
-
-	/**
-	 * Launches the operational execution lifecycle for this micro-feature.
-	 *
-	 * @return void
-	 */
-	public function launch(): void {
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_fix_styles' ), 9999 );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_fix_styles' ), 9999 );
 	}
 
 	/**
@@ -98,14 +127,5 @@ class FixAdminBarStyles implements FeatureInterface {
 			array(),
 			$this->plugin->get_data( 'version' )
 		);
-	}
-
-	/**
-	 * Retrieves feature-specific environment prerequisites.
-	 *
-	 * @return array Multi-dimensional preflight checks matrix.
-	 */
-	public function get_preflight_checks(): array {
-		return array();
 	}
 }

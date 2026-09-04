@@ -11,7 +11,7 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features;
 use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
 use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
 use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Traits\OperationalStateTrait;
+use DeWittePrins\CoreFunctionality\Traits\OperationalState;
 
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class AdminToolbarVisualizer implements FeatureInterface {
 
-	use OperationalStateTrait;
+	use OperationalState;
 
 	/**
 	 * Central root plugin container object.
@@ -58,8 +58,28 @@ class AdminToolbarVisualizer implements FeatureInterface {
 	 *
 	 * @return string The unique micro-feature string key.
 	 */
-	public function get_id(): string {
+	public static function get_id(): string {
 		return 'admin_toolbar_visualizer';
+	}
+
+	/**
+	 * Retrieves the human-readable name of the feature.
+	 *
+	 * @since  1.0.0
+	 * @return string Module title.
+	 */
+	public static function get_name(): string {
+		return 'Admin Toolbar Visualizer Feature.';
+	}
+
+	/**
+	 * Retrieves the contextual description of what the feature provides.
+	 *
+	 * @since  1.0.0
+	 * @return string Module description.
+	 */
+	public static function get_description(): string {
+		return 'The Admin Toolbar Visualizer Feature Maps active runtime Node ID keys for development troubleshooting.';
 	}
 
 	/**
@@ -142,7 +162,7 @@ class AdminToolbarVisualizer implements FeatureInterface {
 	 *
 	 * @return array Multi-dimensional preflight checks matrix.
 	 */
-	public function get_preflight_checks(): array {
+	public static function get_preflight_checks(): array {
 		return array(
 			'or' => array(
 				array( 'and' => array( 'local_environment' ) ),
