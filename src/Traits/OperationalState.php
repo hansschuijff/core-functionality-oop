@@ -13,11 +13,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Trait OperationalStateTrait
+ * Trait OperationalState
  *
  * Provides a standardized, tri-state compliant implementation of the is_active check.
  */
-trait OperationalStateTrait {
+trait OperationalState {
 
 	/**
 	 * Dictates the out-of-the-box factory behavior status for this feature.

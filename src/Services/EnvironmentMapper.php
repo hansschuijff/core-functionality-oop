@@ -35,11 +35,11 @@ class EnvironmentMapper {
 	/**
 	 * EnvironmentMapper constructor.
 	 *
-	 * @param \DeWittePrins\CoreFunctionality\Plugin $plugin De globale hoofd-plugin container shell.
+	 * @param Plugin $plugin De globale hoofd-plugin container shell.
 	 */
 	public function __construct( Plugin $plugin ) {
 		// PURE BLISS: The service simply requests the config. What happens under the hood is a black box!
-		$this->mapping = $plugin->get_config( 'environment-index' );
+		$this->mapping = $plugin->config->get( 'environment-index' );
 	}
 
 	/**
