@@ -12,6 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use DeWittePrins\CoreFunctionality\Plugin;
+use DeWittePrins\CoreFunctionality\Notifiers\Notices;
+
 /**
  * Class PluginIntegrityWatch
  *
@@ -22,19 +25,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class PluginIntegrityWatch {
 
-	/**
-	 * Config repository metadata service context.
-	 *
-	 * @var Config
-	 */
-	private Config $config;
-
-	/**
-	 * Universal administrative notifications registry.
-	 *
-	 * @var Notice
-	 */
-	private Notice $notice;
+		private Settings $settings;
+		private Notices $notices;
 
 	/**
 	 * Multi-dimensional registry tracking structural framework violations.
@@ -51,12 +43,14 @@ class PluginIntegrityWatch {
 	 * PluginIntegrityWatch Constructor.
 	 *
 	 * @since 1.0.0
-	 * @param Config $config The central config repository engine.
-	 * @param Notice $notice The centralized notification service.
+	 * @param Settings $settings The central settings repository engine.
+	 * @param Notices $notices The centralized notification service.
 	 */
-	public function __construct( Config $config, Notice $notice ) {
-		$this->config = $config;
-		$this->notice = $notice;
+	public function __construct(
+		private readonly Plugin $plugin,
+	) {
+		$this->settings = $this->plugin->settings;
+		$this->notices  = $this->plugin->notices;
 	}
 
 	/**
@@ -66,7 +60,7 @@ class PluginIntegrityWatch {
 	 * @return bool True if integrity is cleared, false if structural violations occurred.
 	 */
 	public function monitor_integrity(): bool {
-		$this->audit_framework_tree();
+		$this->duplicate_id_check();
 
 		$active_violations = array_filter( $this->violations );
 		if ( empty( $active_violations ) ) {
@@ -77,7 +71,7 @@ class PluginIntegrityWatch {
 		$this->write_detailed_error_log();
 
 		// NOTIFY: Meld de nette waarschuwing aan bij de berichtendienst (Geen wp_die!).
-		$this->notice->add(
+		$this->notices->add(
 			'error',
 			'<strong>Core Functionality Beheer Gedeactiveerd</strong><br />' .
 			'Vanwege een interne structuurfout is de plugin uit voorzorg tijdelijk uitgeschakeld om de stabiliteit van uw website te garanderen. ' .
@@ -89,51 +83,37 @@ class PluginIntegrityWatch {
 	}
 
 	/**
-	 * Audits the full operational module and feature tree against structural requirements.
+	 * Audits the active framework tree mapping for validation, structural placement, and type stability.
 	 *
-	 * @since 1.0.0
+	 * @since  1.0.0
+	 * @return void
 	 */
-	private function audit_framework_tree(): void {
-		$registered_modules = $this->config->get( 'modules' );
+	private function duplicate_id_check(): void {
+		$registered_modules = $this->plugin->components_register->get();
+
 		if ( ! is_array( $registered_modules ) ) {
 			return;
 		}
 
 		$tracked_features = array();
 
-		foreach ( $registered_modules as $module_class ) {
-			if ( ! class_exists( $module_class ) ) {
-				$this->violations['non_existent_modules'][] = $module_class;
-				continue;
-			}
+		foreach ( $registered_modules as $module_fqcn => $features_fqcn ) {
 
-			$module_id = $module_class::get_id();
-			$features  = $module_class::get_features();
+			$module_id = $module_fqcn::get_id();
 
-			if ( ! is_array( $features ) ) {
-				continue;
-			}
+			foreach ( $features_fqcn as $feature_fqcn ) {
 
-			foreach ( $features as $feature_class ) {
-				if ( ! class_exists( $feature_class ) ) {
-					$this->violations['non_existent_features'][] = array(
-						'module' => $module_class,
-						'class'  => $feature_class,
-					);
-					continue;
-				}
-
-				$compound_key = $module_id . '-' . $feature_class::get_id();
+				$compound_key = $module_id . '-' . $feature_fqcn::get_id();
 
 				if ( array_key_exists( $compound_key, $tracked_features ) ) {
 					$this->violations['duplicate_features'][] = array(
 						'id'       => $compound_key,
 						'original' => $tracked_features[ $compound_key ],
-						'conflict' => $feature_class,
+						'conflict' => $feature_fqcn,
 					);
 				}
 
-				$tracked_features[ $compound_key ] = $feature_class;
+				$tracked_features[ $compound_key ] = $feature_fqcn;
 			}
 		}
 	}
@@ -146,12 +126,14 @@ class PluginIntegrityWatch {
 	private function write_detailed_error_log(): void {
 		$prefix = '[CoreFunctionality Integrity Watchdog] 🛑 ';
 
+		// Is now being prevented by ComponentsRegister
 		if ( ! empty( $this->violations['non_existent_modules'] ) ) {
 			foreach ( $this->violations['non_existent_modules'] as $mod ) {
 				error_log( $prefix . 'Missing/Mismatched module class found in index: ' . $mod ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 
+		// Is now being prevented by ComponentsRegister
 		if ( ! empty( $this->violations['non_existent_features'] ) ) {
 			foreach ( $this->violations['non_existent_features'] as $feat ) {
 				error_log( $prefix . 'Missing feature class inside module ' . $feat['module'] . ': ' . $feat['class'] ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
