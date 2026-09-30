@@ -2,45 +2,42 @@
 /**
  * Admin Toolbar Flexbox Wrapping Fix Feature.
  *
- * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features
+ * Admin functions to change the styles of WordPress Admin bar
+ * so that it doesn't wrap when it gets crowded.
+ *
+ * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\StylesFixer
  * @since   1.0.0
  */
 
-namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features;
+namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\StylesFixer;
 
-use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
-use DeWittePrins\CoreFunctionality\Traits\OperationalState;
+use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
+use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
 use DeWittePrins\CoreFunctionality\Plugin;
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
 /**
- * Class FixAdminBarStyles
+ * Class StylesFixer
  *
  * Prevents the native WordPress admin bar from wrapping on larger viewports.
  *
  * @since 1.0.0
  */
-class FixAdminBarStyles implements FeatureInterface {
-
-	use OperationalState;
+class StylesFixer implements FeatureInterface {
 
 	/**
-	 * Central root plugin container object.
+	 * Constructor.
 	 *
-	 * @var \DeWittePrins\CoreFunctionality\Plugin
+	 * @param ModuleInterface $module Parent module context.
 	 */
-	private Plugin $plugin;
-
-	/**
-	 * Parent module container instance.
-	 *
-	 * @var \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
-	 */
-	private ModuleInterface $module;
+	public function __construct(
+		private readonly ModuleInterface $module,
+		private readonly Plugin $plugin
+	) {}
 
 	/**
 	 * Returns the unique identification string for this feature toggle.
@@ -74,20 +71,30 @@ class FixAdminBarStyles implements FeatureInterface {
 	/**
 	 * Retrieves feature-specific environment prerequisites.
 	 *
-	 * @return array Multi-dimensional preflight checks matrix.
+	 * @return string|array A single (string) dependency or a multi-dimensional preflight checks matrix.
 	 */
-	public static function get_preflight_checks(): array {
+	public static function get_dependencies(): string|array {
 		return array();
 	}
 
 	/**
-	 * FixAdminBarStyles constructor.
+	 * Returns an array with internal dependencies with other features or modules.
 	 *
-	 * @param \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface $module Parent module context.
+	 * @since  1.0.0
+	 * @return array<int, string> List of fully qualified feature class strings.
 	 */
-	public function __construct( ModuleInterface $module ) {
-		$this->module = $module;
-		$this->plugin = $module->get_plugin();
+	public static function uses_features(): array {
+		return array();
+	}
+
+	/**
+	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
+	 *
+	 * @since  1.0.0
+	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
+	 */
+	public static function get_orientation(): Orientation {
+		return Orientation::BOTH;
 	}
 
 	/**
@@ -103,7 +110,7 @@ class FixAdminBarStyles implements FeatureInterface {
 	/**
 	 * Exposes the parent module instance.
 	 *
-	 * @return \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
+	 * @return \DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface
 	 */
 	public function get_module(): ModuleInterface {
 		return $this->module;
@@ -119,11 +126,11 @@ class FixAdminBarStyles implements FeatureInterface {
 			return;
 		}
 
-		$style_url = $this->plugin->get_data( 'plugin-url' ) . 'src/Modules/AdminToolbar/Assets/css/styles.css';
+		$url = plugins_url( 'assets/css/styles-fixer.css', __FILE__ );
 
 		wp_enqueue_style(
 			'dwp-admin-bar-wrap-fix',
-			$style_url,
+			$url,
 			array(),
 			$this->plugin->get_data( 'version' )
 		);

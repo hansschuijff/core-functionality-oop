@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin Toolbar Management Module.
+ * Admin Toolbar Core Module Controller.
  *
  * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar
  * @since   1.0.0
@@ -8,58 +8,38 @@
 
 namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar;
 
-use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Core;
-use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
-use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Data\ModuleConfigSchema;
-use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\AdminToolbarBuilder;
-use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\AdminToolbarCleanup;
-use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\AdminToolbarVisualizer;
-use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\FixAdminBarStyles;
-
 if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+	exit; // Exit if accessed directly.
 }
 
+use DeWittePrins\CoreFunctionality\Plugin;
+use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
+
+use function __;
 /**
  * Class AdminToolbar
  *
- * Orchestrates layout adjustments, responsive flexbox fixes, and node configurations.
+ * @since 1.0.0
  */
 class AdminToolbar implements ModuleInterface {
 
 	/**
-	 * Central plugin context.
+	 * Retrieves the unique administrative string identifier key.
 	 *
-	 * @var Plugin
-	 */
-	private Plugin $plugin;
-
-	/**
-	 * Active features collection bound to this module.
-	 *
-	 * @var array
-	 */
-	private array $features = array();
-
-	/**
-	 * Unique identifier token for this module.
-	 *
-	 * @return string The unique criteria key.
+	 * @return string The unique module key.
 	 */
 	public static function get_id(): string {
 		return 'admin_toolbar';
 	}
 
 	/**
-	 * Retrieves the human-readable name of the module.
+	 * Retrieves the localized visual title name.
 	 *
-	 * @since  1.0.0
-	 * @return string Module title.
+	 * @return string The human-readable module name.
 	 */
 	public static function get_name(): string {
-		return 'Admin Toolbar';
+		return __( 'Admin Toolbar', 'dwp-cf' );
 	}
 
 	/**
@@ -69,98 +49,59 @@ class AdminToolbar implements ModuleInterface {
 	 * @return string Module description.
 	 */
 	public static function get_description(): string {
-		return 'Deze module maakt o.a. een admin toolbar menu aan.';
+		return __( 'Provides advanced layout overrides, performance enhancements, and custom nodes filtering for the WordPress admin bar.', 'dwp-cf' );
 	}
 
 	/**
-	 * Gathers the fully qualified class names of encapsulated micro-features.
-	 *
-	 * @return array List of fully qualified feature class strings.
-	 */
-	public static function get_features(): array {
-		return array(
-			Features\AdminToolbarBuilder::class,
-			Features\AdminToolbarCleanup::class,
-			Features\AdminToolbarVisualizer::class,
-			Features\FixAdminBarStyles::class,
-		);
-	}
-
-	/**
-	 * Returns the baseline preflight verification environment checkpoints.
-	 *
-	 * @return array Multi-dimensional array tracking infrastructure dependencies.
-	 */
-	public static function get_preflight_checks(): array {
-		return array(
-			'and' => array( 'wordpress_core' ),
-		);
-	}
-
-	/**
-	 * Defines core permission roles or capabilities needed to launch.
+	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
 	 *
 	 * @since  1.0.0
-	 * @return array List of required WordPress capabilities.
+	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
 	 */
-	public static function get_required_capabilities(): array {
-		return array( 'manage_options' );
+	public static function get_orientation(): Orientation {
+		return Orientation::BOTH;
 	}
 
 	/**
-	 * AdminToolbar constructor.
+	 * Requests the structural environment requirements for the module base layer.
 	 *
-	 * @param Plugin $plugin The global core plugin metadata shell.
+	 * @since  1.0.0
+	 * @return string|array String or multi-dimensional array tracking environmental requirements.
 	 */
-	public function __construct( Plugin $plugin ) {
-		$this->plugin = $plugin;
-
-		// Volledig gekwalificeerd om compiler-frictie met de Contracts namespace te voorkomen.
-		$this->features = array(
-			AdminToolbarBuilder::class,
-			AdminToolbarCleanup::class,
-			AdminToolbarVisualizer::class,
-			FixAdminBarStyles::class,
-		);
+	public static function get_dependencies(): string|array {
+		return array();
 	}
 
 	/**
-	 * Gets the global plugin core engine instance.
-	 * LOEPZUIVER: Lost de fatal error in de AdminToolbarBuilder direct op! 🎯
+	 * Returns an array with internal dependencies with other features or modules.
 	 *
-	 * @return Plugin The central verkeersleider context.
+	 * @since  1.0.0
+	 * @return array<int, string> List of fully qualified feature class strings.
 	 */
-	public function get_plugin(): Plugin {
-		return $this->plugin;
+	public static function uses_features(): array {
+		return array();
 	}
 
 	/**
-	 * Launches the module internal feature cascades.
+	 * AdminToolbar Constructor.
 	 *
+	 * @since 1.0.0
+	 * @param Plugin $plugin The central plugin class instance acting as a provider.
+	 */
+	public function __construct(
+		private readonly Plugin $plugin,
+	) {}
+
+	/**
+	 * Orchestrates late operational hook executions for the module base layer.
+	 *
+	 * Executed autonomously by the Kernel once the centralized init hook fires.
+	 *
+	 * @since  1.0.0
 	 * @return void
 	 */
 	public function launch(): void {
-	}
-
-	/**
-	 * Defines the settings schema schema mapping for this specific module layer.
-	 *
-	 * @since  4.0.0
-	 * @return ModuleConfigSchema Compiled schema mapping object.
-	 */
-	public static function get_config_schema(): ModuleConfigSchema {
-		/**
-		 * 2. Definieer de exacte configuratie-eisen van deze specifieke module.
-		 */
-		$schema = new ModuleConfigSchema(
-			self::get_id(),
-			self::get_name(),
-			self::get_description()
-		);
-		// De module voegt zijn eigen specifieke configuratiebehoeften toe.
-		$schema->add_field( 'log_retention_days', 'number', 'Aantal dagen logs bewaren', 14 )
-			->add_field( 'slack_webhook_url', 'text', 'Slack Webhook URL voor notificaties', '' );
-
-		return $schema;
+		// De features zijn al veilig in de constructor gescheduled en geïnstantiëerd!
+		// Hier hoeft alleen nog maar specifieke, late module-logica te staan indien nodig.
 	}
 }

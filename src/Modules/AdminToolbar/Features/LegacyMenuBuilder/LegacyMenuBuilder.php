@@ -1,48 +1,46 @@
 <?php
 /**
- * Admin Toolbar Abstract Shortcut Builder Feature.
+ * Ads a configurable shortcuts menu to the admin toolbar (based on config
+ * and availability of plugins and themes) in order to limit chaos make life more enjoyable.
  *
- * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features
+ * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuilder
  * @since   1.0.0
  */
 
-namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features;
+namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\LegacyMenuBuilder;
 
 use DeWittePrins\Corefunctionality\Modules\AdminToolbar\AdminToolbar;
-use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
-use DeWittePrins\CoreFunctionality\Traits\OperationalState;
+use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
+use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
 use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Environment;
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
+use WP_Admin_Bar;
+
+use function current_user_can;
+use function is_admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Class AdminToolbarBuilder
+ * Class MenuBuilder
  *
  * Inject shortcut navigation elements using the decoupled Environment readiness matrix.
  *
  * @since 1.0.0
  */
-class AdminToolbarBuilder implements FeatureInterface {
-
-	use OperationalState;
+class LegacyMenuBuilder implements FeatureInterface {
 
 	/**
-	 * Central root plugin container object.
+	 * Constructor.
 	 *
-	 * @var \DeWittePrins\CoreFunctionality\Plugin
+	 * @param ModuleInterface $module Parent module context.
 	 */
-	private Plugin $plugin;
-
-	/**
-	 * Parent module container instance.
-	 *
-	 * @var \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
-	 */
-	private ModuleInterface $module;
+	public function __construct(
+		private readonly ModuleInterface $module,
+		private readonly Plugin $plugin
+	) {}
 
 	/**
 	 * Returns the unique identification string for this feature.
@@ -50,7 +48,7 @@ class AdminToolbarBuilder implements FeatureInterface {
 	 * @return string The unique micro-feature string key.
 	 */
 	public static function get_id(): string {
-		return 'admin_toolbar_builder';
+		return 'legacy_admin_toolbar_builder';
 	}
 
 	/**
@@ -60,7 +58,7 @@ class AdminToolbarBuilder implements FeatureInterface {
 	 * @return string Module title.
 	 */
 	public static function get_name(): string {
-		return 'Admin Toolbar Builder Feature.';
+		return 'Legacy Admin Toolbar Builder Feature.';
 	}
 
 	/**
@@ -76,20 +74,30 @@ class AdminToolbarBuilder implements FeatureInterface {
 	/**
 	 * Retrieves feature-specific environment prerequisites.
 	 *
-	 * @return array Multi-dimensional preflight checks matrix.
+	 * @return string|array A single string dependency or a multi-dimensional preflight checks matrix.
 	 */
-	public static function get_preflight_checks(): array {
+	public static function get_dependencies(): string|array {
+		return '';
+	}
+
+	/**
+	 * Returns an array with internal dependencies with other features or modules.
+	 *
+	 * @since  1.0.0
+	 * @return array<int, string> List of fully qualified feature class strings.
+	 */
+	public static function uses_features(): array {
 		return array();
 	}
 
 	/**
-	 * AdminToolbarBuilder constructor.
+	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
 	 *
-	 * @param \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface $module Parent module context.
+	 * @since  1.0.0
+	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
 	 */
-	public function __construct( ModuleInterface $module ) {
-		$this->module = $module;
-		$this->plugin = $module->get_plugin();
+	public static function get_orientation(): Orientation {
+		return Orientation::BOTH;
 	}
 
 	/**
@@ -103,22 +111,28 @@ class AdminToolbarBuilder implements FeatureInterface {
 	}
 
 	/**
-	 * Processes the abstract config structure and dynamically injects nodes
+	 * Processes the abstract settings structure and dynamically injects nodes
 	 * into the toolbar.
 	 *
-	 * @global \WP_Admin_Bar $wp_admin_bar Global WordPress admin bar object.
+	 * @global WP_Admin_Bar $wp_admin_bar Global WordPress admin bar object.
 	 * @return void
 	 */
 	public function inject_toolbar_shortcuts(): void {
 		global $wp_admin_bar;
-
 		if ( ! is_object( $wp_admin_bar ) || ! current_user_can( 'administrator' ) ) {
 			return;
 		}
 
 		// Pass $this as context to automatically pull from the module subfolder!
-		$shortcuts = $this->plugin->config->get( 'toolbar-add', AdminToolbar::get_id() );
-
+		$shortcuts = $this->plugin->settings->get( 'toolbar-add', AdminToolbar::get_id() );
+if ( \function_exists( '\d' ) ) {
+	\d(
+		\current_filter(),
+		__METHOD__ . ':' . __LINE__,
+		$shortcuts
+	);
+}
+// error_log( print_r( $shortcuts, true ) );
 		if ( ! is_array( $shortcuts ) ) {
 			return;
 		}
@@ -127,7 +141,6 @@ class AdminToolbarBuilder implements FeatureInterface {
 			if ( ! isset( $node['visibility'] ) || ! isset( $node['node_args'] ) ) {
 				continue;
 			}
-
 			if ( 'front' === $node['visibility'] && is_admin() ) {
 				continue;
 			}
@@ -136,9 +149,9 @@ class AdminToolbarBuilder implements FeatureInterface {
 			}
 
 			$dependency_matrix = $node['dependency'] ?? array();
-			if ( ! empty( $dependency_matrix ) && ! Environment::is_ready( $dependency_matrix ) ) {
-				continue;
-			}
+			// if ( ! empty( $dependency_matrix ) && ! $this->plugin->kernel->environment->is_ready( $dependency_matrix ) ) {
+			// 	continue;
+			// }
 
 			$wp_admin_bar->add_menu( (array) $node['node_args'] );
 		}
@@ -147,10 +160,11 @@ class AdminToolbarBuilder implements FeatureInterface {
 	/**
 	 * Removes the generic core 'appearance' node from the frontend view.
 	 *
-	 * @param \WP_Admin_Bar $wp_admin_bar Global WordPress admin bar object.
+	 * @param WP_Admin_Bar $wp_admin_bar Global WordPress admin bar object.
 	 * @return void
 	 */
 	public function remove_appearance_node_on_front( $wp_admin_bar ): void {
+
 		if ( is_admin() || ! is_object( $wp_admin_bar ) ) {
 			return;
 		}

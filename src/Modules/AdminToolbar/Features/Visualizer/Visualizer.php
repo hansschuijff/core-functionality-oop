@@ -2,56 +2,42 @@
 /**
  * Admin Toolbar Node ID Visualizer Developer Feature.
  *
- * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features
+ * A helper function that adds a toplevel menu to the admin toolbar showing
+ * all current node-id's in the admin toolbar.
+ *
+ * @package DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\Visualizer
  * @since   1.0.0
  */
 
-namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features;
+namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\Visualizer;
 
-use DeWittePrins\CoreFunctionality\Contracts\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Contracts\ModuleInterface;
+use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
+use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
 use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Traits\OperationalState;
-
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Class AdminToolbarVisualizer
+ * Class Visualizer
  *
  * Maps active runtime Node ID keys for development troubleshooting.
  *
  * @since 1.0.0
  */
-class AdminToolbarVisualizer implements FeatureInterface {
-
-	use OperationalState;
+class Visualizer implements FeatureInterface {
 
 	/**
-	 * Central root plugin container object.
+	 * Constructor.
 	 *
-	 * @var \DeWittePrins\CoreFunctionality\Plugin
+	 * @param ModuleInterface $module Parent module context.
 	 */
-	private Plugin $plugin;
-
-	/**
-	 * Parent module container instance.
-	 *
-	 * @var \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
-	 */
-	private ModuleInterface $module;
-
-	/**
-	 * AdminToolbarVisualizer constructor.
-	 *
-	 * @param \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface $module Parent module context.
-	 */
-	public function __construct( ModuleInterface $module ) {
-		$this->module = $module;
-		$this->plugin = $module->get_plugin();
-	}
+	public function __construct(
+		private readonly ModuleInterface $module,
+		private readonly Plugin $plugin
+	) {}
 
 	/**
 	 * Returns the unique identification string for this feature toggle.
@@ -83,9 +69,28 @@ class AdminToolbarVisualizer implements FeatureInterface {
 	}
 
 	/**
+	 * Retrieves feature-specific environment prerequisites.
+	 *
+	 * @return string|array A single (string) dependency or a multi-dimensional preflight checks matrix.
+	 */
+	public static function get_dependencies(): string|array {
+		return array();
+	}
+
+	/**
+	 * Returns an array with internal dependencies with other features or modules.
+	 *
+	 * @since  1.0.0
+	 * @return array<int, string> List of fully qualified feature class strings.
+	 */
+	public static function uses_features(): array {
+		return array();
+	}
+
+	/**
 	 * Exposes the parent module instance.
 	 *
-	 * @return \DeWittePrins\CoreFunctionality\Contracts\ModuleInterface
+	 * @return \DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface
 	 */
 	public function get_module(): ModuleInterface {
 		return $this->module;
@@ -98,6 +103,16 @@ class AdminToolbarVisualizer implements FeatureInterface {
 	 */
 	public function launch(): void {
 		add_action( 'wp_before_admin_bar_render', array( $this, 'render_node_inspector' ), 300 );
+	}
+
+	/**
+	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
+	 *
+	 * @since  1.0.0
+	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
+	 */
+	public static function get_orientation(): Orientation {
+		return Orientation::BOTH;
 	}
 
 	/**
@@ -124,7 +139,7 @@ class AdminToolbarVisualizer implements FeatureInterface {
 		$wp_admin_bar->add_node(
 			array(
 				'id'    => $root_inspector_id,
-				'title' => __( 'Node ID\'s', 'core-functionality-dwp' ),
+				'title' => __( 'Node ID\'s', 'dwp-cf' ),
 				'href'  => '#',
 			)
 		);
@@ -155,20 +170,5 @@ class AdminToolbarVisualizer implements FeatureInterface {
 
 			$wp_admin_bar->add_node( $args );
 		}
-	}
-
-	/**
-	 * Retrieves feature-specific environment prerequisites.
-	 *
-	 * @return array Multi-dimensional preflight checks matrix.
-	 */
-	public static function get_preflight_checks(): array {
-		return array(
-			'or' => array(
-				array( 'and' => array( 'local_environment' ) ),
-				array( 'and' => array( 'staging_environment' ) ),
-				array( 'and' => array( 'development_environment' ) ),
-			),
-		);
 	}
 }
