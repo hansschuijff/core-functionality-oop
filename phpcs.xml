@@ -24,6 +24,6 @@
 
     <!-- Check all PHP files inside the current framework structure -->
     <file>src/</file>
-    <file>config/</file>
+    <file>settings/</file>
     <file>core-functionality.php</file>
 </ruleset>

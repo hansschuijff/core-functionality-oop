@@ -45,6 +45,10 @@ Thumbs.db
 /.htaccess
 
 # development
-/dev-notes/
+/___/
+/trash/
+/todo/
+**/dev-notes/
+**/LegeModule/
 /dev-notes-local/
 # .editorconfig - mag je in git laten gaan.

@@ -13,8 +13,7 @@
     },
     "autoload": {
         "files": [
-            "src/helpers.php",
-            "src/legacy.php"
+            "src/Api/functions.php"
         ],
         "psr-4": {
             "DeWittePrins\\CoreFunctionality\\": "src/"
