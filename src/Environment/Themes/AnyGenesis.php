@@ -1,18 +1,29 @@
 <?php
 /**
- * Genesis Framework Structural Verification Guard.
+ * Genesis Framework / Parent Theme Verification Guard.
  *
- * @package DeWittePrins\CoreFunctionality\Environment\Themes
- * @since   4.0.0
+ * @package    DeWittePrins\CoreFunctionality
+ * @subpackage Environment\Themes
+ * @author     Hans Schuijff <@hansschuijff>
+ * @license    GPL-2.0
+ * @since      1.0.0
  */
 
-namespace DeWittePrins\CoreFunctionality\Environment\Themes;
+declare(strict_types=1);
 
-use DeWittePrins\CoreFunctionality\Contracts\EnvironmentInterface;
+namespace DeWittePrins\CoreFunctionality\Environment\Themes;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
+use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
+use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
+use Override;
+
+use function __;
+use function admin_url;
 
 /**
  * Class AnyGenesis
@@ -20,49 +31,65 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Verifies theme asset deployment patterns evaluating if the running system layout
  * theme (or parent design scaffolding framework) is securely powered by Genesis.
  *
- * @since 4.0.0
+ * @since 1.0.0
  */
-class AnyGenesis implements EnvironmentInterface {
+class AnyGenesis extends AbstractTheme {
 
 	/**
 	 * Unique identifier token for this specific ecosystem component.
 	 *
+	 * @since 1.0.0
 	 * @return string The blueprint identification token.
 	 */
+	#[Override]
 	public function get_id(): string {
 		return 'any_genesis_theme';
 	}
 
 	/**
-	 * Inspects theme template registry indices to confirm Genesis footprint.
+	 * Declares specific technical proof criteria required for framework verification.
 	 *
-	 * @since 4.0.0
-	 * @return bool True if Genesis functions as the baseline framework layout, false otherwise.
-	 * @see wp_get_theme()
+	 * Defensively checks for core Genesis constants to guarantee the framework is fully loaded.
+	 *
+	 * @since 1.0.0
+	 * @return ProofRequirement The structured proof criteria object.
 	 */
-	public function is_ready(): bool {
-		if ( ! function_exists( 'wp_get_theme' ) ) {
-			return false;
-		}
-
-		$current_theme = wp_get_theme();
-
-		return 'Genesis' === $current_theme->get( 'Template' ) || 'Genesis' === $current_theme->get( 'Name' );
+	#[Override]
+	protected function get_proof_requirements(): ProofRequirement {
+		return new ProofRequirement(
+			constants: 'PARENT_THEME_VERSION' // Confirms Genesis engine is initialized and present
+		);
 	}
 
 	/**
-	 * Returns custom administration bar node attributes for immediate rendering.
+	 * Compiles and returns the available pool of toolbar shortcuts this framework can offer.
 	 *
-	 * Called dynamically by the orchestrator registry only when is_ready returns true.
+	 * Transforms your custom link data directly into a type-safe ToolbarShortcut DTO block.
 	 *
-	 * @return array Required layout keys mapping ID, title, parent, and destination slug.
+	 * @since 1.0.0
+	 * @return ToolbarShortcut[] Collection of theme toolbar shortcut DTOs.
 	 */
-	public function get_node_data(): array {
+	#[Override]
+	protected function get_toolbar_nodes(): array {
 		return array(
-			'id'          => 'any_genesis_link',
-			'title'       => __( '⚡ Any Genesis', 'core-functionality-dwp' ),
-			'parent'      => 'top-secondary',
-			'destination' => admin_url( 'themes.php' ),
+			new ToolbarShortcut(
+				id:      'cf-genesis-theme-settings',
+				title:   __( 'Genesis Framework', 'dwp-cf' ),
+				href:    admin_url( 'admin.php?page=genesis' ),
+				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Genesis Framework', 'dwp-cf' ),
+				orientation: Orientation::ADMIN,
+			),
 		);
+	}
+
+	/**
+	 * Compiles and returns the available pool of admin menu blocks this framework can offer.
+	 *
+	 * @since 1.0.0
+	 * @return \DeWittePrins\CoreFunctionality\DTO\AdminMenuBlock[] Collection of theme sidebar menu blocks.
+	 */
+	#[Override]
+	protected function get_menu_nodes(): array {
+		return array();
 	}
 }

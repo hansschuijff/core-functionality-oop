@@ -3,12 +3,12 @@
  * Production Environment Verification Guard.
  *
  * @package DeWittePrins\CoreFunctionality\Environment\Server
- * @since   4.0.0
+ * @since   1.0.0
  */
 
 namespace DeWittePrins\CoreFunctionality\Environment\Servers;
 
-use DeWittePrins\CoreFunctionality\Contracts\DependencyInterface;
+use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Verifies if the active server infrastructure is running in a live production
  * context using native WordPress environment detection.
  *
- * @since 4.0.0
+ * @since 1.0.0
  */
 class Production implements DependencyInterface {
 
@@ -36,7 +36,7 @@ class Production implements DependencyInterface {
 	/**
 	 * Checks the native WordPress environment status metrics.
 	 *
-	 * @since 4.0.0
+	 * @since 1.0.0
 	 * @return bool True if production or default fallback state, false otherwise.
 	 */
 	public function is_ready(): bool {
@@ -44,5 +44,18 @@ class Production implements DependencyInterface {
 			return 'production' === wp_get_environment_type();
 		}
 		return true; // Safe fail-safe default.
+	}
+
+	/**
+	 * Default fallback proof of life check for plugins.
+	 *
+	 * Returns true by default. Extended classes should override this to check for
+	 * specific classes, functions or constants without triggering autoloaders.
+	 *
+	 * @since 1.0.0
+	 * @return bool Always true unless overridden.
+	 */
+	public function has_proof_of_life(): bool {
+		return true;
 	}
 }

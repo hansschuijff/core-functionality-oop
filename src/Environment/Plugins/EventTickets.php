@@ -1,6 +1,6 @@
 <?php
 /**
- * Event Tickets Plus Premium Extension Verification Guard.
+ * Event Tickets Core Extension Verification Guard.
  *
  * @package    DeWittePrins\CoreFunctionality
  * @subpackage Environment\Plugins
@@ -27,30 +27,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class EventTicketsPlus
+ * Class EventTickets
  *
- * Inspects execution states checking if the premium Event Tickets Plus add-on
+ * Inspects execution states checking if the core Event Tickets plugin
  * is fully operational utilizing the translation mapping pipeline.
  *
  * @since 1.0.0
  */
-class EventTicketsPlus extends AbstractPlugin {
+class EventTickets extends AbstractPlugin {
 
 	/**
 	 * Unique identifier token for this specific ecosystem component.
+	 *
+	 * Must return 'event_tickets' to align with the core preflight registry mappings.
 	 *
 	 * @since 1.0.0
 	 * @return string The blueprint identification token.
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'event_tickets_plus';
+		return 'event_tickets';
 	}
 
 	/**
-	 * Declares the specific technical proof criteria required for Event Tickets Plus verification.
+	 * Declares the specific technical proof criteria required for Event Tickets core verification.
 	 *
-	 * Defensively tests the explicit Plus core class and handles the negative version conflict check.
+	 * Matches the core class string layout and attaches the defensive version conflict firewall.
 	 *
 	 * @since 1.0.0
 	 * @return ProofRequirement The structured proof criteria object.
@@ -58,15 +60,15 @@ class EventTicketsPlus extends AbstractPlugin {
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement(
-			classes:     'Tribe__Tickets_Plus__Main', // Upgraded to the explicit Premium class to prevent false positives!
-			not_actions: 'tribe_extensions_failed_requirements' // Dynamic version mismatch monitor firewall
+			classes:     'Tribe__Tickets__Main', // Corrected to the explicit Core class for the free version!
+			not_actions: 'tribe_extensions_failed_requirements' // Global version mismatch monitor guard
 		);
 	}
 
 	/**
 	 * Compiles and returns the available pool of toolbar shortcuts this plugin can offer.
 	 *
-	 * Transforms your link data into a type-safe ToolbarShortcut DTO block.
+	 * Transforms your link criteria directly into a type-safe ToolbarShortcut DTO block.
 	 *
 	 * @since 1.0.0
 	 * @return ToolbarShortcut[] Collection of plugin toolbar shortcut DTOs.
@@ -75,10 +77,10 @@ class EventTicketsPlus extends AbstractPlugin {
 	protected function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'event-tickets-plus-link',
-				title:   __( 'Event Tickets Plus', 'core-functionality-oop' ),
-				href:    admin_url( 'admin.php?page=tickets-plus-settings' ),
-				label:   __( 'Event Tickets Plus Dashboard', 'dwp-cf' ),
+				id:      'event-tickets-link',
+				title:   __( 'Event Tickets', 'core-functionality-oop' ),
+				href:    admin_url( 'plugins.php#event-tickets' )
+				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Event Tickets Dashboard', 'dwp-cf' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

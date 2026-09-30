@@ -2,18 +2,29 @@
 /**
  * Debug Toolkit Application Guard and Dashboard Component.
  *
- * @package DeWittePrins\CoreFunctionality\Environment\Plugins
- * @since   4.0.0
+ * @package    DeWittePrins\CoreFunctionality
+ * @subpackage Environment\Plugins
+ * @author     Hans Schuijff <@hansschuijff>
+ * @license    GPL-2.0
+ * @since      1.0.0
  */
 
-namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
+declare(strict_types=1);
 
-use DeWittePrins\CoreFunctionality\Core;
-use DeWittePrins\CoreFunctionality\Contracts\EnvironmentInterface;
+namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
+
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
+use DeWittePrins\CoreFunctionality\DTO\AdminMenuBlock;
+use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
+use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
+use Override;
+
+use function __;
+use function admin_url;
 
 /**
  * Class DebugToolkit
@@ -21,56 +32,64 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Evaluates the runtime tracking status of the Debug Toolkit plugin.
  * Encapsulates its own admin toolbar node component layout specifications.
  *
- * @since 4.0.0
+ * @since 1.0.0
  */
-class DebugToolkit implements EnvironmentInterface {
+class DebugToolkit extends AbstractPlugin {
 
 	/**
 	 * Unique identifier token for this specific ecosystem component.
 	 *
+	 * @since 1.0.0
 	 * @return string The blueprint identification token.
 	 */
+	#[Override]
 	public function get_id(): string {
 		return 'debug_toolkit';
 	}
 
 	/**
-	 * Verifies if the diagnostic toolkit is active on the server instance.
+	 * Declares the specific technical proof criteria required for Debug Toolkit verification.
 	 *
-	 * @since 4.0.0
-	 * @return bool True if accessible, false otherwise.
+	 * Defaults to an empty requirement object if the basic is_plugin_active database check is sufficient.
+	 *
+	 * @since 1.0.0
+	 * @return ProofRequirement The structured proof criteria object.
 	 */
-	public function is_ready(): bool {
-		$mapper   = Core::get_service( 'environment_mapper' );
-		$basename = $mapper ? $mapper->get_basename( 'debug_toolkit' ) : '';
-
-		// CIRCUIT BREAKER: Halt execution instantly if the allocation mapping is missing.
-		if ( empty( $basename ) ) {
-			return false;
-		}
-
-		if ( ! function_exists( 'is_plugin_active' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-
-		return is_plugin_active( $basename );
+	#[Override]
+	protected function get_proof_requirements(): ProofRequirement {
+		return new ProofRequirement();
 	}
 
 	/**
-	 * Returns custom administration bar node attributes for immediate rendering.
+	 * Compiles and returns the available pool of toolbar shortcuts this plugin can offer.
 	 *
-	 * Called dynamically by the orchestrator registry only when is_ready returns true.
+	 * Maps your custom criteria (including the specific CSS class) into a type-safe DTO.
 	 *
-	 * @since 4.0.0
-	 * @return array Required layout keys mapping ID, title, parent, and destination slug.
+	 * @since 1.0.0
+	 * @return ToolbarShortcut[] Collection of plugin toolbar shortcut DTOs.
 	 */
-	public function get_node_data(): array {
+	#[Override]
+	protected function get_toolbar_nodes(): array {
 		return array(
-			'id'        => 'debug_toolkit_link',
-			'title'     => __( '🛠️ Debug Toolkit', 'core-functionality-dwp' ),
-			'parent'    => 'plugins.php',
-			'slug'      => 'plugins.php?plugin_status=active',
-			'css_class' => 'dwp-debug-bar-item',
+			new ToolbarShortcut(
+				id:      'debug_toolkit_link',
+				title:   __( '🛠️ Debug Toolkit', 'dwp-cf' ),
+				href:    admin_url( 'plugins.php?plugin_status=active' ),
+				label:   __( 'Debug Toolkit Diagnostics', 'dwp-cf' ),
+				meta:    array( 'class' => 'dwp-debug-bar-item' ), // Safely injects your custom CSS styling class
+				orientation: Orientation::ADMIN,
+			),
 		);
+	}
+
+	/**
+	 * Compiles and returns the available pool of admin menu blocks this plugin can offer.
+	 *
+	 * @since 1.0.0
+	 * @return AdminMenuBlock[] Collection of plugin sidebar menu blocks.
+	 */
+	#[Override]
+	protected function get_menu_nodes(): array {
+		return array();
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Essence Pro Child Theme Verification Guard.
+ * Any Block Theme Verification Guard.
  *
  * @package    DeWittePrins\CoreFunctionality
  * @subpackage Environment\Themes
@@ -14,26 +14,26 @@ declare(strict_types=1);
 namespace DeWittePrins\CoreFunctionality\Environment\Themes;
 
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
 
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
-use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
+use DeWittePrins\CoreFunctionality\Environment\Themes\Services\ThemeInspector;
 use Override;
 
 use function __;
 use function admin_url;
 
 /**
- * Class EssencePro
+ * Class AnyBlockTheme
  *
- * Assesses active styling inheritance profiles to verify if the running
- * design instance matches the specialized Essence Pro layout footprint.
+ * Evaluates whether the currently running system layout is securely powered
+ * by any modern WordPress Full Site Editing (FSE) block theme architecture.
  *
  * @since 1.0.0
  */
-class EssencePro extends AbstractTheme {
+class AnyBlockTheme extends AbstractTheme {
 
 	/**
 	 * Unique identifier token for this specific ecosystem component.
@@ -43,29 +43,26 @@ class EssencePro extends AbstractTheme {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'essence_pro_theme';
+		return 'any_block_theme';
 	}
 
 	/**
-	 * Declares specific technical proof criteria required for theme verification.
+	 * Overrides the default proof of life check to poll for FSE block theme presence.
 	 *
-	 * Optional: You can extend this with specific framework classes, Genesis functions,
-	 * or version constants if you want to make it extra defensive.
+	 * Bypasses the default lookup constraints since this applies globally to any FSE setup.
 	 *
 	 * @since 1.0.0
-	 * @return ProofRequirement The structured proof criteria object.
+	 * @return bool True if an FSE block theme is active, false otherwise.
 	 */
 	#[Override]
-	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement(
-			constants: 'ESSENCE_TEXT_DOMAIN' // Example of a safe, single string constant check without array wrapper
-		);
+	public function has_proof_of_life(): bool {
+		return ThemeInspector::is_block_theme();
 	}
 
 	/**
 	 * Compiles and returns the available pool of toolbar shortcuts this theme can offer.
 	 *
-	 * Transforms your custom link data directly into a type-safe ToolbarShortcut DTO block.
+	 * Transforms your link data into a type-safe ToolbarShortcut DTO block.
 	 *
 	 * @since 1.0.0
 	 * @return ToolbarShortcut[] Collection of theme toolbar shortcut DTOs.
@@ -74,10 +71,10 @@ class EssencePro extends AbstractTheme {
 	protected function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'essence_pro_link',
-				title:   __( '⚡ Essence Pro', 'dwp-cf' ),
-				href:    admin_url( 'customize.php' ), // Reconfigured to direct to the customizer for better UX
-				label:   __( 'Essence Pro Theme Customizer', 'dwp-cf' ),
+				id:      'cf-site-editor',
+				title:   __( 'Site editor', 'dwp-cf' ),
+				href:    admin_url( 'site-editor.php' ),
+				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Site editor', 'dwp-cf' ),
 				orientation: Orientation::ADMIN,
 			),
 		);
@@ -85,8 +82,6 @@ class EssencePro extends AbstractTheme {
 
 	/**
 	 * Compiles and returns the available pool of admin menu blocks this theme can offer.
-	 *
-	 * Returns an empty array if the theme does not require dedicated sidebar settings pages.
 	 *
 	 * @since 1.0.0
 	 * @return \DeWittePrins\CoreFunctionality\DTO\AdminMenuBlock[] Collection of theme sidebar menu blocks.
