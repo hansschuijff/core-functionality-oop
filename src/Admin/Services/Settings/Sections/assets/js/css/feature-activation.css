@@ -1,0 +1,41 @@
+/**
+ * Core Framework Admin Settings Stylesheet.
+ *
+ * @package DeWittePrins\CoreFunctionality
+ * @since   1.0.0
+ */
+
+/* De overkoepelende modulekaart */
+.dwp-module-card {
+	border: 1px solid #ccd0d4;
+	padding: 20px;
+	margin-bottom: 20px;
+	background: #fff;
+	max-width: 800px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+	border-radius: 4px;
+	transition: border-color 0.15s ease-in-out;
+}
+
+.dwp-module-card:hover {
+	border-color: #2271b1;
+}
+
+/* De container voor de geneste features */
+.js-dwp-features-container {
+	margin-left: 25px;
+	border-left: 2px solid #2271b1;
+	padding-left: 15px;
+	margin-top: 12px;
+	display: block;
+}
+
+/* Subtiele animatie of styling wanneer een module is uitgeschakeld */
+.dwp-module-card.is-disabled {
+	background: #f6f7f7;
+	opacity: 0.7;
+}
+
+.dwp-module-card.is-disabled .js-dwp-features-container {
+	display: none; /* Verberg features direct als de hoofdmodule uit staat */
+}

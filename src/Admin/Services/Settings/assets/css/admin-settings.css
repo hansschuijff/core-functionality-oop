@@ -1,0 +1,510 @@
+/**
+ * Gutenberg-inspired Layout System for DeWittePrins Framework
+ */
+
+/* ==========================================================================
+   1. ANTI-FLICKER / PRE-FLIGHT REGLER (Voorkomt flitsen bij herladen)
+   ========================================================================== */
+.dwp-sidebar-init-collapsed .dwp-gutenberg-sidebar {
+    width: 60px !important;
+}
+.dwp-sidebar-init-collapsed .dwp-gutenberg-sidebar .dwp-search-wrapper,
+.dwp-sidebar-init-collapsed .dwp-gutenberg-sidebar .dwp-group-title,
+.dwp-sidebar-init-collapsed .dwp-gutenberg-sidebar .dwp-menu-text {
+    display: none !important;
+}
+.dwp-sidebar-init-collapsed #js-toggle-icon {
+    transform: scaleX(-1);
+}
+
+/* ==========================================================================
+   2. HET GLOBAAL INTERFACE FRAME (FLEXBOX PARENT)
+   ========================================================================== */
+.dwp-gutenberg-frame {
+    display: flex;
+    margin-left: -20px; /* Breekt uit de standaard WP padding links */
+    margin-right: -20px; /* Breekt uit de standaard WP padding rechts */
+    margin-top: -10px; /* Meer ademruimte ten opzichte van de WP adminbar */
+    height: calc(100vh - 32px); /* Fixeert de framehoogte voor onafhankelijk scrollen */
+    width: calc(100% + 20px);
+    background: #ffffff;
+    box-sizing: border-box;
+    overflow: hidden; /* Voorkomt dat de complete WP-pagina scrollt */
+}
+
+@media (max-width: 782px) {
+    .dwp-gutenberg-frame {
+        margin-top: 14px; /* Corrigeert voor de dikkere mobiele WP adminbar */
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+}
+
+/* ==========================================================================
+   3. DE WORDPRESS-STIJL ZIJBALK
+   ========================================================================== */
+.dwp-gutenberg-sidebar {
+    width: 280px;
+    background: #ffffff;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.15s ease-in-out;
+    box-sizing: border-box;
+    padding-top: 10px;
+}
+
+/* Collapsed (Iconen-modus stand) */
+.dwp-gutenberg-sidebar.is-collapsed {
+    width: 60px;
+}
+
+.dwp-sidebar-header {
+    padding: 20px 16px 16px 16px; /* Meer marge bovenin voor rust ten opzichte van WP toolbar */
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 70px;
+    box-sizing: border-box;
+}
+
+.dwp-search-wrapper {
+    position: relative;
+    flex-grow: 1;
+}
+
+.dwp-gutenberg-sidebar.is-collapsed .dwp-search-wrapper {
+    display: none; /* Verberg zoekveld in iconenstand */
+}
+
+.dwp-search-wrapper input {
+    width: 100%;
+    padding: 6px 10px 6px 30px !important;
+    border: 1px solid #757575 !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.dwp-search-wrapper input:focus {
+    border-color: #2271b1 !important;
+    box-shadow: 0 0 0 1px #2271b1 !important;
+}
+
+.dwp-search-wrapper .dashicons-search {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #757575;
+    font-size: 16px;
+}
+
+.dwp-sidebar-toggle {
+    background: none;
+    border: 1px solid #ccd0d4;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    color: #1e1e1e;
+}
+
+.dwp-sidebar-toggle:hover {
+    background: #f0f0f0;
+    border-color: #8c8f94;
+    color: #2271b1;
+}
+
+/* Navigatiemenu binnen de zijbalk met eigen scroll-omgeving */
+.dwp-sidebar-menu {
+    padding: 16px 0;
+    overflow-y: auto;
+    flex-grow: 1;
+    height: calc(100% - 70px);
+}
+
+.dwp-menu-group {
+    margin-bottom: 24px;
+}
+
+.dwp-group-title {
+    padding: 0 16px 8px 16px;
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #757575;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+.dwp-gutenberg-sidebar.is-collapsed .dwp-group-title {
+    display: none;
+}
+
+/* MODERNE EN MINIMALISTISCHE MENU LINKS */
+.dwp-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    color: #50575e; /* Rustig grijs voor inactieve items */
+    text-decoration: none;
+    font-size: 13px; /* Strakke, compacte lettergrootte */
+    gap: 12px;
+    border-left: 4px solid transparent; /* Bereid het selectiebalkje voor */
+    transition: all 0.15s ease-in-out;
+    font-weight: 400;
+}
+
+.dwp-menu-item:hover {
+    background: #f6f7f7;
+    color: #2271b1;
+}
+
+.dwp-menu-item:hover .dashicons {
+    color: #2271b1;
+}
+
+/* DE ACTIEVE SELECTIE (Met het strakke verticale balkje opzij) */
+.dwp-menu-item.is-active {
+    background: #f0f6fc; /* Heel zacht blauwe achtergrondglans */
+    color: #1d2327; /* Diep donkergrijs voor maximale leesbaarheid */
+    font-weight: 600; /* Tekst dikker maken */
+    font-size: 13.5px; /* Subtiele vergroting voor extra focus */
+    border-left-color: #2271b1; /* Het strakke verticale selectiebalkje */
+}
+
+/* De actieve span (geen link) mag geen handje/pointer tonen, want je kunt er niet op klikken */
+span.dwp-menu-item.is-active {
+    cursor: default;
+}
+
+/* Zorg dat de actieve indicator (het oogje) zacht meekleurt */
+.dwp-menu-item.is-active .dwp-active-view-indicator {
+    color: #2271b1;
+}
+
+.dwp-menu-item .dashicons {
+    font-size: 18px;
+    color: #646970;
+    transition: color 0.15s ease-in-out;
+}
+
+.dwp-menu-item.is-active .dashicons {
+    color: #2271b1;
+}
+
+.dwp-gutenberg-sidebar.is-collapsed .dwp-menu-text {
+    display: none; /* Alleen iconen tonen in smalle stand */
+}
+
+.dwp-no-results {
+    padding: 0 16px;
+    font-size: 13px;
+    color: #cc1818;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   4. CENTRALE WORKSPACE CANVAS (ONAFHANKELIJK SCROLLEND)
+   ========================================================================== */
+.dwp-gutenberg-canvas {
+    flex-grow: 1;
+    background: #ffffff;
+    display: grid; /* Schakel over van Flexbox naar CSS Grid */
+    grid-template-rows: 70px 1fr 75px; /* Rij 1: Header, Rij 2: Scroll Content (flexibel), Rij 3: Footer */
+    height: 100%;
+    overflow: hidden; /* Canvas zelf mag absoluut NOOIT scrollen */
+    box-sizing: border-box;
+}
+
+/* De formtag trekt zich strak over de volledige Grid-hoogte */
+.dwp-gutenberg-canvas form.dwp-gutenberg-section-form {
+    display: grid;
+    grid-template-rows: 1fr auto; /* Verdeelt de resterende ruimte tussen content en footer */
+    grid-row: 2 / span 2; /* Laat het formulier rij 2 en rij 3 netjes overspannen */
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* HET ONAFHANKELIJK SCROLLBARE INHOUDSGEBIED (Alleen dit deel scrolt!) */
+.dwp-gutenberg-scroll-content {
+    grid-row: 1; /* Leeft strak in de flexibele fr-rij */
+    overflow-y: auto; /* Krijgt zijn eigen, soepele scrollbar */
+    padding: 30px 60px 40px 60px;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+/* DE MUURVAST GEANkerde FOOTER (Altijd direct in beeld, 0% meescrollen) */
+.dwp-gutenberg-actions-footer {
+    grid-row: 2; /* Vastgepind op de allerlaatste rij van het grid */
+    background: #ffffff;
+    padding: 20px 60px; /* Perfect op één lijn met de 60px content padding */
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 100;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    height: 75px; /* Matcht exact met de grid-template-rows van het canvas */
+}
+
+@media (max-width: 782px) {
+    .dwp-gutenberg-canvas {
+        padding: 20px;
+    }
+}
+
+/* STICKY PAGINA HEADER (Blijft in beeld tijdens het scrollen door de velden) */
+.dwp-gutenberg-header {
+    position: sticky;
+    top: -40px; /* Compenseert de canvas padding bovenin */
+    background: #ffffff; /* Voorkomt dat doorscrollende velden achter de tekst leesbaar blijven */
+    z-index: 9;
+    padding-top: 40px;
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dwp-gutenberg-header h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+    color: #1e1e1e;
+}
+
+.dwp-gutenberg-header .description {
+    font-size: 14px;
+    color: #757575;
+    margin: 0;
+    max-width: 800px;
+    line-height: 1.5;
+}
+
+.dwp-gutenberg-body {
+    flex-grow: 1; /* Duwt de footer altijd onvoorwaardelijk naar de onderkant */
+}
+
+/* HAARSCHERPE VASTGEKLEEFDE STICKY FOOTER */
+/* .dwp-gutenberg-actions-footer {
+    position: sticky;
+    bottom: -40px; /* Compenseert perfect de canvas padding onderin */
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 24px 0;
+    margin-top: 40px;
+    border-top: 1px solid #e0e0e0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    z-index: 10;
+} */
+
+/* ==========================================================================
+   5. COMMAND PALETTE MODAL (CTRL + SPACE UI & TOETSENBORD NAVIGATIE)
+   ========================================================================== */
+.dwp-command-palette {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 120px;
+}
+
+.dwp-palette-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px); /* Modern wazig glaseffect */
+}
+
+.dwp-palette-box {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    border: 1px solid #ccc;
+    overflow: hidden;
+    animation: dwpPalettePop 0.15s ease-out;
+}
+
+@keyframes dwpPalettePop {
+    from { transform: scale(0.97); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.dwp-palette-search-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fff;
+}
+
+.dwp-palette-search-wrapper .dashicons-search {
+    font-size: 20px;
+    color: #1e1e1e;
+    margin-right: 14px;
+    width: 20px;
+    height: 20px;
+}
+
+.dwp-palette-search-wrapper input {
+    flex-grow: 1;
+    border: none !important;
+    font-size: 16px !important;
+    outline: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    color: #1e1e1e;
+}
+
+.dwp-palette-results {
+    max-height: 350px;
+    overflow-y: auto;
+    padding: 8px 0;
+    background: #fff;
+}
+
+.dwp-palette-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #1e1e1e;
+    text-decoration: none;
+    font-size: 14px;
+    gap: 14px;
+    transition: background 0.1s ease;
+}
+
+.dwp-palette-item:hover {
+    background: #f0f0f0;
+    color: #2271b1;
+}
+
+/* Actieve toetsenbordselectie binnen de resultaten */
+.dwp-palette-item.is-selected {
+    background: #f0f0f0;
+    color: #2271b1;
+}
+    outline: none;
+
+.dwp-palette-item .dashicons {
+    color: #646970;
+}
+
+.dwp-palette-item:hover .dashicons,
+.dwp-palette-item.is-selected .dashicons {
+    color: #2271b1;
+}
+
+.dwp-palette-text {
+    flex-grow: 1;
+}
+
+.dwp-palette-badge {
+    font-size: 11px;
+    background: #f0f0f0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #646970;
+    font-weight: 500;
+}
+
+.dwp-palette-no-results {
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #757575;
+    font-style: italic;
+}
+
+/* ==========================================================================
+   GUTENBERG RECHTERPANEEL & STICKY TITLE INTERFACE
+   ========================================================================== */
+
+/* De hoofd-workspace canvas */
+.dwp-gutenberg-canvas {
+    flex-grow: 1;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden; /* Fixeert de lay-out */
+    box-sizing: border-box;
+}
+
+/* DE NIEUWE STICKY TITLE HEADER (Lijnt perfect uit met de zoekbalk links) */
+.dwp-gutenberg-sticky-header {
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 99;
+    padding: 20px 60px 16px 60px; /* Hoogte matcht exact met de sidebar-header */
+    height: 80px;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.dwp-gutenberg-sticky-header h1 {
+    font-size: 22px !important; /* Strakke, rustige Gutenberg h1 grootte */
+    font-weight: 500 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #1e1e1e;
+}
+
+/* De onafhankelijk scrollbare content-omgeving binnen het canvas */
+.dwp-gutenberg-scroll-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0 60px 40px 60px;
+    box-sizing: border-box;
+    /* height: calc(100% - 70px); */
+}
+
+/* De omschrijving (Niet meer sticky, scrolt rustig mee) */
+.dwp-gutenberg-description {
+    font-size: 13.5px;
+    color: #757575;
+    margin: 0 0 32px 0;
+    max-width: 800px;
+    line-height: 1.6;
+}
+
+/* Notices styling binnen ons canvas */
+.dwp-gutenberg-notices {
+    margin-bottom: 24px;
+}
+.dwp-gutenberg-notices .notice {
+    margin: 0 0 12px 0 !important;
+    box-shadow: none !important;
+    border-radius: 2px;
+}
+
+/* Zorgt dat de WordPress notices die buiten het frame vallen verborgen worden */
+.wrap > .notice,
+#wpbody-content > .notice {
+    display: none !important;
+}
+
+.dwp-gutenberg-notices {
+    padding-top: 20px;
+}
