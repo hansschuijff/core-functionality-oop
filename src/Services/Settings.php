@@ -1,134 +1,323 @@
 <?php
 /**
- * Database Settings Storage Layer.
+ * File containing the Settings class.
  *
  * @package DeWittePrins\CoreFunctionality\Services
- * @since   4.0.0
+ * @author  Hans Schuijff <@hansschuijff>
+ * @license GPL-2.0
+ * @since   1.0.0
  */
+
+declare( strict_types=1 );
 
 namespace DeWittePrins\CoreFunctionality\Services;
 
+use DeWittePrins\CoreFunctionality\Diagnostics\Logger;
+use DeWittePrins\CoreFunctionality\Admin\Services\Settings\Sections\OptionsManagementSettings;
+use RuntimeException;
+
+use function __;
+use function trailingslashit;
+use function file_exists;
+use function basename;
+use function is_array;
+use function array_replace_recursive;
+use function defined;
+use function _doing_it_wrong;
+
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
 
 /**
  * Class Settings
  *
- * Specialised storage repository interacting directly with the WordPress options pool.
- * Enforces a strict nested module->features structural layout [INDEX].
+ * Sovereign authority managing encapsulated configuration files layout.
+ * Functions strictly on a filesystem root anchor without core parent coupling.
  *
- * @since 4.0.0
+ * @since 1.0.0
  */
 class Settings {
 
 	/**
-	 * Local cache memory for reducing repetitive database queries.
-	 *
-	 * @var array|null
-	 */
-	private ?array $db_cache = null;
-
-	/**
-	 * Central WordPress database option key.
+	 * The absolute base directory path where this service rules.
 	 *
 	 * @var string
 	 */
-	private string $option_key = 'dwp_cf_settings';
+	private string $base_settings_dir;
 
 	/**
-	 * Retrieves the entire, raw configuration matrix from the database.
-	 * Optimized with runtime memory caching.
+	 * Map tracking internal module identifiers to physical kebab-case directory layout.
 	 *
-	 * @since  4.0.0
-	 * @return array The compiled options matrix.
+	 * @var array<string, string>
 	 */
-	public function get_all(): array {
-		if ( null === $this->db_cache ) {
-			$this->db_cache = get_option( $this->option_key, array() );
-		}
+	private array $modules_settings_location = array();
 
-		return is_array( $this->db_cache ) ? $this->db_cache : array();
+	/**
+	 * Map tracking dynamic forms fields keys to physical filenames tokens.
+	 *
+	 * @var array<string, string>
+	 */
+	private array $key_slugs = array();
+
+	/**
+	 * In-memory runtime cache matrix for merged configuration results.
+	 *
+	 * @var array<string, array<string, mixed>>
+	 */
+	private array $runtime_cache = array();
+
+	/**
+	 * An instance of the Options option vault.
+	 *
+	 * @var Options An option vault adding key-management including token-to-key translation to wp options.
+	 */
+	private Options $options;
+
+	/**
+	 * Settings Constructor.
+	 *
+	 * @since 1.0.0
+	 * @param string $base_settings_dir The absolute root directory context for settings files.
+	 * @throws RuntimeException          If critical framework configuration files are missing on disk.
+	 */
+	public function __construct( string $base_settings_dir ) {
+		$this->base_settings_dir         = trailingslashit( $base_settings_dir );
+		$this->modules_settings_location = $this->setup_module_settings_dirs();
+		$this->key_slugs                 = $this->setup_key_slugs();
+		$this->options                   = new Options( $this );
 	}
 
 	/**
-	 * Resolves whether a database override exists for a given key or module setup.
-	 * Bridges the gap directly back to the central Config gateway [INDEX].
+	 * Getter for settings layers.
 	 *
-	 * @since  4.0.0
-	 * @param  string      $config_key The abstract configuration identifier.
-	 * @param  string|null $module_id  Optional parent module context.
-	 * @return mixed Null if no override exists, otherwise the filtered database value.
+	 * @since  1.0.0
+	 * @param  string $key               The targeted configuration identifier string.
+	 * @param  string $module_id         Optional. The specific context folder or component token. Default ''.
+	 * @param  bool   $reset_to_defaults Optional. Force resolution to bypass customized data and return raw file defaults. Default false.
+	 * @param  mixed  $default           Optional. The value that will be returned when there are no settings. Default false.
+	 * @return mixed                     The combined multi-layered configuration dataset.
 	 */
-	public function get_override( string $config_key, ?string $module_id = null ): mixed {
-		// De module-lijst zelf ('modules') mag nooit uit de DB overschreven worden.
-		if ( 'modules' === $config_key ) {
-			return null;
+	public function get( string $key, string $module_id = '', bool $reset_to_defaults = false, mixed $default = false ): mixed {
+		// Make sure context is always filled, because it is used as an array key.
+		$module_id = ( ! empty( $module_id ) ) ? $module_id : 'cf-general';
+
+		if ( true === $reset_to_defaults ) {
+			return $this->get_settings_file( $key, $module_id );
 		}
 
-		$settings = $this->get_all();
-
-		// Als we een module-context hebben, zoeken we binnen de sub-array van die module.
-		if ( ! empty( $module_id ) ) {
-			return $settings[ $module_id ][ $config_key ] ?? null;
+		if ( isset( $this->runtime_cache[ $module_id ][ $key ] ) ) {
+			return $this->runtime_cache[ $module_id ][ $key ];
 		}
 
-		// Plugin-brede globale instellingen (zonder module_id).
-		return $settings[ $config_key ] ?? null;
+		$settings_file = $this->get_settings_file( $key, $module_id );
+		$option        = $this->options->get( $key, $default );
+
+		if ( null === $settings_file ) {
+			$settings = $option;
+		} else {
+			$settings = $settings_file;
+
+			if ( is_array( $settings_file ) && is_array( $option ) ) {
+				$settings = array_replace_recursive( $settings_file, $option );
+			} else {
+				if ( false !== $option ) {
+					$settings = $option;
+				}
+			}
+		}
+
+		if ( ! isset( $this->runtime_cache[ $module_id ] ) ) {
+			$this->runtime_cache[ $module_id ] = array();
+		}
+		$this->runtime_cache[ $module_id ][ $key ] = $settings;
+
+		return $settings;
 	}
 
 	/**
-	 * Evaluates if a specific module is enabled within the database matrix [INDEX].
-	 * Defaults to TRUE (active) if no explicit user configuration exists yet [INDEX].
+	 * Direct route to the database via the Options Vault, bypassing token translation.
 	 *
-	 * @since  4.0.0
-	 * @param  string $module_id Target parent module identifier.
-	 * @return bool True if active or unconfigured, false if explicitly disabled.
+	 * Used for standard wp_* options or dynamically generated plugin keys.
+	 *
+	 * @param string $key     The exact database option key.
+	 * @param mixed  $default Fallback value if the option does not exist.
+	 * @return mixed
 	 */
-	public function is_module_enabled( string $module_id ): bool {
-		$settings = $this->get_all();
-
-		// Als er nog geen keuze in de DB staat, staat de module standaard AAN (Factory Default) [INDEX].
-		if ( ! isset( $settings[ $module_id ]['enabled'] ) ) {
-			return true;
-		}
-
-		return (bool) $settings[ $module_id ]['enabled'];
+	public function get_unmanaged( string $key, mixed $default = null ): mixed {
+		return $this->options->get_unmanaged( $key, $default );
 	}
 
 	/**
-	 * Evaluates if a child feature is allowed to run hooks [INDEX].
-	 * Enforces parental inheritance: if the module is OFF, the feature is ALWAYS OFF [INDEX].
+	 * Persists updated configuration records into the unified options key.
 	 *
-	 * @since  4.0.0
-	 * @param  string $module_id  Target parent module identifier.
-	 * @param  string $feature_id Target child feature identifier.
-	 * @return bool True if cleared for execution.
+	 * @since  1.0.0
+	 * @param  string $key   The unique configuration settings identifier string.
+	 * @param  mixed  $value The dataset array or string value to store.
+	 * @return bool          True on successful database update, false otherwise.
 	 */
-	public function is_feature_enabled( string $module_id, string $feature_id ): bool {
-		// HERSTELD: Hier gebruiken we de herstelde is_module_enabled methode!
-		if ( ! $this->is_module_enabled( $module_id ) ) {
+	public function save( string $key, mixed $value ): bool {
+		return $this->options->update( $key, $value );
+	}
+
+	/**
+	 * Purges specific customized option records to fallback onto raw defaults if they exist.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key The unique configuration settings identifier string to wipe.
+	 * @return bool        True on successful database purge or missing keys, false otherwise.
+	 */
+	public function reset( string $key ): bool {
+		return $this->delete( $key );
+	}
+
+	/**
+	 * Purges specific customized option record.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key The unique identifier string to wipe.
+	 * @return bool        True on successful database purge, false otherwise.
+	 */
+	public function delete( string $key ): bool {
+		return $this->options->delete( $key );
+	}
+
+	/**
+	 * Dynamically includes the module locations mapping array from disk.
+	 *
+	 * @since  1.0.0
+	 * @return array
+	 * @throws RuntimeException If the setup configuration file is missing.
+	 */
+	private function setup_module_settings_dirs(): array {
+		$file = $this->base_settings_dir . 'setup/modules-settings-path.php';
+
+		if ( ! file_exists( $file ) ) {
+			throw new RuntimeException( 'Vitale configuratie ontbreekt op de schijf: modules-settings-path.php' );
+		}
+
+		return (array) require $file;
+	}
+
+	/**
+	 * Dynamically includes the settings key translations array from disk.
+	 *
+	 * @since  1.0.0
+	 * @return array
+	 * @throws RuntimeException If the translation setup file is missing.
+	 */
+	private function setup_key_slugs(): array {
+		$file = $this->base_settings_dir . 'setup/key-slugs-translation.php';
+
+		if ( ! file_exists( $file ) ) {
+			throw new RuntimeException( 'Vitale configuratie ontbreekt op de schijf: ' . $file );
+		}
+
+		return (array) require $file;
+	}
+
+	/**
+	 * Translates a dynamic database settings key to its configuration filename.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key       The settings key token.
+	 * @param  string $module_id The id of a module or cf-general.
+	 * @return string|false      The physical file name slug, or false if unmapped.
+	 */
+	private function get_file_slug( string $key, string $module_id ): string|false {
+		$slug = ! empty( $this->key_slugs[ $key ] ) ? $this->key_slugs[ $key ] : false;
+
+		if ( false === $slug ) {
+			if ( 'cf-general' === $module_id ) {
+				return basename( $key );
+			}
 			return false;
 		}
 
-		$settings = $this->get_all();
-
-		// Fallback: Als er geen specifieke keuze is opgeslagen voor het vinkje, volgt hij de module [INDEX].
-		if ( ! isset( $settings[ $module_id ]['features'][ $feature_id ] ) ) {
-			return true;
-		}
-
-		return (bool) $settings[ $module_id ]['features'][ $feature_id ];
+		return $slug;
 	}
 
 	/**
-	 * Persists the entire sanitised options table back to the database.
+	 * Resolves the absolute baseline directory path for a specific module node branch.
 	 *
-	 * @since 4.0.0
-	 * @param array $new_settings Structural multi-dimensional settings dataset.
+	 * @since  1.0.0
+	 * @param  string $module_id The internal identifier string.
+	 * @return string|false      The absolute destination directory path, or false if unmapped.
 	 */
-	public function save( array $new_settings ): void {
-		update_option( $this->option_key, $new_settings );
-		$this->db_cache = $new_settings;
+	private function get_setting_base_dir( string $module_id ): string|false {
+		if ( 'cf-general' !== $module_id && empty( $this->modules_settings_location[ $module_id ] ) ) {
+			return false;
+		}
+
+		$path_base = trailingslashit( $this->base_settings_dir );
+		$sub_path  = 'cf-general' === $module_id
+			? ''
+			: trailingslashit( 'modules/' . $this->modules_settings_location[ $module_id ] );
+
+		return $path_base . $sub_path;
+	}
+
+	/**
+	 * Resolves the absolute physical configuration file path internally.
+	 *
+	 * @since  1.0.0
+	 * @param  string $settings_key The dynamic settings key identifier.
+	 * @param  string $module_id    The internal identity string of the module.
+	 * @return string               The absolute path to the configuration file, or empty string if invalid.
+	 */
+	private function resolve_config_file_path( string $settings_key, string $module_id ): string {
+		$path = $this->get_setting_base_dir( $module_id );
+		$slug = $this->get_file_slug( $settings_key, $module_id );
+
+		if ( false === $slug || false === $path ) {
+			return '';
+		}
+
+		return $path . $slug . '.php';
+	}
+
+	/**
+	 * Universal Public API loading and returning raw evaluation configurations from disk.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key       The configuration focus layout identifier key.
+	 * @param  string $module_id The parent host module identifier.
+	 * @return mixed             The native contents evaluation payload array, or null if invalid.
+	 */
+	private function get_settings_file( string $key, string $module_id ): mixed {
+		$file = $this->resolve_config_file_path( $key, $module_id );
+
+		if ( '' === $file || ! file_exists( $file ) ) {
+			return null;
+		}
+
+		return include $file;
+	}
+
+	/**
+	 * Returns the live, shared instance of the Options Vault service.
+	 *
+	 * Guarantees a single in-memory cache registry across the entire plugin lifecycle.
+	 *
+	 * @since  1.0.0
+	 * @return Options The active initialized option vault manager instance.
+	 */
+	public function get_options(): Options|false {
+		if ( ! $this->is_allowed_get_options() ) {
+			return false;
+		}
+		return $this->options;
+	}
+
+	private function is_allowed_get_options(): bool {
+		[ 'caller' => $caller, 'called' => $called ] = Logger::get_caller_data( 3 );
+		$caller_fqcn = $caller['class'] ?? '';
+		// Only the options managementSettings section is allowed to call this method
+		if ( OptionsManagementSettings::class !== $caller_fqcn ) {
+			$called_method = $caller['method'] ?? 'unknown';
+			_doing_it_wrong( $called_method, __( "Calling Settings->get_options() is only allowed, use Settings->get(), Settings->save() or Settings->delete() instead. For getting unmanaged options, you can use Settings->get_unmanaged().", 'dwp-cf' ), '1.0.0' );
+			return false;
+		}
+		return true;
 	}
 }
