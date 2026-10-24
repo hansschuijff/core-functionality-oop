@@ -1,0 +1,92 @@
+name: Build and release
+
+# Runs automatically when a version tag is pushed (for example v1.0.0), or
+# manually through "Run workflow" for an existing tag.
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to release again (for example v1.0.0)'
+        required: true
+
+# Needed to be allowed to create a release with the default GITHUB_TOKEN.
+permissions:
+  contents: write
+
+env:
+  # The folder name the plugin has on the sites; becomes core-functionality once the legacy plugin is gone.
+  PLUGIN_SLUG: core-functionality-oop
+  PLUGIN_FILE: core-functionality.php
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      # vendor/ is not in git; the zip needs the autoloader, but not the coding-standard packages.
+      - name: Install the autoloader
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      - name: Check the PHP syntax
+        run: find src settings kernel "${PLUGIN_FILE}" -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Determine the version
+        id: version
+        run: |
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      # Catches the most common mistake: the tag was pushed but the "Version:" line in the main
+      # plugin file was not updated.
+      - name: Check the version in the plugin header
+        run: |
+          HEADER_VERSION=$(grep -m1 -oP 'Version:\s*\K[0-9][0-9A-Za-z.\-]*' "${PLUGIN_FILE}")
+          if [ "$HEADER_VERSION" != "${{ steps.version.outputs.version }}" ]; then
+            echo "::error::Tag version (${{ steps.version.outputs.version }}) does not match the 'Version:' line in ${PLUGIN_FILE} ($HEADER_VERSION)."
+            exit 1
+          fi
+
+      # A clean copy without development-only files, in a folder named after the plugin slug:
+      # that is the folder that ends up in wp-content/plugins when someone uploads the zip through
+      # the WordPress admin screen.
+      - name: Prepare the release files
+        run: |
+          mkdir -p "dist/${PLUGIN_SLUG}"
+          rsync -a \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.gitignore' \
+            --exclude='.editorconfig' \
+            --exclude='.vscode' \
+            --exclude='dist' \
+            --exclude='phpcs.xml' \
+            --exclude='CLAUDE.md' \
+            --exclude='src/Modules/ActiveWoo/Features/KeepLicenseAlive/leeg.php' \
+            ./ "dist/${PLUGIN_SLUG}/"
+
+      - name: Create the zip
+        run: |
+          cd dist
+          zip -r "../${PLUGIN_SLUG}-${{ steps.version.outputs.version }}.zip" "${PLUGIN_SLUG}"
+
+      - name: Create the release with the zip attached
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          files: ${{ env.PLUGIN_SLUG }}-${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true

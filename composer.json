@@ -3,7 +3,7 @@
     "description": "Central Microkernel framework for De Witte Prins",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
-   "require": {
+    "require": {
         "php": ">=8.2"
     },
     "require-dev": {
@@ -18,5 +18,15 @@
         "psr-4": {
             "DeWittePrins\\CoreFunctionality\\": "src/"
         }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=phpcs.xml",
+        "phpcbf": "phpcbf --standard=phpcs.xml",
+        "lint": "find src settings kernel core-functionality.php -name '*.php' -not -path '*/dev-notes/*' -print0 | xargs -0 -n1 php -l | grep -v '^No syntax errors' || true"
     }
 }
