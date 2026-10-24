@@ -18,7 +18,7 @@ class GravityForms extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: 'GFCommon' );
+		return new ProofRequirement( classes: array( 'GFForms', 'GFCommon' ) );
 	}
 
 	#[Override]

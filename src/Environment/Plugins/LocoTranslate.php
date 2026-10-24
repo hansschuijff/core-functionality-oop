@@ -18,7 +18,7 @@ class LocoTranslate extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: array( 'Loco_Empty_Project' ) );
+		return new ProofRequirement( functions: 'loco_plugin_self' );
 	}
 
 	#[Override]

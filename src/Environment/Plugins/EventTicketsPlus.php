@@ -58,7 +58,7 @@ class EventTicketsPlus extends AbstractPlugin {
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement(
-			classes:     'Tribe__Tickets_Plus__Main', // Upgraded to the explicit Premium class to prevent false positives!
+			classes:     array( 'Tribe__Tickets__Main', 'Tribe__Tickets_Plus__Main' ),
 			not_actions: 'tribe_extensions_failed_requirements' // Dynamic version mismatch monitor firewall
 		);
 	}

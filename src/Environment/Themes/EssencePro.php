@@ -57,9 +57,9 @@ class EssencePro extends AbstractTheme {
 	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement(
-			constants: 'ESSENCE_TEXT_DOMAIN' // Example of a safe, single string constant check without array wrapper
-		);
+		// Theme code (functions.php) loads after plugins_loaded, when the Kernel checks dependencies,
+		// so theme constants do not exist yet. The activation check in ThemeInspector is the proof here.
+		return new ProofRequirement();
 	}
 
 	/**

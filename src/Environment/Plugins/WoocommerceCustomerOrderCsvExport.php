@@ -29,12 +29,9 @@ class WoocommerceCustomerOrderCsvExport extends AbstractPlugin {
 	}
 
 	// #[Override]
-	// protected function get_proof_requirements(): ProofRequirement {
-	// 	return new ProofRequirement(
-	// 		// classes: '',
-	// 		// actions: ''
-	// 	);
-	// }
+	protected function get_proof_requirements(): ProofRequirement {
+		return new ProofRequirement( classes: 'WC_Customer_Order_CSV_Export_Loader' );
+	}
 
 	#[Override]
 	protected function get_toolbar_nodes(): array {

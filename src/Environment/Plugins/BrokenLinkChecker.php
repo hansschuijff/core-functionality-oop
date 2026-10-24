@@ -18,7 +18,7 @@ class BrokenLinkChecker extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: array( 'ws_blc_BlcCore' ) );
+		return new ProofRequirement( constants: 'WPMUDEV_BLC_VERSION' );
 	}
 
 	#[Override]

@@ -58,7 +58,7 @@ class YoastSeo extends AbstractPlugin {
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement(
-			classes: 'WPSEO_Options' // Safe string check, no array wrapper needed!
+			constants: 'WPSEO_VERSION' // WPSEO_Options is autoloaded later (wpseo_init runs on plugins_loaded 14).
 		);
 	}
 

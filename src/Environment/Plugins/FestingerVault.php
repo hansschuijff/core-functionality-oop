@@ -18,7 +18,7 @@ class FestingerVault extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( actions: array( 'festinger_vault_loaded' ) );
+		return new ProofRequirement( constants: 'FV_PLUGIN_VERSION' );
 	}
 
 	#[Override]

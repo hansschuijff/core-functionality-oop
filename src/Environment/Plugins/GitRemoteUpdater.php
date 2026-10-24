@@ -18,7 +18,8 @@ class GitRemoteUpdater extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: array( 'Fragen\Git_Remote_Updater\Bootstrap' ) );
+		// Git Remote Updater only loads its own classes on init, and only when Git Updater runs.
+		return new ProofRequirement( classes: 'Fragen\\Git_Updater\\Bootstrap' );
 	}
 
 	#[Override]

@@ -18,7 +18,7 @@ class FluentSmtp extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: array( 'FluentMail\\App\\App' ) );
+		return new ProofRequirement( constants: 'FLUENTMAIL_PLUGIN_FILE' );
 	}
 
 	#[Override]

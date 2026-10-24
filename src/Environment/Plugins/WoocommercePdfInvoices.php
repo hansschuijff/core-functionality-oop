@@ -30,12 +30,9 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 	}
 
 	// #[Override]
-	// protected function get_proof_requirements(): ProofRequirement {
-	// 	return new ProofRequirement(
-	// 		// classes: '',
-	// 		// actions: ''
-	// 	);
-	// }
+	protected function get_proof_requirements(): ProofRequirement {
+		return new ProofRequirement( functions: 'WPO_WCPDF' );
+	}
 
 	#[Override]
 	protected function get_toolbar_nodes(): array {

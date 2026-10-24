@@ -18,7 +18,7 @@ class RedisCache extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: array( 'RedisCache' ) );
+		return new ProofRequirement( constants: 'WP_REDIS_VERSION' );
 	}
 
 	#[Override]

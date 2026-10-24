@@ -57,7 +57,7 @@ class DebugToolkit extends AbstractPlugin {
 	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement();
+		return new ProofRequirement( functions: 'KnowTheCode\\DebugToolkit\\_get_plugin_root_dir' );
 	}
 
 	/**

@@ -19,7 +19,7 @@ class SenseiLms extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: 'Sensei_Main' );
+		return new ProofRequirement( constants: 'SENSEI_LMS_VERSION' );
 	}
 
 	#[Override]

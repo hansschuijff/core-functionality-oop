@@ -18,7 +18,7 @@ class Nobuna extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: 'Nobuna_Plugins' );
+		return new ProofRequirement( functions: 'nobuna_get_php_version' );
 	}
 
 	#[Override]

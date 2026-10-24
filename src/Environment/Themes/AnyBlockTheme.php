@@ -20,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Environment\Themes\Services\ThemeInspector;
+use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
+use DeWittePrins\CoreFunctionality\Environment\Registers\AdminMenuRegister;
 use Override;
 
 use function __;
@@ -44,6 +46,27 @@ class AnyBlockTheme extends AbstractTheme {
 	#[Override]
 	public function get_id(): string {
 		return 'any_block_theme';
+	}
+
+	/**
+	 * Checks for any active block theme.
+	 *
+	 * Overrides the parent check, which needs a theme name from environment-index.php;
+	 * this guard applies to every block theme, so it has no entry there.
+	 *
+	 * @since 1.0.0
+	 * @return bool True if a block theme is active, false otherwise.
+	 */
+	#[Override]
+	public function is_ready(): bool {
+		if ( ! $this->has_proof_of_life() ) {
+			return false;
+		}
+
+		AdminToolbarRegister::register( $this->get_id(), $this->get_toolbar_nodes() );
+		AdminMenuRegister::register( $this->get_id(), $this->get_menu_nodes() );
+
+		return true;
 	}
 
 	/**

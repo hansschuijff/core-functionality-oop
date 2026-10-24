@@ -18,7 +18,7 @@ class SeoRedirectionPremium extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( classes: array( 'SR_WS_Redirect' ) );
+		return new ProofRequirement( constants: 'SR_PLUGIN_NAME' );
 	}
 
 	#[Override]
