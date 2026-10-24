@@ -128,14 +128,14 @@ class PluginIntegrityWatch {
 	private function write_detailed_error_log(): void {
 		$prefix = '[CoreFunctionality Integrity Watchdog] 🛑 ';
 
-		// Is now being prevented by ComponentsRegister
+		// Is now being prevented by ComponentsRegister.
 		if ( ! empty( $this->violations['non_existent_modules'] ) ) {
 			foreach ( $this->violations['non_existent_modules'] as $mod ) {
 				error_log( $prefix . 'Missing/Mismatched module class found in index: ' . $mod ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 			}
 		}
 
-		// Is now being prevented by ComponentsRegister
+		// Is now being prevented by ComponentsRegister.
 		if ( ! empty( $this->violations['non_existent_features'] ) ) {
 			foreach ( $this->violations['non_existent_features'] as $feat ) {
 				error_log( $prefix . 'Missing feature class inside module ' . $feat['module'] . ': ' . $feat['class'] ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log

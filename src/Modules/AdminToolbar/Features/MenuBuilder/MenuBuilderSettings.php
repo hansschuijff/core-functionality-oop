@@ -157,7 +157,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 					<div class="dwp-builder-items-pool js-dwp-builder-pool" style="display: flex; flex-direction: column; gap: 8px; max-height: 450px; overflow-y: auto; padding: 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 3px;">
 		HTML;
 
-		// Inject dynamic virtual submenu header template node inside the stencil list
+		// Inject dynamic virtual submenu header template node inside the stencil list.
 		$virtual_submenu_dto = new ToolbarShortcut(
 			id:          'custom-link-node',
 			title:       __( 'Empty Submenu / Custom Link', 'core-functionality' ),
@@ -167,7 +167,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		);
 		$this->render_draggable_tree_node( $virtual_submenu_dto, 'custom_link', 0, false, '' );
 
-		// Render the active environment registered shortcuts pool items
+		// Render the active environment registered shortcuts pool items.
 		foreach ( $live_registry as $provider_id => $shortcuts ) {
 			if ( is_array( $shortcuts ) ) {
 				foreach ( $shortcuts as $shortcut ) {

@@ -329,7 +329,7 @@ class Settings {
 	private function is_allowed_get_options(): bool {
 		[ 'caller' => $caller, 'called' => $called ] = Logger::get_caller_data( 3 );
 		$caller_fqcn                                 = $caller['class'] ?? '';
-		// Only the options managementSettings section is allowed to call this method
+		// Only the options managementSettings section is allowed to call this method.
 		if ( OptionsManagementSettings::class !== $caller_fqcn ) {
 			$called_method = $caller['method'] ?? 'unknown';
 			_doing_it_wrong( $called_method, __( 'Calling Settings->get_options() is only allowed, use Settings->get(), Settings->save() or Settings->delete() instead. For getting unmanaged options, you can use Settings->get_unmanaged().', 'core-functionality' ), '1.0.0' );

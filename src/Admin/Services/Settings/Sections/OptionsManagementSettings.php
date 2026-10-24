@@ -139,14 +139,14 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	public function render( bool $defaults_only = false ): void {
 		$options_service = $this->plugin->settings->get_options();
 
-		// Use the completed flat-architecture delegated methods out of the Options vault directly
+		// Use the completed flat-architecture delegated methods out of the Options vault directly.
 		$keys               = $options_service->get_keys();
 		$quarantine_pool    = $options_service->get_quarantine_pool();
 		$standalone_options = $options_service->get_standalone_keys();
 		$grouped_options    = $options_service->get_grouped_keys();
 		$keys_in_use        = array_merge( array_keys( $grouped_options ), array_values( $standalone_options ) );
 
-		// INJECT THE NATIVE WordPress NONCE FIELDS IMMEDIATELY AT THE TOP
+		// INJECT THE NATIVE WordPress NONCE FIELDS IMMEDIATELY AT THE TOP.
 		wp_nonce_field( 'dwp_vault_management_action', 'dwp_vault_management_nonce' );
 
 		echo '<div class="dwp-options-management-dashboard" style="max-width: 900px; display: flex; flex-direction: column; gap: 30px;">';
@@ -160,7 +160,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		// Section 3: The Isolated Danger Zone (Moved safely out of bulk action areas).
 		// if ( ! empty( $quarantine_pool ) || ! empty( $keys ) ) {
 		// $this->render_danger_zone_panel();
-		// }
+		// }.
 
 		echo '</div>';
 	}
@@ -404,12 +404,12 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$this->render_registered_keys_section_header( empty( $keys ) );
 
 		foreach ( $grouped_options as $master_key => $tokens ) {
-			// hele div
+			// hele div.
 			$this->render_grouped_option_block( $master_key, $tokens );
 		}
 
 		if ( ! empty( $standalone_options ) ) {
-			// hele div
+			// hele div.
 			$this->render_standalone_options_list( $standalone_options );
 		}
 
@@ -666,7 +666,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$target_key = $this->resolve_target_group( $selected_action, $posted_data );
 
 		if ( 'auto_map_dash' === $selected_action ) {
-			// Resolved autonomously inside transport loop execution path
+			// Resolved autonomously inside transport loop execution path.
 		} elseif ( empty( $target_key ) ) {
 			$this->plugin->notices->add( 'error', __( 'Bulk Action Failed: Target destination key cannot be empty.', 'core-functionality' ) );
 			return false;
@@ -676,7 +676,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			$token              = sanitize_key( $token );
 			$current_target_key = ( 'auto_map_dash' === $selected_action ) ? 'dwp-cf-' . $token : $target_key;
 
-			// Vault service entirely absorbs data relocation, structural alignment, and cleanup rules
+			// Vault service entirely absorbs data relocation, structural alignment, and cleanup rules.
 			if ( $options_service->assign_token_to_key( $token, $current_target_key ) ) {
 				++$count;
 			}
@@ -707,7 +707,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			foreach ( $tokens as $token ) {
 				$token = sanitize_key( $token );
 
-				// Centralize routing decoupling into the primary quarantine service method block
+				// Centralize routing decoupling into the primary quarantine service method block.
 				if ( $options_service->quarantine_token( $token ) ) {
 					++$count;
 				}
@@ -729,7 +729,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$quarantine_tokens = isset( $posted_data['dwp_bulk_quarantine_tokens'] ) ? (array) $posted_data['dwp_bulk_quarantine_tokens'] : array();
 		$matrix_tokens     = isset( $posted_data['dwp_bulk_matrix_tokens'] ) ? (array) $posted_data['dwp_bulk_matrix_tokens'] : array();
 
-		// Merge checked selections from both sections into a clean consolidated loop
+		// Merge checked selections from both sections into a clean consolidated loop.
 		$tokens_to_purge = array_merge( $quarantine_tokens, $matrix_tokens );
 
 		if ( empty( $tokens_to_purge ) ) {
@@ -743,7 +743,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		foreach ( $tokens_to_purge as $token ) {
 			$token = sanitize_key( $token );
 
-			// Invoke pristine core delete method absorbing standalone, grouped, and pool deletions
+			// Invoke pristine core delete method absorbing standalone, grouped, and pool deletions.
 			if ( $options_service->delete( $token ) ) {
 				++$count;
 			}

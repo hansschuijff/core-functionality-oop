@@ -157,38 +157,38 @@ class MenuBuilder extends AbstractFeature {
 			$final_href  = $node_meta['href'] ?? '#';
 			$final_label = $final_title;
 
-			// Check orientation and parameters filters if the target represents a hard code environment provider asset
+			// Check orientation and parameters filters if the target represents a hard code environment provider asset.
 			if ( 'shortcut' === $type ) {
 				$shortcut_dto = $pool[ $node_id ] ?? null;
 
 				if ( $shortcut_dto instanceof ToolbarShortcut ) {
-					// Guard: Enforce visibility rules mapping current admin vs front status
+					// Guard: Enforce visibility rules mapping current admin vs front status.
 					$dto_orientation = $shortcut_dto->orientation ?? Orientation::BOTH;
 					if ( Orientation::BOTH !== $dto_orientation && $orientation !== $dto_orientation ) {
 						continue;
 					}
 
-					// If the label override is empty or matching its original signature, fall back to the live translatable DTO value
+					// If the label override is empty or matching its original signature, fall back to the live translatable DTO value.
 					if ( empty( $final_title ) ) {
 						$final_title = $shortcut_dto->title;
 					}
 
-					// Resolve the target URL safely if no custom overrides are configured on the card face
+					// Resolve the target URL safely if no custom overrides are configured on the card face.
 					if ( empty( $final_href ) || '#' === $final_href ) {
 						$final_href = $shortcut_dto->get_href();
 					}
 
 					$final_label = $shortcut_dto->label;
 				} else {
-					// Skip rendering completely if the environment provider component has been safely decoupled or deactivated
+					// Skip rendering completely if the environment provider component has been safely decoupled or deactivated.
 					continue;
 				}
 			}
 
-			// Generate a truly unique node ID per tree instance location to prevent toolbar registration collisions on duplications
+			// Generate a truly unique node ID per tree instance location to prevent toolbar registration collisions on duplications.
 			$wp_toolbar_node_id = 'wp-admin-bar-dwp-' . $node_id . '-' . $instance_id;
 
-			// Map arguments directly into the native parameters structural array layout expected by WordPress core
+			// Map arguments directly into the native parameters structural array layout expected by WordPress core.
 			$node_args = array(
 				'id'     => esc_attr( $wp_toolbar_node_id ),
 				'title'  => esc_html( $final_title ),
@@ -201,7 +201,7 @@ class MenuBuilder extends AbstractFeature {
 
 			$wp_admin_bar->add_node( $node_args );
 
-			// Cascading down recursively if child entries populate the nested array dictionary layer
+			// Cascading down recursively if child entries populate the nested array dictionary layer.
 			if ( ! empty( $node_meta['children'] ) && is_array( $node_meta['children'] ) ) {
 				$this->render_tree_nodes_recursively( $wp_admin_bar, $node_meta['children'], $pool, $wp_toolbar_node_id, $orientation );
 			}
@@ -222,13 +222,13 @@ class MenuBuilder extends AbstractFeature {
 			return;
 		}
 
-		// Hardhandig verwijderen van de standaard WordPress 'Site bekijken' en 'Winkel bezoeken' sub-nodes
+		// Hardhandig verwijderen van de standaard WordPress 'Site bekijken' en 'Winkel bezoeken' sub-nodes.
 		$wp_admin_bar->remove_node( 'view-site' );
 		$wp_admin_bar->remove_node( 'view-store' );
 		$wp_admin_bar->remove_node( 'dashboard' );
 		$wp_admin_bar->remove_node( 'plugins' );
 
-		// Verwijder de generieke core 'appearance' (Thema's/Customizer) node als we op de frontend zijn
+		// Verwijder de generieke core 'appearance' (Thema's/Customizer) node als we op de frontend zijn.
 		if ( ! is_admin() ) {
 			$wp_admin_bar->remove_node( 'appearance' );
 		}

@@ -43,23 +43,23 @@ class PreflightRestructurer {
 			return array();
 		}
 
-		// Look for the outermost explicit OR-shell
+		// Look for the outermost explicit OR-shell.
 		if ( is_array( $input ) && isset( $input['or'] ) ) {
 			$input = $input['or'];
 		}
 
 		$compiled_or_matrix = array();
 
-		// Execute the recursive reduction over the inner slice
+		// Execute the recursive reduction over the inner slice.
 		self::reduce_to_and_branches( $input, $compiled_or_matrix );
 
-		// Filter out any empty 'and' hulls that might have survived the reduction loop
+		// Filter out any empty 'and' hulls that might have survived the reduction loop.
 		$compiled_or_matrix = array_filter(
 			$compiled_or_matrix,
 			fn( array $branch ) => ! empty( $branch['and'] )
 		);
 
-		// If no valid dependencies remained, return a completely clean array
+		// If no valid dependencies remained, return a completely clean array.
 		if ( empty( $compiled_or_matrix ) ) {
 			return array();
 		}
@@ -83,12 +83,12 @@ class PreflightRestructurer {
 			return;
 		}
 
-		// Strip single item sequential wrappers -> array('') becomes ''
+		// Strip single item sequential wrappers -> array('') becomes ''.
 		while ( is_array( $slice ) && array_is_list( $slice ) && 1 === count( $slice ) ) {
 			$slice = current( $slice );
 		}
 
-		// Scenario A: We hit a raw string token
+		// Scenario A: We hit a raw string token.
 		if ( is_string( $slice ) ) {
 			$slice = trim( $slice );
 			if ( ! empty( $slice ) ) {
@@ -98,16 +98,16 @@ class PreflightRestructurer {
 		}
 
 		if ( is_array( $slice ) ) {
-			// Scenario B: Explicit 'and' wrapper -> strip and re-evaluate
+			// Scenario B: Explicit 'and' wrapper -> strip and re-evaluate.
 			if ( isset( $slice['and'] ) ) {
 				self::reduce_to_and_branches( $slice['and'], $compiled_matrix );
 				return;
 			}
 
-			// Scenario C: A sequential list of alternative or implicit clauses
+			// Scenario C: A sequential list of alternative or implicit clauses.
 			if ( array_is_list( $slice ) ) {
 
-				// Inspect if this is a simple flat list of strings
+				// Inspect if this is a simple flat list of strings.
 				$is_flat_string_list = true;
 				foreach ( $slice as $item ) {
 					if ( ! is_string( $item ) ) {
@@ -125,14 +125,14 @@ class PreflightRestructurer {
 						}
 					}
 
-					// Only append if the AND-cluster actually contains active tokens
+					// Only append if the AND-cluster actually contains active tokens.
 					if ( ! empty( $clean_tokens ) ) {
 						$compiled_matrix[] = array( 'and' => $clean_tokens );
 					}
 					return;
 				}
 
-				// If it's a mixed list, dive deeper recursively into each item
+				// If it's a mixed list, dive deeper recursively into each item.
 				foreach ( $slice as $sub_slice ) {
 					self::reduce_to_and_branches( $sub_slice, $compiled_matrix );
 				}

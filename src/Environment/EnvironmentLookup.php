@@ -116,7 +116,7 @@ class EnvironmentLookup {
 	private function set_register( array $new_register, bool $is_theme = false ): array {
 		$register = $this->sanitize_register( $new_register );
 
-		// Get the current environment lookup index to update (guaranteed to have keys 'plugins' and 'themes')
+		// Get the current environment lookup index to update (guaranteed to have keys 'plugins' and 'themes').
 		$environment_index = $this->get_environment_lookup_register();
 
 		if ( $is_theme ) {

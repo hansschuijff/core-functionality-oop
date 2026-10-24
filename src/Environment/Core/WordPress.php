@@ -58,7 +58,7 @@ class WordPress implements EnvironmentInterface {
 	 */
 	#[Override]
 	public function is_ready(): bool {
-		// Feed the static master registries immediately upon execution kickoff
+		// Feed the static master registries immediately upon execution kickoff.
 		AdminToolbarRegister::register( $this->get_id(), $this->get_toolbar_nodes() );
 		AdminMenuRegister::register( $this->get_id(), $this->get_menu_nodes() );
 
@@ -83,7 +83,7 @@ class WordPress implements EnvironmentInterface {
 	 */
 	protected function get_toolbar_nodes(): array {
 
-		// CLUSTER 1: PLUGIN MANAGEMENT SHORTCUTS [5]
+		// CLUSTER 1: PLUGIN MANAGEMENT SHORTCUTS [5].
 		$plugin_nodes = array(
 			new ToolbarShortcut(
 				id:      'cf-wp-plugins',
@@ -108,7 +108,7 @@ class WordPress implements EnvironmentInterface {
 			),
 		);
 
-		// CLUSTER 2: SITE APPEARANCE & LAYOUT SHORTCUTS [5]
+		// CLUSTER 2: SITE APPEARANCE & LAYOUT SHORTCUTS [5].
 		$appearance_nodes = array(
 			new ToolbarShortcut(
 				id:      'cf-site-customizer',
@@ -140,7 +140,7 @@ class WordPress implements EnvironmentInterface {
 			),
 		);
 
-		// CLUSTER 3: CONTENT GENERATION (POSTS & PAGES) SHORTCUTS [5]
+		// CLUSTER 3: CONTENT GENERATION (POSTS & PAGES) SHORTCUTS [5].
 		$content_nodes = array(
 			new ToolbarShortcut(
 				id:      'cf-view-posts',
@@ -207,7 +207,7 @@ class WordPress implements EnvironmentInterface {
 			),
 		);
 
-		// CLUSTER 4: CORE SETTINGS & TOOLS SHORTCUTS [5]
+		// CLUSTER 4: CORE SETTINGS & TOOLS SHORTCUTS [5].
 		$system_nodes = array(
 			new ToolbarShortcut(
 				id:      'cf-settings-core-functionality',

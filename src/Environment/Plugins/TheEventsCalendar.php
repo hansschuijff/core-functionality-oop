@@ -116,7 +116,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Events Calendar Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
-			// voorkant
+			// voorkant.
 			new ToolbarShortcut(
 				id:      'cf-view-events',
 				title:   __( 'Events', 'core-functionality' ),

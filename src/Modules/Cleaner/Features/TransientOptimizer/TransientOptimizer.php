@@ -67,10 +67,10 @@ class TransientOptimizer extends AbstractFeature {
 		// Register the settings page section.
 		$this->register_settings_section();
 
-		// Register the background asynchronous cleanup action worker
+		// Register the background asynchronous cleanup action worker.
 		add_action( $this->cron_hook_identifier, array( $this, 'execute_bulk_transient_purge' ) );
 
-		// Establish safety schedule gates: Hook a weekly optimization sweep event if currently vacant
+		// Establish safety schedule gates: Hook a weekly optimization sweep event if currently vacant.
 		if ( ! wp_next_scheduled( $this->cron_hook_identifier ) ) {
 			wp_schedule_event( current_time( 'timestamp' ), 'weekly', $this->cron_hook_identifier );
 		}
@@ -128,7 +128,7 @@ class TransientOptimizer extends AbstractFeature {
 				$option_names_to_delete[] = $timeout_name;
 				$option_names_to_delete[] = str_replace( '_transient_timeout_', '_transient_', $timeout_name );
 
-				// CLEAN IN-MEMORY RUNTIME CACHE: Forcefully clean individual options cache paths
+				// CLEAN IN-MEMORY RUNTIME CACHE: Forcefully clean individual options cache paths.
 				$transient_pure_key = str_replace( '_transient_timeout_', '', $timeout_name );
 				wp_cache_delete( $transient_pure_key, 'transient' );
 			}

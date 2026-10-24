@@ -47,7 +47,7 @@ class Telegram implements PushNoticeInterface {
 		$bot_token = $this->settings['bot_token'] ?? '';
 		$chat_id   = $this->settings['chat_id'] ?? '';
 
-		// Guard: If settings are incomplete, silently abort without crashing the core system loop
+		// Guard: If settings are incomplete, silently abort without crashing the core system loop.
 		if ( empty( $bot_token ) || empty( $chat_id ) ) {
 			return false;
 		}

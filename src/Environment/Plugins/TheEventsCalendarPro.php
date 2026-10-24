@@ -103,15 +103,15 @@ class TheEventsCalendarPro extends AbstractPlugin {
 	private function get_defensive_pro_template_tags(): array {
 		return array(
 			'tribe',
-			// Defined in: events-calendar-pro/src/functions/template-tags/general.php
+			// Defined in: events-calendar-pro/src/functions/template-tags/general.php.
 			'tribe_is_week',
 			'tribe_is_map',
 			'tribe_is_photo',
 			'tec_is_venue_view',
 			'tec_is_organizer_view',
-			// Defined in: events-calendar-pro/events-calendar-pro.php and general.php
+			// Defined in: events-calendar-pro/events-calendar-pro.php and general.php.
 			'tribe_is_recurring_event',
-			// Defined in: events-calendar-pro/src/functions/template-tags/series.php
+			// Defined in: events-calendar-pro/src/functions/template-tags/series.php.
 			'tribe_is_event_series',
 		);
 	}

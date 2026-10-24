@@ -148,7 +148,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function render( bool $defaults_only = false ): void {
-		// Strictly matching the 4th parameter constraint criteria for explicit default arrays initialization
+		// Strictly matching the 4th parameter constraint criteria for explicit default arrays initialization.
 		$driver_classes = $this->plugin->settings->get( $this->available_drivers_settings_key, '', false, array() );
 		$active_driver  = $this->plugin->settings->get( $this->active_driver_settings_key, '', false, '' );
 
@@ -161,10 +161,10 @@ class PushNoticeSettings implements SettingsSectionInterface {
 		echo '<div class="dwp-settings-section-wrapper" style="max-width: 800px; background: #fff; border: 1px solid #ccd0d4; padding: 20px; margin-top: 20px;">';
 		echo '<table class="form-table">';
 
-		// Render Main Active Driver Selector Dropdown Row Component Modules
+		// Render Main Active Driver Selector Dropdown Row Component Modules.
 		$this->render_driver_selector_row( $driver_classes, $active_driver );
 
-		// Render Dynamic Schema Configuration Fields Blocks for each verified registered driver
+		// Render Dynamic Schema Configuration Fields Blocks for each verified registered driver.
 		foreach ( $driver_classes as $fqcn ) {
 			if ( is_string( $fqcn ) && ClassParser::is_implementation_of( $fqcn, PushNoticeInterface::class ) ) {
 				$this->render_driver_fields_block( $fqcn, $active_driver );
@@ -203,7 +203,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function save( array $posted_data ): string|bool {
-		// Absolute Security Guard Permissions Checks Lookups Gates
+		// Absolute Security Guard Permissions Checks Lookups Gates.
 		if ( ! current_user_can( 'manage_options' ) ) {
 			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify push notice settings.', 'core-functionality' ) );
 			return false;
@@ -228,7 +228,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 				if ( isset( $posted_data['dwp_driver_bundle'][ $slug ] ) && is_array( $posted_data['dwp_driver_bundle'][ $slug ] ) ) {
 					$sanitized_data = array_map( 'sanitize_text_field', wp_unslash( $posted_data['dwp_driver_bundle'][ $slug ] ) );
 
-					// Persist settings arrays records using standard settings pipeline framework tokens routing paths
+					// Persist settings arrays records using standard settings pipeline framework tokens routing paths.
 					$this->plugin->settings->save( $this->active_driver_settings_prefix . $slug, $sanitized_data );
 				}
 			}
@@ -306,7 +306,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 		$config_txt  = esc_html__( 'Configuration', 'core-functionality' );
 		$fqcn_clean  = esc_attr( ClassParser::to_single_backslashes( $fqcn ) );
 
-		// Secure lookup mapping passing an empty initialization array to satisfy the 4th parameters signature constraints
+		// Secure lookup mapping passing an empty initialization array to satisfy the 4th parameters signature constraints.
 		$option_key = $this->active_driver_settings_prefix . $slug;
 		$options    = $this->plugin->settings->get( $option_key, '', false, array() );
 		if ( ! is_array( $options ) ) {

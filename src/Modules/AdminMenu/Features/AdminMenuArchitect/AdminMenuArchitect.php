@@ -125,7 +125,7 @@ class AdminMenuArchitect extends AbstractFeature {
 	 * @return void
 	 */
 	public function remove_blacklisted_menus(): void {
-		// Read the slugs to remove (e.g., array('edit.php', 'upload.php', 'edit-comments.php'))
+		// Read the slugs to remove (e.g., array('edit.php', 'upload.php', 'edit-comments.php')).
 		$slugs_to_remove = (array) $this->plugin->settings->get( 'menu-remove', $this->module->get_id() );
 
 		if ( empty( $slugs_to_remove ) ) {

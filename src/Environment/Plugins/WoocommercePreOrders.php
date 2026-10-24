@@ -24,6 +24,12 @@ use function home_url;
  */
 class WoocommercePreOrders extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'woocommerce-pre-orders';
@@ -34,6 +40,12 @@ class WoocommercePreOrders extends AbstractPlugin {
 		return new ProofRequirement( constants: 'WC_PRE_ORDERS_VERSION' );
 	}
 
+	/**
+	 * Returns the admin toolbar links this plugin offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
@@ -47,6 +59,12 @@ class WoocommercePreOrders extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks this plugin offers.
+	 *
+	 * @since  1.0.0
+	 * @return AdminMenuBlock[] The menu blocks.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array();

@@ -23,9 +23,15 @@ use function admin_url;
  */
 class WoocommercePdfInvoices extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
-		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
+		// Full plugin name is WooCommerce PDF Invoices & Packing Slips.
 		return 'woocommerce-pdf-invoices';
 	}
 
@@ -34,6 +40,12 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 		return new ProofRequirement( functions: 'WPO_WCPDF' );
 	}
 
+	/**
+	 * Returns the admin toolbar links this plugin offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
@@ -47,6 +59,12 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks this plugin offers.
+	 *
+	 * @since  1.0.0
+	 * @return AdminMenuBlock[] The menu blocks.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array();

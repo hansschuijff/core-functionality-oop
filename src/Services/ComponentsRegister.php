@@ -560,7 +560,7 @@ class ComponentsRegister {
 			return $this->components_register;
 		}
 
-		// fill the runtime cache from component-register settings or file
+		// fill the runtime cache from component-register settings or file.
 		$this->components_register = $this->get_register( Register::COMPONENTS );
 
 		// Still empty after reading the components register file?

@@ -21,11 +21,23 @@ use Override;
  */
 class SenseiPro extends SenseiLms {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'sensei-pro';
 	}
 
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		// Both are defined by the bundled plugins once the bundle has loaded them (plugins_loaded 1).

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Redis Cache Verification Guard.
+ *
+ * @package DeWittePrins\CoreFunctionality\Environment
+ * @since   1.0.0
+ */
+
 declare( strict_types=1 );
 
 namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
@@ -11,19 +18,44 @@ use Override;
 use function __;
 use function admin_url;
 
+/**
+ * Class RedisCache
+ *
+ * Represents Redis Cache in the environment: proves it is active and supplies its admin links.
+ *
+ * @since 1.0.0
+ */
 class RedisCache extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'redis-cache';
 	}
 
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		// The main file creates the plugin instance as soon as it loads.
 		return new ProofRequirement( classes: 'Rhubarb\\RedisCache\\Plugin' );
 	}
 
+	/**
+	 * Returns the admin toolbar links this plugin offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
@@ -37,6 +69,12 @@ class RedisCache extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks this plugin offers.
+	 *
+	 * @since  1.0.0
+	 * @return AdminMenuBlock[] The menu blocks.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array(); }

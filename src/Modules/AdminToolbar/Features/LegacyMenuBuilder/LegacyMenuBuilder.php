@@ -80,7 +80,7 @@ class LegacyMenuBuilder extends AbstractFeature {
 				$shortcuts
 			);
 		}
-		// error_log( print_r( $shortcuts, true ) );
+		// error_log( print_r( $shortcuts, true ) );.
 		if ( ! is_array( $shortcuts ) ) {
 			return;
 		}
@@ -99,7 +99,7 @@ class LegacyMenuBuilder extends AbstractFeature {
 			$dependency_matrix = $node['dependency'] ?? array();
 			// if ( ! empty( $dependency_matrix ) && ! $this->plugin->kernel->environment->is_ready( $dependency_matrix ) ) {
 			// continue;
-			// }
+			// }.
 
 			$wp_admin_bar->add_menu( (array) $node['node_args'] );
 		}

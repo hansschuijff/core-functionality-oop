@@ -61,17 +61,17 @@ class AdminToolbarRegister {
 	 * @return mixed Returns the entire multidimensional array, a subset collection, a single DTO, or null.
 	 */
 	public static function get( ?string $provider_id = null, ?string $node_id = null ): mixed {
-		// Case 1: No arguments supplied -> Requesting the entire master registry library
+		// Case 1: No arguments supplied -> Requesting the entire master registry library.
 		if ( null === $provider_id ) {
 			return self::$nodes;
 		}
 
-		// Case 2: Provider and node ID supplied -> Requesting a single specific node target
+		// Case 2: Provider and node ID supplied -> Requesting a single specific node target.
 		if ( null !== $node_id ) {
 			return self::$nodes[ $provider_id ][ $node_id ] ?? null;
 		}
 
-		// Case 3: Only provider ID supplied -> Requesting all nodes belonging to this component context
+		// Case 3: Only provider ID supplied -> Requesting all nodes belonging to this component context.
 		return self::$nodes[ $provider_id ] ?? array();
 	}
 }

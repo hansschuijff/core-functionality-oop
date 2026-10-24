@@ -28,11 +28,23 @@ use function get_term_link;
  */
 class Woocommerce extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'woocommerce';
 	}
 
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement(
@@ -41,10 +53,16 @@ class Woocommerce extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin toolbar links this plugin offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
-			// Admin Area Links - Safe to call directly because admin_url is purely string manipulation
+			// Admin Area Links - Safe to call directly because admin_url is purely string manipulation.
 			new ToolbarShortcut(
 				id:      'cf-admin-woocommerce-orders',
 				title:   __( 'Orders', 'core-functionality' ),
@@ -140,6 +158,12 @@ class Woocommerce extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks this plugin offers.
+	 *
+	 * @since  1.0.0
+	 * @return AdminMenuBlock[] The menu blocks.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array();

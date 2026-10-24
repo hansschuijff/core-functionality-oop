@@ -74,7 +74,7 @@ class KeepLicenseAlive extends AbstractFeature {
 		$transient_license_data = get_transient( 'aw_license_data' );
 
 		if ( $license_data !== $transient_license_data ) {
-			// bewaar license_data een jaar lang als transient
+			// bewaar license_data een jaar lang als transient.
 			delete_transient( 'aw_license_data' );
 			set_transient( 'aw_license_data', $license_data, \YEAR_IN_SECONDS );
 			update_option( 'aw_license', $license_data->license_key );

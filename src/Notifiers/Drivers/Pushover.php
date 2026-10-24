@@ -47,12 +47,12 @@ class Pushover implements PushNoticeInterface {
 	 */
 	#[Override]
 	public function send( string $message, string $title = '' ): bool {
-		// Extract variables directly from the immutable configuration array shield
+		// Extract variables directly from the immutable configuration array shield.
 		$token = $this->settings['token'] ?? '';
 		$user  = $this->settings['user'] ?? '';
 		$title = $this->settings['title'] ?? '[DeWittePrins]';
 
-		// Guard: If credentials are empty, silently abort without crashing the core framework loop
+		// Guard: If credentials are empty, silently abort without crashing the core framework loop.
 		if ( empty( $token ) || empty( $user ) ) {
 			return false;
 		}

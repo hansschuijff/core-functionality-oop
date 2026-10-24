@@ -56,7 +56,7 @@ class PushNotice {
 			return false; // Driver settings are corrupt or not configured yet.
 		}
 
-		// Rocket launch trigger: execute the driver passing the local instance configuration forward
+		// Rocket launch trigger: execute the driver passing the local instance configuration forward.
 		return ( new $driver( $this->settings ) )->send( $message );
 	}
 
@@ -77,7 +77,7 @@ class PushNotice {
 			return false;
 		}
 
-		// ClassParser handles class_exists() internally before verifying the contract
+		// ClassParser handles class_exists() internally before verifying the contract.
 		if ( ! ClassParser::is_implementation_of( $driver, PushNoticeInterface::class ) ) {
 			return false;
 		}
@@ -93,16 +93,16 @@ class PushNotice {
 	 * @return array|false The settings array map on success, false otherwise.
 	 */
 	public function get_driver_settings( string $driver ): array|false {
-		// ClassParser handles class_exists() internally before verifying the contract
+		// ClassParser handles class_exists() internally before verifying the contract.
 		if ( ! ClassParser::is_implementation_of( $driver, PushNoticeInterface::class ) ) {
 			return false;
 		}
 
-		// Transform the class mapping footprint: 'Telegram' becomes 'telegram'
+		// Transform the class mapping footprint: 'Telegram' becomes 'telegram'.
 		$slug = ClassParser::fqcn_remove_namespace( $driver );
 		$slug = ClassParser::camel_to_kebab( $slug );
 
-		// Use the clean kebabcase slug context to dynamically request the unique settings block path
+		// Use the clean kebabcase slug context to dynamically request the unique settings block path.
 		$driver_settings = $this->settings->get( 'active-push-notice-driver-settings-' . $slug );
 
 		if ( ! is_array( $driver_settings ) ) {

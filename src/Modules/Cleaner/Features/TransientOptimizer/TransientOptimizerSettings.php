@@ -128,7 +128,7 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 
 		$total_garbage_rows = $expired_count + $orphans_count;
 
-		// UI Presentation Parameters Layout
+		// UI Presentation Parameters Layout.
 		$lbl_status  = esc_html__( 'Database Cache Status Analysis', 'core-functionality' );
 		$lbl_expired = esc_html__( 'Expired Transients Found', 'core-functionality' );
 		$lbl_orphans = esc_html__( 'Orphaned Timeout Markers', 'core-functionality' );
@@ -147,19 +147,19 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 
 		echo '<div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 15px;">';
 
-		// Card 1: Expired Rows
+		// Card 1: Expired Rows.
 		echo '<div style="flex: 1; min-width: 180px; background: #fff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">';
 		echo '<span style="display: block; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase;">' . $lbl_expired . '</span>';
 		echo '<strong style="display: block; font-size: 24px; color: #1e293b; margin-top: 5px;">' . $expired_count . '</strong>';
 		echo '</div>';
 
-		// Card 2: Orphaned Rows
+		// Card 2: Orphaned Rows.
 		echo '<div style="flex: 1; min-width: 180px; background: #fff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">';
 		echo '<span style="display: block; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase;">' . $lbl_orphans . '</span>';
 		echo '<strong style="display: block; font-size: 24px; color: #1e293b; margin-top: 5px;">' . $orphans_count . '</strong>';
 		echo '</div>';
 
-		// Card 3: Combined Overhead
+		// Card 3: Combined Overhead.
 		$total_color = $total_garbage_rows > 0 ? '#b91c1c' : '#1e293b';
 		echo '<div style="flex: 1; min-width: 180px; background: #fff; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-right: 4px solid ' . $total_color . ';">';
 		echo '<span style="display: block; font-size: 11px; font-weight: 600; color: #64748b; text-transform: uppercase;">' . $lbl_total . '</span>';
@@ -187,7 +187,7 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 			return true;
 		}
 
-		// FIXED INTERACTION POOL: Retrieve the active running singleton straight from the Kernel instance vault
+		// FIXED INTERACTION POOL: Retrieve the active running singleton straight from the Kernel instance vault.
 		$optimizer_feature = $this->plugin->kernel->get_instance( TransientOptimizer::class );
 
 		if ( ! $optimizer_feature instanceof TransientOptimizer ) {

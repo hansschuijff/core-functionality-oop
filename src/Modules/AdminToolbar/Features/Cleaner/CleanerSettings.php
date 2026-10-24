@@ -96,7 +96,7 @@ class CleanerSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function render( bool $reset_to_defaults = false ): void {
-		// Pull active matrix parameters out of the managed Settings service
+		// Pull active matrix parameters out of the managed Settings service.
 		$keep_in_place_nodes = $this->plugin->settings->get( self::get_settings_key(), AdminToolbar::get_id(), $reset_to_defaults );
 		if ( ! is_array( $keep_in_place_nodes ) ) {
 			$keep_in_place_nodes = array();

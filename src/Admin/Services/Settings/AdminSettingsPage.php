@@ -492,12 +492,12 @@ class AdminSettingsPage {
 	 * @return void
 	 */
 	// private function render_settings_form_end( $active_section_id, $reset_to_defaults = false ): void {
-	// $submit_button = get_submit_button( __( 'Save Settings', 'core-functionality' ), 'primary', 'submit', false );
+	// $submit_button = get_submit_button( __( 'Save Settings', 'core-functionality' ), 'primary', 'submit', false );.
 
 	// echo <<<HTML
 	// <div class="dwp-gutenberg-actions-footer">
 	// {$submit_button}
-	// HTML;
+	// HTML;.
 
 	// $this->render_return_to_factory_settings_button();
 
@@ -505,7 +505,7 @@ class AdminSettingsPage {
 	// </div>
 	// </form>
 	// HTML;
-	// }
+	// }.
 	/**
 	 * Renders the bottom part of the setting form, enclosing the form tags.
 	 * Dynamically injects section-specific action buttons or falls back to core defaults.

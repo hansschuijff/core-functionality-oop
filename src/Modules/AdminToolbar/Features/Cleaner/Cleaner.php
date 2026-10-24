@@ -120,7 +120,7 @@ class Cleaner extends AbstractFeature {
 			return;
 		}
 
-		// Pull active matrix visibility configurations out of the managed Settings service
+		// Pull active matrix visibility configurations out of the managed Settings service.
 		$keep_in_place_nodes = $this->plugin->settings->get( CleanerSettings::get_settings_key(), $this->module::get_id() );
 		if ( ! is_array( $keep_in_place_nodes ) ) {
 			$keep_in_place_nodes = array();

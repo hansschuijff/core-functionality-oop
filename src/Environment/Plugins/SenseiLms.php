@@ -1,4 +1,11 @@
 <?php
+/**
+ * Sensei Lms Verification Guard.
+ *
+ * @package DeWittePrins\CoreFunctionality\Environment
+ * @since   1.0.0
+ */
+
 declare( strict_types=1 );
 
 namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
@@ -12,18 +19,43 @@ use function __;
 use function admin_url;
 use function home_url;
 
+/**
+ * Class SenseiLms
+ *
+ * Represents Sensei Lms in the environment: proves it is active and supplies its admin links.
+ *
+ * @since 1.0.0
+ */
 class SenseiLms extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'sensei-lms';
 	}
 
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( constants: 'SENSEI_LMS_VERSION' );
 	}
 
+	/**
+	 * Returns the admin toolbar links this plugin offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
@@ -226,6 +258,12 @@ class SenseiLms extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks this plugin offers.
+	 *
+	 * @since  1.0.0
+	 * @return AdminMenuBlock[] The menu blocks.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array(); }

@@ -174,7 +174,7 @@ class Options {
 
 		$grouped_keys = $this->get_grouped_keys();
 
-		// If the targeted key is shared by multiple tokens, dissolve via array structures
+		// If the targeted key is shared by multiple tokens, dissolve via array structures.
 		if ( isset( $grouped_keys[ $key ] ) ) {
 			$master_array = get_option( $key, array() );
 			if ( is_array( $master_array ) && isset( $master_array[ $token ] ) ) {
@@ -183,7 +183,7 @@ class Options {
 			return $default;
 		}
 
-		// Otherwise, retrieve directly as a clean standalone database row option
+		// Otherwise, retrieve directly as a clean standalone database row option.
 		return $this->get_unmanaged( $key, $default );
 	}
 
@@ -218,7 +218,7 @@ class Options {
 
 		$grouped_keys = $this->get_grouped_keys();
 
-		// Strategy A: If the physical key is shared, save inside a multi-tenant array block
+		// Strategy A: If the physical key is shared, save inside a multi-tenant array block.
 		if ( isset( $grouped_keys[ $key ] ) ) {
 			$master_array = get_option( $key, array() );
 			if ( ! is_array( $master_array ) ) {
@@ -230,7 +230,7 @@ class Options {
 			return update_option( $key, $master_array, true ); // Forced autoload for maximum sub-millisecond RAM speeds
 		}
 
-		// Strategy B: Save as a standard standalone database option row
+		// Strategy B: Save as a standard standalone database option row.
 		return update_option( $key, $value );
 	}
 
@@ -253,7 +253,7 @@ class Options {
 				$this->remove_standalone_options( $key );
 			}
 
-			// Clean up the flat routing linkage register
+			// Clean up the flat routing linkage register.
 			$translations = get_option( $this->token_translations_option_key, array() );
 			if ( is_array( $translations ) && isset( $translations[ $token ] ) ) {
 				unset( $translations[ $token ] );
@@ -261,10 +261,10 @@ class Options {
 			}
 		}
 
-		// Always scrub from quarantine pool as fallback flavor
+		// Always scrub from quarantine pool as fallback flavor.
 		$this->remove_from_quarantine( $token );
 
-		// Refresh internal cache registers to keep runtime in sync
+		// Refresh internal cache registers to keep runtime in sync.
 		$this->refresh_keys();
 
 		return true;
@@ -389,7 +389,7 @@ class Options {
 		if ( is_string( $sibling_token ) && $sibling_token !== $token ) {
 			$sibling_value = $this->get( $sibling_token );
 
-			// Temporary manually build a minimal shared array register for the sibling
+			// Temporary manually build a minimal shared array register for the sibling.
 			$sibling_array = array( $sibling_token => $sibling_value );
 			update_option( $target_key, $sibling_array, true );
 		}

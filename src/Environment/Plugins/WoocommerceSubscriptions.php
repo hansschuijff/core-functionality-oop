@@ -28,6 +28,12 @@ use function get_term_link;
  */
 class WoocommerceSubscriptions extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of this plugin or theme.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'woocommerce-subscriptions';
@@ -38,6 +44,12 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 		return new ProofRequirement( classes: 'WC_Subscriptions' );
 	}
 
+	/**
+	 * Returns the admin toolbar links this plugin offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
@@ -66,6 +78,12 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks this plugin offers.
+	 *
+	 * @since  1.0.0
+	 * @return AdminMenuBlock[] The menu blocks.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array();
