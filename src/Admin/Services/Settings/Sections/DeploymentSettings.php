@@ -353,10 +353,10 @@ class DeploymentSettings implements SettingsSectionInterface {
 			}
 		}
 
-		$written === $this->plugin->components_register->save( Register::DEPLOYMENT, $cleaned_states );
+		$written = $this->plugin->components_register->save( Register::DEPLOYMENT, $cleaned_states );
 
 		if ( false === $written ) {
-			$this->plugin->notices->add( 'error', __( 'Critical Error: Failed to write updates toward the release-states JSON file.', 'core-functionality' ) );
+			$this->plugin->notices->add( 'error', __( 'Critical Error: Failed to save the deployment states.', 'core-functionality' ) );
 			return false;
 		}
 

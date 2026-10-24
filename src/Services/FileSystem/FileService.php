@@ -111,6 +111,12 @@ class FileService {
 			return false;
 		}
 
+		// The file is a fallback for the database option, so a folder that may not be written
+		// (common on production) is no error: the option keeps the change.
+		if ( ! $this->is_writable_register( $register ) ) {
+			return false;
+		}
+
 		$written = match ( $this->get_file_extension( $register ) ) {
 			FileExtension::PHP->value  => $this->php_write_register( $register, $register_data ),
 			FileExtension::JSON->value => $this->json_write_register( $register, $register_data ),
@@ -118,18 +124,6 @@ class FileService {
 		};
 
 		if ( false === $written ) {
-			if ( \function_exists( '\d' ) ) {
-				\ddd(
-					\current_filter(),
-					__METHOD__ . ':' . __LINE__,
-					$register->value,
-					this->get_file_extension( $register->value ),
-					$written,
-					$this->get_register_full_path( $register ),
-					$register,
-					$register_data,
-				);
-			}
 			$this->plugin->notices->add(
 				'error',
 				sprintf(
@@ -141,6 +135,19 @@ class FileService {
 		}
 
 		return __( 'Settings saved successfully. Remember to commit changes in Git! 🚀', 'core-functionality' );
+	}
+
+	/**
+	 * Checks whether a register file can be written (the file itself, or its folder if it does not exist yet).
+	 *
+	 * @since  1.0.0
+	 * @param  Register $register Enum configuration file destination indicator.
+	 * @return bool               True if the file can be written, false otherwise.
+	 */
+	private function is_writable_register( Register $register ): bool {
+		$path = $this->get_register_full_path( $register );
+
+		return file_exists( $path ) ? wp_is_writable( $path ) : wp_is_writable( dirname( $path ) );
 	}
 
 	/**
