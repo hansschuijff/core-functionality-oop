@@ -230,8 +230,6 @@ Known issues:
   Transient Optimizer compared UTC expiry times with local time (transients removed up to two hours
   early), the WooCommerce category link always used an example slug, and two buttons were never
   translated.
-- The tracked folder `wp-content/config/mollie/` in the plugin root ends up in the release zip (confirm:
-  belongs here?).
 - Tested in a logged-in admin (October 2026): the "new components" notice after a simulated update, the
   integrity check and all settings tabs. The two issues found there (the toolbar Cleaner reading
   `$node->id` from an array, and feature names ending in a period) are fixed. The plugin is active again
