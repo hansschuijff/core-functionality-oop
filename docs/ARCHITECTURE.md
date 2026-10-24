@@ -198,12 +198,10 @@ Known issues:
   and functions answer "not ready", and `src/Api/helpers.php` is a placeholder (not autoloaded; it calls a
   `Core` class that no longer exists).
 - phpcs works again since October 2026 (it silently exited before, see `src/Api/functions.php`) and the
-  plugin is clean, except `KeepLicenseAlive/leeg.php`. Fixing the findings also fixed three bugs: the
+  plugin is clean. Fixing the findings also fixed three bugs: the
   Transient Optimizer compared UTC expiry times with local time (transients removed up to two hours
   early), the WooCommerce category link always used an example slug, and two buttons were never
   translated.
-- `src/Modules/ActiveWoo/Features/KeepLicenseAlive/leeg.php` is an old copy of KeepLicenseAlive with the
-  same class name (tracked in git, left out of the release zip); it can be deleted.
 - The tracked folder `wp-content/config/mollie/` in the plugin root ends up in the release zip (confirm:
   belongs here?).
 - Tested in a logged-in admin (October 2026): the "new components" notice after a simulated update, the

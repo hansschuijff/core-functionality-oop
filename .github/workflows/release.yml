@@ -76,7 +76,6 @@ jobs:
             --exclude='dist' \
             --exclude='phpcs.xml' \
             --exclude='CLAUDE.md' \
-            --exclude='src/Modules/ActiveWoo/Features/KeepLicenseAlive/leeg.php' \
             ./ "dist/${PLUGIN_SLUG}/"
 
       - name: Create the zip
