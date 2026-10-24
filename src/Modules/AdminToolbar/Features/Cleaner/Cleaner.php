@@ -28,6 +28,7 @@ use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\Cleaner\Cleaner
 use function __;
 use function is_admin_bar_showing;
 use function is_array;
+use function array_keys;
 use function is_object;
 use function add_action;
 
@@ -127,9 +128,10 @@ class Cleaner extends AbstractFeature {
 
 		// Scan through the top-level movable nodes to see if we need an overflow menu.
 		$need_to_move = false;
-		foreach ( $all_movable_nodes as $node ) {
-			$keep_in_place = isset( $keep_in_place_nodes[ $node->id ]['main'] )
-				? (bool) $keep_in_place_nodes[ $node->id ]['main']
+		// get_movable_nodes() returns arrays keyed by node id, not WP_Admin_Bar node objects.
+		foreach ( array_keys( $all_movable_nodes ) as $node_id ) {
+			$keep_in_place = isset( $keep_in_place_nodes[ $node_id ]['main'] )
+				? (bool) $keep_in_place_nodes[ $node_id ]['main']
 				: false;
 
 			if ( ! $keep_in_place ) {
