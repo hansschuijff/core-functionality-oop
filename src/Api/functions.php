@@ -10,8 +10,10 @@ namespace DeWittePrins\CoreFunctionality\Api;
 
 use DeWittePrins\CoreFunctionality\Api\CoreFunctionality as CF;
 
+// Composer loads this file in every process that uses the autoloader, also outside WordPress
+// (phpcs, scripts). return skips the file there; exit would end the whole process.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	return;
 }
 
 /**
