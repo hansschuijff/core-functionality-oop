@@ -37,6 +37,9 @@ use function add_action;
 use function call_user_func;
 use function is_admin;
 use function trailingslashit;
+use function untrailingslashit;
+use function load_plugin_textdomain;
+use function basename;
 use function plugin_dir_path;
 use function get_plugin_data;
 use function plugin_dir_url;
@@ -147,6 +150,9 @@ class Plugin {
 		$this->set_plugin_data( $root_file );
 		$this->set_option_keys( $root_file );
 
+		// Before the Kernel boots (init 0), whose components use translated names.
+		add_action( 'init', array( $this, 'load_textdomain' ), -10 );
+
 		try {
 			// 2. INITIALIZE CENTRAL PLATFORM SERVICES
 
@@ -179,6 +185,23 @@ class Plugin {
 		$this->kernel              = new Kernel( $this, $interdependency_checker, $environment, $this->components_register );
 
 		add_action( 'plugins_loaded', array( $this, 'setup' ) );
+	}
+
+	/**
+	 * Loads the plugin's translations.
+	 *
+	 * WordPress first looks in wp-content/languages/plugins/ (and Loco Translate in its own
+	 * folder), then in the plugin's languages/ folder.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function load_textdomain(): void {
+		load_plugin_textdomain(
+			'core-functionality',
+			false,
+			basename( untrailingslashit( $this->get_data( 'plugin-dir' ) ) ) . '/languages'
+		);
 	}
 
 	/**
@@ -341,8 +364,8 @@ class Plugin {
 				?>
 			<div class="notice notice-error">
 				<p>
-					<strong><?php esc_html_e( 'De Witte Prins - Core Functionality Gecrasht!', 'core-functionality' ); ?></strong><br />
-					<?php esc_html_e( 'De plugin-infrastructuur is stopgezet omdat de fysieke installatie corrupt is. De rest van de website functioneert normaal, maar alle acties van deze plugin zijn geblokkeerd.', 'core-functionality' ); ?><br />
+					<strong><?php esc_html_e( 'De Witte Prins - Core Functionality has stopped!', 'core-functionality' ); ?></strong><br />
+					<?php esc_html_e( 'The plugin stopped because its installation is damaged. The rest of the website works normally, but everything this plugin does is switched off.', 'core-functionality' ); ?><br />
 					<code style="display: inline-block; margin-top: 5px; background: #f6f7f7; padding: 3px 6px; border-radius: 3px;">
 						<?php echo esc_html( $error_message ); ?>
 					</code>

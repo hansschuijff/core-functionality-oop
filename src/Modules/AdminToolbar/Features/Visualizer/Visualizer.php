@@ -17,6 +17,8 @@ use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
 
+use function __;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -40,8 +42,8 @@ class Visualizer extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:            'admin_toolbar_visualizer',
-			name:          'Admin Toolbar Visualizer Feature',
-			description:   'The Admin Toolbar Visualizer Feature Maps active runtime Node ID keys for development troubleshooting.',
+			name:          __( 'Admin Toolbar Visualizer Feature', 'core-functionality' ),
+			description:   __( 'The Admin Toolbar Visualizer Feature Maps active runtime Node ID keys for development troubleshooting.', 'core-functionality' ),
 		);
 	}
 

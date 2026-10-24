@@ -12,6 +12,8 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminMenu\Features\AdminMenuArc
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
+
+use function __;
 use DeWittePrins\CoreFunctionality\Modules\AdminMenu\DTO\AdminMenuConfigNode;
 
 use function add_action;
@@ -37,8 +39,8 @@ class AdminMenuArchitect extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:            'admin_menu_architect',
-			name:          'Admin Menu Architect',
-			description:   'Architects, structures and cleans up the admin side navigation.',
+			name:          __( 'Admin Menu Architect', 'core-functionality' ),
+			description:   __( 'Architects, structures and cleans up the admin side navigation.', 'core-functionality' ),
 		);
 	}
 

@@ -14,6 +14,8 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\LegacyMen
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
+
+use function __;
 use DeWittePrins\Corefunctionality\Modules\AdminToolbar\AdminToolbar;
 use WP_Admin_Bar;
 
@@ -43,8 +45,8 @@ class LegacyMenuBuilder extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:            'legacy_admin_toolbar_builder',
-			name:          'Legacy Admin Toolbar Builder Feature',
-			description:   'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.',
+			name:          __( 'Legacy Admin Toolbar Builder Feature', 'core-functionality' ),
+			description:   __( 'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.', 'core-functionality' ),
 		);
 	}
 

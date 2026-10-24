@@ -83,7 +83,7 @@ class Pushover implements PushNoticeInterface {
 	 */
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Pushover (App Notificaties)', 'core-functionality' );
+		return __( 'Pushover (app notifications)', 'core-functionality' );
 	}
 
 	/**

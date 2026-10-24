@@ -18,6 +18,8 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuild
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
+
+use function __;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
@@ -62,8 +64,8 @@ class MenuBuilder extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:            'admin_toolbar_builder',
-			name:          'Admin Toolbar Builder Feature',
-			description:   'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.',
+			name:          __( 'Admin Toolbar Builder Feature', 'core-functionality' ),
+			description:   __( 'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.', 'core-functionality' ),
 		);
 	}
 

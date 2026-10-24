@@ -77,7 +77,7 @@ class Telegram implements PushNoticeInterface {
 	 */
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Telegram (Gratis Bot)', 'core-functionality' );
+		return __( 'Telegram (free bot)', 'core-functionality' );
 	}
 
 	/**

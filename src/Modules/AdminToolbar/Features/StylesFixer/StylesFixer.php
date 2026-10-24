@@ -17,6 +17,8 @@ use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
 
+use function __;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -40,8 +42,8 @@ class StylesFixer extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:            'fix_admin_bar_styles',
-			name:          'Admin Toolbar Styles Fixer Feature',
-			description:   'The Admin Toolbar Styles Fixer Feature solves some styling issues in the admin toolbar.',
+			name:          __( 'Admin Toolbar Styles Fixer Feature', 'core-functionality' ),
+			description:   __( 'The Admin Toolbar Styles Fixer Feature solves some styling issues in the admin toolbar.', 'core-functionality' ),
 		);
 	}
 

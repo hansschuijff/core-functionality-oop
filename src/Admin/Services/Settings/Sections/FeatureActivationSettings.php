@@ -23,6 +23,7 @@ use function __;
 use function checked;
 use function esc_attr;
 use function esc_html;
+use function esc_html__;
 use function esc_html_e;
 use function sanitize_key;
 use function sanitize_text_field;
@@ -160,8 +161,8 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_section_start() {
-		$button_text_select_everything = esc_html( 'Select all', 'core-functionality' );
-		$button_text_rebuild_register  = esc_html( 'Scan for new features', 'core-functionality' );
+		$button_text_select_everything = esc_html__( 'Select all', 'core-functionality' );
+		$button_text_rebuild_register  = esc_html__( 'Scan for new features', 'core-functionality' );
 		echo <<<HTML
 			<div class="dewitteprins-global-actions" style="margin: 20px 0; display: flex; gap: 10px; align-items: center;">
 				<button type="button" class="button button-secondary js-dwp-toggle-all" data-state="select">
