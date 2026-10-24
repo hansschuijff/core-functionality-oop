@@ -159,9 +159,9 @@ ids in the error log and as an admin notice.
 
 Known errors (to fix first):
 
-- `Environment/Plugins/EventTickets.php` and `TheEventsCalendarPro.php` have a syntax error, and
-  `FestingerVault.php` and `GitRemoteUpdater.php` import `Orientation` twice. When one of those plugins is
-  a dependency or active, loading the guard is a fatal error.
+- Guard ids do not all follow the snake_case convention: `FestingerVault::get_id()` returns
+  `festinger-vault`, and `GitRemoteUpdater` returns `git-updater`, the same id as `GitUpdater`
+  (probably copied; `git_remote_updater` expected) (confirm).
 - `CF::initialize()` is never called, so the `Api` facade and functions always answer "not ready".
   `src/Api/helpers.php` is not autoloaded and calls a `Core` class that no longer exists.
 - `Plugin` imports `Services\Loaders\ModuleLoader`, which does not exist.
