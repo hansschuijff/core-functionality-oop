@@ -24,7 +24,7 @@ use function __;
 use function wp_next_scheduled;
 use function wp_schedule_event;
 use function wp_clear_scheduled_hook;
-use function current_time;
+use function time;
 use function add_action;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -62,6 +62,12 @@ class TransientOptimizer extends AbstractFeature {
 		);
 	}
 
+	/**
+	 * Registers the settings tab and the weekly cleanup cron event.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
 	#[Override]
 	public function launch(): void {
 		// Register the settings page section.
@@ -72,7 +78,7 @@ class TransientOptimizer extends AbstractFeature {
 
 		// Establish safety schedule gates: Hook a weekly optimization sweep event if currently vacant.
 		if ( ! wp_next_scheduled( $this->cron_hook_identifier ) ) {
-			wp_schedule_event( current_time( 'timestamp' ), 'weekly', $this->cron_hook_identifier );
+			wp_schedule_event( time(), 'weekly', $this->cron_hook_identifier );
 		}
 	}
 
@@ -102,18 +108,23 @@ class TransientOptimizer extends AbstractFeature {
 	public function execute_bulk_transient_purge(): int {
 		global $wpdb;
 
-		$now_timestamp = (int) current_time( 'timestamp' );
+		// Transient timeouts are Unix (UTC) timestamps, so compare with time(), not current_time().
+		$now_timestamp = time();
 
-		// 1. SELECT EXPIRED NAMES: Fetch the exact option names whose timeout markers have genuinely lapsed
-		$expired_transients_query = $wpdb->prepare(
-			"SELECT option_name
-			 FROM {$wpdb->options}
-			 WHERE option_name LIKE '_transient_timeout_%%'
-			   AND CAST(option_value AS UNSIGNED) < %d",
-			$now_timestamp
+		// In LIKE, "_" matches any character; esc_like() makes it literal.
+		$timeout_like = $wpdb->esc_like( '_transient_timeout_' ) . '%';
+
+		// 1. SELECT EXPIRED NAMES: Fetch the exact option names whose timeout markers have genuinely lapsed.
+		$expired_timeouts = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT option_name
+				 FROM {$wpdb->options}
+				 WHERE option_name LIKE %s
+				   AND CAST(option_value AS UNSIGNED) < %d",
+				$timeout_like,
+				$now_timestamp
+			)
 		);
-
-		$expired_timeouts = $wpdb->get_col( $expired_transients_query );
 
 		if ( empty( $expired_timeouts ) || ! is_array( $expired_timeouts ) ) {
 			$expired_timeouts = array();
@@ -133,27 +144,33 @@ class TransientOptimizer extends AbstractFeature {
 				wp_cache_delete( $transient_pure_key, 'transient' );
 			}
 
-			$format_string = implode( ',', array_fill( 0, count( $option_names_to_delete ), '%s' ) );
-			$delete_query  = $wpdb->prepare(
-				"DELETE FROM {$wpdb->options} WHERE option_name IN ($format_string)",
-				$option_names_to_delete
-			);
+			$placeholders = implode( ',', array_fill( 0, count( $option_names_to_delete ), '%s' ) );
 
-			$result = $wpdb->query( $delete_query );
+			$result = $wpdb->query(
+				$wpdb->prepare(
+					// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $placeholders holds only %s placeholders, one per name.
+					"DELETE FROM {$wpdb->options} WHERE option_name IN ($placeholders)",
+					$option_names_to_delete
+				)
+			);
 			if ( $result ) {
 				$deleted_rows += (int) $result;
 			}
 		}
 
 		// 3. SQL TRANSACTION 2: Scrub standalone orphaned timeouts
-		$purge_orphans_query = "
-			DELETE FROM {$wpdb->options}
-			WHERE option_name LIKE '_transient_timeout_%%'
-			  AND REPLACE(option_name, '_transient_timeout_', '_transient_') NOT IN (
-				  SELECT option_name FROM (SELECT option_name FROM {$wpdb->options}) as sub
-			  )";
-
-		$orphan_result = $wpdb->query( $purge_orphans_query );
+		$orphan_result = $wpdb->query(
+			$wpdb->prepare(
+				"DELETE FROM {$wpdb->options}
+				 WHERE option_name LIKE %s
+				   AND REPLACE(option_name, %s, %s) NOT IN (
+					   SELECT option_name FROM (SELECT option_name FROM {$wpdb->options}) AS sub
+				   )",
+				$timeout_like,
+				'_transient_timeout_',
+				'_transient_'
+			)
+		);
 		if ( $orphan_result ) {
 			$deleted_rows += (int) $orphan_result;
 		}

@@ -26,7 +26,7 @@ use function __;
 use function esc_html__;
 use function esc_html;
 use function esc_attr;
-use function current_time;
+use function time;
 use function is_array;
 use function sprintf;
 
@@ -102,29 +102,42 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 	public function render( bool $reset_to_defaults = false ): void {
 		global $wpdb;
 
-		$now_timestamp = current_time( 'timestamp' );
+		// Transient timeouts are Unix (UTC) timestamps, so compare with time(), not current_time().
+		$now_timestamp = time();
 
-		// 1. SCAN EXPIRED: Count main rows whose timeout markers have passed
-		$count_expired_query = $wpdb->prepare(
-			"SELECT COUNT(*)
-			 FROM {$wpdb->options} o1
-			 INNER JOIN {$wpdb->options} o2
-				ON o1.option_name = REPLACE(o2.option_name, '_transient_timeout_', '_transient_')
-			 WHERE o2.option_name LIKE '_transient_timeout_%%'
-			   AND o2.option_value < %d",
-			$now_timestamp
+		// In LIKE, "_" matches any character; esc_like() makes it literal.
+		$timeout_like = $wpdb->esc_like( '_transient_timeout_' ) . '%';
+
+		// 1. SCAN EXPIRED: Count main rows whose timeout markers have passed.
+		$expired_count = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*)
+				 FROM {$wpdb->options} o1
+				 INNER JOIN {$wpdb->options} o2
+					ON o1.option_name = REPLACE(o2.option_name, %s, %s)
+				 WHERE o2.option_name LIKE %s
+				   AND CAST(o2.option_value AS UNSIGNED) < %d",
+				'_transient_timeout_',
+				'_transient_',
+				$timeout_like,
+				$now_timestamp
+			)
 		);
-		$expired_count       = (int) $wpdb->get_var( $count_expired_query );
 
-		// 2. SCAN ORPHANS: Count standalone timeout markers whose main data row has been deleted
-		$count_orphans_query = "
-			SELECT COUNT(*)
-			FROM {$wpdb->options}
-			WHERE option_name LIKE '_transient_timeout_%%'
-			  AND REPLACE(option_name, '_transient_timeout_', '_transient_') NOT IN (
-				  SELECT option_name FROM (SELECT option_name FROM {$wpdb->options}) as sub
-			  )";
-		$orphans_count       = (int) $wpdb->get_var( $count_orphans_query );
+		// 2. SCAN ORPHANS: Count standalone timeout markers whose main data row has been deleted.
+		$orphans_count = (int) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(*)
+				 FROM {$wpdb->options}
+				 WHERE option_name LIKE %s
+				   AND REPLACE(option_name, %s, %s) NOT IN (
+					   SELECT option_name FROM (SELECT option_name FROM {$wpdb->options}) AS sub
+				   )",
+				$timeout_like,
+				'_transient_timeout_',
+				'_transient_'
+			)
+		);
 
 		$total_garbage_rows = $expired_count + $orphans_count;
 

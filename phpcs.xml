@@ -29,6 +29,12 @@
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
     </rule>
 
+    <!-- Parameters such as $default and $namespace are passed as named arguments (default: ...);
+         renaming them to avoid reserved words would break those calls. -->
+    <rule ref="WordPress-Core">
+        <exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+    </rule>
+
     <!-- Hook names are core-functionality/<kebab-name>: allow - and / between words -->
     <rule ref="WordPress.NamingConventions.ValidHookName">
         <properties>
