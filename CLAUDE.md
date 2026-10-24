@@ -45,8 +45,11 @@ new modules and features for Hans's own sites.
   `get_dependencies`, `uses_features`), so the kernel can check them before creating an instance.
 - Dependencies use environment ids: a plugin id (`woocommerce`), a theme id with `_theme`
   (`any_genesis_theme`) or a server id with `_environment`. Each id needs a guard class in
-  `src/Environment/Plugins|Themes|Servers/` named after the id in CamelCase, and plugins and themes also
-  an entry in `settings/environment-index.php`.
+  `src/Environment/Plugins|Themes|Servers/`; its `get_id()` is the class name in snake_case and equals the
+  key in `settings/environment-index.php` (plugins: basename, themes: name and author).
+- A guard's proof must hold on `plugins_loaded` priority 10: prefer a constant, function or class that the
+  plugin's main file defines, or one verified on the local site. Autoloaded classes usually do not exist
+  yet (`class_exists( $class, false )`), and theme code is not loaded yet.
 - Site-specific data (menus, links, licences) goes into settings files, not into code:
   `settings/modules/<module-folder>/...`, mapped in `settings/setup/modules-settings-path.php` and
   `settings/setup/key-slugs-translation.php`. Read them with `$plugin->settings->get( $key, $module_id )`.

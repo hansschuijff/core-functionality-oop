@@ -159,9 +159,9 @@ ids in the error log and as an admin notice.
 
 Known errors (to fix first):
 
-- Guard ids do not all follow the snake_case convention: `FestingerVault::get_id()` returns
-  `festinger-vault`, and `GitRemoteUpdater` returns `git-updater`, the same id as `GitUpdater`
-  (probably copied; `git_remote_updater` expected) (confirm).
+- 14 keys in `environment-index.php` have no guard class (jetpack, carbon_fields, searchwp, mollie, the
+  Genesis and Sensei add-ons, ...). When such a plugin is active, `Environment` raises
+  `_doing_it_wrong()` on every request. Add a guard or remove the key.
 - `CF::initialize()` is never called, so the `Api` facade and functions always answer "not ready".
   `src/Api/helpers.php` is not autoloaded and calls a `Core` class that no longer exists.
 - `Plugin` imports `Services\Loaders\ModuleLoader`, which does not exist.
@@ -170,6 +170,27 @@ Known errors (to fix first):
 - `settings/modules.php` lists old feature namespaces and is not read anywhere (the `modules` key is mapped
   but never requested) (confirm: remove?).
 - About half of the PHP files lack `declare( strict_types=1 );`; phpcs has not been run over everything.
+
+Environment proofs (reviewed October 2026):
+
+- The Kernel checks dependencies on `plugins_loaded` priority 10. Plugins that initialise later (Event
+  Tickets Plus at 50, Yoast at 14, Gravity Forms after the Kernel) can only be proven by what their main
+  file defines, not by their own successful start; themes cannot be proven at all before `functions.php`
+  loads, so theme guards rely on the activation check. Option: schedule later (a later default in
+  `dwp_cf_plugin_load_timing`) and check themes on `after_setup_theme`.
+- The Tribe guards use `not_actions: 'tribe_extensions_failed_requirements'`, but that action does not
+  exist in the current Tribe plugins, so it has no effect. The template-function check is what catches
+  a Tribe plugin that switched itself off.
+- Verified on the local site at Kernel timing: The Events Calendar (+ Pro), Event Tickets (+ Plus),
+  WooCommerce, Loco Translate, SEO Redirection Premium, Debug Toolkit. Checked in the sources only: the
+  other installed plugins. Not installed locally, proof and basename unverified (confirm): Redis Cache,
+  WP phpMyAdmin, EU VAT Assistant, Follow-Up Emails (no proof yet), Sensei Pro; which Festinger Vault
+  folder production uses.
+- Site-specific URLs live in guard code (`/evenementen/`, `/agenda/categorie/familieopstellingen/`,
+  `/artikelen/`, the `course-payment-plans` product category); they belong in settings files.
+- Ids are snake_case (index keys, `_theme` and `_environment` suffixes). Hans prefers kebab-case; switching
+  means changing the index keys, every `get_id()` and the two suffixes in `ClassParser::get_clean_id()`
+  and `Environment::get_dependency_namespace()` (`to_camel_case()` already accepts both).
 
 Structure proposal (Claude, October 2026; not decided):
 
