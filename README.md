@@ -106,7 +106,12 @@ the plugin's admin links, from which the quick menu in the admin toolbar is comp
    (`'my-plugin' => 'my-plugin/my-plugin.php'`).
 3. `get_proof_requirements()` returns what exists once the plugin has started (a class, function or
    constant), checked on `init`. Classes are checked without autoloading.
-4. `get_toolbar_nodes()` and `get_menu_nodes()` return the plugin's admin links.
+4. `get_toolbar_nodes()` and `get_menu_nodes()` return the plugin's admin links. The toolbar links of
+   every known plugin are offered in the menu builder, also when the plugin is not active, so
+   `get_toolbar_nodes()` may only call WordPress functions directly: a URL that needs the plugin
+   itself goes in a closure (`href: fn () => wc_get_page_permalink( 'shop' )`). The `orientation` of a
+   shortcut says whether it links to an admin page or to the site; where it is shown is set in the
+   menu builder.
 
 Themes work the same in `src/Environment/Themes/` with the id suffix `-theme`; their index entry holds
 the theme name and author.

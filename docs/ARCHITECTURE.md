@@ -35,7 +35,7 @@ New customizations are added as new features without touching the kernel.
 3. `plugins_loaded`, admin only: `Plugin::setup()` builds `Notices`, the settings page and the
    `PluginIntegrityWatch`.
 4. `init` priority 0 (filter `core-functionality/launch-timing`): `Kernel::boot()` does everything in one step. It lets
-   every active environment guard register its toolbar and menu nodes, takes the launchable components
+   every active environment guard register its admin menu nodes, takes the launchable components
    from the `ComponentsRegister` (already filtered on activation, deployment tier and orientation), keeps
    those whose environment dependencies are ready, creates the modules and their features, drops features
    whose required features are missing (`uses_features()`), calls `launch()` on every instance, marks the
@@ -113,6 +113,10 @@ A dependency is an id. `Environment` turns it into a guard class by convention: 
 results are cached per request. `settings/environment-index.php` maps plugin ids to plugin basenames and
 theme ids to theme name and author. `get_dependencies()` returns one id or an `and` / `or` array of ids.
 
+`Environment` creates each guard once per request: `get_plugin( $id )` and `get_theme( $id )` keep the
+instances per kind (plugins and themes are registered separately), `get_wordpress()` the core guard.
+Server guards (`-environment`) are created on demand and not kept (see open points).
+
 The plugin and theme guards also supply admin toolbar and admin menu links for their plugin or theme
 (`get_toolbar_nodes()`, `get_menu_nodes()`), collected in `AdminToolbarRegister` and `AdminMenuRegister`.
 This is deliberate: a guard is the plugin's internal representative of something outside, so it is the
@@ -122,10 +126,29 @@ Custom links can be added on the settings page as well. Blocks of a plugin that 
 show in the menu. (The legacy plugin did it the other way round, from config, and had to test every
 item's dependencies itself.)
 
-Planned (not built): the settings screen needs the full catalogue of nodes, also of inactive plugins, to
-compose the menu; at runtime the composed menu is matched against the guards that are ready, like the
-components register does for loading. Guards therefore need a way to hand over their nodes outside
-`is_ready()`. The admin menu feature has a similar, latent mechanism for menu items.
+**Toolbar catalogue.** `AdminToolbarRegister` holds the toolbar nodes of *every known* plugin and theme
+(every guard class in `Plugins/` and `Themes/`) plus the core, each provider with a `ProviderStatus`:
+active (`is_ready()`), inactive (installed) or not installed. `get_all()` serves the settings page, so a
+menu can be set up once, before a plugin is installed or activated; `get_active()` serves the toolbar, so
+activating or deactivating a plugin switches its nodes on and off. The register is filled in memory on
+first use after `init` (`Environment::load_toolbar_catalogue()`, set as its loader); it is not cached in
+the database, because hrefs can be closures and titles are translated. Because nodes of inactive plugins
+are built too, `get_toolbar_nodes()` may only call WordPress functions directly; anything that needs the
+plugin itself goes in a closure as href (`ToolbarShortcut::get_href()` resolves it). The admin menu nodes
+still go to `AdminMenuRegister` from `is_ready()`.
+
+`ToolbarShortcut::$orientation` is the kind of link (to an admin page or to the site), shown as a badge in
+the menu builder. Where a node is shown is not decided by the guard but per node in the menu builder.
+
+**Menu builder.** The saved tree (settings key `menu-builder-hierarchical-tree`) holds per node: `id`,
+`type` (`shortcut` or `submenu`), `title` (empty: the shortcut's own, translated title), `href` (submenus
+only; a shortcut's URL always comes from the guard), `visibility` (`admin`, `frontend` or `both`, the
+default) and `children`, at most three levels. At runtime a shortcut whose provider is not active is left
+out together with its children, and a submenu without a link of its own is left out when none of its
+children is shown. The settings tab renders the catalogue and the tree as JSON; `menu-builder-settings.js`
+builds the pool and the tree from it (one place for the markup). A new node takes the depth of the node it
+is inserted before (at the end: of the last node), so it never takes over a submenu; moving a node moves
+its branch. The admin menu feature has a similar, latent mechanism for menu items.
 
 ## Settings and options
 
@@ -189,6 +212,9 @@ ids in the error log and as an admin notice.
 | Metadata in one DTO | A static `get_meta()` returns `ComponentMeta`; abstract base classes answer the getters | A feature class holds only its functionality (Hans's idea, October 2026) |
 | Version sync of the registers | Plugin version stored with the registers; on a new version the components option is rebuilt from the file and new components get file defaults | An update's new features appear without a manual rescan, and the site's choices stay |
 | Register files optional | Written only when `kernel/` is writable | They are a fallback for the database; production folders are often read-only |
+| Toolbar catalogue of all known plugins | The register holds the nodes of every guard with a provider status; the toolbar shows only active ones | A menu is set up once; installing or activating a plugin switches its links on and off |
+| Catalogue in memory only | Built per request on first use, not stored in the database | Hrefs can be closures and titles are translated; the cost is small |
+| Visibility per menu node | Admin, front end or both, set in the menu builder; the guard's orientation only says what kind of link it is | Where a link is useful depends on the menu, not on the plugin |
 
 ## Open points
 
@@ -209,6 +235,14 @@ Known issues:
   `$node->id` from an array, and feature names ending in a period) are fixed. The plugin is active again
   on the local site.
 - `src/Modules/LegeModule/` (gitignored template) still uses the old style.
+- Menu builder (October 2026): titles saved before this version are stored as overrides, also where
+  they equal the English title; clearing the title field makes a node follow the translation again.
+  Still to do: a better long-list experience (search, insert at a selected spot, keyboard, collapsing
+  branches). `src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/` is an old copy of the menu
+  builder (same class name, not loaded) that can go (confirm).
+- The server guards (`Environment/Servers`, ids ending in `-environment`) supply no nodes and no
+  component uses them; switching plugins by server tier is done by a separate mu-plugin. Candidate for
+  removal (confirm).
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):

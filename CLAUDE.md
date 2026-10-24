@@ -45,7 +45,10 @@ new modules and features for Hans's own sites.
 - No `class_exists()` / `interface_exists()` / `function_exists()` wrappers around the plugin's own
   declarations; Composer loads them once.
 - Guards supply the admin toolbar and menu links of their plugin or theme on purpose (see
-  `docs/ARCHITECTURE.md`, Environment); do not move them to the AdminToolbar module.
+  `docs/ARCHITECTURE.md`, Environment); do not move them to the AdminToolbar module. Toolbar nodes are
+  built for inactive plugins too (the menu builder's catalogue), so `get_toolbar_nodes()` calls a
+  plugin's own functions only inside an href closure. Get guards through `Environment::get_plugin()` /
+  `get_theme()`, which keep one instance per request.
 - A **module** is only a container: `src/Modules/<Module>/<Module>.php`, extends `AbstractModule` and
   contains only `get_meta()`.
 - A **feature** holds the functionality: `src/Modules/<Module>/Features/<Feature>/<Feature>.php`, extends
