@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T00:29:28+02:00\n"
+"POT-Creation-Date: 2026-10-25T00:36:49+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -1442,16 +1442,12 @@ msgstr ""
 msgid "Configuration"
 msgstr ""
 
-#: src/Enums/DependencyType.php:40
+#: src/Enums/DependencyType.php:39
 msgid "Plugin"
 msgstr ""
 
-#: src/Enums/DependencyType.php:41
+#: src/Enums/DependencyType.php:40
 msgid "Theme"
-msgstr ""
-
-#: src/Enums/DependencyType.php:42
-msgid "Server"
 msgstr ""
 
 #: src/Enums/Deployment.php:40
@@ -2239,7 +2235,7 @@ msgstr ""
 msgid "Path to the component registers could not be retrieved, fallback paths used. Please inform Support"
 msgstr ""
 
-#: src/Services/FileSystem/FinderService.php:246
+#: src/Services/FileSystem/FinderService.php:245
 msgid "Invalid method call: FinderService->find_modules_and_features() should only be executed from within the Core Functionality admin settings page context."
 msgstr ""
 

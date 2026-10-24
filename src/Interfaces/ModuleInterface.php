@@ -81,7 +81,7 @@ interface ModuleInterface {
 	 *
 	 * Must return a multi-dimensional array mapping an 'and' or 'or' matrix
 	 * of clean kebab-case system environment identifiers.
-	 * Example: array( 'and' => array( 'woocommerce', 'production-environment' ) )
+	 * Example: array( 'and' => array( 'woocommerce', 'woocommerce-subscriptions' ) )
 	 *
 	 * Note: Made static so the loader can run pre-flights before instantiation.
 	 *

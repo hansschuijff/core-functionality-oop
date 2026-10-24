@@ -129,7 +129,6 @@ class FinderService {
 		$discovered_classes = array();
 
 		// Add 'Core' to the discovery loop to automatically capture WordPress.php!
-		// Leave 'Servers' out to keep the architecture light, fast, and focused.
 		$subfolders = array( 'Core', 'Plugins', 'Themes' );
 
 		foreach ( $subfolders as $subfolder ) {

@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Enum representing the type of dependency.
  *
- * Used by the Kernel to filter component activation based on the server environment.
+ * Taken from the suffix of an environment id ("-theme" or none); picks the guard folder.
  *
  * @since 1.0.0
  */
@@ -27,7 +27,6 @@ enum DependencyType: string {
 
 	case PLUGIN = 'plugin';
 	case THEME  = 'theme';
-	case SERVER = 'server';
 
 	/**
 	 * Returns the localized human-readable label for the status.
@@ -38,8 +37,7 @@ enum DependencyType: string {
 	public function get_label(): string {
 		return match ( $this ) {
 			self::PLUGIN => __( 'Plugin', 'core-functionality' ),
-			self::THEME  => __( 'Theme', 'core-functionality' ),
-			self::SERVER => __( 'Server', 'core-functionality' ),
+			self::THEME => __( 'Theme', 'core-functionality' ),
 		};
 	}
 }

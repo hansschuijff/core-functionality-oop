@@ -189,7 +189,7 @@ class Environment {
 	 * Checks a single dependency if it's ready, consolidating caching logic in one place.
 	 *
 	 * @since  1.0.0
-	 * @param  string $dependency_id The identifier of a theme, plugin, or server environment.
+	 * @param  string $dependency_id The identifier of a theme or plugin.
 	 * @return bool                  True if the single dependency is verified and ready for work.
 	 */
 	private function dependency_is_ready( string $dependency_id ): bool {
@@ -333,10 +333,10 @@ class Environment {
 	}
 
 	/**
-	 * Returns the guard for a dependency id: the core, a plugin, a theme or a server environment.
+	 * Returns the guard for a dependency id: the core, a plugin or a theme.
 	 *
 	 * @since  1.0.0
-	 * @param  string $dependency_id The identifier of the core, a theme, plugin, or server environment.
+	 * @param  string $dependency_id The identifier of the core, a theme or a plugin.
 	 * @return DependencyInterface|null The guard, or null if there is no guard class for this id.
 	 */
 	private function get_guard( string $dependency_id ): ?DependencyInterface {
@@ -346,10 +346,6 @@ class Environment {
 		if ( ClassParser::is_theme_id( $dependency_id ) ) {
 			return $this->get_theme( $dependency_id );
 		}
-		if ( ClassParser::is_environment_id( $dependency_id ) ) {
-			$class = $this->get_dependency_class_name( $dependency_id );
-			return ClassParser::is_implementation_of( $class, DependencyInterface::class ) ? new $class( $this->lookup ) : null;
-		}
 
 		return $this->get_plugin( $dependency_id );
 	}
@@ -358,7 +354,7 @@ class Environment {
 	 * Determines the fully qualified class name for a given dependency identifier.
 	 *
 	 * @since  1.0.0
-	 * @param  string $dependency_id The identifier of a theme, plugin, or server environment.
+	 * @param  string $dependency_id The identifier of a theme or plugin.
 	 * @return string                The fully qualified class name for the dependency.
 	 */
 	private function get_dependency_class_name( string $dependency_id ): string {
@@ -373,7 +369,7 @@ class Environment {
 	 * Determines the correct namespace for a given dependency identifier.
 	 *
 	 * @since  1.0.0
-	 * @param  string $dependency_id The identifier of a theme, plugin, or server environment.
+	 * @param  string $dependency_id The identifier of a theme or plugin.
 	 * @return string                The fully qualified namespace for the dependency.
 	 */
 	private function get_dependency_namespace( string $dependency_id ): string {
@@ -381,9 +377,6 @@ class Environment {
 
 		if ( ClassParser::is_theme_id( $dependency_id ) ) {
 			return $namespace_base . 'Themes';
-		}
-		if ( ClassParser::is_environment_id( $dependency_id ) ) {
-			return $namespace_base . 'Servers';
 		}
 		return $namespace_base . 'Plugins';
 	}

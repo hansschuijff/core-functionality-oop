@@ -62,7 +62,7 @@ core-functionality-oop/
 │   ├── Services/                 ComponentsRegister, Settings, Options, InterDependenciesGuard,
 │   │                             PluginIntegrityWatch, ClassParser, FileSystem/ (scan and file writes)
 │   ├── Environment/              Environment, EnvironmentLookup, Core/WordPress,
-│   │                             Plugins/, Themes/, Servers/ (one guard class per id), Registers/
+│   │                             Plugins/, Themes/ (one guard class per id), Registers/
 │   ├── Admin/Services/Settings/  settings page (Settings → Core Functionality) with sections (tabs)
 │   ├── Notifiers/                admin notices; push notices with Pushover and Telegram drivers
 │   ├── Diagnostics/Logger.php
@@ -106,8 +106,8 @@ still how new code is picked up locally.
 ## Environment
 
 A dependency is an id. `Environment` turns it into a guard class by convention: `woocommerce` →
-`Environment\Plugins\Woocommerce`, `<id>-theme` → `Environment\Themes\…`, `<id>-environment` →
-`Environment\Servers\…`, and `wordpress-core` → `Environment\Core\WordPress`. Ids are kebab-case
+`Environment\Plugins\Woocommerce`, `<id>-theme` → `Environment\Themes\…`, and `wordpress-core` →
+`Environment\Core\WordPress`. Ids are kebab-case
 (Hans's preference); the key in `environment-index.php` is the id without the `-theme` suffix. Plugin guards extend
 `AbstractPlugin` and prove the plugin is alive with a `ProofRequirement` (classes, functions, actions);
 results are cached per request. `settings/environment-index.php` maps plugin ids to plugin basenames and
@@ -115,7 +115,9 @@ theme ids to theme name and author. `get_dependencies()` returns one id or an `a
 
 `Environment` creates each guard once per request: `get_plugin( $id )` and `get_theme( $id )` keep the
 instances per kind (plugins and themes are registered separately), `get_wordpress()` the core guard.
-Server guards (`-environment`) are created on demand and not kept (see open points).
+There are no server guards: the server tier is handled by the deployment tiers of the components, and
+switching plugins per server by a separate mu-plugin (the `-environment` guards were removed in October
+2026).
 
 The plugin and theme guards also supply admin toolbar and admin menu links for their plugin or theme
 (`get_toolbar_nodes()`, `get_menu_nodes()`), collected in `AdminToolbarRegister` and `AdminMenuRegister`.
@@ -180,7 +182,7 @@ ids in the error log and as an admin notice.
 | Settings page slug | `dwp-cf-settings` |
 | Module | `src/Modules/<Module>/<Module>.php` |
 | Feature | `src/Modules/<Module>/Features/<Feature>/<Feature>.php` |
-| Environment ids | kebab-case of the guard's class name; `-theme` and `-environment` suffixes pick the guard folder |
+| Environment ids | kebab-case of the guard's class name; the `-theme` suffix picks the guard folder |
 
 ## Hooks
 
@@ -240,9 +242,6 @@ Known issues:
   Still to do: a better long-list experience (search, insert at a selected spot, keyboard, collapsing
   branches). `src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/` is an old copy of the menu
   builder (same class name, not loaded) that can go (confirm).
-- The server guards (`Environment/Servers`, ids ending in `-environment`) supply no nodes and no
-  component uses them; switching plugins by server tier is done by a separate mu-plugin. Candidate for
-  removal (confirm).
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):

@@ -134,17 +134,6 @@ class ClassParser {
 	}
 
 	/**
-	 * Checks if a given environment identifier represents a server/hosting environment context.
-	 *
-	 * @since  1.0.0
-	 * @param  string $dependency_id The raw environment identifier token.
-	 * @return bool                  True if the identifier belongs to a server environment, false otherwise.
-	 */
-	public static function is_environment_id( string $dependency_id ): bool {
-		return str_ends_with( $dependency_id, '-environment' );
-	}
-
-	/**
 	 * Removes descriptive type suffixes from an environment identifier token.
 	 *
 	 * Converts tokens like 'essence-pro-theme' to its clean slug 'essence-pro'.
@@ -154,7 +143,7 @@ class ClassParser {
 	 * @return string                Cleaned structural token.
 	 */
 	public static function get_clean_id( string $dependency_id ): string {
-		return (string) preg_replace( '/-(theme|environment)$/', '', $dependency_id );
+		return (string) preg_replace( '/-theme$/', '', $dependency_id );
 	}
 
 	/**
@@ -194,7 +183,7 @@ class ClassParser {
 	 * Translates a dependency ID to a Fully Qualified Class Name of the Class it belongs to.
 	 *
 	 * @since  1.0.0
-	 * @param  string $id The identifier of a theme, plugin or server environment.
+	 * @param  string $id The identifier of a theme or plugin.
 	 * @return string     The FQCN of the dependency.
 	 */
 	public static function id_to_fqcn( string $id ): string {
@@ -209,7 +198,7 @@ class ClassParser {
 	 * Translates a dependency ID to a Fully Qualified Class Name and checks if it exists.
 	 *
 	 * @since  1.0.0
-	 * @param  string $id The identifier of a theme, plugin or server environment.
+	 * @param  string $id The identifier of a theme or plugin.
 	 * @return bool       True if the translated class of a dependency ID actually exists, otherwise false.
 	 */
 	public static function id_fqcn_exists( string $id ): bool {
@@ -222,15 +211,12 @@ class ClassParser {
 	 * Returns the type of dependency based on the suffix in a dependency ID.
 	 *
 	 * @since  1.0.0
-	 * @param  string $id The identifier of a theme, plugin or server environment.
-	 * @return DependencyType Enum for the type of dependency (plugin, theme, server environment).
+	 * @param  string $id The identifier of a theme or plugin.
+	 * @return DependencyType Enum for the type of dependency (plugin or theme).
 	 */
 	public static function get_dependency_type( string $id ): DependencyType {
 		if ( self::is_theme_id( $id ) ) {
 			return DependencyType::THEME;
-		}
-		if ( self::is_environment_id( $id ) ) {
-			return DependencyType::SERVER;
 		}
 
 		return DependencyType::PLUGIN;
@@ -240,7 +226,7 @@ class ClassParser {
 	 * Determines the correct namespace for a given dependency identifier.
 	 *
 	 * @since  1.0.0
-	 * @param  string $id The identifier of a theme, plugin or server environment.
+	 * @param  string $id The identifier of a theme or plugin.
 	 * @return string     The fully qualified namespace for the dependency.
 	 */
 	public static function get_dependency_namespace( string $id ): string {
@@ -249,7 +235,6 @@ class ClassParser {
 
 		$namespace_suffix = match ( $type ) {
 			DependencyType::THEME  => 'Themes',
-			DependencyType::SERVER => 'Servers',
 			DependencyType::PLUGIN => 'Plugins',
 		};
 

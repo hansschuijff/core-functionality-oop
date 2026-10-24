@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T00:29:28+02:00\n"
+"POT-Creation-Date: 2026-10-25T00:36:49+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -1444,17 +1444,13 @@ msgstr "Kies het platform waar automatische pushmeldingen naartoe gaan."
 msgid "Configuration"
 msgstr "Configuratie"
 
-#: src/Enums/DependencyType.php:40
+#: src/Enums/DependencyType.php:39
 msgid "Plugin"
 msgstr "Plugin"
 
-#: src/Enums/DependencyType.php:41
+#: src/Enums/DependencyType.php:40
 msgid "Theme"
 msgstr "Thema"
-
-#: src/Enums/DependencyType.php:42
-msgid "Server"
-msgstr "Server"
 
 #: src/Enums/Deployment.php:40
 msgid "🧪 Development"
@@ -2241,7 +2237,7 @@ msgstr "Instellingen opgeslagen. Vergeet niet de wijzigingen in Git te committen
 msgid "Path to the component registers could not be retrieved, fallback paths used. Please inform Support"
 msgstr "Het pad naar de componentregisters kon niet worden bepaald; de standaardpaden worden gebruikt. Laat het de ondersteuning weten."
 
-#: src/Services/FileSystem/FinderService.php:246
+#: src/Services/FileSystem/FinderService.php:245
 msgid "Invalid method call: FinderService->find_modules_and_features() should only be executed from within the Core Functionality admin settings page context."
 msgstr "Ongeldige aanroep: FinderService->find_modules_and_features() mag alleen vanaf de instellingenpagina van Core Functionality worden uitgevoerd."
 
