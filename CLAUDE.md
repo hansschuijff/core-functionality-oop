@@ -43,9 +43,9 @@ new modules and features for Hans's own sites.
   `SettingsSectionInterface`, registered on `dwp_cf_register_settings_sections`.
 - Metadata on modules and features is static (`get_id`, `get_name`, `get_description`, `get_orientation`,
   `get_dependencies`, `uses_features`), so the kernel can check them before creating an instance.
-- Dependencies use environment ids: a plugin id (`woocommerce`), a theme id with `_theme`
-  (`any_genesis_theme`) or a server id with `_environment`. Each id needs a guard class in
-  `src/Environment/Plugins|Themes|Servers/`; its `get_id()` is the class name in snake_case and equals the
+- Dependencies use environment ids: a plugin id (`woocommerce`), a theme id with `-theme`
+  (`any-genesis-theme`) or a server id with `-environment` (`production-environment`). Each id needs a guard class in
+  `src/Environment/Plugins|Themes|Servers/`; its `get_id()` is the class name in kebab-case and equals the
   key in `settings/environment-index.php` (plugins: basename, themes: name and author).
 - A guard's proof must hold on `plugins_loaded` priority 10: prefer a constant, function or class that the
   plugin's main file defines, or one verified on the local site. Autoloaded classes usually do not exist

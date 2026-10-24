@@ -90,8 +90,9 @@ the files are read and copied into it.
 ## Environment
 
 A dependency is an id. `Environment` turns it into a guard class by convention: `woocommerce` →
-`Environment\Plugins\Woocommerce`, `<id>_theme` → `Environment\Themes\…`, `<id>_environment` →
-`Environment\Servers\…`, and `wordpress_core` → `Environment\Core\WordPress`. Plugin guards extend
+`Environment\Plugins\Woocommerce`, `<id>-theme` → `Environment\Themes\…`, `<id>-environment` →
+`Environment\Servers\…`, and `wordpress-core` → `Environment\Core\WordPress`. Ids are kebab-case
+(Hans's preference); the key in `environment-index.php` is the id without the `-theme` suffix. Plugin guards extend
 `AbstractPlugin` and prove the plugin is alive with a `ProofRequirement` (classes, functions, actions);
 results are cached per request. `settings/environment-index.php` maps plugin ids to plugin basenames and
 theme ids to theme name and author. `get_dependencies()` returns one id or an `and` / `or` array of ids.
@@ -128,7 +129,7 @@ ids in the error log and as an admin notice.
 | Settings page slug | `dwp-cf-settings` |
 | Module | `src/Modules/<Module>/<Module>.php` |
 | Feature | `src/Modules/<Module>/Features/<Feature>/<Feature>.php` |
-| Environment ids | snake_case; `_theme` and `_environment` suffixes pick the guard folder |
+| Environment ids | kebab-case of the guard's class name; `-theme` and `-environment` suffixes pick the guard folder |
 
 ## Hooks
 
@@ -188,9 +189,6 @@ Environment proofs (reviewed October 2026):
   folder production uses.
 - Site-specific URLs live in guard code (`/evenementen/`, `/agenda/categorie/familieopstellingen/`,
   `/artikelen/`, the `course-payment-plans` product category); they belong in settings files.
-- Ids are snake_case (index keys, `_theme` and `_environment` suffixes). Hans prefers kebab-case; switching
-  means changing the index keys, every `get_id()` and the two suffixes in `ClassParser::get_clean_id()`
-  and `Environment::get_dependency_namespace()` (`to_camel_case()` already accepts both).
 
 Structure proposal (Claude, October 2026; not decided):
 
