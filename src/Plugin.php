@@ -209,10 +209,18 @@ class Plugin {
 
 		new AdminSettingsPage( $this );
 
-		$watchdog = new PluginIntegrityWatch( $this );
-		if ( ! $watchdog->monitor_integrity() ) {
-			return;
-		}
+		// After init: the check reads component metadata, which includes translated names.
+		add_action( 'admin_init', array( $this, 'monitor_integrity' ) );
+	}
+
+	/**
+	 * Runs the plugin integrity checks (such as duplicate ids) and reports problems.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function monitor_integrity(): void {
+		( new PluginIntegrityWatch( $this ) )->monitor_integrity();
 	}
 
 	/**
