@@ -12,7 +12,7 @@
 namespace DeWittePrins\CoreFunctionality\ActiveWoo;
 
 return json_decode(
-		'{
+	'{
 			"result":"success",
 			"message":"License key details retrieved.",
 			"license_key":"aw5c2a6946207ad",
@@ -45,4 +45,4 @@ return json_decode(
 			"txn_id":"3203",
 			"subscr_id":""
 		}'
-	);
+);

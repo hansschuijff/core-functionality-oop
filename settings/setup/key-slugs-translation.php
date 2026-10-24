@@ -17,13 +17,13 @@ return array(
 	/**
 	 * Globals & Core Framework Index Registry.
 	 */
-	'environment-index'             => 'environment-index',
-	'push-notice-available-drivers' => 'push-notice-drivers',
+	'environment-index'                                => 'environment-index',
+	'push-notice-available-drivers'                    => 'push-notice-drivers',
 
 	/**
 	 * Feature: Activewoo->KeepLicenseAlive.
 	 */
-	'activewoo-license-data' => 'license',
+	'activewoo-license-data'                           => 'license',
 
 	/**
 	 * Feature: AminToolbar->MenuBuilder

@@ -31,10 +31,11 @@ class GitRemoteUpdater extends AbstractPlugin {
 				href:    admin_url( 'admin.php?page=git-remote-updater' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Remote Updater', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
-			)
+			),
 		);
 	}
 
 	#[Override]
-	protected function get_menu_nodes(): array { return array(); }
+	protected function get_menu_nodes(): array {
+		return array(); }
 }

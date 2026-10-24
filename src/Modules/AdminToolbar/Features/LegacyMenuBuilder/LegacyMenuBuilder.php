@@ -71,14 +71,14 @@ class LegacyMenuBuilder extends AbstractFeature {
 
 		// Pass $this as context to automatically pull from the module subfolder!
 		$shortcuts = $this->plugin->settings->get( 'toolbar-add', AdminToolbar::get_id() );
-if ( \function_exists( '\d' ) ) {
-	\d(
-		\current_filter(),
-		__METHOD__ . ':' . __LINE__,
-		$shortcuts
-	);
-}
-// error_log( print_r( $shortcuts, true ) );
+		if ( \function_exists( '\d' ) ) {
+			\d(
+				\current_filter(),
+				__METHOD__ . ':' . __LINE__,
+				$shortcuts
+			);
+		}
+		// error_log( print_r( $shortcuts, true ) );
 		if ( ! is_array( $shortcuts ) ) {
 			return;
 		}
@@ -96,7 +96,7 @@ if ( \function_exists( '\d' ) ) {
 
 			$dependency_matrix = $node['dependency'] ?? array();
 			// if ( ! empty( $dependency_matrix ) && ! $this->plugin->kernel->environment->is_ready( $dependency_matrix ) ) {
-			// 	continue;
+			// continue;
 			// }
 
 			$wp_admin_bar->add_menu( (array) $node['node_args'] );

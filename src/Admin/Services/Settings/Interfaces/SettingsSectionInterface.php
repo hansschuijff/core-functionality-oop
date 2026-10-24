@@ -94,5 +94,4 @@ interface SettingsSectionInterface {
 	 * @return array<string, string> Dictionary indexing raw HTML button element blocks strings.
 	 */
 	public function get_action_buttons(): array;
-
 }

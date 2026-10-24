@@ -237,7 +237,8 @@ class PushNoticeSettings implements SettingsSectionInterface {
 		return __( 'Push notice configuration successfully updated.', 'core-functionality' );
 	}
 
-	/*-------------------------------------------------------------------------
+	/*
+	-------------------------------------------------------------------------
 	 * PRIVATE RENDER BLOCK METHODS (CLEAN CODE ISOLATION)
 	 *------------------------------------------------------------------------*/
 
@@ -298,16 +299,16 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_driver_fields_block( string $fqcn, string $active_driver ): void {
-		$schema        = $fqcn::get_configuration_schema();
-		$slug          = strtolower( ClassParser::fqcn_remove_namespace( $fqcn ) );
-		$slug          = ClassParser::camel_to_kebab( $slug );
-		$driver_name   = esc_html( $fqcn::get_name() );
-		$config_txt    = esc_html__( 'Configuration', 'core-functionality' );
-		$fqcn_clean    = esc_attr( ClassParser::to_single_backslashes( $fqcn ) );
+		$schema      = $fqcn::get_configuration_schema();
+		$slug        = strtolower( ClassParser::fqcn_remove_namespace( $fqcn ) );
+		$slug        = ClassParser::camel_to_kebab( $slug );
+		$driver_name = esc_html( $fqcn::get_name() );
+		$config_txt  = esc_html__( 'Configuration', 'core-functionality' );
+		$fqcn_clean  = esc_attr( ClassParser::to_single_backslashes( $fqcn ) );
 
 		// Secure lookup mapping passing an empty initialization array to satisfy the 4th parameters signature constraints
-		$option_key    = $this->active_driver_settings_prefix . $slug;
-		$options       = $this->plugin->settings->get( $option_key, '', false, array() );
+		$option_key = $this->active_driver_settings_prefix . $slug;
+		$options    = $this->plugin->settings->get( $option_key, '', false, array() );
 		if ( ! is_array( $options ) ) {
 			$options = array();
 		}

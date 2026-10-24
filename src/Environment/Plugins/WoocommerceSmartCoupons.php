@@ -39,7 +39,7 @@ class WoocommerceSmartCoupons extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-front-my-account-smart-coupons',
- 				title:   __( 'My Account: Smart Coupons', 'core-functionality' ),
+				title:   __( 'My Account: Smart Coupons', 'core-functionality' ),
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'wc-smart-coupons', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/wc-smart-coupons/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Smart Coupons', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,

@@ -23,9 +23,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 enum DependencyType: string {
 
-	case PLUGIN      = 'plugin';
-	case THEME       = 'theme';
-	case SERVER      = 'server';
+	case PLUGIN = 'plugin';
+	case THEME  = 'theme';
+	case SERVER = 'server';
 
 	/**
 	 * Returns the localized human-readable label for the status.

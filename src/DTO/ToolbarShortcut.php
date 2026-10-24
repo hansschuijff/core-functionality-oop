@@ -30,13 +30,13 @@ readonly class ToolbarShortcut {
 	 * @param array           $meta         Optional metadata attributes.
 	 */
 	public function __construct(
-		public string      $id,
-		public string      $title,
-		public string      $label,
+		public string $id,
+		public string $title,
+		public string $label,
 		public Orientation $orientation = Orientation::ADMIN,
-		public string      $parent = 'site-name',
-		public mixed       $href = '#',
-		public array       $meta = array()
+		public string $parent = 'site-name',
+		public mixed $href = '#',
+		public array $meta = array()
 	) {}
 
 	/**

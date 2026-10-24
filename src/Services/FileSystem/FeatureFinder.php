@@ -39,5 +39,4 @@ class FinderService {
 		$this->modules_dir       = $this->untrailingslashit( $this->plugin->get_data( 'modules-dir' ) );
 		$this->modules_namespace = $this->plugin->get_data( 'modules-namespace' );
 	}
-
 }

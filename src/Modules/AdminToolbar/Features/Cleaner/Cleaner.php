@@ -83,7 +83,7 @@ class Cleaner extends AbstractFeature {
 		// Securely register the configuration panel into the host page factory autonomously.
 		add_action(
 			'core-functionality/register-settings-sections',
-			function( $settings_factory ) {
+			function ( $settings_factory ) {
 				$settings_factory->register_section( CleanerSettings::class );
 			}
 		);
@@ -178,8 +178,8 @@ class Cleaner extends AbstractFeature {
 	}
 
 	private function save_movable_nodes( array $all_movable_nodes ) {
-		# Merge the newly found nodes with the already saved ones, to make sure no nodes are forgotten.
-		$saved_nodes  = $this->plugin->settings->get( self::get_movable_nodes_key(), $this->module::get_id() );
+		// Merge the newly found nodes with the already saved ones, to make sure no nodes are forgotten.
+		$saved_nodes = $this->plugin->settings->get( self::get_movable_nodes_key(), $this->module::get_id() );
 
 		$saved_nodes  = is_array( $saved_nodes ) ? $saved_nodes : array();
 		$merged_nodes = array_merge( $saved_nodes, $all_movable_nodes );
@@ -226,7 +226,7 @@ class Cleaner extends AbstractFeature {
 			'my-account',
 			'menu-toggle',               // The hamburger menu icon for small screens.
 			'top-secondary',             // The account panel on the right side.
-			self::get_overflow_node_id() // Our overflow (more) menu node.
+			self::get_overflow_node_id(), // Our overflow (more) menu node.
 		);
 	}
 }

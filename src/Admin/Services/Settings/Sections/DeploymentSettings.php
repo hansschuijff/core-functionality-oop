@@ -187,8 +187,8 @@ class DeploymentSettings implements SettingsSectionInterface {
 		}
 
 		// $module_slug          = ClassParser::fqcn_remove_namespace( $module_fqcn );
-		$module_name          = esc_html( $module_fqcn::get_name() );
-		$module_description   = esc_html( $module_fqcn::get_description() ?? '' );
+		$module_name        = esc_html( $module_fqcn::get_name() );
+		$module_description = esc_html( $module_fqcn::get_description() ?? '' );
 
 		return <<<HTML
 			<table class="wp-list-table widefat fixed striped" style="margin-bottom: 35px; border: 1px solid #ccd0d4; box-shadow: 0 1px 1px rgba(0,0,0,.04);">
@@ -222,10 +222,10 @@ class DeploymentSettings implements SettingsSectionInterface {
 		}
 
 		// $feature_slug         = ClassParser::fqcn_remove_namespace( $feature_fqcn );
-		$feature_name         = esc_html( $feature_fqcn::get_name() );
+		$feature_name = esc_html( $feature_fqcn::get_name() );
 		// $feature_fqcn_trunc  = substr( $feature_fqcn, strlen( $this->plugin->get_data( 'plugin-namespace' ) ) + 1 );
 
-		$html = '';
+		$html  = '';
 		$html .= <<<HTML
 			<tr>
 				<td style="padding: 15px 15px 15px 25px; vertical-align: top;">
@@ -236,7 +236,7 @@ class DeploymentSettings implements SettingsSectionInterface {
 
 		$html .= $this->get_render_feature_description( $feature_fqcn );
 
-		$html .=  <<<HTML
+		$html .= <<<HTML
 				</td>
 				<td style="padding: 15px; width: 250px; vertical-align: middle; text-align: right;">
 					{$this->get_render_deployment_select( $feature_fqcn, $feature_deployment )}
@@ -254,7 +254,7 @@ class DeploymentSettings implements SettingsSectionInterface {
 	 * @return string The rendered html or a feature row.
 	 */
 	private function get_render_feature_description( string $feature_fqcn ): string {
-		$feature_description  = esc_html( $feature_fqcn::get_description() ?? '' );
+		$feature_description = esc_html( $feature_fqcn::get_description() ?? '' );
 		if ( empty( $feature_description ) ) {
 			return '';
 		}
@@ -273,21 +273,21 @@ class DeploymentSettings implements SettingsSectionInterface {
 	 * @param string $current_deployment Current deployment string of the mmodule or class.
 	 * @return string Select controll html.
 	 */
-	private function get_render_deployment_select( string $fqcn, string $current_deployment): string {
+	private function get_render_deployment_select( string $fqcn, string $current_deployment ): string {
 
-		$fqcn             = esc_attr( $fqcn );
+		$fqcn = esc_attr( $fqcn );
 
 		$development_value = Deployment::DEVELOPMENT->value;
 		$is_development    = selected( $current_deployment, Deployment::DEVELOPMENT->value, false );
 		$development_label = esc_html( Deployment::DEVELOPMENT->get_label() );
 
-		$staging_value     = Deployment::STAGING->value;
-		$is_staging        = selected( $current_deployment, Deployment::STAGING->value, false );
-		$staging_label     = esc_html( Deployment::STAGING->get_label() );
+		$staging_value = Deployment::STAGING->value;
+		$is_staging    = selected( $current_deployment, Deployment::STAGING->value, false );
+		$staging_label = esc_html( Deployment::STAGING->get_label() );
 
-		$production_value  = Deployment::PRODUCTION->value;
-		$is_production     = selected( $current_deployment, Deployment::PRODUCTION->value, false );
-		$production_label  = esc_html( Deployment::PRODUCTION->get_label() );
+		$production_value = Deployment::PRODUCTION->value;
+		$is_production    = selected( $current_deployment, Deployment::PRODUCTION->value, false );
+		$production_label = esc_html( Deployment::PRODUCTION->get_label() );
 
 		return <<<HTML
 			<select name="feature_states[{$fqcn}]" style="max-width: 100%; font-size: 14px; height: 35px; padding: 0 30px 0 10px; border-color: #8c8f94;">

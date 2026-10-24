@@ -63,18 +63,18 @@ readonly class ProofRequirement {
 	 * @param string|string[] $not_actions Actions that must NOT have fired.
 	 */
 	public function __construct(
-		string|array $classes     = array(),
-		string|array $functions   = array(),
-		string|array $methods     = array(),
-		string|array $constants   = array(),
-		string|array $actions     = array(),
+		string|array $classes = array(),
+		string|array $functions = array(),
+		string|array $methods = array(),
+		string|array $constants = array(),
+		string|array $actions = array(),
 		string|array $not_actions = array()
 	) {
-		$this->classes     = is_array( $classes )     ? $classes     : array( $classes );
-		$this->functions   = is_array( $functions )   ? $functions   : array( $functions );
-		$this->methods     = is_array( $methods )     ? $methods     : array( $methods );
-		$this->constants   = is_array( $constants )   ? $constants   : array( $constants );
-		$this->actions     = is_array( $actions )     ? $actions     : array( $actions );
+		$this->classes     = is_array( $classes ) ? $classes : array( $classes );
+		$this->functions   = is_array( $functions ) ? $functions : array( $functions );
+		$this->methods     = is_array( $methods ) ? $methods : array( $methods );
+		$this->constants   = is_array( $constants ) ? $constants : array( $constants );
+		$this->actions     = is_array( $actions ) ? $actions : array( $actions );
 		$this->not_actions = is_array( $not_actions ) ? $not_actions : array( $not_actions );
 	}
 }

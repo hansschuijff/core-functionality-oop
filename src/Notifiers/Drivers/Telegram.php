@@ -54,13 +54,16 @@ class Telegram implements PushNoticeInterface {
 
 		$url = "https://telegram.org{$bot_token}/sendMessage";
 
-		wp_remote_post( $url, array(
-			'body' => array(
-				'chat_id'    => $chat_id,
-				'text'       => '🚨 *[DeWittePrins Alert]*' . "\n\n" . $message,
-				'parse_mode' => 'Markdown',
-			),
-		) );
+		wp_remote_post(
+			$url,
+			array(
+				'body' => array(
+					'chat_id'    => $chat_id,
+					'text'       => '🚨 *[DeWittePrins Alert]*' . "\n\n" . $message,
+					'parse_mode' => 'Markdown',
+				),
+			)
+		);
 
 		return true;
 	}

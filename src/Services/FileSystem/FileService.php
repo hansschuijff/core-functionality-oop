@@ -102,7 +102,7 @@ class FileService {
 	 * Supports dynamic encoding paths for both executable PHP arrays and JSON documents.
 	 *
 	 * @since  1.0.0
-	 * @param  Register    $register      Enum configuration destination signature mapping index.
+	 * @param  Register     $register      Enum configuration destination signature mapping index.
 	 * @param  array<mixed> $register_data The structured components registry context data payload tree.
 	 * @return string|bool                Translatable success message notification on success, false on write failure.
 	 */
@@ -154,7 +154,7 @@ class FileService {
 	 * Commits data payload maps into an executable PHP return array compilation blueprint file.
 	 *
 	 * @since  1.0.0
-	 * @param  Register    $register      Enum configuration file destination indicator.
+	 * @param  Register     $register      Enum configuration file destination indicator.
 	 * @param  array<mixed> $register_data The structured components registry data context.
 	 * @return bool                       True if data operations succeed, false otherwise.
 	 */
@@ -186,7 +186,7 @@ class FileService {
 	 * @param string $path
 	 * @return void
 	 */
-	private function clear_opcache( string $path ) : void {
+	private function clear_opcache( string $path ): void {
 		/**
 		 * FIX 1: Force the OS to synchronize the disk-state immediately.
 		 */
@@ -206,7 +206,7 @@ class FileService {
 	 * Commits data payload maps into an indented, human-readable JSON string file configuration.
 	 *
 	 * @since  1.0.0
-	 * @param  Register    $register      Enum configuration file destination indicator.
+	 * @param  Register     $register      Enum configuration file destination indicator.
 	 * @param  array<mixed> $register_data The structured components registry data context.
 	 * @return bool                       True if data operations succeed, false otherwise.
 	 */
@@ -235,18 +235,18 @@ class FileService {
 	 * @return string              Generated execution-ready PHP file code string.
 	 */
 	private function build_file_content_php( array $array ): string {
-		$html  = "<?php" . PHP_EOL;
-		$html .= "/**" . PHP_EOL;
-		$html .= " * Auto-generated configuration file." . PHP_EOL;
-		$html .= " *" . PHP_EOL;
-		$html .= " * @since 1.0.0" . PHP_EOL;
-		$html .= " */"  . PHP_EOL;
+		$html  = '<?php' . PHP_EOL;
+		$html .= '/**' . PHP_EOL;
+		$html .= ' * Auto-generated configuration file.' . PHP_EOL;
+		$html .= ' *' . PHP_EOL;
+		$html .= ' * @since 1.0.0' . PHP_EOL;
+		$html .= ' */' . PHP_EOL;
 		$html .= PHP_EOL;
 		$html .= "if ( ! defined( 'ABSPATH' ) ) {" . PHP_EOL;
 		$html .= "\texit;" . PHP_EOL;
-		$html .= "}" . PHP_EOL;
+		$html .= '}' . PHP_EOL;
 		$html .= PHP_EOL;
-		$html .= 'return ' . var_export( $array, true ) . ";" . PHP_EOL; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_var_export
+		$html .= 'return ' . var_export( $array, true ) . ';' . PHP_EOL; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_var_export
 
 		return $html;
 	}

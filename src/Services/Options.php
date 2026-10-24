@@ -336,7 +336,7 @@ class Options {
 		$live_value = $this->get( $token );
 
 		// 2. Hydrate and update the isolated quarantine pool array in memory
-		$quarantine_pool = $this->get_quarantine_pool();
+		$quarantine_pool           = $this->get_quarantine_pool();
 		$quarantine_pool[ $token ] = $live_value;
 		$this->save_quarantine_pool( $quarantine_pool );
 

@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use \DeWittePrins\CoreFunctionality\Diagnostics\Logger;
+use DeWittePrins\CoreFunctionality\Diagnostics\Logger;
 
 if ( ! function_exists( __NAMESPACE__ . '\is_cf_ready' ) ) {
 	/**

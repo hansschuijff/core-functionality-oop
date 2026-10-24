@@ -81,7 +81,7 @@ class MenuBuilder extends AbstractFeature {
 		// Securely register the configuration panel into the host page factory autonomously.
 		add_action(
 			'core-functionality/register-settings-sections',
-			function( $settings_factory ) {
+			function ( $settings_factory ) {
 				$settings_factory->register_section( MenuBuilderSettings::class );
 			}
 		);
@@ -123,7 +123,7 @@ class MenuBuilder extends AbstractFeature {
 		}
 
 		// 2. Fetch the live initialized shared singleton options service out of settings.
-		$saved_tree      = $this->plugin->settings->get( $this->menu_builder_tree_key, '', false, array() );
+		$saved_tree = $this->plugin->settings->get( $this->menu_builder_tree_key, '', false, array() );
 
 		if ( empty( $saved_tree ) || ! is_array( $saved_tree ) ) {
 			return;

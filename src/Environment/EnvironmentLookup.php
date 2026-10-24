@@ -261,7 +261,7 @@ class EnvironmentLookup {
 	 * @return void
 	 */
 	private function set_lookup_registries_from_settings(): void {
-		$register = $this->get_environment_lookup_register();
+		$register               = $this->get_environment_lookup_register();
 		$this->plugins_register = $register['plugins'];
 		$this->themes_register  = $register['themes'];
 	}

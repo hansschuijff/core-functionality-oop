@@ -130,7 +130,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 			return;
 		}
 
-		foreach ( $registered_modules as $module_fqcn => $features_fqcn) {
+		foreach ( $registered_modules as $module_fqcn => $features_fqcn ) {
 
 			$this->render_module_start( $module_fqcn, $reset_to_defaults );
 
@@ -167,7 +167,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
-	private function render_module_start( string $module_fqcn, bool $reset_to_defaults ): void  {
+	private function render_module_start( string $module_fqcn, bool $reset_to_defaults ): void {
 
 		$module_name    = esc_html( $module_fqcn::get_name() );
 		$module_enabled = $reset_to_defaults
@@ -198,14 +198,14 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
-	private function render_feature( string $feature_fqcn, bool $reset_to_defaults ) : void {
+	private function render_feature( string $feature_fqcn, bool $reset_to_defaults ): void {
 		$feature_name    = $feature_fqcn::get_name();
 		$feature_enabled = $reset_to_defaults
 			? $this->default_enabled_setting
 			: $this->plugin->components_register->is_enabled( $feature_fqcn );
-		$is_enabled   = checked( $feature_enabled, true, false );
-		$feature_fqcn = esc_attr( $feature_fqcn );
-		$feature_name = esc_html( $feature_name );
+		$is_enabled      = checked( $feature_enabled, true, false );
+		$feature_fqcn    = esc_attr( $feature_fqcn );
+		$feature_name    = esc_html( $feature_name );
 
 		echo <<<HTML
 			<label style="display: block; margin-bottom: 8px;">

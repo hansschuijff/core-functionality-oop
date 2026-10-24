@@ -23,10 +23,10 @@ use Override;
 use DeWittePrins\CoreFunctionality\Plugin;
 
 use function __;
-use function \get_transient;
-use function \set_transient;
-use function \update_option;
-use function \delete_transient;
+use function get_transient;
+use function set_transient;
+use function update_option;
+use function delete_transient;
 
 /**
  * Class KeepLicense
@@ -69,7 +69,7 @@ class KeepLicenseAlive extends AbstractFeature {
 	 */
 	private function set_license_data() {
 
-		$license_data = $this->plugin->settings->get('activewoo-license-data');
+		$license_data = $this->plugin->settings->get( 'activewoo-license-data' );
 
 		$transient_license_data = get_transient( 'aw_license_data' );
 
@@ -79,6 +79,5 @@ class KeepLicenseAlive extends AbstractFeature {
 			set_transient( 'aw_license_data', $license_data, \YEAR_IN_SECONDS );
 			update_option( 'aw_license', $license_data->license_key );
 		}
-
 	}
 }

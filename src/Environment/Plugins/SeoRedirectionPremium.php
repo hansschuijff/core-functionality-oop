@@ -42,5 +42,6 @@ class SeoRedirectionPremium extends AbstractPlugin {
 	}
 
 	#[Override]
-	protected function get_menu_nodes(): array { return array(); }
+	protected function get_menu_nodes(): array {
+		return array(); }
 }

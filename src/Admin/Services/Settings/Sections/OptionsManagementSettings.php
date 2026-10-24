@@ -113,7 +113,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return array<string, string> Array mapping unique style handles to absolute file asset URLs.
 	 */
 	#[Override]
-	public static function get_stylesheets(): array { return array(); }
+	public static function get_stylesheets(): array {
+		return array(); }
 
 	/**
 	 * Registers interactive execution JavaScript script file assets handles maps bindings.
@@ -122,7 +123,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return array<string, string> Array mapping unique script handles to absolute file asset URLs.
 	 */
 	#[Override]
-	public static function get_scripts(): array { return array(); }
+	public static function get_scripts(): array {
+		return array(); }
 
 	/**
 	 * Orchestrates the rendering pipeline generating the complete feature settings dashboard views layout.
@@ -144,7 +146,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$grouped_options    = $options_service->get_grouped_keys();
 		$keys_in_use        = array_merge( array_keys( $grouped_options ), array_values( $standalone_options ) );
 
-		// INJECT THE NATIVE WORDPRESS NONCE FIELDS IMMEDIATELY AT THE TOP
+		// INJECT THE NATIVE WordPress NONCE FIELDS IMMEDIATELY AT THE TOP
 		wp_nonce_field( 'dwp_vault_management_action', 'dwp_vault_management_nonce' );
 
 		echo '<div class="dwp-options-management-dashboard" style="max-width: 900px; display: flex; flex-direction: column; gap: 30px;">';
@@ -157,7 +159,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 
 		// Section 3: The Isolated Danger Zone (Moved safely out of bulk action areas).
 		// if ( ! empty( $quarantine_pool ) || ! empty( $keys ) ) {
-		// 	$this->render_danger_zone_panel();
+		// $this->render_danger_zone_panel();
 		// }
 
 		echo '</div>';
@@ -232,7 +234,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		return true;
 	}
 
-	/*-------------------------------------------------------------------------
+	/*
+	-------------------------------------------------------------------------
 	 * PRIVATE RENDER BLOCK METHODS (CLEAN CODE ISOLATION MODULES)
 	 *------------------------------------------------------------------------*/
 
@@ -366,7 +369,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 				$group_attr = esc_attr( $group );
 				echo "<option value='shared:{$group_attr}'>{$group_attr}</option>";
 			}
-			echo "</optgroup>";
+			echo '</optgroup>';
 		}
 
 		echo <<<HTML
@@ -411,7 +414,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		}
 
 		if ( ! empty( $keys ) ) {
- 			echo '</div>'; // Sluit de .dwp-matrix-clusters-container loepzuiver.
+			echo '</div>'; // Sluit de .dwp-matrix-clusters-container loepzuiver.
 
 			$this->render_registered_keys_section_actions();
 		}
@@ -587,8 +590,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_danger_zone_panel(): void {
-		$zone_title  = esc_html__( 'Danger Zone Panel Area', 'core-functionality' );
-		$zone_desc   = esc_html__( 'Erase Configuration Strategy: Select feature settings tokens via checkboxes across either list above to submit them for hard erasure. Applying the button action inside the footer below will permanently scrub the keys and clear out data structures directly from the WordPress database rows context allocations.', 'core-functionality' );
+		$zone_title = esc_html__( 'Danger Zone Panel Area', 'core-functionality' );
+		$zone_desc  = esc_html__( 'Erase Configuration Strategy: Select feature settings tokens via checkboxes across either list above to submit them for hard erasure. Applying the button action inside the footer below will permanently scrub the keys and clear out data structures directly from the WordPress database rows context allocations.', 'core-functionality' );
 
 		echo <<<HTML
 		<div class="dwp-danger-zone-panel" style="background: #fff5f5; border: 1px solid #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin-top: 30px; border-radius: 4px;">
@@ -670,12 +673,12 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		}
 
 		foreach ( $selected_tokens as $token ) {
-			$token = sanitize_key( $token );
+			$token              = sanitize_key( $token );
 			$current_target_key = ( 'auto_map_dash' === $selected_action ) ? 'dwp-cf-' . $token : $target_key;
 
 			// Vault service entirely absorbs data relocation, structural alignment, and cleanup rules
 			if ( $options_service->assign_token_to_key( $token, $current_target_key ) ) {
-				$count++;
+				++$count;
 			}
 		}
 
@@ -706,7 +709,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 
 				// Centralize routing decoupling into the primary quarantine service method block
 				if ( $options_service->quarantine_token( $token ) ) {
-					$count++;
+					++$count;
 				}
 			}
 			return sprintf( __( '%d keys successfully de-registered and safely returned to quarantine via the Vault.', 'core-functionality' ), $count );
@@ -742,14 +745,15 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 
 			// Invoke pristine core delete method absorbing standalone, grouped, and pool deletions
 			if ( $options_service->delete( $token ) ) {
-				$count++;
+				++$count;
 			}
 		}
 
 		return sprintf( __( 'Deep Purge Completed! %d configurations tokens and data structures fully erased from the database.', 'core-functionality' ), $count );
 	}
 
-	/*-------------------------------------------------------------------------
+	/*
+	-------------------------------------------------------------------------
 	 * PRIVATE UTILITY / DATA LOOKUP METRICS HELPERS
 	 *------------------------------------------------------------------------*/
 

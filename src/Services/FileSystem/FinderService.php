@@ -123,7 +123,7 @@ class FinderService {
 	 * @return string[] Array mapping discovered Fully Qualified Class Name strings.
 	 */
 	public function find_plugins_and_themes_representatives(): array {
-		$base_dir  = rtrim( dirname( __FILE__, 3 ), '/\\' ) . '/Environment';
+		$base_dir  = rtrim( dirname( __DIR__, 2 ), '/\\' ) . '/Environment';
 		$namespace = 'DeWittePrins\\CoreFunctionality\\Environment';
 
 		$discovered_classes = array();

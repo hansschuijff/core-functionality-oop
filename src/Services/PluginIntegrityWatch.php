@@ -25,8 +25,8 @@ use DeWittePrins\CoreFunctionality\Notifiers\Notices;
  */
 class PluginIntegrityWatch {
 
-		private Settings $settings;
-		private Notices $notices;
+	private Settings $settings;
+	private Notices $notices;
 
 	/**
 	 * Multi-dimensional registry tracking structural framework violations.
@@ -44,7 +44,7 @@ class PluginIntegrityWatch {
 	 *
 	 * @since 1.0.0
 	 * @param Settings $settings The central settings repository engine.
-	 * @param Notices $notices The centralized notification service.
+	 * @param Notices  $notices The centralized notification service.
 	 */
 	public function __construct(
 		private readonly Plugin $plugin,

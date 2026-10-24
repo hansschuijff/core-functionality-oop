@@ -59,14 +59,17 @@ class Pushover implements PushNoticeInterface {
 
 		$url = 'https://pushover.net';
 
-		wp_remote_post( $url, array(
-			'body' => array(
-				'token'   => $token,
-				'user'    => $user,
-				'message' => $message,
-				'title'   => $title,
-			),
-		) );
+		wp_remote_post(
+			$url,
+			array(
+				'body' => array(
+					'token'   => $token,
+					'user'    => $user,
+					'message' => $message,
+					'title'   => $title,
+				),
+			)
+		);
 
 		return true;
 	}

@@ -129,7 +129,7 @@ class Logger {
 	 *
 	 * @since  1.0.0
 	 * @param int $caller_depth Optional. Track trace depth where caller van be retrieved. Default 2.
- 	 * @return array{
+	 * @return array{
 	 *     caller: array{
 	 *         class: string,
 	 *         type: string,
@@ -156,16 +156,16 @@ class Logger {
 		$called_file_depth = ( $called_depth - 1 );
 
 		// Capture only the top 3 layers of the execution stack to maximize performance.
-		$trace             = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, $caller_depth + 1 );
-		$default           =  array(
+		$trace       = debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, $caller_depth + 1 );
+		$default     = array(
 			'class'  => 'unknown',
 			'type'   => 'unknown',
 			'method' => 'unknown',
 			'file'   => 'unknown',
 			'line'   => 'unknown',
 		);
-		$caller_info       = $default;
-		$called_info       = $default;
+		$caller_info = $default;
+		$called_info = $default;
 
 		/**
 		 * Default backtrace array blueprint:
@@ -175,31 +175,34 @@ class Logger {
 		 */
 		if ( isset( $trace[ $called_depth ] ) ) {
 			$called_info = array(
-				'class'    => $trace[ $called_depth ]['class']    ?? 'Global Scope / Function',
-				'type'     => $trace[ $called_depth ]['type']     ?? 'N/A',  // '->' for instance, '::' for static
+				'class'    => $trace[ $called_depth ]['class'] ?? 'Global Scope / Function',
+				'type'     => $trace[ $called_depth ]['type'] ?? 'N/A',  // '->' for instance, '::' for static
 				'function' => $trace[ $called_depth ]['function'] ?? 'N/A',
-				'method'   => ( $trace[ $called_depth ]['class']    ?? '' )
-							. ( $trace[ $called_depth ]['type']     ?? '' )
+				'method'   => ( $trace[ $called_depth ]['class'] ?? '' )
+							. ( $trace[ $called_depth ]['type'] ?? '' )
 							. ( $trace[ $called_depth ]['function'] ?? 'unknown' )
 							. '()',
-				'file'     => $trace[ $called_file_depth ]['file']     ?? 'N/A',
-				'line'     => $trace[ $called_file_depth ]['line']     ?? 'N/A', // Line inside the caller file
+				'file'     => $trace[ $called_file_depth ]['file'] ?? 'N/A',
+				'line'     => $trace[ $called_file_depth ]['line'] ?? 'N/A', // Line inside the caller file
 			);
 		}
 		if ( isset( $trace[ $caller_depth ] ) ) {
 			$caller_info = array(
-				'class'    => $trace[ $caller_depth ]['class']    ?? 'Global Scope / Function',
-				'type'     => $trace[ $caller_depth ]['type']     ?? 'N/A',  // '->' for instance, '::' for static
+				'class'    => $trace[ $caller_depth ]['class'] ?? 'Global Scope / Function',
+				'type'     => $trace[ $caller_depth ]['type'] ?? 'N/A',  // '->' for instance, '::' for static
 				'function' => $trace[ $caller_depth ]['function'] ?? 'N/A',
-				'method'   => ( $trace[ $caller_depth ]['class']    ?? '' )
-							. ( $trace[ $caller_depth ]['type']     ?? '' )
+				'method'   => ( $trace[ $caller_depth ]['class'] ?? '' )
+							. ( $trace[ $caller_depth ]['type'] ?? '' )
 							. ( $trace[ $caller_depth ]['function'] ?? 'unknown' )
 							. '()',
-				'file'     => $trace[ $caller_file_depth ]['file']     ?? 'N/A',
-				'line'     => $trace[ $caller_file_depth ]['line']     ?? 'N/A', // Line inside the caller file
+				'file'     => $trace[ $caller_file_depth ]['file'] ?? 'N/A',
+				'line'     => $trace[ $caller_file_depth ]['line'] ?? 'N/A', // Line inside the caller file
 			);
 		}
-		return( array ( 'caller' => $caller_info, 'called' => $called_info ) );
+		return( array(
+			'caller' => $caller_info,
+			'called' => $called_info,
+		) );
 	}
 
 	/**
@@ -231,6 +234,6 @@ class Logger {
 			$caller_method,
 			$file,
 			$caller['line'],
-		 );
+		);
 	}
 }

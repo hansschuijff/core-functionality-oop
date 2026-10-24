@@ -114,7 +114,7 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 			   AND o2.option_value < %d",
 			$now_timestamp
 		);
-		$expired_count = (int) $wpdb->get_var( $count_expired_query );
+		$expired_count       = (int) $wpdb->get_var( $count_expired_query );
 
 		// 2. SCAN ORPHANS: Count standalone timeout markers whose main data row has been deleted
 		$count_orphans_query = "
@@ -124,17 +124,17 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 			  AND REPLACE(option_name, '_transient_timeout_', '_transient_') NOT IN (
 				  SELECT option_name FROM (SELECT option_name FROM {$wpdb->options}) as sub
 			  )";
-		$orphans_count = (int) $wpdb->get_var( $count_orphans_query );
+		$orphans_count       = (int) $wpdb->get_var( $count_orphans_query );
 
 		$total_garbage_rows = $expired_count + $orphans_count;
 
 		// UI Presentation Parameters Layout
-		$lbl_status   = esc_html__( 'Database Cache Status Analysis', 'core-functionality' );
-		$lbl_expired  = esc_html__( 'Expired Transients Found', 'core-functionality' );
-		$lbl_orphans  = esc_html__( 'Orphaned Timeout Markers', 'core-functionality' );
-		$lbl_total    = esc_html__( 'Total Removable Row Overhead', 'core-functionality' );
-		$lbl_healthy  = esc_html__( 'Database cache is in optimal health! No transient clutter detected.', 'core-functionality' );
-		$lbl_warning  = esc_html__( 'Database clutter detected. Use the manual optimization trigger below to clean the option rows.', 'core-functionality' );
+		$lbl_status  = esc_html__( 'Database Cache Status Analysis', 'core-functionality' );
+		$lbl_expired = esc_html__( 'Expired Transients Found', 'core-functionality' );
+		$lbl_orphans = esc_html__( 'Orphaned Timeout Markers', 'core-functionality' );
+		$lbl_total   = esc_html__( 'Total Removable Row Overhead', 'core-functionality' );
+		$lbl_healthy = esc_html__( 'Database cache is in optimal health! No transient clutter detected.', 'core-functionality' );
+		$lbl_warning = esc_html__( 'Database clutter detected. Use the manual optimization trigger below to clean the option rows.', 'core-functionality' );
 
 		echo '<div class="dwp-transient-metrics-panel" style="margin-top: 15px;">';
 		echo '<h4 style="margin: 0 0 12px 0; color: #1e293b; font-size: 14px; font-weight: 600;">' . $lbl_status . '</h4>';

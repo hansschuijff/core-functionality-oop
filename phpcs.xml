@@ -2,6 +2,9 @@
 <ruleset name="DeWittePrins Core Functionality Code Standards">
     <description>Strict compliance ruleset for core functionality framework development.</description>
 
+    <!-- PHP only; the WordPress JS sniffs are outdated. -->
+    <arg name="extensions" value="php"/>
+
     <!-- Exclude third-party assets and compressed build folders -->
     <exclude-pattern>*/build/*</exclude-pattern>
     <exclude-pattern>*/node_modules/*</exclude-pattern>

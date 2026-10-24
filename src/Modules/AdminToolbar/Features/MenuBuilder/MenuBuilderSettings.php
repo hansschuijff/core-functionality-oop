@@ -140,7 +140,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		HTML;
 
 		foreach ( $providers as $provider_id ) {
-			$clean_id = esc_attr( $provider_id );
+			$clean_id          = esc_attr( $provider_id );
 			$friendly_provider = esc_html( ucwords( str_replace( array( '_', '-' ), ' ', $provider_id ) ) );
 			echo "<option value='{$clean_id}'>{$friendly_provider}</option>";
 		}
@@ -200,7 +200,10 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 				if ( is_array( $shortcuts ) ) {
 					foreach ( $shortcuts as $s ) {
 						if ( $s instanceof ToolbarShortcut ) {
-							$flattened_pool[ $s->id ] = array( 'shortcut' => $s, 'provider' => $p_id );
+							$flattened_pool[ $s->id ] = array(
+								'shortcut' => $s,
+								'provider' => $p_id,
+							);
 						}
 					}
 				}
@@ -234,7 +237,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			$type = $meta['type'] ?? 'shortcut';
 
 			if ( 'submenu' === $type ) {
-				$shortcut = new ToolbarShortcut(
+				$shortcut    = new ToolbarShortcut(
 					id:          $meta['id'] ?? $instance_id,
 					title:       $meta['title'] ?? 'Custom Submenu',
 					label:       __( 'Custom Submenu Header Group', 'core-functionality' ),
@@ -247,7 +250,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 				$pool_item = $flattened_pool[ $node_id ] ?? null;
 
 				if ( is_array( $pool_item ) ) {
-					$shortcut = new ToolbarShortcut(
+					$shortcut    = new ToolbarShortcut(
 						id:          $pool_item['shortcut']->id,
 						title:       $meta['title'] ?? $pool_item['shortcut']->title,
 						label:       $pool_item['shortcut']->label,
@@ -258,11 +261,11 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 					$provider_id = $pool_item['provider'];
 				} else {
 					$shortcut    = new ToolbarShortcut(
-							id: $node_id,
-							title: $node_id,
-							label: __( 'Inactive Component Residual Node', 'core-functionality' ),
-							orientation: Orientation::BOTH
-						);
+						id: $node_id,
+						title: $node_id,
+						label: __( 'Inactive Component Residual Node', 'core-functionality' ),
+						orientation: Orientation::BOTH
+					);
 					$provider_id = 'unknown';
 				}
 			}
@@ -385,7 +388,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			return false;
 		}
 
-		$sanitized_tree  = $this->sanitize_recursive_tree_payload( $decoded_tree );
+		$sanitized_tree = $this->sanitize_recursive_tree_payload( $decoded_tree );
 
 		$this->plugin->settings->save( $this->menu_builder_tree_option_token, $sanitized_tree );
 

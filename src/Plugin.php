@@ -153,7 +153,7 @@ class Plugin {
 			//
 			// if it crashes everythin after this statement will not be performed and processing
 			// will continue in the catch clause.
-			$this->settings          = new Settings( $this->get_data( 'settings-dir' ) );
+			$this->settings = new Settings( $this->get_data( 'settings-dir' ) );
 
 		} catch ( Throwable $e ) {
 			// 🎯 SCENARIO B: EMERGENCY HALT
@@ -333,8 +333,10 @@ class Plugin {
 	 * @return void
 	 */
 	private function register_emergency_admin_notice( string $error_message ): void {
-		add_action( 'admin_notices', function() use ( $error_message ) {
-			?>
+		add_action(
+			'admin_notices',
+			function () use ( $error_message ) {
+				?>
 			<div class="notice notice-error">
 				<p>
 					<strong><?php esc_html_e( 'De Witte Prins - Core Functionality Gecrasht!', 'core-functionality' ); ?></strong><br />
@@ -344,8 +346,9 @@ class Plugin {
 					</code>
 				</p>
 			</div>
-			<?php
-		});
+				<?php
+			}
+		);
 	}
 
 	/**
@@ -371,18 +374,18 @@ class Plugin {
 		$base_dir = trailingslashit( plugin_dir_path( $root_file ) );
 
 		$this->plugin_data = array(
-			'version'                   => get_plugin_data( $root_file, false, false )['Version'] ?? '1.0.0',
-			'plugin-url'                => plugin_dir_url( $root_file ),
+			'version'             => get_plugin_data( $root_file, false, false )['Version'] ?? '1.0.0',
+			'plugin-url'          => plugin_dir_url( $root_file ),
 			// base paths.
-			'plugin-dir'                => $base_dir,
-			'modules-dir'               => $base_dir . 'src/Modules/',
+			'plugin-dir'          => $base_dir,
+			'modules-dir'         => $base_dir . 'src/Modules/',
 			// Settings directories.
-			'settings-dir'              => $base_dir . 'settings/',
-			'kernel-settings-dir'       => $base_dir . 'kernel/',
-			'ac-settings-dir'           => $base_dir . 'kernel/',
+			'settings-dir'        => $base_dir . 'settings/',
+			'kernel-settings-dir' => $base_dir . 'kernel/',
+			'ac-settings-dir'     => $base_dir . 'kernel/',
 			// Base namespaces.
-			'plugin-namespace'          => 'DeWittePrins\\CoreFunctionality',
-			'modules-namespace'         => 'DeWittePrins\\CoreFunctionality\\Modules',
+			'plugin-namespace'    => 'DeWittePrins\\CoreFunctionality',
+			'modules-namespace'   => 'DeWittePrins\\CoreFunctionality\\Modules',
 		);
 	}
 

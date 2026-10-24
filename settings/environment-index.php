@@ -25,65 +25,71 @@ return array(
 		// kebab-case). Basenames marked "confirm" are not installed on the local site and are unverified.
 
 		// Core & Common Utilities.
-		'yoast-seo'                       => 'wordpress-seo/wp-seo.php',
-		'jetpack'                         => 'jetpack/jetpack.php',
-		'gravity-forms'                   => 'gravityforms/gravityforms.php',
-		'carbon-fields'                   => 'carbon-fields/carbon-fields.php',
-		'carbon-fields-helper'            => 'carbon-fields-helper/carbon-fields-helper.php',
-		'searchwp'                        => 'searchwp/searchwp.php',
-		'debug-toolkit'                   => '__debug-toolkit/debug-toolkit.php',
-		'broken-link-checker'             => 'broken-link-checker/broken-link-checker.php',
-		'fluent-smtp'                     => 'fluent-smtp/fluent-smtp.php',
-		'loco-translate'                  => 'loco-translate/loco.php',
-		'seo-redirection-premium'         => 'seo-redirection-premium/seo-redirection-premium.php',
-		'updraft-plus'                    => 'updraftplus/updraftplus.php',
-		'wp-forms'                        => 'wpforms/wpforms.php',
-		'redis-cache'                     => 'redis-cache/redis-cache.php',
+		'yoast-seo'                               => 'wordpress-seo/wp-seo.php',
+		'jetpack'                                 => 'jetpack/jetpack.php',
+		'gravity-forms'                           => 'gravityforms/gravityforms.php',
+		'carbon-fields'                           => 'carbon-fields/carbon-fields.php',
+		'carbon-fields-helper'                    => 'carbon-fields-helper/carbon-fields-helper.php',
+		'searchwp'                                => 'searchwp/searchwp.php',
+		'debug-toolkit'                           => '__debug-toolkit/debug-toolkit.php',
+		'broken-link-checker'                     => 'broken-link-checker/broken-link-checker.php',
+		'fluent-smtp'                             => 'fluent-smtp/fluent-smtp.php',
+		'loco-translate'                          => 'loco-translate/loco.php',
+		'seo-redirection-premium'                 => 'seo-redirection-premium/seo-redirection-premium.php',
+		'updraft-plus'                            => 'updraftplus/updraftplus.php',
+		'wp-forms'                                => 'wpforms/wpforms.php',
+		'redis-cache'                             => 'redis-cache/redis-cache.php',
 
 		// Updates and licences.
-		'git-updater'                     => 'git-updater/git-updater.php',
-		'git-remote-updater'              => 'git-remote-updater/git-remote-updater.php',
-		'festinger-vault'                 => 'festinger-vault/festingervault.php', // confirm: local site also has festingervault/ (v5 beta).
-		'nobuna'                          => 'nobuna-plugins-manager/nobuna-plugins-manager.php',
+		'git-updater'                             => 'git-updater/git-updater.php',
+		'git-remote-updater'                      => 'git-remote-updater/git-remote-updater.php',
+		'festinger-vault'                         => 'festinger-vault/festingervault.php', // confirm: local site also has festingervault/ (v5 beta).
+		'nobuna'                                  => 'nobuna-plugins-manager/nobuna-plugins-manager.php',
 
 		// WooCommerce Core & Extensions.
-		'woocommerce'                     => 'woocommerce/woocommerce.php',
-		'activewoo-api-helper'            => 'activewoo-api-helper/activewoo-api-helper.php',
+		'woocommerce'                             => 'woocommerce/woocommerce.php',
+		'activewoo-api-helper'                    => 'activewoo-api-helper/activewoo-api-helper.php',
 		'woocommerce-active-campaign-integration' => 'woocommerce-active-campaign/woocommerce-active-campaign.php',
-		'mollie-payments-for-woocommerce' => 'mollie-payments-for-woocommerce/mollie-payments-for-woocommerce.php',
-		'woocommerce-pdf-invoices'        => 'woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packingslips.php',
-		'woocommerce-subscriptions'       => 'woocommerce-subscriptions/woocommerce-subscriptions.php',
-		'woocommerce-customer-order-csv-export' => 'woocommerce-customer-order-csv-export/woocommerce-customer-order-csv-export.php',
-		'woocommerce-pre-orders'          => 'woocommerce-pre-orders/woocommerce-pre-orders.php',
-		'woocommerce-product-addons'      => 'woocommerce-product-addons/woocommerce-product-addons.php',
-		'woocommerce-smart-coupons'       => 'woocommerce-smart-coupons/woocommerce-smart-coupons.php',
-		'automatewoo'                     => 'automatewoo/automatewoo.php',
+		'mollie-payments-for-woocommerce'         => 'mollie-payments-for-woocommerce/mollie-payments-for-woocommerce.php',
+		'woocommerce-pdf-invoices'                => 'woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packingslips.php',
+		'woocommerce-subscriptions'               => 'woocommerce-subscriptions/woocommerce-subscriptions.php',
+		'woocommerce-customer-order-csv-export'   => 'woocommerce-customer-order-csv-export/woocommerce-customer-order-csv-export.php',
+		'woocommerce-pre-orders'                  => 'woocommerce-pre-orders/woocommerce-pre-orders.php',
+		'woocommerce-product-addons'              => 'woocommerce-product-addons/woocommerce-product-addons.php',
+		'woocommerce-smart-coupons'               => 'woocommerce-smart-coupons/woocommerce-smart-coupons.php',
+		'automatewoo'                             => 'automatewoo/automatewoo.php',
 
 		// The Events Calendar Stack.
-		'the-events-calendar'             => 'the-events-calendar/the-events-calendar.php',
-		'the-events-calendar-pro'         => 'events-calendar-pro/events-calendar-pro.php',
-		'event-tickets'                   => 'event-tickets/event-tickets.php',
-		'event-tickets-plus'              => 'event-tickets-plus/event-tickets-plus.php',
-		'schema-glue-yoast-tec'           => 'schema-glue-for-yoast-the-events-calendar/schema-glue.php',
+		'the-events-calendar'                     => 'the-events-calendar/the-events-calendar.php',
+		'the-events-calendar-pro'                 => 'events-calendar-pro/events-calendar-pro.php',
+		'event-tickets'                           => 'event-tickets/event-tickets.php',
+		'event-tickets-plus'                      => 'event-tickets-plus/event-tickets-plus.php',
+		'schema-glue-yoast-tec'                   => 'schema-glue-for-yoast-the-events-calendar/schema-glue.php',
 
 		// Sensei LMS Stack.
-		'sensei-lms'                      => 'sensei-lms/sensei-lms.php',
-		'sensei-pro'                      => 'woothemes-sensei/woothemes-sensei.php', // Sensei Pro (WC Paid Courses).
-		'sensei-content-drip'             => 'sensei-content-drip/sensei-content-drip.php',
-		'sensei-paid-courses'             => 'sensei-paid-courses/sensei-paid-courses.php',
+		'sensei-lms'                              => 'sensei-lms/sensei-lms.php',
+		'sensei-pro'                              => 'woothemes-sensei/woothemes-sensei.php', // Sensei Pro (WC Paid Courses).
+		'sensei-content-drip'                     => 'sensei-content-drip/sensei-content-drip.php',
+		'sensei-paid-courses'                     => 'sensei-paid-courses/sensei-paid-courses.php',
 
 		// Social & Feeds.
-		'scriptless-social-sharing'       => 'scriptless-social-sharing/scriptless-social-sharing.php',
-		'shared-counts'                   => 'shared-counts/shared-counts.php',
-		'send-images-to-rss'              => 'send-images-rss/send-images-rss.php',
+		'scriptless-social-sharing'               => 'scriptless-social-sharing/scriptless-social-sharing.php',
+		'shared-counts'                           => 'shared-counts/shared-counts.php',
+		'send-images-to-rss'                      => 'send-images-rss/send-images-rss.php',
 
 		// Genesis Utility Plugins.
-		'display-featured-image-genesis'  => 'display-featured-image-genesis/display-featured-image-genesis.php',
-		'genesis-simple-faq'              => 'genesis-simple-faq/genesis-simple-faq.php',
-		'be-like-content'                 => 'be-like-content/be-like-content.php',
+		'display-featured-image-genesis'          => 'display-featured-image-genesis/display-featured-image-genesis.php',
+		'genesis-simple-faq'                      => 'genesis-simple-faq/genesis-simple-faq.php',
+		'be-like-content'                         => 'be-like-content/be-like-content.php',
 	),
-	'themes' => array(
-		'any-genesis'                     => array ( 'name' => 'Genesis', 'author' => 'StudioPress' ),
-		'essence-pro'                     => array ( 'name' => 'Essence Pro', 'author' => 'StudioPress' ),
+	'themes'  => array(
+		'any-genesis' => array(
+			'name'   => 'Genesis',
+			'author' => 'StudioPress',
+		),
+		'essence-pro' => array(
+			'name'   => 'Essence Pro',
+			'author' => 'StudioPress',
+		),
 	),
 );

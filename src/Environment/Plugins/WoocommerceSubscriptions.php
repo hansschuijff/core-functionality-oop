@@ -51,7 +51,7 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 			// Frontend Links - Safe lazy loading via PHP short closures!
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-front-my-account-subscriptions',
- 				title:   __( 'My Account: Subscriptions', 'core-functionality' ),
+				title:   __( 'My Account: Subscriptions', 'core-functionality' ),
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'subscriptions', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Subscriptions', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,

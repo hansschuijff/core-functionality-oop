@@ -85,7 +85,7 @@ class TransientOptimizer extends AbstractFeature {
 		// Securely register the configuration panel into the host page factory autonomously.
 		add_action(
 			'core-functionality/register-settings-sections',
-			function( $settings_factory ) {
+			function ( $settings_factory ) {
 				$settings_factory->register_section( TransientOptimizerSettings::class );
 			}
 		);

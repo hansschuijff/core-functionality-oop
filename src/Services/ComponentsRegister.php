@@ -121,9 +121,9 @@ class ComponentsRegister {
 	public function __construct(
 		private readonly Plugin $plugin,
 	) {
-		$this->modules_namespace     = $this->plugin->get_data( 'modules-namespace' );
-		$this->current_deployment    = $this->plugin->get_deployment();
-		$this->current_orientation   = $this->plugin->get_orientation();
+		$this->modules_namespace   = $this->plugin->get_data( 'modules-namespace' );
+		$this->current_deployment  = $this->plugin->get_deployment();
+		$this->current_orientation = $this->plugin->get_orientation();
 
 		// Must run before the registers are read, so an update's register file wins over a stale option.
 		$this->sync_with_plugin_version();
@@ -328,7 +328,7 @@ class ComponentsRegister {
 	 * @param string $module The Classname slug, or Fully Qualified Class Name, of a module.
 	 * @return array<string, array> The filtered array of verified feature FQCNs for the module.
 	 */
-	public function get_module_features(  string $module ): array {
+	public function get_module_features( string $module ): array {
 		// Validation and preparations.
 		if ( empty( $module ) ) {
 			return array();
@@ -340,7 +340,7 @@ class ComponentsRegister {
 
 		// Get the unfiltered features.
 		$module_features_fcqn = $this->get_module_features_unfiltered( $module_fqcn );
-		if ( empty ( $module_features_fcqn ) ) {
+		if ( empty( $module_features_fcqn ) ) {
 			return $module_features_fcqn;
 		}
 
@@ -358,7 +358,7 @@ class ComponentsRegister {
 	 * @param string $module The Classname slug, or Fully Qualified Class Name, of a module.
 	 * @return array<int, string> The complete unfiltered array of verified feature FQCNs for the module.
 	 */
-	public function get_module_features_unfiltered(  string $module ): array {
+	public function get_module_features_unfiltered( string $module ): array {
 		if ( empty( $module ) ) {
 			return array();
 		}
@@ -385,7 +385,7 @@ class ComponentsRegister {
 	 */
 	public function get_modules(): array {
 		$components_register = $this->get_register( Register::COMPONENTS );
-		if ( empty ( $components_register) ) {
+		if ( empty( $components_register ) ) {
 			return array();
 		}
 		return array_keys( $components_register ) ?? array();
@@ -399,7 +399,7 @@ class ComponentsRegister {
 	 */
 	public function get_modules_unfiltered(): array {
 		$components_register = $this->get_register( Register::COMPONENTS );
-		if ( empty ( $components_register) ) {
+		if ( empty( $components_register ) ) {
 			return array();
 		}
 		return array_keys( $components_register ) ?? array();
@@ -453,11 +453,11 @@ class ComponentsRegister {
 	private function filter( array $components ): array {
 		$components_register = array();
 
-		foreach ($components as $module_fqcn => $features_fqcn) {
+		foreach ( $components as $module_fqcn => $features_fqcn ) {
 
 			if ( ! $this->is_enabled( $module_fqcn )
-			||   ! $this->current_orientation_allowed( $module_fqcn )
-			||   ! $this->current_deployment_allowed( $module_fqcn )
+			|| ! $this->current_orientation_allowed( $module_fqcn )
+			|| ! $this->current_deployment_allowed( $module_fqcn )
 			) {
 				continue;
 			}
@@ -466,8 +466,8 @@ class ComponentsRegister {
 			foreach ( $features_fqcn as $feature_fqcn ) {
 
 				if ( ! $this->is_enabled( $feature_fqcn )
-				||   ! $this->current_orientation_allowed( $feature_fqcn )
-				||   ! $this->current_deployment_allowed( $feature_fqcn )
+				|| ! $this->current_orientation_allowed( $feature_fqcn )
+				|| ! $this->current_deployment_allowed( $feature_fqcn )
 				) {
 					continue;
 				}
@@ -505,7 +505,7 @@ class ComponentsRegister {
 
 		$component_deployment = $this->get_deployment( $fqcn );
 
-		return match( $this->current_deployment ) {
+		return match ( $this->current_deployment ) {
 
 			Deployment::DEVELOPMENT => true,
 			Deployment::STAGING     => in_array( $component_deployment, array( Deployment::STAGING->value, Deployment::PRODUCTION->value ), true ),
@@ -565,13 +565,13 @@ class ComponentsRegister {
 		if ( empty( $this->components_register ) ) {
 
 			// The components register file must be empty or not found.
-			$this->plugin->notices->add( 'error', __('Components register file was empty or not found. Please inform support.') );
+			$this->plugin->notices->add( 'error', __( 'Components register file was empty or not found. Please inform support.' ) );
 
 			// if component-register file was empty, try to rebuild the cache by scanning files.
 			$this->components_register = $this->rebuild();
 
 			if ( empty( $this->components_register ) ) {
-				$this->plugin->notices->add( 'error', __('Something went wrong rebuilding the components registry. No component was found. Please inform support!') );
+				$this->plugin->notices->add( 'error', __( 'Something went wrong rebuilding the components registry. No component was found. Please inform support!' ) );
 			}
 		}
 
@@ -622,7 +622,7 @@ class ComponentsRegister {
 	/**
 	 * Reforms and validates flat incoming form arrays into a high-performance hash layout (FQCN => true).
 	 *
- 	 * Ensures lookups via array_key_exists execute at instant O(1) performance speeds.
+	 * Ensures lookups via array_key_exists execute at instant O(1) performance speeds.
 	 *
 	 * @since  1.0.0
 	 * @param  array<int, string> $form_enabled_components Flat array payload matching submitted checkboxes.
@@ -641,7 +641,7 @@ class ComponentsRegister {
 		foreach ( $components_register as $module_fqcn => $features_fqcn ) {
 
 			// If the module itself was checked/enabled in the form, add its full FQCN string.
-			if ( ! in_array( $module_fqcn,  $form_enabled_components, true ) ) {
+			if ( ! in_array( $module_fqcn, $form_enabled_components, true ) ) {
 				// If a parent module is disabled, all nested sub-features are implicitly disabled too.
 				continue;
 			}
@@ -679,7 +679,7 @@ class ComponentsRegister {
 		};
 	}
 
-    /**
+	/**
 	 * Perfoms some basic checks on the component register.
 	 * - classes exist
 	 * - implement the correct Interfaces
@@ -719,9 +719,12 @@ class ComponentsRegister {
 	 */
 	private function features_fqcn_to_slug( array $fqcns ): array {
 		// From each array item, keep the part after the last slash and remove the rest.
-		return array_map( function( $fqcn ) {
+		return array_map(
+			function ( $fqcn ) {
 				return basename( str_replace( '\\', '/', $fqcn ) );
-			}, $fqcns );
+			},
+			$fqcns
+		);
 	}
 
 	/**
