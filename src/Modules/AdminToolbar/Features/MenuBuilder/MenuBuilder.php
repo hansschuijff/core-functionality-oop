@@ -135,7 +135,7 @@ class MenuBuilder implements FeatureInterface {
 
 		// Securely register the configuration panel into the host page factory autonomously.
 		add_action(
-			'dwp_cf_register_settings_sections',
+			'core-functionality/register-settings-sections',
 			function( $settings_factory ) {
 				$settings_factory->register_section( MenuBuilderSettings::class );
 			}

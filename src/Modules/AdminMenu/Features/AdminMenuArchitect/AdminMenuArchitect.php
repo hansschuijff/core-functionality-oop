@@ -76,7 +76,7 @@ class AdminMenuArchitect implements FeatureInterface {
 		 *
 		 * @param AdminMenuConfigNode[] $config_nodes Array of config node DTOs.
 		 */
-		$filtered_nodes = apply_filters( 'dwp_core_admin_menu_config_nodes', $config_nodes );
+		$filtered_nodes = apply_filters( 'core-functionality/admin-menu-config-nodes', $config_nodes );
 
 		foreach ( $filtered_nodes as $node ) {
 			if ( ! $node instanceof AdminMenuConfigNode || ! $node->is_enabled ) {
@@ -134,7 +134,7 @@ class AdminMenuArchitect implements FeatureInterface {
 		 *
 		 * @param string[] $slugs_to_remove Array of WordPress admin menu slug strings.
 		 */
-		$slugs_to_remove = apply_filters( 'dwp_core_admin_menu_removals', $slugs_to_remove );
+		$slugs_to_remove = apply_filters( 'core-functionality/admin-menu-removals', $slugs_to_remove );
 
 		foreach ( $slugs_to_remove as $slug ) {
 			if ( is_string( $slug ) && ! empty( $slug ) ) {

@@ -62,7 +62,7 @@ if ( ! function_exists( __NAMESPACE__ . '\call_when_ready' ) ) {
 				call_user_func( $callback );
 			} else {
 				// if not yet ready, defer execution to the core's reactive state queue.
-				add_action( 'dwp_cf_ready', $callback );
+				add_action( 'core-functionality/ready', $callback );
 			}
 		}
 	}

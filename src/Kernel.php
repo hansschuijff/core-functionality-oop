@@ -112,7 +112,7 @@ class Kernel {
 		 * @since 1.0.0
 		 * @param array{hook: string, priority: int} $default_timing Hook and priority (default init, 0).
 		 */
-		$timing = apply_filters( 'dwp_cf_launch_timing', $default_timing );
+		$timing = apply_filters( 'core-functionality/launch-timing', $default_timing );
 		if ( ! is_array( $timing ) ) {
 			$timing = $default_timing;
 		}
@@ -327,7 +327,7 @@ class Kernel {
 		$this->did_launch = true;
 		$this->plugin->set_ready();
 
-		do_action( 'dwp_cf_ready' );
+		do_action( 'core-functionality/ready' );
 	}
 
 	/**

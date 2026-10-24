@@ -121,7 +121,7 @@ class AdminSettingsPage {
 		);
 		add_action( 'admin_print_styles-' . $page_hook, array( $this, 'enqueue_section_assets' ) );
 
-		do_action( 'dwp_cf_register_settings_sections', $this );
+		do_action( 'core-functionality/register-settings-sections', $this );
 	}
 
 	/**

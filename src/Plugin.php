@@ -192,7 +192,7 @@ class Plugin {
 	private function admin_setup() {
 		// schedule the registration of admin settings page sections.
 		add_action(
-			'dwp_cf_register_settings_sections',
+			'core-functionality/register-settings-sections',
 			array( $this, 'register_settingspage_sections' )
 		);
 
@@ -220,7 +220,7 @@ class Plugin {
 	 * Smart orchestration gateway for dependent plugins and external APIs.
 	 *
 	 * Immediately executes the callback if the framework kernel is already booted,
-	 * or defers execution to the global 'dwp_cf_ready' broadcast event.
+	 * or defers execution to the global 'core-functionality/ready' broadcast event.
 	 *
 	 * @since  1.0.0
 	 * @param  callable $callback The code or initialization logic to execute.
@@ -230,7 +230,7 @@ class Plugin {
 		if ( $this->is_ready() ) {
 			call_user_func( $callback );
 		} else {
-			add_action( 'dwp_cf_ready', $callback );
+			add_action( 'core-functionality/ready', $callback );
 		}
 	}
 
