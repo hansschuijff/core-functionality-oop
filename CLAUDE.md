@@ -24,15 +24,22 @@ new modules and features for Hans's own sites.
   and commits in small separate commits. Hans pushes. Never stage files Hans is still editing; commit only
   what belongs to the change.
 - Think first, then build: for anything beyond a small fix, agree on the plan before writing code.
-- Verify before delivering: `php -l` on every changed PHP file and `vendor/bin/phpcs` (ruleset `phpcs.xml`).
-  There is no JS build. For behaviour, check in the local site `https://speeltuin.ddev.site` (DDEV, PHP 8.5).
+- Verify before delivering: `composer lint` and `composer phpcs` (ruleset `phpcs.xml`, PHP files only;
+  the plugin is phpcs-clean, keep it that way). There is no JS build. For behaviour, check the local site
+  `https://speeltuin.ddev.site` (DDEV, PHP 8.5, plugin active). The site's mu-plugins limit the debug log
+  to fatal errors, so warnings do not show there; log them with a temporary mu-plugin that is removed
+  afterwards. Hans logs in in the app's browser pane for admin tests.
+- New or changed translatable strings: regenerate the `.pot`, update `languages/core-functionality-nl_NL.po`
+  and the `.mo` (commands in README.md).
 - Do not change hook names, option keys, settings keys, module or feature ids without saying so; stored
   values and settings files depend on them.
 
 ## Plugin-specific rules
 
-- Namespace `DeWittePrins\CoreFunctionality\`, PSR-4 under `src/`. PHP 8.2+.
-- Text domain `core-functionality` (the final folder name), Domain Path `/languages`.
+- Namespace `DeWittePrins\CoreFunctionality\`, PSR-4 under `src/`. PHP 8.2+, `declare( strict_types=1 );`
+  in every file.
+- Text domain `core-functionality` (the final folder name), Domain Path `/languages`, loaded by `Plugin` on
+  `init` (priority -10). Source strings English, every string also in the nl_NL `.po`.
 - Hooks are `core-functionality/<name>` with a kebab-case name (the brain's `<plugin_slug>/<name>`).
   Prefix `dwp_cf_` for options, nonces and cron events; settings page slug `dwp-cf-settings`.
 - No `class_exists()` / `interface_exists()` / `function_exists()` wrappers around the plugin's own

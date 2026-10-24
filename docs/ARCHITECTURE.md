@@ -197,15 +197,20 @@ Known issues:
 - The public API is not worked out yet (parked): `CF::initialize()` is never called, so the `Api` facade
   and functions answer "not ready", and `src/Api/helpers.php` is a placeholder (not autoloaded; it calls a
   `Core` class that no longer exists).
-- phpcs works again since October 2026 (it silently exited before, see `src/Api/functions.php`). Over the
-  whole plugin: 2795 errors and 306 warnings, of which phpcbf can fix 2634 automatically (best in one
-  separate commit). The rest is mostly missing docblocks (also in the guard classes) and
-  `declare( strict_types=1 );` in about half of the files.
+- phpcs works again since October 2026 (it silently exited before, see `src/Api/functions.php`) and the
+  plugin is clean, except `KeepLicenseAlive/leeg.php`. Fixing the findings also fixed three bugs: the
+  Transient Optimizer compared UTC expiry times with local time (transients removed up to two hours
+  early), the WooCommerce category link always used an example slug, and two buttons were never
+  translated.
+- `src/Modules/ActiveWoo/Features/KeepLicenseAlive/leeg.php` is an old copy of KeepLicenseAlive with the
+  same class name (tracked in git, left out of the release zip); it can be deleted.
+- The tracked folder `wp-content/config/mollie/` in the plugin root ends up in the release zip (confirm:
+  belongs here?).
 - Tested in a logged-in admin (October 2026): the "new components" notice after a simulated update, the
   integrity check and all settings tabs. The two issues found there (the toolbar Cleaner reading
   `$node->id` from an array, and feature names ending in a period) are fixed. The plugin is active again
   on the local site.
-- `src/Modules/LegeModule/` (gitignored template) and `KeepLicenseAlive/leeg.php` still use the old style.
+- `src/Modules/LegeModule/` (gitignored template) still uses the old style.
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):
@@ -236,17 +241,23 @@ Environment proofs (reviewed October 2026):
 Considered and set aside: keeping a feature's administration (its meta) on a settings screen; options do
 not travel with an update to another site.
 
-Missing:
+Later:
 
-- `languages/` with `.pot` and nl_NL `.po`/`.mo`, and loading of the text domain.
-- `README.md` for developers (how to add a module or feature, hooks table).
-- `.github/workflows/release.yml` that builds the release zip, as in Reader Experience.
-- Rename of the folder and repository to `core-functionality` once the legacy plugin is retired.
+- Rename of the folder and repository to `core-functionality` once the legacy plugin is retired (also
+  `PLUGIN_SLUG` in the release workflow).
+
+## Release and translations
+
+`README.md` describes both. A pushed `vX.Y.Z` tag runs `.github/workflows/release.yml`: Composer installs
+the autoloader without development packages, the PHP syntax and the header version are checked, and a
+zip of the `core-functionality-oop` folder goes to the GitHub release, where Git Updater picks it up.
+`languages/` holds the `.pot` and the nl_NL `.po`/`.mo`; the text domain is loaded on `init`.
 
 ## Testing
 
-No automated tests. Checks: `php -l`, `vendor/bin/phpcs` (WordPress-Core and WordPress-Docs, PSR-4 file
-names allowed, `-` and `/` allowed in hook names), and manual checks on the DDEV site
-`https://speeltuin.ddev.site`. The plugin is not active there; Claude tests by loading it for a single
-request from a temporary mu-plugin (removed afterwards), which shows whether the Kernel boots, which
-components start and which guards are ready, without changing the activation state.
+No automated tests. Checks: `composer lint`, `composer phpcs` (WordPress-Core and WordPress-Docs, PHP files
+only, PSR-4 file names allowed, `-` and `/` allowed in hook names), and manual checks on the DDEV site
+`https://speeltuin.ddev.site`, where the plugin is active. The site's debug log only records fatal errors,
+so tests use a temporary mu-plugin (removed afterwards) that logs warnings, notices, `_doing_it_wrong()`
+and fatal errors from this plugin. For a plugin that is not active, such a mu-plugin can load it for a
+single request.
