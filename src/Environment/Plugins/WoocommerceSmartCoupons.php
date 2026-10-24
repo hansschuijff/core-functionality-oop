@@ -26,7 +26,7 @@ class WoocommerceSmartCoupons extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce_smart_coupons';
+		return 'woocommerce-smart-coupons';
 	}
 
 	// #[Override]

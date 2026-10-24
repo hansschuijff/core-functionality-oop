@@ -30,7 +30,7 @@ class Staging implements DependencyInterface {
 	 * @return string The blueprint identification token.
 	 */
 	public function get_id(): string {
-		return 'staging_server';
+		return 'staging-environment';
 	}
 
 	/**

@@ -30,7 +30,7 @@ class Production implements DependencyInterface {
 	 * @return string The blueprint identification token.
 	 */
 	public function get_id(): string {
-		return 'production_server';
+		return 'production-environment';
 	}
 
 	/**

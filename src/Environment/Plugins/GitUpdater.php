@@ -13,7 +13,7 @@ class GitUpdater extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'git_updater';
+		return 'git-updater';
 	}
 
 	#[Override]

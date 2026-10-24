@@ -210,7 +210,7 @@ class Kernel {
 	private function get_active_environment_ids(): array {
 		$environment_index = $this->plugin->settings->get( 'environment-index', default: array() );
 		if ( empty( $environment_index ) || ! is_array( $environment_index ) ) {
-			return array( 'wordpress_core' );
+			return array( 'wordpress-core' );
 		}
 
 		$active_plugins = $this->plugin->settings->get_unmanaged( 'active_plugins', array() );
@@ -219,7 +219,7 @@ class Kernel {
 		}
 
 		$active_ids   = array();
-		$active_ids[] = 'wordpress_core';
+		$active_ids[] = 'wordpress-core';
 
 		// 1. ACCUMULATE ACTIVE PLUGIN MAPPINGS
 		$plugin_pool = $environment_index['plugins'] ?? array();
@@ -238,7 +238,7 @@ class Kernel {
 		if ( is_array( $theme_pool ) && ! empty( $theme_pool ) ) {
 			foreach ( $theme_pool as $id => $theme ) {
 				if ( is_array( $theme ) && ThemeInspector::is_theme_active( $theme ) ) {
-					$active_ids[] = $id . '_theme';
+					$active_ids[] = $id . '-theme';
 				}
 			}
 		}

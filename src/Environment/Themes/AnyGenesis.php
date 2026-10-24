@@ -43,7 +43,7 @@ class AnyGenesis extends AbstractTheme {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'any_genesis_theme';
+		return 'any-genesis-theme';
 	}
 
 	/**

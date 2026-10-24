@@ -13,7 +13,7 @@ class FestingerVault extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'festinger_vault';
+		return 'festinger-vault';
 	}
 
 	#[Override]

@@ -30,7 +30,7 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce_subscriptions';
+		return 'woocommerce-subscriptions';
 	}
 
 	// #[Override]

@@ -13,7 +13,7 @@ class WpPhpMyAdmin extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'wp_php_my_admin';
+		return 'wp-php-my-admin';
 	}
 
 	#[Override]

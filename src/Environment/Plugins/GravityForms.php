@@ -13,7 +13,7 @@ class GravityForms extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'gravity_forms';
+		return 'gravity-forms';
 	}
 
 	#[Override]

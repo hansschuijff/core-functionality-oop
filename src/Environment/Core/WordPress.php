@@ -45,7 +45,7 @@ class WordPress implements EnvironmentInterface {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'wordpress_core';
+		return 'wordpress-core';
 	}
 
 	/**

@@ -44,7 +44,7 @@ class YoastSeo extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'yoast_seo';
+		return 'yoast-seo';
 	}
 
 	/**

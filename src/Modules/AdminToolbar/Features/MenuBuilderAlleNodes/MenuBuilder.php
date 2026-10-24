@@ -157,7 +157,7 @@ class MenuBuilder implements FeatureInterface {
 
 		$current_orientation = is_admin() ? 'admin' : 'frontend';
 
-		// 2. Loop through the distinct registered providers (e.g., 'wordpress_core', 'woocommerce').
+		// 2. Loop through the distinct registered providers (e.g., 'wordpress-core', 'woocommerce').
 		foreach ( $master_registry as $provider_id => $shortcuts ) {
 			if ( empty( $shortcuts ) || ! is_array( $shortcuts ) ) {
 				continue;

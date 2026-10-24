@@ -39,14 +39,14 @@ class EventTickets extends AbstractPlugin {
 	/**
 	 * Unique identifier token for this specific ecosystem component.
 	 *
-	 * Must return 'event_tickets' to align with the core preflight registry mappings.
+	 * Must return 'event-tickets' to align with the core preflight registry mappings.
 	 *
 	 * @since 1.0.0
 	 * @return string The blueprint identification token.
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'event_tickets';
+		return 'event-tickets';
 	}
 
 	/**

@@ -45,7 +45,7 @@ class AnyBlockTheme extends AbstractTheme {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'any_block_theme';
+		return 'any-block-theme';
 	}
 
 	/**

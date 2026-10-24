@@ -13,7 +13,7 @@ class WpForms extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'wp_forms';
+		return 'wp-forms';
 	}
 
 	#[Override]

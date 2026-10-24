@@ -25,7 +25,7 @@ class WoocommerceProductAddons extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce_product_addons';
+		return 'woocommerce-product-addons';
 	}
 
 	// #[Override]

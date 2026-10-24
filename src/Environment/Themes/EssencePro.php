@@ -43,7 +43,7 @@ class EssencePro extends AbstractTheme {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'essence_pro_theme';
+		return 'essence-pro-theme';
 	}
 
 	/**

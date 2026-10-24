@@ -26,7 +26,7 @@ class WoocommercePreOrders extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce_pre_orders';
+		return 'woocommerce-pre-orders';
 	}
 
 	// #[Override]

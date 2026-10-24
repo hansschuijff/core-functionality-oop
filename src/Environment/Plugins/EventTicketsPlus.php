@@ -44,7 +44,7 @@ class EventTicketsPlus extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'event_tickets_plus';
+		return 'event-tickets-plus';
 	}
 
 	/**

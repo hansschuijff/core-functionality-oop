@@ -113,7 +113,7 @@ class ClassParser {
 	 * @return bool                  True if the identifier belongs to a theme, false otherwise.
 	 */
 	public static function is_theme_id( string $dependency_id ): bool {
-		return str_ends_with( $dependency_id, '_theme' );
+		return str_ends_with( $dependency_id, '-theme' );
 	}
 
 	/**
@@ -141,26 +141,26 @@ class ClassParser {
 	 * @return bool                  True if the identifier belongs to a server environment, false otherwise.
 	 */
 	public static function is_environment_id( string $dependency_id ): bool {
-		return str_ends_with( $dependency_id, '_environment' );
+		return str_ends_with( $dependency_id, '-environment' );
 	}
 
 	/**
 	 * Removes descriptive type suffixes from an environment identifier token.
 	 *
-	 * Converts tokens like 'essence_pro_theme' to its clean slug 'essence_pro'.
+	 * Converts tokens like 'essence-pro-theme' to its clean slug 'essence-pro'.
 	 *
 	 * @since  1.0.0
 	 * @param  string $dependency_id The raw environment identifier token.
 	 * @return string                Cleaned structural token.
 	 */
 	public static function get_clean_id( string $dependency_id ): string {
-		return str_replace( array( '_theme', '_environment' ), '', $dependency_id );
+		return (string) preg_replace( '/-(theme|environment)$/', '', $dependency_id );
 	}
 
 	/**
-	 * Transforms a snake_case identifier slug into a PascalCase class definition name.
+	 * Transforms a kebab-case (or snake_case) identifier slug into a PascalCase class definition name.
 	 *
-	 * Converts tokens like 'any_genesis' into 'AnyGenesis'.
+	 * Converts tokens like 'any-genesis' into 'AnyGenesis'.
 	 *
 	 * @since  1.0.0
 	 * @param  string $clean_id The cleaned token slug.

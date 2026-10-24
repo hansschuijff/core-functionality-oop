@@ -44,7 +44,7 @@ class TheEventsCalendar extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'the_events_calendar';
+		return 'the-events-calendar';
 	}
 
 	/**

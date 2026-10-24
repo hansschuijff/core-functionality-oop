@@ -169,7 +169,7 @@ class Environment {
 			return true;
 		}
 
-		if ( 'wordpress_core' === $dependency_id ) {
+		if ( 'wordpress-core' === $dependency_id ) {
 			$is_ready = ( new WordPress() )->is_ready();
 			if ( true === $is_ready ) {
 				$this->readiness_cache[ $dependency_id ] = true;
@@ -208,7 +208,7 @@ class Environment {
 	 * @return string                The fully qualified class name for the dependency.
 	 */
 	private function get_dependency_class_name( string $dependency_id ): string {
-		if ( 'wordpress_core' === $dependency_id ) {
+		if ( 'wordpress-core' === $dependency_id ) {
 			return WordPress::class;
 		}
 
@@ -229,10 +229,10 @@ class Environment {
 	private function get_dependency_namespace( string $dependency_id ): string {
 		$namespace_base = '\\DeWittePrins\\CoreFunctionality\\Environment\\';
 
-		if ( str_ends_with( $dependency_id, '_theme' ) ) {
+		if ( ClassParser::is_theme_id( $dependency_id ) ) {
 			return $namespace_base . 'Themes';
 		}
-		if ( str_ends_with( $dependency_id, '_environment' ) ) {
+		if ( ClassParser::is_environment_id( $dependency_id ) ) {
 			return $namespace_base . 'Servers';
 		}
 		return $namespace_base . 'Plugins';

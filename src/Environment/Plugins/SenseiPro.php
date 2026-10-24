@@ -20,7 +20,7 @@ class SenseiPro extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'sensei_pro';
+		return 'sensei-pro';
 	}
 
 	#[Override]

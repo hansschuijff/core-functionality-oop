@@ -67,8 +67,8 @@ if ( ! interface_exists( __NAMESPACE__ . '\ModuleInterface' ) ) {
 		 * Requests the structural environment requirements for the module base layer.
 		 *
 		 * Must return a multi-dimensional array mapping an 'and' or 'or' matrix
-		 * of clean snake_case system environment identifiers.
-		 * Example: array( 'and' => array( 'woocommerce', 'production_environment' ) )
+		 * of clean kebab-case system environment identifiers.
+		 * Example: array( 'and' => array( 'woocommerce', 'production-environment' ) )
 		 *
 		 * Note: Made static so the loader can run pre-flights before instantiation.
 		 *

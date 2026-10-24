@@ -63,7 +63,7 @@ class EnvironmentLookup {
 	 * Translates an abstract plugin ID into a physical active plugin basename string.
 	 *
 	 * @since 1.0.0
-	 * @param string $id The abstract plugin id/key (e.g. 'the_events_calendar').
+	 * @param string $id The abstract plugin id/key (e.g. 'the-events-calendar').
 	 * @return string The basename of the corresponding plugin, or '' if not found.
 	 */
 	public function get_plugin_basename( string $id ): string {
@@ -74,7 +74,7 @@ class EnvironmentLookup {
 	 * Translates an abstract theme ID into an active theme name string.
 	 *
 	 * @since 1.0.0
-	 * @param string $id The abstract theme id/key (e.g. 'essence_pro').
+	 * @param string $id The abstract theme id/key (e.g. 'essence-pro').
 	 * @return array An array containing the name and author of the theme, or empty array if not found.
 	 */
 	public function get_theme_name( string $id ): array {

@@ -44,7 +44,7 @@ class DebugToolkit extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_id(): string {
-		return 'debug_toolkit';
+		return 'debug-toolkit';
 	}
 
 	/**

@@ -25,7 +25,7 @@ class WoocommerceFollowUpEmails extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce_follow_up_emails';
+		return 'woocommerce-follow-up-emails';
 	}
 
 	// #[Override]
