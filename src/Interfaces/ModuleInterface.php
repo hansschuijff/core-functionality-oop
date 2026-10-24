@@ -8,6 +8,7 @@
 
 namespace DeWittePrins\CoreFunctionality\Interfaces;
 
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,6 +30,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 interface ModuleInterface {
+
+	/**
+	 * Returns the descriptive data of the module (id, name, description, orientation, needs).
+	 *
+	 * Static, because the register and the Kernel read it before the module exists.
+	 * AbstractModule answers the getters below from it.
+	 *
+	 * @since  1.0.0
+	 * @return ComponentMeta The descriptive data.
+	 */
+	public static function get_meta(): ComponentMeta;
 
 	/**
 	 * Retrieves the unique string identifier for the module.

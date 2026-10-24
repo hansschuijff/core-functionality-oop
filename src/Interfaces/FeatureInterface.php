@@ -11,6 +11,7 @@
 
 namespace DeWittePrins\CoreFunctionality\Interfaces;
 
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\Plugin;
 
@@ -27,6 +28,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 interface FeatureInterface {
+
+	/**
+	 * Returns the descriptive data of the feature (id, name, description, orientation, needs).
+	 *
+	 * Static, because the register and the Kernel read it before the feature exists.
+	 * AbstractFeature answers the getters below from it.
+	 *
+	 * @since  1.0.0
+	 * @return ComponentMeta The descriptive data.
+	 */
+	public static function get_meta(): ComponentMeta;
 
 	/**
 	 * Retrieves the absolute, fully qualified system identifier key for this live instance.
