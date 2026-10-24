@@ -107,7 +107,7 @@ class MenuBuilder extends AbstractFeature {
 				continue;
 			}
 
-			/** @var \DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut $shortcut */
+			// Each $shortcut is a \DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut.
 			foreach ( $shortcuts as $shortcut ) {
 
 				// Gate 1: Enforce strict orientationual visibility filtering (admin vs frontend).

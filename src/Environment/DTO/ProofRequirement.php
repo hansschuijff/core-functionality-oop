@@ -21,32 +21,44 @@ use function is_array;
 readonly class ProofRequirement {
 
 	/**
-	 * @var string[] Required classes.
+	 * Required classes.
+	 *
+	 * @var string[]
 	 */
 	public array $classes;
 
 	/**
-	 * @var string[] Required functions.
+	 * Required functions.
+	 *
+	 * @var string[]
 	 */
 	public array $functions;
 
 	/**
-	 * @var string[] Required class methods.
+	 * Required class methods.
+	 *
+	 * @var string[]
 	 */
 	public array $methods;
 
 	/**
-	 * @var string[] Required global constants.
+	 * Required global constants.
+	 *
+	 * @var string[]
 	 */
 	public array $constants;
 
 	/**
-	 * @var string[] Action hooks that MUST have fired or be running.
+	 * Action hooks that MUST have fired or be running.
+	 *
+	 * @var string[]
 	 */
 	public array $actions;
 
 	/**
-	 * @var string[] Action hooks that MUST NOT have fired or be running.
+	 * Action hooks that MUST NOT have fired or be running.
+	 *
+	 * @var string[]
 	 */
 	public array $not_actions;
 

@@ -70,9 +70,9 @@ class ClassParser {
 	 * Checks if a class implements a specific interface.
 	 *
 	 * @since  1.0.0
-	 * @param  string $class     The Fully Qualified Class Name string to inspect.
-	 * @param  string $interface The Fully Qualified Interface Name string to test against.
-	 * @return bool              True if the class implements the interface, false otherwise.
+	 * @param  string       $class     The Fully Qualified Class Name string to inspect.
+	 * @param  string|array $interface The Fully Qualified Interface Name (or names) to test against.
+	 * @return bool                    True if the class implements the interface, false otherwise.
 	 */
 	public static function is_implementation_of( string $class, string|array $interface ): bool {
 		if ( ! class_exists( $class ) ) {

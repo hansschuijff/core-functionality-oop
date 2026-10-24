@@ -27,7 +27,18 @@ use DeWittePrins\CoreFunctionality\Notifiers\Notices;
  */
 class PluginIntegrityWatch {
 
+	/**
+	 * The settings service.
+	 *
+	 * @var Settings
+	 */
 	private Settings $settings;
+
+	/**
+	 * The admin notices service.
+	 *
+	 * @var Notices
+	 */
 	private Notices $notices;
 
 	/**
@@ -45,8 +56,7 @@ class PluginIntegrityWatch {
 	 * PluginIntegrityWatch Constructor.
 	 *
 	 * @since 1.0.0
-	 * @param Settings $settings The central settings repository engine.
-	 * @param Notices  $notices The centralized notification service.
+	 * @param Plugin $plugin The central plugin instance (provides settings and notices).
 	 */
 	public function __construct(
 		private readonly Plugin $plugin,

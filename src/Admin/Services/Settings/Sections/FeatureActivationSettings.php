@@ -120,7 +120,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	/**
 	 * Outputs the wrapping HTML matrix shell.
 	 *
-	 * @param bool $defaults_only Optional. Force bypass of database overrides. Default false.
+	 * @param bool $reset_to_defaults Optional. Force bypass of database overrides. Default false.
 	 */
 	#[Override]
 	public function render( bool $reset_to_defaults = false ): void {
@@ -153,6 +153,12 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		$this->render_section_end();
 	}
 
+	/**
+	 * Opens the list of modules and features.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
 	private function render_section_start() {
 		$button_text_select_everything = esc_html( 'Select all', 'core-functionality' );
 		$button_text_rebuild_register  = esc_html( 'Scan for new features', 'core-functionality' );
@@ -169,6 +175,14 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
+	/**
+	 * Opens a module block and renders its checkbox.
+	 *
+	 * @since  1.0.0
+	 * @param  string $module_fqcn Fully qualified class name of the module.
+	 * @param  bool   $reset_to_defaults Whether to show the default values instead of the saved ones.
+	 * @return void
+	 */
 	private function render_module_start( string $module_fqcn, bool $reset_to_defaults ): void {
 
 		$module_name    = esc_html( $module_fqcn::get_name() );
@@ -189,6 +203,12 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
+	/**
+	 * Renders the heading above the features of a module.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
 	private function render_features_heading(): void {
 
 		$available_features_text = esc_html_e( 'Available features:', 'core-functionality' );
@@ -200,6 +220,14 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
+	/**
+	 * Renders the checkbox of a feature.
+	 *
+	 * @since  1.0.0
+	 * @param  string $feature_fqcn Fully qualified class name of the feature.
+	 * @param  bool   $reset_to_defaults Whether to show the default values instead of the saved ones.
+	 * @return void
+	 */
 	private function render_feature( string $feature_fqcn, bool $reset_to_defaults ): void {
 		$feature_name    = $feature_fqcn::get_name();
 		$feature_enabled = $reset_to_defaults
@@ -217,6 +245,12 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
+	/**
+	 * Closes a module block.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
 	private function render_module_end(): void {
 		echo <<<HTML
 				</div>
@@ -224,6 +258,12 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		HTML;
 	}
 
+	/**
+	 * Closes the list of modules and features.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
 	private function render_section_end() {
 		echo <<<HTML
 			</div>
@@ -299,6 +339,12 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		return __( 'All modules and features where reset to their default settings.', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the enabled components as they are after a reset: every module and feature in the register.
+	 *
+	 * @since  1.0.0
+	 * @return string[] Fully qualified class names.
+	 */
 	private function get_initial_enabled_components_array() {
 		$components_register = $this->plugin->components_register->get_register( Register::COMPONENTS );
 		// Built a flat array with all the classes in $components_register..
@@ -333,7 +379,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	/**
 	 * Adds trailing forward slash to path.
 	 *
-	 * @param string $path
+	 * @param string $path The path.
 	 * @return string
 	 */
 	private static function trailingslashit( $path ) {
@@ -343,7 +389,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	/**
 	 * Trims trailing forward- and backward slash from path.
 	 *
-	 * @param string $path
+	 * @param string $path The path.
 	 * @return string
 	 */
 	private static function untrailingslashit( string $path ): string {

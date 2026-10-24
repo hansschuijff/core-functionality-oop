@@ -65,31 +65,67 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	public function __construct( private readonly Plugin $plugin ) {}
 
+	/**
+	 * Returns the id of this settings section (used in the page URL).
+	 *
+	 * @since  1.0.0
+	 * @return string The section id.
+	 */
 	#[Override]
 	public static function get_id(): string {
 		return 'cf-menu-builder-settings';
 	}
 
+	/**
+	 * Returns the dashicon class shown next to the tab title.
+	 *
+	 * @since  1.0.0
+	 * @return string The dashicon class.
+	 */
 	#[Override]
 	public static function get_icon(): string {
 		return 'dashicons-menu-alt';
 	}
 
+	/**
+	 * Returns the title of this settings tab.
+	 *
+	 * @since  1.0.0
+	 * @return string The tab title.
+	 */
 	#[Override]
 	public static function get_name(): string {
 		return __( 'Admin Toolbar Menu Builder', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the description shown at the top of this tab.
+	 *
+	 * @since  1.0.0
+	 * @return string The description.
+	 */
 	#[Override]
 	public static function get_description(): string {
 		return __( 'Design your custom WordPress Admin Toolbar. Filter shortcuts by source provider, select elements from the pool to clone them, and manage hierarchy sequence fields.', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the stylesheets this tab needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The stylesheets to enqueue.
+	 */
 	#[Override]
 	public static function get_stylesheets(): array {
 		return array();
 	}
 
+	/**
+	 * Returns the scripts this tab needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The scripts to enqueue.
+	 */
 	#[Override]
 	public static function get_scripts(): array {
 		$base_url = plugins_url( 'assets/js/', __FILE__ );
@@ -99,6 +135,13 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		);
 	}
 
+	/**
+	 * Renders the content of this tab.
+	 *
+	 * @since  1.0.0
+	 * @param  bool $defaults_only Whether to show the default values instead of the saved ones.
+	 * @return void
+	 */
 	#[Override]
 	public function render( bool $defaults_only = false ): void {
 		$saved_tree = $this->plugin->settings->get( $this->menu_builder_tree_option_token, '', false, array() );
@@ -116,6 +159,12 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 	/**
 	 * Renders the structural layout workspace optimized for tree nestings and provider filtering.
+	 *
+	 * @since  1.0.0
+	 * @param  array $live_registry The toolbar shortcuts offered by the active guards, per provider.
+	 * @param  array $providers     The providers (plugins and themes) for the filter.
+	 * @param  array $saved_tree    The saved menu tree.
+	 * @return void
 	 */
 	private function render_builder_drag_tree_grid( array $live_registry, array $providers, array $saved_tree ): void {
 		$col_pool_title   = esc_html__( 'Available Shortcuts Pool', 'core-functionality' );
@@ -364,11 +413,25 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		echo '</div>';
 	}
 
+	/**
+	 * Validates the submitted form data before it is saved.
+	 *
+	 * @since  1.0.0
+	 * @param  array $posted_data The submitted form data.
+	 * @return bool|WP_Error True when valid, an error otherwise.
+	 */
 	#[Override]
 	public function validate( array $posted_data ): bool|WP_Error {
 		return true;
 	}
 
+	/**
+	 * Saves the submitted form data.
+	 *
+	 * @since  1.0.0
+	 * @param  array $posted_data The submitted form data.
+	 * @return string|bool A success message, true, or false on failure.
+	 */
 	#[Override]
 	public function save( array $posted_data ): string|bool {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -397,6 +460,10 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 	/**
 	 * Recursively sanitizes keys, attributes, and children nested inside the json payload layout tree.
+	 *
+	 * @since  1.0.0
+	 * @param  array $tree_level One level of the submitted menu tree.
+	 * @return array             The sanitized level.
 	 */
 	private function sanitize_recursive_tree_payload( array $tree_level ): array {
 		$sanitized = array();

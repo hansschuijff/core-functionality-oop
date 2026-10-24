@@ -263,7 +263,6 @@ class Notices {
 	 * @since  1.0.0
 	 * @param  Notice[] $notices Complete collection of active framework Notice DTO objects.
 	 * @return bool              True on successful commitment, false otherwise.
-	 * @return bool              True on successful commitment, false otherwise.
 	 */
 	private function save_notices( array $notices ): bool {
 		return set_transient( $this->transient_key, $notices, 45 );

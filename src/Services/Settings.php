@@ -326,6 +326,12 @@ class Settings {
 		return $this->options;
 	}
 
+	/**
+	 * Checks whether the caller may receive the Options vault itself.
+	 *
+	 * @since  1.0.0
+	 * @return bool True if allowed, false otherwise.
+	 */
 	private function is_allowed_get_options(): bool {
 		[ 'caller' => $caller, 'called' => $called ] = Logger::get_caller_data( 3 );
 		$caller_fqcn                                 = $caller['class'] ?? '';

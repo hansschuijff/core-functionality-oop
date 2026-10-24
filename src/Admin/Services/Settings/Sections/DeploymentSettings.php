@@ -178,7 +178,7 @@ class DeploymentSettings implements SettingsSectionInterface {
 	 * Renders and returns the top html for a single module.
 	 *
 	 * @param string $module_fqcn       Fully Qualified Class Name of the target module.
-	 * @param array  $module_deployment The current deployment of the target module.
+	 * @param string $module_deployment The current deployment of the target module.
 	 * @return string The rendered html.
 	 */
 	private function get_render_module_open( string $module_fqcn, string $module_deployment ): string {

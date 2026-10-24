@@ -34,7 +34,13 @@ class WoocommerceCustomerOrderCsvExport extends AbstractPlugin {
 		return 'woocommerce-customer-order-csv-export';
 	}
 
-	// #[Override]
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
+	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( classes: 'WC_Customer_Order_CSV_Export_Loader' );
 	}

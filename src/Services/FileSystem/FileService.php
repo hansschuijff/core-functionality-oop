@@ -127,6 +127,7 @@ class FileService {
 			$this->plugin->notices->add(
 				'error',
 				sprintf(
+					/* translators: %1$s: path of the register file. */
 					__( 'Critical Error: Failed to write updates toward configuration file: %1$s.', 'core-functionality' ),
 					$this->get_register_full_path( $register )
 				)
@@ -183,7 +184,7 @@ class FileService {
 	 * configuration we decided to read the files only as failsave, when
 	 * wp option has no values.
 	 *
-	 * @param string $path
+	 * @param string $path Path of the file that was just written.
 	 * @return void
 	 */
 	private function clear_opcache( string $path ): void {
@@ -255,7 +256,7 @@ class FileService {
 	 * Resolves the absolute directory disk path mapping toward a specific target configuration file.
 	 *
 	 * @since  1.0.0
-	 * @param  Register $file Enum key matching the active registration identifier destination.
+	 * @param  Register $register Enum key matching the active registration identifier destination.
 	 * @return string         The resolved cross-platform absolute filesystem target location.
 	 */
 	private function get_register_full_path( Register $register ): string {
@@ -266,7 +267,7 @@ class FileService {
 	/**
 	 * Gets the registers filename.
 	 *
-	 * @param Register $register
+	 * @param Register $register The register.
 	 * @return string
 	 */
 	private function get_filename( Register $register ): string {

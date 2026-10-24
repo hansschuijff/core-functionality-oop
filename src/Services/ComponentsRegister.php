@@ -252,12 +252,13 @@ class ComponentsRegister {
 	 * If any other register is given in de arguments, then it is returned unfiltered.
 	 *
 	 * @since  1.0.0
+	 * @param  Register $register Which register to return. Default the components register.
 	 *
 	 * @return array<string, array> The filtered array of module FQCNs with their verified feature FQCNs.
 	 */
 	public function get( Register $register = Register::COMPONENTS ): array {
 		$data = $this->get_register( $register );
-		if ( $register === Register::COMPONENTS ) {
+		if ( Register::COMPONENTS === $register ) {
 			return $this->filter( $data );
 		}
 
@@ -511,7 +512,7 @@ class ComponentsRegister {
 
 			Deployment::DEVELOPMENT => true,
 			Deployment::STAGING     => in_array( $component_deployment, array( Deployment::STAGING->value, Deployment::PRODUCTION->value ), true ),
-			Deployment::PRODUCTION  => ( $component_deployment === Deployment::PRODUCTION->value ),
+			Deployment::PRODUCTION  => ( Deployment::PRODUCTION->value === $component_deployment ),
 		};
 	}
 
@@ -599,7 +600,7 @@ class ComponentsRegister {
 
 		// Perform specific data restructuring schemas if the target is
 		// the administrative activation list.
-		if ( $register === Register::ENABLED ) {
+		if ( Register::ENABLED === $register ) {
 			$register_data = $this->validate_and_restructure_enabled_list( $register_data );
 		}
 
@@ -666,6 +667,14 @@ class ComponentsRegister {
 		return $enabled_components;
 	}
 
+	/**
+	 * Updates the in-memory copy of a register after it was saved.
+	 *
+	 * @since  1.0.0
+	 * @param  Register $register The register that was saved.
+	 * @param  array    $register_data The saved register data.
+	 * @return void
+	 */
 	private function cache_refresh( Register $register, array $register_data ): void {
 
 		// Hydrate the matching in-memory cache properties immediately upon a successful write operation.
@@ -687,8 +696,8 @@ class ComponentsRegister {
 	 * - implement the correct Interfaces
 	 *
 	 * @since  1.0.0
-	 * @return string[] $components_register Fully Qualified Class Names of components and features in the register.
-	 * @return string[]                      Filtered verion of the component register, removing all fqcn's with incorrect Interfaces or non existing classes.
+	 * @param  array<string, string[]> $components_register Module class name => feature class names.
+	 * @return array<string, string[]> The register without classes that do not exist or implement the wrong interface.
 	 */
 	private function validate( array $components_register ): array {
 
@@ -732,7 +741,7 @@ class ComponentsRegister {
 	/**
 	 * Make sure the input string ends with a forward slash.
 	 *
-	 * @param string $path
+	 * @param string $path The path.
 	 * @return string
 	 */
 	private function trailingslashit( string $path ): string {
@@ -752,7 +761,7 @@ class ComponentsRegister {
 	/**
 	 * Trims trailing forward- and backward slash from path.
 	 *
-	 * @param string $path
+	 * @param string $path The path.
 	 * @return string
 	 */
 	private function untrailingslashit( string $path ): string {

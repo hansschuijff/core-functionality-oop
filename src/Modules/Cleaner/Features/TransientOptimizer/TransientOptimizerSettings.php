@@ -61,31 +61,67 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 		$this->plugin = $plugin;
 	}
 
+	/**
+	 * Returns the id of this settings section (used in the page URL).
+	 *
+	 * @since  1.0.0
+	 * @return string The section id.
+	 */
 	#[Override]
 	public static function get_id(): string {
 		return 'cf-transient-optimizer-settings';
 	}
 
+	/**
+	 * Returns the title of this settings tab.
+	 *
+	 * @since  1.0.0
+	 * @return string The tab title.
+	 */
 	#[Override]
 	public static function get_name(): string {
 		return __( 'Transient Optimizer', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the description shown at the top of this tab.
+	 *
+	 * @since  1.0.0
+	 * @return string The description.
+	 */
 	#[Override]
 	public static function get_description(): string {
 		return __( 'Analyze your database options overhead. Scan for expired cache entries and orphaned transient keys left behind by deactivated plugins.', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the dashicon class shown next to the tab title.
+	 *
+	 * @since  1.0.0
+	 * @return string The dashicon class.
+	 */
 	#[Override]
 	public static function get_icon(): string {
 		return 'dashicons-performance';
 	}
 
+	/**
+	 * Returns the stylesheets this tab needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The stylesheets to enqueue.
+	 */
 	#[Override]
 	public static function get_stylesheets(): array {
 		return array();
 	}
 
+	/**
+	 * Returns the scripts this tab needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The scripts to enqueue.
+	 */
 	#[Override]
 	public static function get_scripts(): array {
 		return array();
@@ -182,6 +218,13 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 		echo '</div></div>';
 	}
 
+	/**
+	 * Validates the submitted form data before it is saved.
+	 *
+	 * @since  1.0.0
+	 * @param  array $posted_data The submitted form data.
+	 * @return bool|WP_Error True when valid, an error otherwise.
+	 */
 	#[Override]
 	public function validate( array $posted_data ): bool|WP_Error {
 		return true;

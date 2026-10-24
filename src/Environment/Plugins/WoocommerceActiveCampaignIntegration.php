@@ -34,7 +34,13 @@ class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 		return 'woocommerce-active-campaign-integration';
 	}
 
-	// #[Override]
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
+	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( classes: 'WC_Active_Woo' );
 	}

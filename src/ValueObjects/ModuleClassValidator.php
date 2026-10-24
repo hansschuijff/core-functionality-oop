@@ -46,6 +46,7 @@ final class ModuleClassValidator {
 	 */
 	private function __construct() {}
 
+	// phpcs:disable Squiz.Commenting.FunctionCommentThrowTag.Missing -- The exceptions are thrown and caught inside this method.
 	/**
 	 * Universal gatekeeper method for complete Module hierarchies.
 	 *
@@ -59,6 +60,7 @@ final class ModuleClassValidator {
 	 * @return string[]|false                Array of verified feature FQCN strings, or false if invalid.
 	 */
 	public static function validate( string $module_fqcn, array $found_feature_slugs, string $modules_namespace ): array|false {
+		// phpcs:enable Squiz.Commenting.FunctionCommentThrowTag.Missing
 		try {
 			if ( ! class_exists( $module_fqcn ) ) {
 				throw new InvalidArgumentException( sprintf( "Module class '%s' does not exist.", $module_fqcn ) );

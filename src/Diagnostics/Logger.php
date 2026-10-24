@@ -185,7 +185,7 @@ class Logger {
 							. ( $trace[ $called_depth ]['function'] ?? 'unknown' )
 							. '()',
 				'file'     => $trace[ $called_file_depth ]['file'] ?? 'N/A',
-				'line'     => $trace[ $called_file_depth ]['line'] ?? 'N/A', // Line inside the caller file
+				'line'     => $trace[ $called_file_depth ]['line'] ?? 'N/A', // Line inside the caller file.
 			);
 		}
 		if ( isset( $trace[ $caller_depth ] ) ) {
@@ -198,7 +198,7 @@ class Logger {
 							. ( $trace[ $caller_depth ]['function'] ?? 'unknown' )
 							. '()',
 				'file'     => $trace[ $caller_file_depth ]['file'] ?? 'N/A',
-				'line'     => $trace[ $caller_file_depth ]['line'] ?? 'N/A', // Line inside the caller file
+				'line'     => $trace[ $caller_file_depth ]['line'] ?? 'N/A', // Line inside the caller file.
 			);
 		}
 		return( array(

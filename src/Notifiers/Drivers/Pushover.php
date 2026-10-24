@@ -43,6 +43,7 @@ class Pushover implements PushNoticeInterface {
 	 *
 	 * @since 1.0.0
 	 * @param string $message The alert text payload to push.
+	 * @param string $title   Optional title of the notification.
 	 * @return bool True if successfully initiated, false otherwise.
 	 */
 	#[Override]
@@ -74,11 +75,23 @@ class Pushover implements PushNoticeInterface {
 		return true;
 	}
 
+	/**
+	 * Returns the name of this push notice driver.
+	 *
+	 * @since  1.0.0
+	 * @return string The driver name.
+	 */
 	#[Override]
 	public static function get_name(): string {
 		return __( 'Pushover (App Notificaties)', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the settings fields this driver needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The configuration fields.
+	 */
 	#[Override]
 	public static function get_configuration_schema(): array {
 		return array(

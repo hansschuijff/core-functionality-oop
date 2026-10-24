@@ -65,7 +65,7 @@ class KeepLicenseAlive extends AbstractFeature {
 	/**
 	 * Save active license data as transient, so ActiveWoo will read it.
 	 *
-	 * @return object
+	 * @return void
 	 */
 	private function set_license_data() {
 

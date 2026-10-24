@@ -53,35 +53,77 @@ class CleanerSettings implements SettingsSectionInterface {
 		private readonly Plugin $plugin,
 	) {}
 
+	/**
+	 * Returns the settings key under which this tab stores its choices.
+	 *
+	 * @since  1.0.0
+	 * @return string The settings key.
+	 */
 	public static function get_settings_key(): string {
 		return 'admin-toolbar-cleaner-keep-this-nodes';
 	}
 
+	/**
+	 * Returns the id of this settings section (used in the page URL).
+	 *
+	 * @since  1.0.0
+	 * @return string The section id.
+	 */
 	#[Override]
 	public static function get_id(): string {
 		return 'cf-toolbar-cleaner-settings';
 	}
 
+	/**
+	 * Returns the title of this settings tab.
+	 *
+	 * @since  1.0.0
+	 * @return string The tab title.
+	 */
 	#[Override]
 	public static function get_name(): string {
 		return __( 'Admin Toolbar Cleaner', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the description shown at the top of this tab.
+	 *
+	 * @since  1.0.0
+	 * @return string The description.
+	 */
 	#[Override]
 	public static function get_description(): string {
 		return __( 'Configure your top bar visibility layout strategy. Top-level shortcut nodes left unchecked will be automatically filtered and evacuated into the central "More" overflow dropdown menu.', 'core-functionality' );
 	}
 
+	/**
+	 * Returns the dashicon class shown next to the tab title.
+	 *
+	 * @since  1.0.0
+	 * @return string The dashicon class.
+	 */
 	#[Override]
 	public static function get_icon(): string {
 		return 'dashicons-buddicons-replies';
 	}
 
+	/**
+	 * Returns the stylesheets this tab needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The stylesheets to enqueue.
+	 */
 	#[Override]
 	public static function get_stylesheets(): array {
 		return array();
 	}
 
+	/**
+	 * Returns the scripts this tab needs.
+	 *
+	 * @since  1.0.0
+	 * @return array The scripts to enqueue.
+	 */
 	#[Override]
 	public static function get_scripts(): array {
 		return array();
@@ -155,11 +197,25 @@ class CleanerSettings implements SettingsSectionInterface {
 		return $movable_nodes;
 	}
 
+	/**
+	 * Validates the submitted form data before it is saved.
+	 *
+	 * @since  1.0.0
+	 * @param  array $posted_data The submitted form data.
+	 * @return bool|WP_Error True when valid, an error otherwise.
+	 */
 	#[Override]
 	public function validate( array $posted_data ): bool|WP_Error {
 		return true;
 	}
 
+	/**
+	 * Saves the submitted form data.
+	 *
+	 * @since  1.0.0
+	 * @param  array $posted_data The submitted form data.
+	 * @return string|bool A success message, true, or false on failure.
+	 */
 	#[Override]
 	public function save( array $posted_data ): string|bool {
 		$cleaner_input = isset( $posted_data[ self::get_id() ] ) && is_array( $posted_data[ self::get_id() ] )
@@ -169,6 +225,12 @@ class CleanerSettings implements SettingsSectionInterface {
 		return $this->plugin->settings->save( self::get_settings_key(), $cleaner_input );
 	}
 
+	/**
+	 * Returns the extra action buttons shown under the form of this tab.
+	 *
+	 * @since  1.0.0
+	 * @return array The action buttons.
+	 */
 	#[Override]
 	public function get_action_buttons(): array {
 		$btn_save = esc_attr__( 'Save Toolbar Visibility Filter', 'core-functionality' );

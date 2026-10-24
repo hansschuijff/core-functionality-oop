@@ -235,9 +235,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	}
 
 	/*
-	-------------------------------------------------------------------------
-	 * PRIVATE RENDER BLOCK METHODS (CLEAN CODE ISOLATION MODULES)
-	 *------------------------------------------------------------------------*/
+	 * Private render methods.
+	 */
 
 	/**
 	 * Renders the isolated dashboard panel table wrapper collecting unmapped fallback records indicators.
@@ -310,7 +309,9 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$token_attr = esc_attr( $q_token );
 		$token_html = esc_html( $q_token );
 		$size_info  = is_array( $q_data )
+			/* translators: %d: number of elements in the array. */
 			? sprintf( __( 'Array (%d elements)', 'core-functionality' ), count( $q_data ) )
+			/* translators: %d: number of characters in the string. */
 			: sprintf( __( 'String (%d characters)', 'core-functionality' ), strlen( (string) $q_data ) );
 
 		echo <<<HTML
@@ -338,7 +339,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		echo '</tbody></table>';
 
 		if ( $is_empty_quarantine ) {
-			echo '</div>'; // Closes the central .dwp-card-panel box loepzuiver
+			echo '</div>'; // Closes the central .dwp-card-panel box.
 		}
 
 		$action_title = esc_html__( 'Transport Quarantine Tokens:', 'core-functionality' );
@@ -387,7 +388,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		</div>
 		HTML;
 
-		echo '</div>'; // Closes the central .dwp-card-panel box loepzuiver
+		echo '</div>'; // Closes the central .dwp-card-panel box.
 	}
 
 	/**
@@ -463,6 +464,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 */
 	private function render_grouped_option_block( string $master_key, array $tokens ): void {
 		$master_html = esc_html( $master_key );
+		/* translators: %d: number of entries. */
 		$entry_count = sprintf( _n( '%d entry', '%d entries', count( $tokens ), 'core-functionality' ), count( $tokens ) );
 
 		echo <<<HTML
@@ -682,6 +684,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			}
 		}
 
+		/* translators: %d: number of moved tokens. */
 		return sprintf( __( 'Bulk transport complete! %d feature tokens successfully moved to active storage destinations.', 'core-functionality' ), $count );
 	}
 
@@ -712,6 +715,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 					++$count;
 				}
 			}
+			/* translators: %d: number of keys. */
 			return sprintf( __( '%d keys successfully de-registered and safely returned to quarantine via the Vault.', 'core-functionality' ), $count );
 		}
 
@@ -749,13 +753,13 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			}
 		}
 
+		/* translators: %d: number of erased configurations. */
 		return sprintf( __( 'Deep Purge Completed! %d configurations tokens and data structures fully erased from the database.', 'core-functionality' ), $count );
 	}
 
 	/*
-	-------------------------------------------------------------------------
-	 * PRIVATE UTILITY / DATA LOOKUP METRICS HELPERS
-	 *------------------------------------------------------------------------*/
+	 * Private utility and lookup helpers.
+	 */
 
 	/**
 	 * Safely retrieves active translations registers out of the configuration layer via framework route.

@@ -76,7 +76,7 @@ class EssencePro extends AbstractTheme {
 			new ToolbarShortcut(
 				id:      'essence_pro_link',
 				title:   __( '⚡ Essence Pro', 'core-functionality' ),
-				href:    admin_url( 'customize.php' ), // Reconfigured to direct to the customizer for better UX
+				href:    admin_url( 'customize.php' ), // The customizer is where Essence Pro is set up.
 				label:   __( 'Essence Pro Theme Customizer', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),

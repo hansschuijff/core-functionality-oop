@@ -35,7 +35,13 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 		return 'woocommerce-pdf-invoices';
 	}
 
-	// #[Override]
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
+	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( functions: 'WPO_WCPDF' );
 	}

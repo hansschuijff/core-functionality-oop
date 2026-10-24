@@ -35,7 +35,13 @@ class WoocommercePreOrders extends AbstractPlugin {
 		return 'woocommerce-pre-orders';
 	}
 
-	// #[Override]
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
+	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( constants: 'WC_PRE_ORDERS_VERSION' );
 	}

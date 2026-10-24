@@ -177,6 +177,13 @@ class Cleaner extends AbstractFeature {
 		}
 	}
 
+	/**
+	 * Adds newly found top-level toolbar nodes to the stored list, so the settings tab can offer them.
+	 *
+	 * @since  1.0.0
+	 * @param  array $all_movable_nodes The movable nodes found on this request, keyed by node id.
+	 * @return void
+	 */
 	private function save_movable_nodes( array $all_movable_nodes ) {
 		// Merge the newly found nodes with the already saved ones, to make sure no nodes are forgotten.
 		$saved_nodes = $this->plugin->settings->get( self::get_movable_nodes_key(), $this->module::get_id() );
@@ -187,6 +194,12 @@ class Cleaner extends AbstractFeature {
 		$this->plugin->settings->save( self::get_movable_nodes_key(), $merged_nodes );
 	}
 
+	/**
+	 * Checks whether the current admin page is the Toolbar Cleaner settings tab.
+	 *
+	 * @since  1.0.0
+	 * @return bool True on that tab, false otherwise.
+	 */
 	private function is_cleaner_settings_page(): bool {
 		global $plugin_page;
 		return is_admin()
@@ -194,6 +207,13 @@ class Cleaner extends AbstractFeature {
 			&& isset( $_GET['section'] ) && CleanerSettings::get_id() === $_GET['section'];
 	}
 
+	/**
+	 * Returns the top-level toolbar nodes that may be moved into the overflow menu.
+	 *
+	 * @since  1.0.0
+	 * @param  array $nodes All nodes of the admin toolbar.
+	 * @return array<string, array{id: string, label: string}> Node id => id and label.
+	 */
 	private function get_movable_nodes( array $nodes ) {
 		$movable_top_level_nodes = array();
 		foreach ( $nodes as $node ) {
@@ -208,14 +228,32 @@ class Cleaner extends AbstractFeature {
 		return $movable_top_level_nodes;
 	}
 
+	/**
+	 * Returns the settings key of the stored movable nodes.
+	 *
+	 * @since  1.0.0
+	 * @return string The settings key.
+	 */
 	public static function get_movable_nodes_key(): string {
 		return 'admin-toolbar-cleaner-movable-nodes';
 	}
 
+	/**
+	 * Returns the id of the "More" overflow node.
+	 *
+	 * @since  1.0.0
+	 * @return string The node id.
+	 */
 	public static function get_overflow_node_id(): string {
 		return 'cf_more_admin_bar_menus';
 	}
 
+	/**
+	 * Returns the ids of the toolbar nodes that always stay in place.
+	 *
+	 * @since  1.0.0
+	 * @return string[] The node ids.
+	 */
 	public static function get_protected_nodes(): array {
 		return array(
 			'wp-logo',

@@ -58,8 +58,20 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 * @var string
 	 */
 	private string $available_drivers_settings_key = 'push-notice-available-drivers';
-	private string $active_driver_settings_key     = 'push-notice-driver';
-	private string $active_driver_settings_prefix  = 'push-notice-driver-settings-';
+
+	/**
+	 * Settings key of the active push notice driver.
+	 *
+	 * @var string
+	 */
+	private string $active_driver_settings_key = 'push-notice-driver';
+
+	/**
+	 * Prefix of the settings key that holds the settings of a driver.
+	 *
+	 * @var string
+	 */
+	private string $active_driver_settings_prefix = 'push-notice-driver-settings-';
 
 	/**
 	 * Constructor.
@@ -238,9 +250,8 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	}
 
 	/*
-	-------------------------------------------------------------------------
 	 * PRIVATE RENDER BLOCK METHODS (CLEAN CODE ISOLATION)
-	 *------------------------------------------------------------------------*/
+	 */
 
 	/**
 	 * Renders the main form table header dropdown containing driver choice options.
@@ -313,7 +324,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 			$options = array();
 		}
 
-		$is_visible    = ( $active_driver === ClassParser::to_single_backslashes( $fqcn ) );
+		$is_visible    = ( ClassParser::to_single_backslashes( $fqcn ) === $active_driver );
 		$display_style = $is_visible ? 'table-row-group' : 'none';
 
 		echo <<<HTML

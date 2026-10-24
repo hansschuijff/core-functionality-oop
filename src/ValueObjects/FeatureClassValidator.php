@@ -1,19 +1,12 @@
 <?php
 /**
- * Dit is een opvolger van de FeatureClass VO met een betere naam
- * en de try-catch structuur ingebouwd, zodat de aanroepende kant
- * een bool returnwaarde terugkrijgt die getest kan worden.
+ * Feature Class Validator.
  *
- * Voorheen moest je de aanroep van de VO in een try catch blok uitvoeren
- * en begrijpen dat als de code na de aanroep verder zou gaan het betekent
- * dat de vo de invoer goedgekeurd had, omat het anders de code had laten
- * crashen met een InvalidArgumentException die dan naar de catch liet
- * springen.
+ * Successor of the FeatureClass value object. It catches its own exceptions, reports the
+ * violation with _doing_it_wrong() and returns a bool, so callers need no try/catch.
  *
- * Omdat de normale reactie van een quard is om de foutstatus
- * in een doing it wrong naar de log te schrijven doet de VO
- * dat nu zelf en geeft vervolgens een false waarde terug
- * als er een fout was en true als de invoer is goedgekeurd.
+ * @package DeWittePrins\CoreFunctionality\ValueObjects
+ * @since   1.0.0
  */
 
 declare( strict_types=1 );
@@ -60,6 +53,7 @@ class FeatureClassValidator {
 	 */
 	private function __construct() {}
 
+	// phpcs:disable Squiz.Commenting.FunctionCommentThrowTag.Missing -- The exceptions are thrown and caught inside this method.
 	/**
 	 * Universal gatekeeper method for Feature classes.
 	 *
@@ -74,6 +68,7 @@ class FeatureClassValidator {
 	 * @return bool                      True if the class structure is valid, false otherwise.
 	 */
 	public static function is_valid( string $class_name, string $module_slug, string $modules_namespace ): bool {
+		// phpcs:enable Squiz.Commenting.FunctionCommentThrowTag.Missing
 		try {
 			if ( ! class_exists( $class_name ) ) {
 				throw new InvalidArgumentException( "Feature class '{$class_name}' does not exist physically. Check your PSR-4 mapping." );

@@ -227,7 +227,7 @@ class Options {
 
 			$master_array[ $token ] = $value;
 
-			return update_option( $key, $master_array, true ); // Forced autoload for maximum sub-millisecond RAM speeds
+			return update_option( $key, $master_array, true ); // Autoload, so the grouped option is read with the other options.
 		}
 
 		// Strategy B: Save as a standard standalone database option row.

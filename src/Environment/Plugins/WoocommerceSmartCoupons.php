@@ -35,7 +35,13 @@ class WoocommerceSmartCoupons extends AbstractPlugin {
 		return 'woocommerce-smart-coupons';
 	}
 
-	// #[Override]
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
+	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( constants: 'WC_SC_PLUGIN_FILE' );
 	}

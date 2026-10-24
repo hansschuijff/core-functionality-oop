@@ -130,7 +130,7 @@ class PluginInspector {
 				continue;
 			}
 
-			return false; // Hook did not run yet
+			return false; // Hook did not run yet.
 		}
 		return true;
 	}

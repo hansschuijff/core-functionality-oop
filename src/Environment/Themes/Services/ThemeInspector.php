@@ -82,7 +82,7 @@ class ThemeInspector {
 		$current_author = strtolower( strip_tags( (string) $theme->get( 'Author' ) ) );
 
 		return strtolower( (string) $theme->get( 'Name' ) ) === strtolower( $theme_name )
-			&& ( ! $theme_author || $current_author === strtolower( $theme_author ) );
+			&& ( ! $theme_author || strtolower( $theme_author ) === $current_author );
 	}
 
 	/**
@@ -107,7 +107,7 @@ class ThemeInspector {
 		$parent_author = strtolower( strip_tags( (string) $parent_theme->get( 'Author' ) ) );
 
 		return strtolower( (string) $parent_theme->get( 'Name' ) ) === strtolower( $theme_name )
-			&& ( ! $theme_author || $parent_author === strtolower( $theme_author ) );
+			&& ( ! $theme_author || strtolower( $theme_author ) === $parent_author );
 	}
 
 	/**
