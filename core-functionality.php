@@ -3,9 +3,18 @@
  * Plugin Name:       Core Functionality OOP
  * Description:       Central Microkernel framework managing standalone modules and contextual guards.
  * Version:           1.0.0
+ * Requires at least: 7.0
+ * Requires PHP:      8.2
  * Author:            Hans Schuijff
- * Text Domain:       dwp-cf
+ * Author URI:        https://dewitteprins.nl
+ * License:           GPL-2.0-only
+ * License URI:       https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * Text Domain:       core-functionality
  * Domain Path:       /languages
+ *
+ * GitHub Plugin URI: https://github.com/hansschuijff/core-functionality-oop
+ * Primary Branch:    main
+ * Release Asset:     true
  *
  * @package DeWittePrins\CoreFunctionality
  */
