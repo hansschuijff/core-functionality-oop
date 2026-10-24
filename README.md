@@ -1,0 +1,162 @@
+# Core Functionality
+
+The site-specific functionality of De Witte Prins, independent of the theme, as a small microkernel.
+The plugin finds its own modules and features and starts only those that fit the site: the active
+plugins and theme, the server tier (development, staging, production), admin or front end, and what is
+switched on under Settings → Core Functionality.
+
+Requires WordPress 7.0 and PHP 8.2. Updates through [Git Updater](https://git-updater.com/) from the
+GitHub releases. Architecture and decisions: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+
+This is the OOP successor of the legacy `core-functionality` plugin. Both are installed side by side
+while features move over, which is why the folder is still called `core-functionality-oop`.
+
+## First time
+
+    composer install            # autoloader and the coding standards (phpcs)
+
+The release zip contains `vendor/` without the development packages, so a site needs no Composer.
+
+## Adding a feature
+
+A feature lives in its own folder under its module and is found automatically:
+`src/Modules/<Module>/Features/<Feature>/<Feature>.php`. It describes itself in `get_meta()` and
+does its work in `launch()`; everything else comes from `AbstractFeature`.
+
+```php
+<?php
+/**
+ * Hide Comments Feature.
+ *
+ * @package DeWittePrins\CoreFunctionality
+ * @since   1.0.0
+ */
+
+declare( strict_types=1 );
+
+namespace DeWittePrins\CoreFunctionality\Modules\Cleaner\Features\HideComments;
+
+use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
+use Override;
+
+use function __;
+use function add_filter;
+
+/**
+ * Class HideComments
+ *
+ * Closes comments on every post.
+ *
+ * @since 1.0.0
+ */
+class HideComments extends AbstractFeature {
+
+	/**
+	 * Returns the descriptive data of this feature.
+	 *
+	 * @since  1.0.0
+	 * @return ComponentMeta Id, name, description and requirements.
+	 */
+	#[Override]
+	public static function get_meta(): ComponentMeta {
+		return new ComponentMeta(
+			id:           'cleaner_hide_comments',
+			name:         __( 'Hide comments', 'core-functionality' ),
+			description:  __( 'Closes comments on every post.', 'core-functionality' ),
+			orientation:  Orientation::FRONTEND,   // Default: Orientation::BOTH.
+			dependencies: 'woocommerce',           // Optional: environment id(s) that must be ready.
+		);
+	}
+
+	/**
+	 * Adds the hooks of this feature.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	#[Override]
+	public function launch(): void {
+		add_filter( 'comments_open', '__return_false' );
+	}
+}
+```
+
+Then, on the settings page, **Feature Activation → Scan for new features** adds it to the
+components register, after which you can switch it on and set its deployment tier. `$this->plugin`
+(services such as `settings`) and `$this->module` are available in the feature.
+
+On a site that gets the feature through a plugin update, the register is refreshed automatically: the
+new feature gets its enabled state and tier from `kernel/`, and an administrator sees a notice.
+
+## Adding a module
+
+A module only groups features: `src/Modules/<Module>/<Module>.php`, extending `AbstractModule` with
+just `get_meta()`. Its features go in `src/Modules/<Module>/Features/`.
+
+## Adding a plugin or theme to the environment
+
+A guard class represents an outside plugin or theme: it proves the plugin really started and supplies
+the plugin's admin links, from which the quick menu in the admin toolbar is composed.
+
+1. Add `src/Environment/Plugins/<ClassName>.php` extending `AbstractPlugin`. `get_id()` returns the class
+   name in kebab-case (`MyPlugin` → `my-plugin`).
+2. Add the id and the plugin basename to `settings/environment-index.php`
+   (`'my-plugin' => 'my-plugin/my-plugin.php'`).
+3. `get_proof_requirements()` returns what exists once the plugin has started (a class, function or
+   constant), checked on `init`. Classes are checked without autoloading.
+4. `get_toolbar_nodes()` and `get_menu_nodes()` return the plugin's admin links.
+
+Themes work the same in `src/Environment/Themes/` with the id suffix `-theme`; their index entry holds
+the theme name and author.
+
+## Hooks
+
+| Hook | Type | Default | Arguments | Example |
+|---|---|---|---|---|
+| `core-functionality/ready` | action | | | `add_action( 'core-functionality/ready', 'my_start' );` |
+| `core-functionality/launch-timing` | filter | `init`, priority `0` | `array{hook: string, priority: int} $timing` | `add_filter( 'core-functionality/launch-timing', fn () => array( 'hook' => 'wp_loaded', 'priority' => 10 ) );` |
+| `core-functionality/register-settings-sections` | action | | `AdminSettingsPage $page` | `add_action( 'core-functionality/register-settings-sections', fn ( $page ) => $page->register_section( MySettings::class ) );` |
+| `core-functionality/admin-menu-config-nodes` | filter | The admin menu items from the settings files | `AdminMenuConfigNode[] $config_nodes` | `add_filter( 'core-functionality/admin-menu-config-nodes', fn ( $nodes ) => $nodes );` |
+| `core-functionality/admin-menu-removals` | filter | The admin menu slugs to remove | `string[] $slugs_to_remove` | `add_filter( 'core-functionality/admin-menu-removals', fn ( $slugs ) => array_merge( $slugs, array( 'edit-comments.php' ) ) );` |
+
+To run code from another plugin once Core Functionality has started, whether or not that already
+happened:
+
+```php
+if ( did_action( 'core-functionality/ready' ) ) {
+	my_start();
+} else {
+	add_action( 'core-functionality/ready', 'my_start' );
+}
+```
+
+(A public API for this is planned; see the open points in `docs/ARCHITECTURE.md`.)
+
+## Code style and checks
+
+WordPress Coding Standards with PSR-4 class files, `declare( strict_types=1 );` everywhere and
+`core-functionality/<name>` hook names. See [`CLAUDE.md`](CLAUDE.md) for the conventions.
+
+    composer phpcs              # check
+    composer phpcbf             # fix what can be fixed automatically
+    composer lint               # php -l on all PHP files
+
+## Translations
+
+Source strings are English, text domain `core-functionality`; `languages/` holds the `.pot` and the
+Dutch translation. After changing strings (in DDEV, from the site folder):
+
+    ddev wp i18n make-pot wp-content/plugins/core-functionality-oop wp-content/plugins/core-functionality-oop/languages/core-functionality.pot --domain=core-functionality --exclude=vendor,___,kernel,src/Modules/LegeModule,src/Modules/ActiveWoo/dev-notes,src/Modules/ActiveWoo/Features/KeepLicenseAlive/leeg.php
+
+Then update `languages/core-functionality-nl_NL.po` (Poedit or Loco Translate) and create the `.mo`:
+
+    ddev wp i18n make-mo wp-content/plugins/core-functionality-oop/languages/core-functionality-nl_NL.po wp-content/plugins/core-functionality-oop/languages
+
+## Release
+
+1. Raise the version in the plugin header of `core-functionality.php` and the `Stable tag` in
+   `readme.txt`, and add a changelog entry in `readme.txt`.
+2. Commit, tag `vX.Y.Z` and push the tag. `.github/workflows/release.yml` builds the zip (with
+   `vendor/`, without development files) and attaches it to the GitHub release.
