@@ -3,7 +3,6 @@ namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
-use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
 use Override;
 
