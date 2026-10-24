@@ -280,6 +280,8 @@ class MenuBuilder implements FeatureInterface {
 		// Hardhandig verwijderen van de standaard WordPress 'Site bekijken' en 'Winkel bezoeken' sub-nodes
 		$wp_admin_bar->remove_node( 'view-site' );
 		$wp_admin_bar->remove_node( 'view-store' );
+		$wp_admin_bar->remove_node( 'dashboard' );
+		$wp_admin_bar->remove_node( 'plugins' );
 
 		// Verwijder de generieke core 'appearance' (Thema's/Customizer) node als we op de frontend zijn
 		if ( ! is_admin() ) {
