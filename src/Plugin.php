@@ -317,7 +317,7 @@ class Plugin {
 		$base_dir = trailingslashit( plugin_dir_path( $root_file ) );
 
 		$this->plugin_data = array(
-			'version'                   => get_plugin_data( $root_file )['Version'] ?? '1.0.0',
+			'version'                   => get_plugin_data( $root_file, false, false )['Version'] ?? '1.0.0',
 			'plugin-url'                => plugin_dir_url( $root_file ),
 			// base paths.
 			'plugin-dir'                => $base_dir,
