@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Core Functionality OOP 1.0.0\n"
-"Report-Msgid-Bugs-To: https://github.com/hansschuijff/core-functionality-oop/issues\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/core-functionality-oop\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-24T20:25:57+02:00\n"
+"POT-Creation-Date: 2026-10-25T00:29:28+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -120,8 +120,8 @@ msgstr ""
 #: settings/modules/admin-toolbar/add-events/menu.php:127
 #: settings/modules/admin-toolbar/add-posts/menu.php:95
 #: settings/modules/admin-toolbar/add-shop/items/admin.php:120
-#: src/Environment/Core/WordPress.php:168
-#: src/Environment/Core/WordPress.php:170
+#: src/Environment/Core/WordPress.php:178
+#: src/Environment/Core/WordPress.php:180
 #: src/Environment/Plugins/SenseiLms.php:99
 #: src/Environment/Plugins/TheEventsCalendar.php:107
 #: src/Environment/Plugins/Woocommerce.php:90
@@ -184,6 +184,7 @@ msgstr ""
 #: src/Environment/Plugins/TheEventsCalendar.php:114
 #: src/Environment/Plugins/Woocommerce.php:104
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:66
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:415
 msgid "Settings"
 msgstr ""
 
@@ -275,25 +276,25 @@ msgstr ""
 #: settings/modules/admin-toolbar/add-view/menu.php:49
 #: settings/modules/admin-toolbar/add-view/menu.php:65
 #: settings/modules/admin-toolbar/add-view/menu.php:81
-#: src/Environment/Core/WordPress.php:92
-#: src/Environment/Core/WordPress.php:99
-#: src/Environment/Core/WordPress.php:106
-#: src/Environment/Core/WordPress.php:117
-#: src/Environment/Core/WordPress.php:124
-#: src/Environment/Core/WordPress.php:131
-#: src/Environment/Core/WordPress.php:138
-#: src/Environment/Core/WordPress.php:149
-#: src/Environment/Core/WordPress.php:156
-#: src/Environment/Core/WordPress.php:163
-#: src/Environment/Core/WordPress.php:170
-#: src/Environment/Core/WordPress.php:177
-#: src/Environment/Core/WordPress.php:184
-#: src/Environment/Core/WordPress.php:191
-#: src/Environment/Core/WordPress.php:198
-#: src/Environment/Core/WordPress.php:205
-#: src/Environment/Core/WordPress.php:216
-#: src/Environment/Core/WordPress.php:223
-#: src/Environment/Core/WordPress.php:230
+#: src/Environment/Core/WordPress.php:102
+#: src/Environment/Core/WordPress.php:109
+#: src/Environment/Core/WordPress.php:116
+#: src/Environment/Core/WordPress.php:127
+#: src/Environment/Core/WordPress.php:134
+#: src/Environment/Core/WordPress.php:141
+#: src/Environment/Core/WordPress.php:148
+#: src/Environment/Core/WordPress.php:159
+#: src/Environment/Core/WordPress.php:166
+#: src/Environment/Core/WordPress.php:173
+#: src/Environment/Core/WordPress.php:180
+#: src/Environment/Core/WordPress.php:187
+#: src/Environment/Core/WordPress.php:194
+#: src/Environment/Core/WordPress.php:201
+#: src/Environment/Core/WordPress.php:208
+#: src/Environment/Core/WordPress.php:215
+#: src/Environment/Core/WordPress.php:226
+#: src/Environment/Core/WordPress.php:233
+#: src/Environment/Core/WordPress.php:240
 #: src/Environment/Plugins/Automatewoo.php:73
 #: src/Environment/Plugins/Automatewoo.php:80
 #: src/Environment/Plugins/BrokenLinkChecker.php:65
@@ -388,7 +389,7 @@ msgstr ""
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:82
 #: src/Environment/Plugins/WpForms.php:65
 #: src/Environment/Plugins/YoastSeo.php:80
-#: src/Environment/Themes/AnyBlockTheme.php:100
+#: src/Environment/Themes/AnyBlockTheme.php:109
 #: src/Environment/Themes/AnyGenesis.php:78
 msgid "Link to"
 msgstr ""
@@ -429,22 +430,22 @@ msgstr ""
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:32
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:63
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:70
-#: src/Environment/Core/WordPress.php:189
-#: src/Environment/Core/WordPress.php:191
+#: src/Environment/Core/WordPress.php:199
+#: src/Environment/Core/WordPress.php:201
 msgid "Pages"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:44
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:51
-#: src/Environment/Core/WordPress.php:182
-#: src/Environment/Core/WordPress.php:184
+#: src/Environment/Core/WordPress.php:192
+#: src/Environment/Core/WordPress.php:194
 msgid "Reusable blocks"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:82
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:89
-#: src/Environment/Core/WordPress.php:196
-#: src/Environment/Core/WordPress.php:198
+#: src/Environment/Core/WordPress.php:206
+#: src/Environment/Core/WordPress.php:208
 msgid "Comments"
 msgstr ""
 
@@ -467,8 +468,8 @@ msgstr ""
 
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:139
 #: settings/modules/admin-toolbar/add-other-edits/menu.php:146
-#: src/Environment/Core/WordPress.php:203
-#: src/Environment/Core/WordPress.php:205
+#: src/Environment/Core/WordPress.php:213
+#: src/Environment/Core/WordPress.php:215
 msgid "Users"
 msgstr ""
 
@@ -513,8 +514,8 @@ msgstr ""
 #: settings/modules/admin-toolbar/add-settings/menu.php:43
 #: settings/modules/admin-toolbar/add-site/menu.php:103
 #: settings/modules/admin-toolbar/add-site/menu.php:110
-#: src/Environment/Core/WordPress.php:136
-#: src/Environment/Core/WordPress.php:138
+#: src/Environment/Core/WordPress.php:146
+#: src/Environment/Core/WordPress.php:148
 #: src/Environment/Plugins/FestingerVault.php:84
 #: src/Environment/Plugins/FestingerVault.php:86
 msgid "Themes"
@@ -536,7 +537,7 @@ msgstr ""
 
 #: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:126
 #: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:25
-#: src/Environment/Core/WordPress.php:97
+#: src/Environment/Core/WordPress.php:107
 #: src/Environment/Plugins/FestingerVault.php:70
 msgid "Updates"
 msgstr ""
@@ -629,21 +630,21 @@ msgid "Nobuna Plugins"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:32
-#: src/Environment/Core/WordPress.php:99
+#: src/Environment/Core/WordPress.php:109
 msgid "Plugins & Themes Updates"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:41
 #: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:48
-#: src/Environment/Core/WordPress.php:90
-#: src/Environment/Core/WordPress.php:92
+#: src/Environment/Core/WordPress.php:100
+#: src/Environment/Core/WordPress.php:102
 msgid "Installed Plugins"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:57
 #: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:64
-#: src/Environment/Core/WordPress.php:104
-#: src/Environment/Core/WordPress.php:106
+#: src/Environment/Core/WordPress.php:114
+#: src/Environment/Core/WordPress.php:116
 msgid "Add Plugin"
 msgstr ""
 
@@ -660,8 +661,8 @@ msgid "the posts"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-posts/menu.php:79
-#: src/Environment/Core/WordPress.php:161
-#: src/Environment/Core/WordPress.php:163
+#: src/Environment/Core/WordPress.php:171
+#: src/Environment/Core/WordPress.php:173
 msgid "New Post"
 msgstr ""
 
@@ -674,8 +675,8 @@ msgid "Post categories"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-posts/menu.php:111
-#: src/Environment/Core/WordPress.php:175
-#: src/Environment/Core/WordPress.php:177
+#: src/Environment/Core/WordPress.php:185
+#: src/Environment/Core/WordPress.php:187
 msgid "Tags"
 msgstr ""
 
@@ -696,8 +697,8 @@ msgstr ""
 #: settings/modules/admin-toolbar/add-settings/menu.php:78
 #: settings/modules/admin-toolbar/add-site/menu.php:87
 #: settings/modules/admin-toolbar/add-site/menu.php:94
-#: src/Environment/Core/WordPress.php:129
-#: src/Environment/Core/WordPress.php:131
+#: src/Environment/Core/WordPress.php:139
+#: src/Environment/Core/WordPress.php:141
 msgid "Menus"
 msgstr ""
 
@@ -705,8 +706,8 @@ msgstr ""
 #: settings/modules/admin-toolbar/add-settings/menu.php:94
 #: settings/modules/admin-toolbar/add-site/menu.php:71
 #: settings/modules/admin-toolbar/add-site/menu.php:78
-#: src/Environment/Core/WordPress.php:122
-#: src/Environment/Core/WordPress.php:124
+#: src/Environment/Core/WordPress.php:132
+#: src/Environment/Core/WordPress.php:134
 msgid "Widgets"
 msgstr ""
 
@@ -728,12 +729,12 @@ msgstr ""
 
 #: settings/modules/admin-toolbar/add-settings/menu.php:141
 #: src/Admin/Services/Settings/AdminSettingsPage.php:119
-#: src/Environment/Core/WordPress.php:214
+#: src/Environment/Core/WordPress.php:224
 msgid "Core Functionality"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-settings/menu.php:148
-#: src/Environment/Core/WordPress.php:216
+#: src/Environment/Core/WordPress.php:226
 msgid "Core functionality settings"
 msgstr ""
 
@@ -921,15 +922,15 @@ msgstr ""
 
 #: settings/modules/admin-toolbar/add-site/menu.php:36
 #: settings/modules/admin-toolbar/add-site/menu.php:43
-#: src/Environment/Themes/AnyBlockTheme.php:98
-#: src/Environment/Themes/AnyBlockTheme.php:100
+#: src/Environment/Themes/AnyBlockTheme.php:107
+#: src/Environment/Themes/AnyBlockTheme.php:109
 msgid "Site editor"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-site/menu.php:55
 #: settings/modules/admin-toolbar/add-site/menu.php:62
-#: src/Environment/Core/WordPress.php:115
-#: src/Environment/Core/WordPress.php:117
+#: src/Environment/Core/WordPress.php:125
+#: src/Environment/Core/WordPress.php:127
 msgid "Customizer"
 msgstr ""
 
@@ -1106,15 +1107,15 @@ msgstr ""
 
 #: settings/modules/admin-toolbar/add-view/menu.php:60
 #: settings/modules/admin-toolbar/add-view/menu.php:67
-#: src/Environment/Core/WordPress.php:221
-#: src/Environment/Core/WordPress.php:223
+#: src/Environment/Core/WordPress.php:231
+#: src/Environment/Core/WordPress.php:233
 msgid "Frontpage"
 msgstr ""
 
 #: settings/modules/admin-toolbar/add-view/menu.php:76
 #: settings/modules/admin-toolbar/add-view/menu.php:83
-#: src/Environment/Core/WordPress.php:228
-#: src/Environment/Core/WordPress.php:230
+#: src/Environment/Core/WordPress.php:238
+#: src/Environment/Core/WordPress.php:240
 msgid "Testimonials"
 msgstr ""
 
@@ -1465,13 +1466,13 @@ msgstr ""
 msgid "🌐 Production"
 msgstr ""
 
-#: src/Environment/Core/WordPress.php:147
-#: src/Environment/Core/WordPress.php:149
+#: src/Environment/Core/WordPress.php:157
+#: src/Environment/Core/WordPress.php:159
 msgid "View Posts"
 msgstr ""
 
-#: src/Environment/Core/WordPress.php:154
-#: src/Environment/Core/WordPress.php:156
+#: src/Environment/Core/WordPress.php:164
+#: src/Environment/Core/WordPress.php:166
 msgid "Edit Posts"
 msgstr ""
 
@@ -1825,11 +1826,11 @@ msgstr ""
 msgid "Provides advanced layout overrides, performance enhancements, and custom nodes filtering for the WordPress admin menu."
 msgstr ""
 
-#: src/Modules/AdminMenu/Features/AdminMenuArchitect/AdminMenuArchitect.php:42
+#: src/Modules/AdminMenu/Features/AdminMenuArchitect/AdminMenuArchitect.php:41
 msgid "Admin Menu Architect"
 msgstr ""
 
-#: src/Modules/AdminMenu/Features/AdminMenuArchitect/AdminMenuArchitect.php:43
+#: src/Modules/AdminMenu/Features/AdminMenuArchitect/AdminMenuArchitect.php:42
 msgid "Architects, structures and cleans up the admin side navigation."
 msgstr ""
 
@@ -1877,121 +1878,206 @@ msgstr ""
 msgid "Save Toolbar Visibility Filter"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:48
+#: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:47
 msgid "Legacy Admin Toolbar Builder Feature"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:49
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:68
-#: src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/MenuBuilder.php:58
+#: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:48
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:66
+#: src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/MenuBuilder.php:57
 msgid "The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:67
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:65
 msgid "Admin Toolbar Builder Feature"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:98
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:112
 msgid "Admin Toolbar Menu Builder"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:109
-msgid "Design your custom WordPress Admin Toolbar. Filter shortcuts by source provider, select elements from the pool to clone them, and manage hierarchy sequence fields."
-msgstr ""
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:170
-msgid "Available Shortcuts Pool"
-msgstr ""
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:171
-msgid "Filter by source plugin. Check items to add them, or drag nodes to build your menu skeleton blueprint."
-msgstr ""
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:172
-msgid "Active Admin Toolbar Menu Structure (Max 3 Levels)"
-msgstr ""
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:173
-msgid "Drag nodes vertically to reorder. Expand cards via the arrow to tweak live titles, custom URLs, and adjust indentation levels."
-msgstr ""
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:174
-msgid "Filter by Source Provider:"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:123
+msgid "Compose the shortcuts menu of the admin toolbar from the links of all known plugins and themes. Links of plugins that are not active are kept, but only shown once the plugin is active."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:175
-msgid "All Source Providers"
+msgid "Available shortcuts"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:212
-msgid "Empty Submenu / Custom Link"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:176
+msgid "Shortcuts of all known plugins and themes. Check them and add them, or drag them into the menu."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:213
-msgid "Generates an abstract menu parent node group or redirection asset url link"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:177
+msgid "Source"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:244
-msgid "Toolbar menu is empty. Add shortcuts from the pool and manage your dropdown matrix submenus nesting groups."
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:178
+msgid "Toolbar menu (max. 3 levels)"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:292
-msgid "Custom Submenu Header Group"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:179
+msgid "Drag to reorder and use the arrows to indent. Open a node to change its title or where it is shown."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:315
-msgid "Inactive Component Residual Node"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:243
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:308
+msgid "Custom"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:376
-msgid "Move Outward (Reduce Depth)"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:246
+msgid "Submenu or custom link"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:377
-msgid "Move Inward (Increase Depth)"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:247
+msgid "A parent for other nodes, or a link of your own"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:378
-msgid "Toggle configuration panel"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:324
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:393
+msgid "Unknown"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:379
-msgid "Remove node item"
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:328
+msgid "No known plugin or theme offers this shortcut any more."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:389
-msgid "Navigation Label Override"
+msgid "All sources"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:390
-msgid "Resource URL Reference (Read-Only Copy Source)"
+msgid "Active"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:391
-msgid "⚠️ Notice: Custom label overrides bypass system i18n core translation files."
+msgid "Inactive"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:438
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:392
+msgid "Not installed"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:394
+msgid "Admin"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:395
+msgid "Front"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:396
+msgid "Links to an admin page"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:397
+msgid "Links to a page on the site"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:398
+msgid "Only on admin pages"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:399
+msgid "Only on the front end"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:400
+msgid "On admin pages and the front end"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:401
+msgid "Show"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:402
+msgid "Add selected"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:403
+msgid "Select all visible"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:404
+msgid "Select at least one shortcut first."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:405
+msgid "The menu is empty. Add shortcuts from the list."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:406
+msgid "Title"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:407
+msgid "Leave empty to use the title of the shortcut, which follows the translation."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:408
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:491
+msgid "Submenu"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:409
+msgid "URL"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:410
+msgid "Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:411
+msgid "Copy"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:412
+msgid "Copied"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:413
+msgid "Move out (one level up)"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:414
+msgid "Move in (one level down)"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:416
+msgid "Remove"
+msgstr ""
+
+#. translators: %d: number of items below the node.
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:418
+#, php-format
+msgid "This node has %d items below it. Remove the node together with those items?"
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:419
+msgid "Shown once this plugin or theme is active."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:445
 msgid "Critical Error: You do not have sufficient permissions to modify the Admin Menu Builder settings."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:444
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:451
 msgid "Save Aborted: No changes detected or serialization data stream is empty."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:450
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:457
 msgid "Save Failed: Transmitted layout configuration matrix map is corrupt."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:458
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:465
 msgid "Admin toolbar multi-level menu hierarchy blueprint saved successfully."
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:499
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:527
 msgid "Save Toolbar Menu Order Hierarchy"
 msgstr ""
 
-#: src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/MenuBuilder.php:57
+#: src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/MenuBuilder.php:56
 msgid "Admin Toolbar Menu Feature"
 msgstr ""
 
