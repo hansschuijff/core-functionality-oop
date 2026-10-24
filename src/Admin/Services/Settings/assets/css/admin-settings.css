@@ -294,22 +294,6 @@ span.dwp-menu-item.is-active {
     flex-grow: 1; /* Duwt de footer altijd onvoorwaardelijk naar de onderkant */
 }
 
-/* HAARSCHERPE VASTGEKLEEFDE STICKY FOOTER */
-/* .dwp-gutenberg-actions-footer {
-    position: sticky;
-    bottom: -40px; /* Compenseert perfect de canvas padding onderin */
-    left: 0;
-    right: 0;
-    background: #ffffff;
-    padding: 24px 0;
-    margin-top: 40px;
-    border-top: 1px solid #e0e0e0;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    z-index: 10;
-} */
-
 /* ==========================================================================
    5. COMMAND PALETTE MODAL (CTRL + SPACE UI & TOETSENBORD NAVIGATIE)
    ========================================================================== */
@@ -401,8 +385,8 @@ span.dwp-menu-item.is-active {
 .dwp-palette-item.is-selected {
     background: #f0f0f0;
     color: #2271b1;
-}
     outline: none;
+}
 
 .dwp-palette-item .dashicons {
     color: #646970;
