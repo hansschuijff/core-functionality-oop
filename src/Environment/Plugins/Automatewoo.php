@@ -30,11 +30,23 @@ use function admin_url;
  */
 class Automatewoo extends AbstractPlugin {
 
+	/**
+	 * Returns the environment id of AutomateWoo.
+	 *
+	 * @since  1.0.0
+	 * @return string The id, also the key in environment-index.php.
+	 */
 	#[Override]
 	public function get_id(): string {
 		return 'automatewoo';
 	}
 
+	/**
+	 * Returns what must exist to prove AutomateWoo has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		// AutomateWoo only loads these (plugins_loaded 8) when its PHP, WordPress and WooCommerce
@@ -45,6 +57,12 @@ class Automatewoo extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin toolbar links AutomateWoo offers for the quick menu.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The toolbar links.
+	 */
 	#[Override]
 	protected function get_toolbar_nodes(): array {
 		return array(
@@ -65,6 +83,12 @@ class Automatewoo extends AbstractPlugin {
 		);
 	}
 
+	/**
+	 * Returns the admin menu blocks AutomateWoo offers (none yet).
+	 *
+	 * @since  1.0.0
+	 * @return array Empty array.
+	 */
 	#[Override]
 	protected function get_menu_nodes(): array {
 		return array();

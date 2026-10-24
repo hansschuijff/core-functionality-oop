@@ -7,6 +7,10 @@
     <exclude-pattern>*/node_modules/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
 
+    <!-- Local notes and scratch modules (gitignored, not part of the plugin) -->
+    <exclude-pattern>*/dev-notes/*</exclude-pattern>
+    <exclude-pattern>*/LegeModule/*</exclude-pattern>
+
     <!-- Enforce the official WordPress Core standards -->
     <rule ref="WordPress-Core" />
     <rule ref="WordPress-Docs" />
@@ -20,6 +24,13 @@
         <!-- Optional: if the sniff still triggers warnings on structure, switch off entirely: -->
         <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
         <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+    </rule>
+
+    <!-- Hook names are core-functionality/<kebab-name>: allow - and / between words -->
+    <rule ref="WordPress.NamingConventions.ValidHookName">
+        <properties>
+            <property name="additionalWordDelimiters" value="-/"/>
+        </properties>
     </rule>
 
     <!-- Check all PHP files inside the current framework structure -->
