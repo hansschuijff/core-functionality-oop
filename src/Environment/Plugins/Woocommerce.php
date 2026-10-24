@@ -22,6 +22,7 @@ use function home_url;
 use function wc_get_page_permalink;
 use function get_term_by;
 use function get_term_link;
+use function is_wp_error;
 
 /**
  * Class Woocommerce
@@ -169,16 +170,23 @@ class Woocommerce extends AbstractPlugin {
 		return array();
 	}
 
+	/**
+	 * Returns the front-end URL of a product category.
+	 *
+	 * @since  1.0.0
+	 * @param  string $category_slug The product category slug.
+	 * @return string The category URL, or '#' when the category does not exist.
+	 */
 	private function get_product_cat_url_by_slug( string $category_slug ): string {
 		if ( empty( $category_slug ) ) {
 			return '#';
 		}
-		$category_slug = 'schoenen'; // Vervang door de slug van jouw categorie
-		$category      = get_term_by( 'slug', $category_slug, 'product_cat' );
+		$category = get_term_by( 'slug', $category_slug, 'product_cat' );
 		if ( ! $category ) {
 			return '#';
 		}
 		$category_url = get_term_link( $category, 'product_cat' );
-		return $category_url;
+
+		return is_wp_error( $category_url ) ? '#' : $category_url;
 	}
 }

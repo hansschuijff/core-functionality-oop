@@ -20,6 +20,7 @@ use function admin_url;
 use function function_exists;
 use function home_url;
 use function wc_get_page_permalink;
+use function is_wp_error;
 use function get_term_by;
 use function get_term_link;
 
@@ -39,7 +40,13 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 		return 'woocommerce-subscriptions';
 	}
 
-	// #[Override]
+	/**
+	 * Returns what must exist to prove the plugin has started.
+	 *
+	 * @since  1.0.0
+	 * @return ProofRequirement The proof criteria.
+	 */
+	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement( classes: 'WC_Subscriptions' );
 	}
@@ -89,6 +96,13 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 		return array();
 	}
 
+	/**
+	 * Returns the front-end URL of a product category.
+	 *
+	 * @since  1.0.0
+	 * @param  string $category_slug The product category slug.
+	 * @return string The category URL, or '#' when the category does not exist.
+	 */
 	private function get_product_cat_url_by_slug( string $category_slug ): string {
 		if ( empty( $category_slug ) ) {
 			return '#';
@@ -98,6 +112,7 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 			return '#';
 		}
 		$category_url = get_term_link( $category, 'product_cat' );
-		return $category_url;
+
+		return is_wp_error( $category_url ) ? '#' : $category_url;
 	}
 }
