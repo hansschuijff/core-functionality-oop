@@ -39,14 +39,16 @@ new modules and features for Hans's own sites.
   declarations; Composer loads them once.
 - Guards supply the admin toolbar and menu links of their plugin or theme on purpose (see
   `docs/ARCHITECTURE.md`, Environment); do not move them to the AdminToolbar module.
-- A **module** is only a container: `src/Modules/<Module>/<Module>.php`, implements `ModuleInterface`, no
-  functionality of its own (`launch()` stays empty).
-- A **feature** holds the functionality: `src/Modules/<Module>/Features/<Feature>/<Feature>.php`, implements
-  `FeatureInterface`, constructor `( ModuleInterface $module, Plugin $plugin )`, hooks in `launch()`.
-  Its assets live next to it (`assets/css`, `assets/js`); a settings tab is a class implementing
-  `SettingsSectionInterface`, registered on `core-functionality/register-settings-sections`.
-- Metadata on modules and features is static (`get_id`, `get_name`, `get_description`, `get_orientation`,
-  `get_dependencies`, `uses_features`), so the kernel can check them before creating an instance.
+- A **module** is only a container: `src/Modules/<Module>/<Module>.php`, extends `AbstractModule` and
+  contains only `get_meta()`.
+- A **feature** holds the functionality: `src/Modules/<Module>/Features/<Feature>/<Feature>.php`, extends
+  `AbstractFeature`, contains `get_meta()` and `launch()` (where it adds its hooks) plus its own methods.
+  `$this->module` and `$this->plugin` come from the base class. Its assets live next to it (`assets/css`,
+  `assets/js`); a settings tab is a class implementing `SettingsSectionInterface`, registered on
+  `core-functionality/register-settings-sections`.
+- `get_meta()` is static and returns a `ComponentMeta` (id, name, description; orientation, dependencies
+  and `uses_features` only when they differ from the defaults). The register and the Kernel read it before
+  an instance exists. Names are translated, so do not call the getters before `init`.
 - Dependencies use environment ids: a plugin id (`woocommerce`), a theme id with `-theme`
   (`any-genesis-theme`) or a server id with `-environment` (`production-environment`). Each id needs a guard class in
   `src/Environment/Plugins|Themes|Servers/`; its `get_id()` is the class name in kebab-case and equals the

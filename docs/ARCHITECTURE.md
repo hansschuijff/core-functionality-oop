@@ -55,8 +55,9 @@ core-functionality-oop/
 │   ├── Plugin.php                container: services, paths, option keys, ready state
 │   ├── Kernel.php                schedules on plugins_loaded, launches on init
 │   ├── Interfaces/               ModuleInterface, FeatureInterface, LoggerInterface
+│   ├── Abstracts/                AbstractModule, AbstractFeature, DescribedByMeta (getters from get_meta())
 │   ├── Enums/                    Orientation, Deployment, Register, RegisterSetting, ...
-│   ├── DTO/                      AdminMenuBlock, ToolbarShortcut
+│   ├── DTO/                      AdminMenuBlock, ToolbarShortcut, ComponentMeta
 │   ├── ValueObjects/             module, feature and environment validators
 │   ├── Services/                 ComponentsRegister, Settings, Options, InterDependenciesGuard,
 │   │                             PluginIntegrityWatch, ClassParser, FileSystem/ (scan and file writes)
@@ -90,7 +91,17 @@ site. It combines:
 The kernel then checks the environment dependencies of whatever passes. The registers are kept in the
 database through the options vault and also written to `kernel/components-register.php`,
 `components-enabled-register.php` and `components-deployment-register.php`; when the database has no value
-the files are read and copied into it.
+the files are read and copied into it. The options are there for speed; the files are a fallback and are
+only written when the `kernel/` folder is writable (on production it often is not, and the option then
+keeps the change).
+
+After a plugin update the components option would still describe the old version. The plugin version is
+therefore stored with the registers (`components-register-version`). On a different version, before
+anything reads the registers, the components option is removed so it is refilled from the new version's
+file; components that are new get their enabled state and deployment tier from the files, while the
+site's choices for existing components stay. An administrator gets a notice (on `admin_init`) listing
+what was added. During development the version does not change, so a rescan on the settings page is
+still how new code is picked up locally.
 
 ## Environment
 
@@ -175,6 +186,9 @@ ids in the error log and as an admin notice.
 | Guards supply links | Each plugin/theme guard hands in its own toolbar and menu links | The guard knows the external plugin; the menu is composed from these blocks |
 | Hook names | `core-functionality/<name>` (October 2026, before production) | "core" alone suggests WordPress core; replaces `dwp_cf_` and `dwp_core_` hooks |
 | External contract | Only the ready moment (`core-functionality/ready`, `call_when_ready()`) is promised to other code | Internal timing may change |
+| Metadata in one DTO | A static `get_meta()` returns `ComponentMeta`; abstract base classes answer the getters | A feature class holds only its functionality (Hans's idea, October 2026) |
+| Version sync of the registers | Plugin version stored with the registers; on a new version the components option is rebuilt from the file and new components get file defaults | An update's new features appear without a manual rescan, and the site's choices stay |
+| Register files optional | Written only when `kernel/` is writable | They are a fallback for the database; production folders are often read-only |
 
 ## Open points
 
@@ -183,7 +197,12 @@ Known issues:
 - The public API is not worked out yet (parked): `CF::initialize()` is never called, so the `Api` facade
   and functions answer "not ready", and `src/Api/helpers.php` is a placeholder (not autoloaded; it calls a
   `Core` class that no longer exists).
-- About half of the PHP files lack `declare( strict_types=1 );`; phpcs has not been run over everything.
+- phpcs works again since October 2026 (it silently exited before, see `src/Api/functions.php`). Over the
+  whole plugin: 2795 errors and 306 warnings, of which phpcbf can fix 2634 automatically (best in one
+  separate commit). The rest is mostly missing docblocks (also in the guard classes) and
+  `declare( strict_types=1 );` in about half of the files.
+- Not tested in a logged-in admin: the "new components" notice and the integrity check on `admin_init`.
+- `src/Modules/LegeModule/` (gitignored template) and `KeepLicenseAlive/leeg.php` still use the old style.
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):
@@ -211,19 +230,8 @@ Environment proofs (reviewed October 2026):
   `/artikelen/`, the `course-payment-plans` product category) stay for now; they could also become custom
   links on the settings page.
 
-Structure (agreed direction, October 2026; to be planned and built):
-
-1. **Less boilerplate per component.** Hans's idea: a DTO with the descriptive data (id, name,
-   description, orientation, dependencies, `uses_features`), filled by one method of the feature; an
-   `AbstractFeature` (and `AbstractModule`) implements the interface getters from it, so a feature class
-   holds only its functionality. Modules are already almost empty shells. Keeping a feature's
-   administration on a settings screen was considered, but options do not travel with an update to another
-   site.
-2. **Code and site state apart.** Confirmed: `ComponentsRegister::get_register()` uses the option when it
-   exists and only falls back to the `kernel/` file, so a feature added in an update stays invisible until
-   someone rescans. The options are there for speed; the file is always written as well. Hans's direction:
-   store the plugin version with the options; on a version difference, update the options from the file
-   (new components get their file defaults, existing ones keep the site's choices).
+Considered and set aside: keeping a feature's administration (its meta) on a settings screen; options do
+not travel with an update to another site.
 
 Missing:
 
@@ -235,4 +243,7 @@ Missing:
 ## Testing
 
 No automated tests. Checks: `php -l`, `vendor/bin/phpcs` (WordPress-Core and WordPress-Docs, PSR-4 file
-names allowed), and manual checks on the DDEV site `https://speeltuin.ddev.site`.
+names allowed, `-` and `/` allowed in hook names), and manual checks on the DDEV site
+`https://speeltuin.ddev.site`. The plugin is not active there; Claude tests by loading it for a single
+request from a temporary mu-plugin (removed afterwards), which shows whether the Kernel boots, which
+components start and which guards are ready, without changing the activation state.
