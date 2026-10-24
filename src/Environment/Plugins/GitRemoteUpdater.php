@@ -13,7 +13,7 @@ class GitRemoteUpdater extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'git-updater';
+		return 'git_remote_updater';
 	}
 
 	#[Override]

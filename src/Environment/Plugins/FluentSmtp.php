@@ -13,7 +13,7 @@ class FluentSmtp extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'fluent-smtp';
+		return 'fluent_smtp';
 	}
 
 	#[Override]

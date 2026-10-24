@@ -13,7 +13,7 @@ class RedisCache extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'redis-cache';
+		return 'redis_cache';
 	}
 
 	#[Override]

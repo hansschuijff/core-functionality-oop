@@ -25,7 +25,7 @@ class WoocommerceCustomerOrderCsvExport extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce-customer-order-csv-export';
+		return 'woocommerce_customer_order_csv_export';
 	}
 
 	// #[Override]

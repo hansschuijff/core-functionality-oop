@@ -27,7 +27,7 @@ class WoocommercePreOrders extends AbstractPlugin {
 	#[Override]
 	public function get_id(): string {
 		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
-		return 'woocommerce-pre-orders';
+		return 'woocommerce_pre_orders';
 	}
 
 	// #[Override]

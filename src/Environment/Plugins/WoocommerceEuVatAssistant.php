@@ -25,7 +25,7 @@ class WoocommerceEuVatAssistant extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce-eu-vat-assistant';
+		return 'woocommerce_eu_vat_assistant';
 	}
 
 	// #[Override]

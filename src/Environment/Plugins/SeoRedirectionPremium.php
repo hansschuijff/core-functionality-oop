@@ -13,7 +13,7 @@ class SeoRedirectionPremium extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'seo-redirection-premium';
+		return 'seo_redirection_premium';
 	}
 
 	#[Override]

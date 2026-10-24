@@ -13,7 +13,7 @@ class UpdraftPlus extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'updraft-plus';
+		return 'updraft_plus';
 	}
 
 	#[Override]

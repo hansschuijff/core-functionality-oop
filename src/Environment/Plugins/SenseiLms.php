@@ -14,7 +14,7 @@ class SenseiLms extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'sensei-lms';
+		return 'sensei_lms';
 	}
 
 	#[Override]

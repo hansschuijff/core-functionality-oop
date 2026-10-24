@@ -21,6 +21,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	'plugins' => array(
+		// Every key equals the get_id() of a guard class in src/Environment/Plugins/ (the class name in
+		// snake_case). Basenames marked "confirm" are not installed on the local site and are unverified.
+
 		// Core & Common Utilities.
 		'yoast_seo'                       => 'wordpress-seo/wp-seo.php',
 		'jetpack'                         => 'jetpack/jetpack.php',
@@ -28,30 +31,53 @@ return array(
 		'carbon_fields'                   => 'carbon-fields/carbon-fields.php',
 		'carbon_fields_helper'            => 'carbon-fields-helper/carbon-fields-helper.php',
 		'searchwp'                        => 'searchwp/searchwp.php',
-		'debug_toolkit'                   => '_debug-toolkit/debug-toolkit.php',
+		'debug_toolkit'                   => '__debug-toolkit/debug-toolkit.php',
+		'broken_link_checker'             => 'broken-link-checker/broken-link-checker.php',
+		'fluent_smtp'                     => 'fluent-smtp/fluent-smtp.php',
+		'loco_translate'                  => 'loco-translate/loco.php',
+		'seo_redirection_premium'         => 'seo-redirection-premium/seo-redirection-premium.php',
+		'updraft_plus'                    => 'updraftplus/updraftplus.php',
+		'wp_forms'                        => 'wpforms/wpforms.php',
+		'redis_cache'                     => 'redis-cache/redis-cache.php', // confirm.
+		'wp_php_my_admin'                 => 'wp-phpmyadmin-extension/index.php', // confirm.
+
+		// Updates and licences.
+		'git_updater'                     => 'git-updater/git-updater.php',
+		'git_remote_updater'              => 'git-remote-updater/git-remote-updater.php',
+		'festinger_vault'                 => 'festinger-vault/festingervault.php', // confirm: local site also has festingervault/ (v5 beta).
+		'nobuna'                          => 'nobuna-plugins-manager/nobuna-plugins-manager.php',
 
 		// WooCommerce Core & Extensions.
 		'woocommerce'                     => 'woocommerce/woocommerce.php',
 		'activewoo_api_helper'            => 'activewoo-api-helper/activewoo-api-helper.php',
-		'woocommerce_activecampaign'      => 'woocommerce-activecampaign/woocommerce-activecampaign.php',
+		'woocommerce_active_campaign_integration' => 'woocommerce-active-campaign/woocommerce-active-campaign.php',
 		'mollie_payments_for_woocommerce' => 'mollie-payments-for-woocommerce/mollie-payments-for-woocommerce.php',
-		'woocommerce_pdf_invoices'        => 'woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packing-slips.php',
+		'woocommerce_pdf_invoices'        => 'woocommerce-pdf-invoices-packing-slips/woocommerce-pdf-invoices-packingslips.php',
 		'woocommerce_subscriptions'       => 'woocommerce-subscriptions/woocommerce-subscriptions.php',
+		'woocommerce_customer_order_csv_export' => 'woocommerce-customer-order-csv-export/woocommerce-customer-order-csv-export.php',
+		'woocommerce_pre_orders'          => 'woocommerce-pre-orders/woocommerce-pre-orders.php',
+		'woocommerce_product_addons'      => 'woocommerce-product-addons/woocommerce-product-addons.php',
+		'woocommerce_smart_coupons'       => 'woocommerce-smart-coupons/woocommerce-smart-coupons.php',
+		'woocommerce_eu_vat_assistant'    => 'woocommerce-eu-vat-assistant/woocommerce-eu-vat-assistant.php', // confirm.
+		'woocommerce_follow_up_emails'    => 'woocommerce-follow-up-emails/woocommerce-follow-up-emails.php', // confirm.
 
 		// The Events Calendar Stack.
 		'the_events_calendar'             => 'the-events-calendar/the-events-calendar.php',
+		'the_events_calendar_pro'         => 'events-calendar-pro/events-calendar-pro.php',
+		'event_tickets'                   => 'event-tickets/event-tickets.php',
 		'event_tickets_plus'              => 'event-tickets-plus/event-tickets-plus.php',
 		'schema_glue_yoast_tec'           => 'schema-glue-for-yoast-the-events-calendar/schema-glue.php',
 
 		// Sensei LMS Stack.
 		'sensei_lms'                      => 'sensei-lms/sensei-lms.php',
+		'sensei_pro'                      => 'sensei-pro/sensei-pro.php', // confirm.
 		'sensei_content_drip'             => 'sensei-content-drip/sensei-content-drip.php',
 		'sensei_paid_courses'             => 'sensei-paid-courses/sensei-paid-courses.php',
 
 		// Social & Feeds.
-		'scriptless_social_sharing'       => 'scriptless-social-sharing/index.php',
+		'scriptless_social_sharing'       => 'scriptless-social-sharing/scriptless-social-sharing.php',
 		'shared_counts'                   => 'shared-counts/shared-counts.php',
-		'send_images_to_rss'              => 'send-images-to-rss/send-images-to-rss.php',
+		'send_images_to_rss'              => 'send-images-rss/send-images-rss.php',
 
 		// Genesis Utility Plugins.
 		'display_featured_image_genesis'  => 'display-featured-image-genesis/display-featured-image-genesis.php',

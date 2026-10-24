@@ -27,7 +27,7 @@ class WoocommerceSmartCoupons extends AbstractPlugin {
 	#[Override]
 	public function get_id(): string {
 		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
-		return 'woocommerce-smart-coupons';
+		return 'woocommerce_smart_coupons';
 	}
 
 	// #[Override]

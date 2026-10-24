@@ -25,7 +25,7 @@ class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'woocommerce-active-campaign-integration';
+		return 'woocommerce_active_campaign_integration';
 	}
 
 	// #[Override]

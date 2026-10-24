@@ -13,7 +13,7 @@ class LocoTranslate extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'loco-translate';
+		return 'loco_translate';
 	}
 
 	#[Override]

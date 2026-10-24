@@ -26,7 +26,7 @@ class WoocommerceFollowUpEmails extends AbstractPlugin {
 	#[Override]
 	public function get_id(): string {
 		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
-		return 'woocommerce-follow-up-emails';
+		return 'woocommerce_follow_up_emails';
 	}
 
 	// #[Override]

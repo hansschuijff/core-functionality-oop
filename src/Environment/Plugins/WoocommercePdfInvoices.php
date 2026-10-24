@@ -26,7 +26,7 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 	#[Override]
 	public function get_id(): string {
 		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
-		return 'woocommerce-pdf-invoices';
+		return 'woocommerce_pdf_invoices';
 	}
 
 	// #[Override]

@@ -13,7 +13,7 @@ class BrokenLinkChecker extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'broken-link-checker';
+		return 'broken_link_checker';
 	}
 
 	#[Override]

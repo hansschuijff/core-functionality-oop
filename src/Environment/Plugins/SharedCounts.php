@@ -13,7 +13,7 @@ class SharedCounts extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		return 'shared-counts';
+		return 'shared_counts';
 	}
 
 	#[Override]
