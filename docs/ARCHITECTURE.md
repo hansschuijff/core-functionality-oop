@@ -202,9 +202,9 @@ Known issues:
   separate commit). The rest is mostly missing docblocks (also in the guard classes) and
   `declare( strict_types=1 );` in about half of the files.
 - Tested in a logged-in admin (October 2026): the "new components" notice after a simulated update, the
-  integrity check and all settings tabs. Found there: `AdminToolbar\Features\Cleaner\Cleaner.php:131`
-  reads `$node->id` while the node is an array (warning plus deprecation on every admin page). Feature
-  names that end in a period ("… Feature.") read oddly in the notice.
+  integrity check and all settings tabs. The two issues found there (the toolbar Cleaner reading
+  `$node->id` from an array, and feature names ending in a period) are fixed. The plugin is active again
+  on the local site.
 - `src/Modules/LegeModule/` (gitignored template) and `KeepLicenseAlive/leeg.php` still use the old style.
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
