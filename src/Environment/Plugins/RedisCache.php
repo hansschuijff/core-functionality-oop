@@ -26,9 +26,9 @@ class RedisCache extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-redis-cache',
-				title:   __( 'Redis Cache', 'dwp-cf' ),
+				title:   __( 'Redis Cache', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=redis-cache' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Redis Cache Settings', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Redis Cache Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

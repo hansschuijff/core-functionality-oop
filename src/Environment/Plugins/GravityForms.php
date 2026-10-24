@@ -26,9 +26,9 @@ class GravityForms extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-gravityforms',
-				title:   __( 'Forms', 'dwp-cf' ),
+				title:   __( 'Forms', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=gf_edit_forms' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Gravity Forms', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Gravity Forms', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

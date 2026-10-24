@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Shop', 'dwp-cf' ),
+				'title'  => \__( 'Shop', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view',
 				'id'     => 'view-store',
 				'href'   => \get_site_url( null, '/winkel/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Shop', 'dwp-cf' ),
+							. \__( 'Shop', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'My Account', 'dwp-cf' ),
+				'title'  => \__( 'My Account', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-shop',
 				'id'     => 'cf-shortcuts-view-shop-my-account',
 				'href'   => \get_site_url( null, '/mijn-account/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'My Account', 'dwp-cf' ),
+							. \__( 'My Account', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Courses', 'dwp-cf' ),
+				'title'  => \__( 'Courses', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-shop',
 				'id'     => 'cf-shortcuts-view-shop-courses',
 				'href'   => \get_site_url( null, '/product-categorie/cursus-opleiding/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Courses', 'dwp-cf' ),
+							. \__( 'Courses', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -77,14 +77,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Course Payment Plans', 'dwp-cf' ),
+				'title'  => \__( 'Course Payment Plans', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-shop',
 				'id'     => 'cf-shortcuts-view-shop-course-subscriptions',
 				'href'   => \get_site_url( null, '/product-categorie/leerplannen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Course Payment Plans', 'dwp-cf' ),
+							. \__( 'Course Payment Plans', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

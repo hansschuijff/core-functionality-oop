@@ -35,9 +35,9 @@ enum DependencyType: string {
 	 */
 	public function get_label(): string {
 		return match ( $this ) {
-			self::PLUGIN => __( 'Plugin', 'dwp-cf' ),
-			self::THEME  => __( 'Theme', 'dwp-cf' ),
-			self::SERVER => __( 'Server', 'dwp-cf' ),
+			self::PLUGIN => __( 'Plugin', 'core-functionality' ),
+			self::THEME  => __( 'Theme', 'core-functionality' ),
+			self::SERVER => __( 'Server', 'core-functionality' ),
 		};
 	}
 }

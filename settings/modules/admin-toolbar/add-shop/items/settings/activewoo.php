@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'ActiveWoo', 'dwp-cf' ),
+				'title'  => \__( 'ActiveWoo', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings',
 				'id'     => 'cf-shortcuts-woocommerce-settings-activewoo',
 				'href'   => \admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'ActiveWoo Settings', 'dwp-cf' ),
+							. \__( 'ActiveWoo Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'ActiveWoo', 'dwp-cf' ),
+				'title'  => \__( 'ActiveWoo', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings-activewoo',
 				'id'     => 'cf-shortcuts-woocommerce-settings-activewoo-base',
 				'href'   => \admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'ActiveWoo Settings', 'dwp-cf' ),
+							. \__( 'ActiveWoo Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Advanced Settings', 'dwp-cf' ),
+				'title'  => \__( 'Advanced Settings', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings-activewoo',
 				'id'     => 'cf-shortcuts-woocommerce-settings-activewoo-advanced',
 				'href'   => \admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-advanced', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'ActiveWoo Advanced Settings', 'dwp-cf' ),
+							. \__( 'ActiveWoo Advanced Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -77,14 +77,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Recover Cart Settings', 'dwp-cf' ),
+				'title'  => \__( 'Recover Cart Settings', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings-activewoo',
 				'id'     => 'cf-shortcuts-woocommerce-settings-activewoo-rc',
 				'href'   => \admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-advanced-rc', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'ActiveWoo Recover Cart Settings', 'dwp-cf' ),
+							. \__( 'ActiveWoo Recover Cart Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -96,14 +96,14 @@ return array(
 	array(
 		'node_args'  =>
 		array(
-			'title'  => \__( 'Coupons Settings', 'dwp-cf' ),
+			'title'  => \__( 'Coupons Settings', 'core-functionality' ),
 			'parent' => 'cf-shortcuts-woocommerce-settings-activewoo',
 			'id'     => 'cf-shortcuts-woocommerce-settings-activewoo-coupons',
 			'href'   => \admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-advanced-coupons', 'admin' ),
 			'meta'   => array(
-				'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+				'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 						. ' '
-						. \__( 'ActiveWoo Coupons Settings', 'dwp-cf' ),
+						. \__( 'ActiveWoo Coupons Settings', 'core-functionality' ),
 			),
 		),
 		'visibility' => 'both',

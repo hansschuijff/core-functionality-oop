@@ -42,9 +42,9 @@ class WoocommerceFollowUpEmails extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-follow-up-emails',
-				title:   __( 'Follow-Up Emails', 'dwp-cf' ),
+				title:   __( 'Follow-Up Emails', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=followup-emails' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce Follow-Up Emails', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Follow-Up Emails', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

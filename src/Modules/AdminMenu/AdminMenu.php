@@ -38,7 +38,7 @@ class AdminMenu implements ModuleInterface {
 	 * @return string The human-readable module name.
 	 */
 	public static function get_name(): string {
-		return __( 'Admin Menu', 'dwp-cf' );
+		return __( 'Admin Menu', 'core-functionality' );
 	}
 
 	/**
@@ -48,7 +48,7 @@ class AdminMenu implements ModuleInterface {
 	 * @return string Module description.
 	 */
 	public static function get_description(): string {
-		return __( 'Provides advanced layout overrides, performance enhancements, and custom nodes filtering for the WordPress admin menu.', 'dwp-cf' );
+		return __( 'Provides advanced layout overrides, performance enhancements, and custom nodes filtering for the WordPress admin menu.', 'core-functionality' );
 	}
 
 	/**

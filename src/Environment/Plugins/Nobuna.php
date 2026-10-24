@@ -26,9 +26,9 @@ class Nobuna extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:          'cf-nobuna-plugins',
-				title:       __( 'Nobuna', 'dwp-cf' ),
+				title:       __( 'Nobuna', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=nobuna-plugins' ),
-				label:       __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Nobuna Plugins', 'dwp-cf' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Nobuna Plugins', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

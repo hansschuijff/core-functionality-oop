@@ -75,9 +75,9 @@ class EssencePro extends AbstractTheme {
 		return array(
 			new ToolbarShortcut(
 				id:      'essence_pro_link',
-				title:   __( '⚡ Essence Pro', 'dwp-cf' ),
+				title:   __( '⚡ Essence Pro', 'core-functionality' ),
 				href:    admin_url( 'customize.php' ), // Reconfigured to direct to the customizer for better UX
-				label:   __( 'Essence Pro Theme Customizer', 'dwp-cf' ),
+				label:   __( 'Essence Pro Theme Customizer', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

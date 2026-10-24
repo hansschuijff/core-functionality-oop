@@ -26,23 +26,23 @@ class LocoTranslate extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-all',
-				title:   __( 'Translations', 'dwp-cf' ),
+				title:   __( 'Translations', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Translations', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-plugins',
-				title:   __( 'Plugin Translations', 'dwp-cf' ),
+				title:   __( 'Plugin Translations', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco-plugin' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Plugin Translations', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Plugin Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-themes',
-				title:   __( 'Theme Translations', 'dwp-cf' ),
+				title:   __( 'Theme Translations', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco-theme' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Theme Translations', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Theme Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

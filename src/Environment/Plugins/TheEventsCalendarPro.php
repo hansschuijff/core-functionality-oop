@@ -77,9 +77,9 @@ class TheEventsCalendarPro extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'the_events_calendar_pro_link',
-				title:   __( 'Events Calendar Pro', 'dwp-cf' ),
+				title:   __( 'Events Calendar Pro', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_events&page=ticket-settings' ) // Example target to direct to specialized Pro management panel
-				label:   __( 'The Events Calendar Pro Settings', 'dwp-cf' ),
+				label:   __( 'The Events Calendar Pro Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

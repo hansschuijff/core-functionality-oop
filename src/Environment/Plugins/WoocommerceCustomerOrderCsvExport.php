@@ -41,9 +41,9 @@ class WoocommerceCustomerOrderCsvExport extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-csv-export',
-				title:   __( 'Shop Order CSV Export', 'dwp-cf' ),
+				title:   __( 'Shop Order CSV Export', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc_customer_order_csv_export' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce Shop Order CSV Export', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Shop Order CSV Export', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

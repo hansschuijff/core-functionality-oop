@@ -22,14 +22,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Shop', 'dwp-cf' ),
+				'title'  => \__( 'Shop', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-woocommerce',
 				'href'   => \admin_url( 'edit.php?post_type=shop_order', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Orders', 'dwp-cf' ),
+							. \__( 'Orders', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

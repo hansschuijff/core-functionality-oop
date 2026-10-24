@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'PDF-invoice', 'dwp-cf' ),
+				'title'  => \__( 'PDF-invoice', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings',
 				'id'     => 'cf-shortcuts-woocommerce-settings-pdf-invoice',
 				'href'   => \admin_url( 'admin.php?page=wpo_wcpdf_options_page', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'PDF-invoice Settings', 'dwp-cf' ),
+							. \__( 'PDF-invoice Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

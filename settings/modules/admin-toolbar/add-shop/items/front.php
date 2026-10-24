@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Shop front', 'dwp-cf' ),
+				'title'  => \__( 'Shop front', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-front',
 				'href'   => \get_site_url( null, '/winkel/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Orders', 'dwp-cf' ),
+							. \__( 'Orders', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Shop', 'dwp-cf' ),
+				'title'  => \__( 'Shop', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-front',
 				'id'     => 'cf-shortcuts-woocommerce-front-store',
 				'href'   => \get_site_url( null, '/winkel/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Shop', 'dwp-cf' ),
+							. \__( 'Shop', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,12 +58,12 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'My Account', 'dwp-cf' ),
+				'title'  => \__( 'My Account', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-front',
 				'id'     => 'cf-shortcuts-woocommerce-front-my-account',
 				'href'   => \get_site_url( null, '/mijn-account/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to My Account', 'dwp-cf' ),
+					'title' => \__( 'Link to My Account', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

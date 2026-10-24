@@ -67,7 +67,7 @@ class Telegram implements PushNoticeInterface {
 
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Telegram (Gratis Bot)', 'dwp-cf' );
+		return __( 'Telegram (Gratis Bot)', 'core-functionality' );
 	}
 
 	#[Override]
@@ -75,13 +75,13 @@ class Telegram implements PushNoticeInterface {
 		return array(
 			'bot_token' => array(
 				'type'  => 'text',
-				'label' => __( 'Telegram Bot Token', 'dwp-cf' ),
-				'desc'  => __( 'Obtained via Telegram BotFather (e.g., 123456:ABC-def).', 'dwp-cf' ),
+				'label' => __( 'Telegram Bot Token', 'core-functionality' ),
+				'desc'  => __( 'Obtained via Telegram BotFather (e.g., 123456:ABC-def).', 'core-functionality' ),
 			),
 			'chat_id'   => array(
 				'type'  => 'text',
-				'label' => __( 'Telegram Chat ID', 'dwp-cf' ),
-				'desc'  => __( 'The target private user or group chat ID window.', 'dwp-cf' ),
+				'label' => __( 'Telegram Chat ID', 'core-functionality' ),
+				'desc'  => __( 'The target private user or group chat ID window.', 'core-functionality' ),
 			),
 		);
 	}

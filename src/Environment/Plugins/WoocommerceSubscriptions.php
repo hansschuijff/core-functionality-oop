@@ -46,24 +46,24 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-admin-woocommerce-subscriptions',
-				title:   __( 'Subscriptions', 'dwp-cf' ),
+				title:   __( 'Subscriptions', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=shop_subscription' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce Subscriptions', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Subscriptions', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			// Frontend Links - Safe lazy loading via PHP short closures!
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-front-my-account-subscriptions',
- 				title:   __( 'My Account: Subscriptions', 'dwp-cf' ),
-				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'dwp-cf' ) ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'My Account: Subscriptions', 'dwp-cf' ),
+ 				title:   __( 'My Account: Subscriptions', 'core-functionality' ),
+				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'core-functionality' ) ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Subscriptions', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
 			new ToolbarShortcut(
 				id:      'cf-view-course-subscriptions',
-				title:   __( 'Course Payment Plans', 'dwp-cf' ),
-				href:    fn() => $this->get_product_cat_url_by_slug( __( 'course-payment-plans', 'dwp-cf' ) ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce Course Payment Plans', 'dwp-cf' ),
+				title:   __( 'Course Payment Plans', 'core-functionality' ),
+				href:    fn() => $this->get_product_cat_url_by_slug( __( 'course-payment-plans', 'core-functionality' ) ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Course Payment Plans', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
 		);

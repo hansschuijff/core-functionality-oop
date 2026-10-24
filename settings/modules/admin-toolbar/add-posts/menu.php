@@ -22,16 +22,16 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Posts', 'dwp-cf' ),
+				'title'  => \__( 'Posts', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-posts',
 				'href'   => \get_permalink( $this->get( 'page_for_posts', AdminToolbar::get_id() ) )
 							? \get_permalink( $this->get( 'page_for_posts', AdminToolbar::get_id() ) )
 							: \get_site_url( null, '/artikelen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'the posts', 'dwp-cf' ),
+							. \__( 'the posts', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -40,16 +40,16 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'View', 'dwp-cf' ),
+				'title'  => \__( 'View', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-posts',
 				'id'     => 'cf-shortcuts-posts-view-posts',
 				'href'   => \get_permalink( $this->get( 'page_for_posts', AdminToolbar::get_id() ) )
 							? \get_permalink( $this->get( 'page_for_posts', AdminToolbar::get_id() ) )
 							: \get_site_url( null, '/artikelen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'the posts', 'dwp-cf' ),
+							. \__( 'the posts', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Edit', 'dwp-cf' ),
+				'title'  => \__( 'Edit', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-posts',
 				'id'     => 'cf-shortcuts-posts-edit-posts',
 				'href'   => \admin_url( 'edit.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Posts', 'dwp-cf' ),
+							. \__( 'Posts', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -74,14 +74,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'New Post', 'dwp-cf' ),
+				'title'  => \__( 'New Post', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-posts',
 				'id'     => 'cf-shortcuts-posts-new-post',
 				'href'   => \admin_url( 'post-new.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Add New Post', 'dwp-cf' ),
+							. \__( 'Add New Post', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -90,14 +90,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Categories', 'dwp-cf' ),
+				'title'  => \__( 'Categories', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-posts',
 				'id'     => 'cf-shortcuts-posts-categories',
 				'href'   => \admin_url( 'edit-tags.php?taxonomy=category', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Post categories', 'dwp-cf' ),
+							. \__( 'Post categories', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -106,14 +106,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Tags', 'dwp-cf' ),
+				'title'  => \__( 'Tags', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-posts',
 				'id'     => 'cf-shortcuts-posts-tags',
 				'href'   => \admin_url( 'edit-tags.php?taxonomy=post_tag', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Post tags', 'dwp-cf' ),
+							. \__( 'Post tags', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

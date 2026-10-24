@@ -113,8 +113,8 @@ class AdminSettingsPage {
 	 */
 	public function register_settings_page(): void {
 		$page_hook = add_options_page(
-			__( 'Core Functionality Settings', 'dwp-cf' ),
-			__( 'Core Functionality', 'dwp-cf' ),
+			__( 'Core Functionality Settings', 'core-functionality' ),
+			__( 'Core Functionality', 'core-functionality' ),
 			'manage_options',
 			'dwp-cf-settings',
 			array( $this, 'render_settings_page' )
@@ -305,7 +305,7 @@ class AdminSettingsPage {
 	 * @return void
 	 */
 	private function render_command_pallette_modal(): void {
-		$placeholder = esc_attr__( 'Type to search... (↑↓ to navigate, Enter)', 'dwp-cf' );
+		$placeholder = esc_attr__( 'Type to search... (↑↓ to navigate, Enter)', 'core-functionality' );
 		echo <<<HTML
 			<div class="dwp-command-palette" id="js-dwp-palette" style="display: none;">
 				<div class="dwp-palette-overlay"></div>
@@ -336,7 +336,7 @@ class AdminSettingsPage {
 			<!-- STICKY HEADER AREA (Alleen voor de H1 Titel voor maximale ruimte) -->
 			<div class="dwp-gutenberg-sticky-header">
 				<h1>
-					<?php echo esc_html( $section::get_name() . ' ' . __( 'Settings', 'dwp-cf' ) ); ?>
+					<?php echo esc_html( $section::get_name() . ' ' . __( 'Settings', 'core-functionality' ) ); ?>
 				</h1>
 			</div>
 
@@ -406,8 +406,8 @@ class AdminSettingsPage {
 	 * @return void
 	 */
 	private function render_navigation_sidebar( string $active_section_id ): void {
-		$search_placeholder = esc_attr__( 'Search... (/)', 'dwp-cf' );
-		$collapse_title     = esc_attr__( 'Collapse menu', 'dwp-cf' );
+		$search_placeholder = esc_attr__( 'Search... (/)', 'core-functionality' );
+		$collapse_title     = esc_attr__( 'Collapse menu', 'core-functionality' );
 		?>
 		<aside class="dwp-gutenberg-sidebar" id="js-dwp-sidebar">
 			<div class="dwp-sidebar-header">
@@ -423,7 +423,7 @@ class AdminSettingsPage {
 			<nav class="dwp-sidebar-menu">
 				<!-- GROEP 1: CORE FUNCTIONALITY SETTINGS -->
 				<div class="dwp-menu-group">
-					<span class="dwp-group-title"><?php esc_html_e( 'Core Functionality Settings', 'dwp-cf' ); ?></span>
+					<span class="dwp-group-title"><?php esc_html_e( 'Core Functionality Settings', 'core-functionality' ); ?></span>
 					<?php
 					foreach ( $this->sections as $id => $fqcn ) {
 						if ( ! $this->is_feature_section( $fqcn ) ) {
@@ -435,7 +435,7 @@ class AdminSettingsPage {
 
 				<!-- GROEP 2: ACTIVE COMPONENTS -->
 				<div class="dwp-menu-group">
-					<span class="dwp-group-title"><?php esc_html_e( 'Active Components', 'dwp-cf' ); ?></span>
+					<span class="dwp-group-title"><?php esc_html_e( 'Active Components', 'core-functionality' ); ?></span>
 					<?php
 					foreach ( $this->sections as $id => $fqcn ) {
 						if ( $this->is_feature_section( $fqcn ) ) {
@@ -444,7 +444,7 @@ class AdminSettingsPage {
 					}
 					?>
 				</div>
-				<div class="dwp-no-results" id="js-search-no-results" style="display: none;"><?php esc_html_e( 'No items found', 'dwp-cf' ); ?></div>
+				<div class="dwp-no-results" id="js-search-no-results" style="display: none;"><?php esc_html_e( 'No items found', 'core-functionality' ); ?></div>
 			</nav>
 		</aside>
 		<?php
@@ -490,7 +490,7 @@ class AdminSettingsPage {
 	 * @return void
 	 */
 	// private function render_settings_form_end( $active_section_id, $reset_to_defaults = false ): void {
-	// 	$submit_button = get_submit_button( __( 'Save Settings', 'dwp-cf' ), 'primary', 'submit', false );
+	// 	$submit_button = get_submit_button( __( 'Save Settings', 'core-functionality' ), 'primary', 'submit', false );
 
 	// 	echo <<<HTML
 	// 		<div class="dwp-gutenberg-actions-footer">
@@ -531,7 +531,7 @@ class AdminSettingsPage {
 			}
 		} else {
 			// Fallback: Render the standard global default framework submission actions.
-			$submit_button = get_submit_button( __( 'Save Settings', 'dwp-cf' ), 'primary', 'submit', false );
+			$submit_button = get_submit_button( __( 'Save Settings', 'core-functionality' ), 'primary', 'submit', false );
 			echo $submit_button;
 			$this->render_return_to_factory_settings_button();
 		}
@@ -588,8 +588,8 @@ class AdminSettingsPage {
 	 * @return void
 	 */
 	private function render_return_to_factory_settings_button(): void {
-		$button_text       = esc_html__( 'Reset to Factory Defaults', 'dwp-cf' );
-		$are_you_sure_text = esc_attr__( '🚨 CRITICAL WARNING:\n\nAre you sure you want to trigger a settings reset for this section?', 'dwp-cf' );
+		$button_text       = esc_html__( 'Reset to Factory Defaults', 'core-functionality' );
+		$are_you_sure_text = esc_attr__( '🚨 CRITICAL WARNING:\n\nAre you sure you want to trigger a settings reset for this section?', 'core-functionality' );
 
 		echo <<<HTML
 			<button type="submit" name="dwp_cf_reset_defaults" value="1" class="button button-secondary" onclick="return confirm('{$are_you_sure_text}');" >
@@ -630,12 +630,12 @@ class AdminSettingsPage {
 		}
 
 		if ( ! wp_verify_nonce( sanitize_key( $_POST['dwp_cf_nonce'] ), 'dwp_cf_save_settings' ) ) {
-			$this->plugin->notices->add( 'error', esc_html__( 'Security check failed. Please try again.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', esc_html__( 'Security check failed. Please try again.', 'core-functionality' ) );
 			return;
 		}
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$this->plugin->notices->add( 'error', esc_html__( 'You do not have sufficient permissions to update this settings.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', esc_html__( 'You do not have sufficient permissions to update this settings.', 'core-functionality' ) );
 			return;
 		}
 
@@ -657,14 +657,14 @@ class AdminSettingsPage {
 		}
 
 		if ( false === $validation_result ) {
-			$this->plugin->notices->add( 'error', __( 'Validation failed. Please double-check your entries.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Validation failed. Please double-check your entries.', 'core-functionality' ) );
 			return;
 		}
 
 		$save_result = $section_object->save( $_POST );
 
 		if ( false !== $save_result ) {
-			$success_message = is_string( $save_result ) ? $save_result : __( 'Settings saved successfully.', 'dwp-cf' );
+			$success_message = is_string( $save_result ) ? $save_result : __( 'Settings saved successfully.', 'core-functionality' );
 			$this->plugin->notices->add( 'success', $success_message );
 		}
 

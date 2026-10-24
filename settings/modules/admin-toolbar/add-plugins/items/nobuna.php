@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Nobuna', 'dwp-cf' ),
+				'title'  => \__( 'Nobuna', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins',
 				'id'     => 'cf-shortcuts-plugins-nobuna',
 				'href'   => \admin_url( 'admin.php?page=nobuna-plugins', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Nobuna Plugins', 'dwp-cf' ),
+							. \__( 'Nobuna Plugins', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

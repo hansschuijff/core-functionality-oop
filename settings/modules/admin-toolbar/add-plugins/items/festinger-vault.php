@@ -45,14 +45,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Festinger Vault', 'dwp-cf' ),
+						'title'  => \__( 'Festinger Vault', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins',
 						'id'     => 'cf-shortcuts-plugins-festinger',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/updates' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Plugin Updates', 'dwp-cf' ),
+									. \__( 'Plugin Updates', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -64,14 +64,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Plugins', 'dwp-cf' ),
+						'title'  => \__( 'Plugins', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-plugins',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/item/wordpress-plugins' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Festinger Vault Plugins', 'dwp-cf' ),
+									. \__( 'Festinger Vault Plugins', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -83,14 +83,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Themes', 'dwp-cf' ),
+						'title'  => \__( 'Themes', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-themes',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/item/wordpress-themes' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Festinger Vault Themes', 'dwp-cf' ),
+									. \__( 'Festinger Vault Themes', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -102,14 +102,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Elementor Template Kits', 'dwp-cf' ),
+						'title'  => \__( 'Elementor Template Kits', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-elementor-template-kits',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/item/elementor-template-kits' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Festinger Vault Elementor Template Kits', 'dwp-cf' ),
+									. \__( 'Festinger Vault Elementor Template Kits', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -121,14 +121,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Updates', 'dwp-cf' ),
+						'title'  => \__( 'Updates', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-plugin-updates',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/updates' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Plugin Updates', 'dwp-cf' ),
+									. \__( 'Plugin Updates', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -140,14 +140,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'History', 'dwp-cf' ),
+						'title'  => \__( 'History', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-history',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/history' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'History', 'dwp-cf' ),
+									. \__( 'History', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -159,14 +159,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Settings', 'dwp-cf' ),
+						'title'  => \__( 'Settings', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-settings',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/settings' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Settings', 'dwp-cf' ),
+									. \__( 'Settings', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -178,14 +178,14 @@ if ( ! function_exists( 'add_fv_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Support', 'dwp-cf' ),
+						'title'  => \__( 'Support', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-support',
 						'href'   => \admin_url( 'admin.php?page=festingervault#/need-help' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'support', 'dwp-cf' ),
+									. \__( 'support', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -209,14 +209,14 @@ if ( ! function_exists( 'add_fv_legacy_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Festinger Vault', 'dwp-cf' ),
+						'title'  => \__( 'Festinger Vault', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins',
 						'id'     => 'cf-shortcuts-plugins-festinger',
 						'href'   => \admin_url( 'admin.php?page=festinger-vault-updates' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Plugin Updates', 'dwp-cf' ),
+									. \__( 'Plugin Updates', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -228,14 +228,14 @@ if ( ! function_exists( 'add_fv_legacy_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Vault', 'dwp-cf' ),
+						'title'  => \__( 'Vault', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-vault',
 						'href'   => \admin_url( 'admin.php?page=festinger-vault' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Festinger Vault', 'dwp-cf' ),
+									. \__( 'Festinger Vault', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -247,14 +247,14 @@ if ( ! function_exists( 'add_fv_legacy_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Plugin Updates', 'dwp-cf' ),
+						'title'  => \__( 'Plugin Updates', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-plugin-updates',
 						'href'   => \admin_url( 'admin.php?page=festinger-vault-updates' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Plugin Updates', 'dwp-cf' ),
+									. \__( 'Plugin Updates', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -266,14 +266,14 @@ if ( ! function_exists( 'add_fv_legacy_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Theme Updates', 'dwp-cf' ),
+						'title'  => \__( 'Theme Updates', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-theme-updates',
 						'href'   => \admin_url( 'admin.php?page=festinger-vault-theme-updates' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Theme Updates', 'dwp-cf' ),
+									. \__( 'Theme Updates', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -285,14 +285,14 @@ if ( ! function_exists( 'add_fv_legacy_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'History', 'dwp-cf' ),
+						'title'  => \__( 'History', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-history',
 						'href'   => \admin_url( 'admin.php?page=festinger-vault-theme-history' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'History', 'dwp-cf' ),
+									. \__( 'History', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',
@@ -304,14 +304,14 @@ if ( ! function_exists( 'add_fv_legacy_toolbar_links' ) ) {
 			array(
 				'node_args'  =>
 					array(
-						'title'  => \__( 'Settings', 'dwp-cf' ),
+						'title'  => \__( 'Settings', 'core-functionality' ),
 						'parent' => 'cf-shortcuts-plugins-festinger',
 						'id'     => 'cf-shortcuts-plugins-festinger-settings',
 						'href'   => \admin_url( 'admin.php?page=festinger-vault' ),
 						'meta'   => array(
-							'title' => \__( 'Link to', 'dwp-cf' )
+							'title' => \__( 'Link to', 'core-functionality' )
 									. ' '
-									. \__( 'Settings', 'dwp-cf' ),
+									. \__( 'Settings', 'core-functionality' ),
 						),
 					),
 				'visibility' => 'both',

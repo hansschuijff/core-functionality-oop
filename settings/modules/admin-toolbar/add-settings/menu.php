@@ -20,7 +20,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Settings', 'dwp-cf' ),
+				'title'  => \__( 'Settings', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-settings',
 				'href'   => '#',
@@ -31,14 +31,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Themes', 'dwp-cf' ),
+				'title'  => \__( 'Themes', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-themes',
 				'href'   => \admin_url( 'themes.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Themes', 'dwp-cf' ),
+							. \__( 'Themes', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -47,14 +47,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Genesis Framework', 'dwp-cf' ),
+				'title'  => \__( 'Genesis Framework', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-genesis',
 				'href'   => \admin_url( 'admin.php?page=genesis', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Genesis Framework', 'dwp-cf' ),
+							. \__( 'Genesis Framework', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -66,14 +66,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Menus', 'dwp-cf' ),
+				'title'  => \__( 'Menus', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-menus',
 				'href'   => \admin_url( 'nav-menus.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Menus', 'dwp-cf' ),
+							. \__( 'Menus', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -82,14 +82,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Widgets', 'dwp-cf' ),
+				'title'  => \__( 'Widgets', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-widgets',
 				'href'   => \admin_url( 'widgets.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Widgets', 'dwp-cf' ),
+							. \__( 'Widgets', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -98,14 +98,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Shared Counts', 'dwp-cf' ),
+				'title'  => \__( 'Shared Counts', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-social-share',
 				'href'   => \admin_url( 'options-general.php?page=shared_counts_options', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Shared Counts', 'dwp-cf' ),
+							. \__( 'Shared Counts', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -117,14 +117,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Broken Links Checker', 'dwp-cf' ),
+				'title'  => \__( 'Broken Links Checker', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-broken-links',
 				'href'   => \admin_url( 'tools.php?page=view-broken-links', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 								. ' '
-								. \__( 'Broken Links Checker', 'dwp-cf' ),
+								. \__( 'Broken Links Checker', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -136,14 +136,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Core Functionality', 'dwp-cf' ),
+				'title'  => \__( 'Core Functionality', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-settings',
 				'id'     => 'cf-shortcuts-settings-core-functionality',
 				'href'   => \admin_url( 'options-general.php?page=core-functionality', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Core functionality settings', 'dwp-cf' ),
+							. \__( 'Core functionality settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

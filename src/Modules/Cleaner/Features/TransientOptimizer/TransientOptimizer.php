@@ -56,12 +56,12 @@ class TransientOptimizer implements FeatureInterface {
 
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Transient Optimizer Feature', 'dwp-cf' );
+		return __( 'Transient Optimizer Feature', 'core-functionality' );
 	}
 
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Monitors, indexes, and flushes expired or orphaned core transients clusters using automated background crons to optimize the options table.', 'dwp-cf' );
+		return __( 'Monitors, indexes, and flushes expired or orphaned core transients clusters using automated background crons to optimize the options table.', 'core-functionality' );
 	}
 
 	#[Override]

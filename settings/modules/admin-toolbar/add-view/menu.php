@@ -22,7 +22,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'View', 'dwp-cf' ),
+				'title'  => \__( 'View', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-view',
 				'href'   => '#',
@@ -36,7 +36,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Posts', 'dwp-cf' ),
+				'title'  => \__( 'Posts', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view',
 				'id'     => 'cf-shortcuts-view-posts',
 				'href'   =>
@@ -44,9 +44,9 @@ return array(
 					? \get_permalink( $this->get( 'page_for_posts', AdminToolbar::get_id() ) )
 					: \get_site_url( null, '/artikelen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'the posts', 'dwp-cf' ),
+							. \__( 'the posts', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -55,14 +55,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Frontpage', 'dwp-cf' ),
+				'title'  => \__( 'Frontpage', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view',
 				'id'     => 'view-site',
 				'href'   => \get_site_url( null, '' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Frontpage', 'dwp-cf' ),
+							. \__( 'Frontpage', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -71,14 +71,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Testimonials', 'dwp-cf' ),
+				'title'  => \__( 'Testimonials', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view',
 				'id'     => 'cf-shortcuts-view-testimonials',
 				'href'   => \get_site_url( null, '/schrijf-een-aanbeveling/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Testimonials', 'dwp-cf' ),
+							. \__( 'Testimonials', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

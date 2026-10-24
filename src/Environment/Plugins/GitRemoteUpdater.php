@@ -27,9 +27,9 @@ class GitRemoteUpdater extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-git-remote-updater',
-				title:   __( 'Remote Updater', 'dwp-cf' ),
+				title:   __( 'Remote Updater', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=git-remote-updater' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Git Remote Updater', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Remote Updater', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			)
 		);

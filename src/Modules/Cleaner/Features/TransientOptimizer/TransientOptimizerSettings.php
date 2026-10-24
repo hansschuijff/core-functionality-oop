@@ -68,12 +68,12 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Transient Optimizer', 'dwp-cf' );
+		return __( 'Transient Optimizer', 'core-functionality' );
 	}
 
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Analyze your database options overhead. Scan for expired cache entries and orphaned transient keys left behind by deactivated plugins.', 'dwp-cf' );
+		return __( 'Analyze your database options overhead. Scan for expired cache entries and orphaned transient keys left behind by deactivated plugins.', 'core-functionality' );
 	}
 
 	#[Override]
@@ -129,12 +129,12 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 		$total_garbage_rows = $expired_count + $orphans_count;
 
 		// UI Presentation Parameters Layout
-		$lbl_status   = esc_html__( 'Database Cache Status Analysis', 'dwp-cf' );
-		$lbl_expired  = esc_html__( 'Expired Transients Found', 'dwp-cf' );
-		$lbl_orphans  = esc_html__( 'Orphaned Timeout Markers', 'dwp-cf' );
-		$lbl_total    = esc_html__( 'Total Removable Row Overhead', 'dwp-cf' );
-		$lbl_healthy  = esc_html__( 'Database cache is in optimal health! No transient clutter detected.', 'dwp-cf' );
-		$lbl_warning  = esc_html__( 'Database clutter detected. Use the manual optimization trigger below to clean the option rows.', 'dwp-cf' );
+		$lbl_status   = esc_html__( 'Database Cache Status Analysis', 'core-functionality' );
+		$lbl_expired  = esc_html__( 'Expired Transients Found', 'core-functionality' );
+		$lbl_orphans  = esc_html__( 'Orphaned Timeout Markers', 'core-functionality' );
+		$lbl_total    = esc_html__( 'Total Removable Row Overhead', 'core-functionality' );
+		$lbl_healthy  = esc_html__( 'Database cache is in optimal health! No transient clutter detected.', 'core-functionality' );
+		$lbl_warning  = esc_html__( 'Database clutter detected. Use the manual optimization trigger below to clean the option rows.', 'core-functionality' );
 
 		echo '<div class="dwp-transient-metrics-panel" style="margin-top: 15px;">';
 		echo '<h4 style="margin: 0 0 12px 0; color: #1e293b; font-size: 14px; font-weight: 600;">' . $lbl_status . '</h4>';
@@ -191,14 +191,14 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 		$optimizer_feature = $this->plugin->kernel->get_instance( TransientOptimizer::class );
 
 		if ( ! $optimizer_feature instanceof TransientOptimizer ) {
-			return new WP_Error( 'missing_feature', __( 'Critical Error: Transient Optimizer feature instance not loaded by Kernel.', 'dwp-cf' ) );
+			return new WP_Error( 'missing_feature', __( 'Critical Error: Transient Optimizer feature instance not loaded by Kernel.', 'core-functionality' ) );
 		}
 
 		$rows_scrubbed = $optimizer_feature->execute_bulk_transient_purge();
 
 		return sprintf(
 			/* translators: %d: total records deleted out of the database */
-			__( 'Database cleanup successful! Atomic sweep completely purged %d expired option parameters rows.', 'dwp-cf' ),
+			__( 'Database cleanup successful! Atomic sweep completely purged %d expired option parameters rows.', 'core-functionality' ),
 			$rows_scrubbed
 		);
 	}
@@ -211,7 +211,7 @@ class TransientOptimizerSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function get_action_buttons(): array {
-		$btn_text = esc_attr__( 'Optimize Transient Cache Now', 'dwp-cf' );
+		$btn_text = esc_attr__( 'Optimize Transient Cache Now', 'core-functionality' );
 
 		return array(
 			'purge_transients' => <<<HTML

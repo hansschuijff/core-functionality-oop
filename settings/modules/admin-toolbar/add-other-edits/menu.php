@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Edit Other', 'dwp-cf' ),
+				'title'  => \__( 'Edit Other', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-Edit-Other',
 				'href'   => \admin_url( 'edit.php?post_type=page', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Pages', 'dwp-cf' ),
+							. \__( 'Pages', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Reusable blocks', 'dwp-cf' ),
+				'title'  => \__( 'Reusable blocks', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-Edit-Other',
 				'id'     => 'cf-shortcuts-reusable-blocks',
 				'href'   => \admin_url( 'edit.php?post_type=wp_block', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Reusable blocks', 'dwp-cf' ),
+							. \__( 'Reusable blocks', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Pages', 'dwp-cf' ),
+				'title'  => \__( 'Pages', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-Edit-Other',
 				'id'     => 'cf-shortcuts-pages',
 				'href'   => \admin_url( 'edit.php?post_type=page', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Pages', 'dwp-cf' ),
+							. \__( 'Pages', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -77,14 +77,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Comments', 'dwp-cf' ),
+				'title'  => \__( 'Comments', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-Edit-Other',
 				'id'     => 'cf-shortcuts-comments',
 				'href'   => \admin_url( 'edit-comments.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Comments', 'dwp-cf' ),
+							. \__( 'Comments', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -96,14 +96,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Forms', 'dwp-cf' ),
+				'title'  => \__( 'Forms', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-Edit-Other',
 				'id'     => 'cf-shortcuts-gravityforms',
 				'href'   => \admin_url( 'admin.php?page=gf_edit_forms', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Gravity Forms', 'dwp-cf' ),
+							. \__( 'Gravity Forms', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -115,14 +115,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Forms', 'dwp-cf' ),
+				'title'  => \__( 'Forms', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-Edit-Other',
 				'id'     => 'cf-shortcuts-wpforms',
 				'href'   => \admin_url( 'admin.php?page=wpforms-overview', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'WPForms', 'dwp-cf' ),
+							. \__( 'WPForms', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -134,14 +134,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Users', 'dwp-cf' ),
+				'title'  => \__( 'Users', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-Edit-Other',
 				'id'     => 'cf-shortcuts-users',
 				'href'   => \admin_url( 'users.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Users', 'dwp-cf' ),
+							. \__( 'Users', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

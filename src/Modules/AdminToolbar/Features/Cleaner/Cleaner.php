@@ -69,7 +69,7 @@ class Cleaner implements FeatureInterface {
 	 * @return string Feature title.
 	 */
 	public static function get_name(): string {
-		return __( 'Admin Toolbar Cleaner Feature', 'dwp-cf' );
+		return __( 'Admin Toolbar Cleaner Feature', 'core-functionality' );
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Cleaner implements FeatureInterface {
 	 * @return string Feature description.
 	 */
 	public static function get_description(): string {
-		return __( 'Moves unwanted Admin Toolbar shortcuts to an overflow submenu, based on a negative-selection user matrix.', 'dwp-cf' );
+		return __( 'Moves unwanted Admin Toolbar shortcuts to an overflow submenu, based on a negative-selection user matrix.', 'core-functionality' );
 	}
 
 	/**
@@ -200,7 +200,7 @@ class Cleaner implements FeatureInterface {
 			$wp_admin_bar->add_node(
 				array(
 					'id'    => self::get_overflow_node_id(),
-					'title' => __( 'More', 'dwp-cf' ),
+					'title' => __( 'More', 'core-functionality' ),
 					'href'  => '#',
 				)
 			);

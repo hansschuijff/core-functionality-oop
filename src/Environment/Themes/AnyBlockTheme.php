@@ -72,9 +72,9 @@ class AnyBlockTheme extends AbstractTheme {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-site-editor',
-				title:   __( 'Site editor', 'dwp-cf' ),
+				title:   __( 'Site editor', 'core-functionality' ),
 				href:    admin_url( 'site-editor.php' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Site editor', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Site editor', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

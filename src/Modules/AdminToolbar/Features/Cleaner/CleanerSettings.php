@@ -62,12 +62,12 @@ class CleanerSettings implements SettingsSectionInterface {
 
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Admin Toolbar Cleaner', 'dwp-cf' );
+		return __( 'Admin Toolbar Cleaner', 'core-functionality' );
 	}
 
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Configure your top bar visibility layout strategy. Top-level shortcut nodes left unchecked will be automatically filtered and evacuated into the central "More" overflow dropdown menu.', 'dwp-cf' );
+		return __( 'Configure your top bar visibility layout strategy. Top-level shortcut nodes left unchecked will be automatically filtered and evacuated into the central "More" overflow dropdown menu.', 'core-functionality' );
 	}
 
 	#[Override]
@@ -103,12 +103,12 @@ class CleanerSettings implements SettingsSectionInterface {
 		$movable_nodes = $this->get_movable_nodes();
 
 		if ( empty( $movable_nodes ) ) {
-			echo '<p style="font-style: italic; color: #64748b; padding: 15px; border: 1px dashed #cbd5e1; background: #f8fafc;">' . esc_html__( 'No toolbar nodes logged yet. Navigate to any other admin page or the frontend first to allow the discovery engine to index your top-level links.', 'dwp-cf' ) . '</p>';
+			echo '<p style="font-style: italic; color: #64748b; padding: 15px; border: 1px dashed #cbd5e1; background: #f8fafc;">' . esc_html__( 'No toolbar nodes logged yet. Navigate to any other admin page or the frontend first to allow the discovery engine to index your top-level links.', 'core-functionality' ) . '</p>';
 			return;
 		}
 
-		$th_node       = esc_html__( 'Top-Level Toolbar Node', 'dwp-cf' );
-		$th_visibility = esc_html__( 'Keep in Main Toolbar (Visible)', 'dwp-cf' );
+		$th_node       = esc_html__( 'Top-Level Toolbar Node', 'core-functionality' );
+		$th_visibility = esc_html__( 'Keep in Main Toolbar (Visible)', 'core-functionality' );
 		$section_id    = esc_attr( self::get_id() );
 		?>
 		<table class="wp-list-table widefat fixed striped dwp-cleaner-management-table" style="border: 1px solid #ccd0d4; box-shadow: none; border-radius: 4px; overflow: hidden; margin-top: 10px;">
@@ -169,7 +169,7 @@ class CleanerSettings implements SettingsSectionInterface {
 
 	#[Override]
 	public function get_action_buttons(): array {
-		$btn_save = esc_attr__( 'Save Toolbar Visibility Filter', 'dwp-cf' );
+		$btn_save = esc_attr__( 'Save Toolbar Visibility Filter', 'core-functionality' );
 
 		return array(
 			'save_cleaner' => <<<HTML

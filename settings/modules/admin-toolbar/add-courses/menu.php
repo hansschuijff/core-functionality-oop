@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Courses', 'dwp-cf' ),
+				'title'  => \__( 'Courses', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-courses',
 				'href'   => \admin_url( 'edit.php?post_type=course', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Courses', 'dwp-cf' ),
+							. \__( 'Courses', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'View', 'dwp-cf' ),
+				'title'  => \__( 'View', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-courses',
 				'href'   => \get_site_url( null, '/cursussen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Courses', 'dwp-cf' ),
+							. \__( 'Courses', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Grading', 'dwp-cf' ),
+				'title'  => \__( 'Grading', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-grading',
 				'href'   => \admin_url( 'admin.php?page=sensei_grading', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Grading', 'dwp-cf' ),
+							. \__( 'Grading', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -77,14 +77,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Student Management', 'dwp-cf' ),
+				'title'  => \__( 'Student Management', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-student-management',
 				'href'   => \admin_url( 'admin.php?page=sensei_learners', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Student Management', 'dwp-cf' ),
+							. \__( 'Student Management', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -96,14 +96,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Edit', 'dwp-cf' ),
+				'title'  => \__( 'Edit', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-edit-courses',
 				'href'   => \admin_url( 'edit.php?post_type=course', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Courses', 'dwp-cf' ),
+							. \__( 'Courses', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -115,14 +115,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Lessons', 'dwp-cf' ),
+				'title'  => \__( 'Lessons', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-lessons',
 				'href'   => \admin_url( 'edit.php?post_type=lesson', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Lessons', 'dwp-cf' ),
+							. \__( 'Lessons', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -134,14 +134,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Categories', 'dwp-cf' ),
+				'title'  => \__( 'Categories', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-categories',
 				'href'   => \admin_url( 'edit-tags.php?taxonomy=course-category&post_type=course', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Course Categories', 'dwp-cf' ),
+							. \__( 'Course Categories', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -153,14 +153,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Modules', 'dwp-cf' ),
+				'title'  => \__( 'Modules', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-modules',
 				'href'   => \admin_url( 'edit-tags.php?taxonomy=module', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Modules', 'dwp-cf' ),
+							. \__( 'Modules', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -172,14 +172,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Module Order', 'dwp-cf' ),
+				'title'  => \__( 'Module Order', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-module-order',
 				'href'   => \admin_url( 'edit.php?post_type=course&page=module-order', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Module Order', 'dwp-cf' ),
+							. \__( 'Module Order', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -191,14 +191,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Lesson Tags', 'dwp-cf' ),
+				'title'  => \__( 'Lesson Tags', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-lesson-tags',
 				'href'   => \admin_url( 'edit-tags.php?taxonomy=lesson-tag&post_type=lesson', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Lesson Tags', 'dwp-cf' ),
+							. \__( 'Lesson Tags', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -210,14 +210,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Questions', 'dwp-cf' ),
+				'title'  => \__( 'Questions', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-questions',
 				'href'   => \admin_url( 'edit.php?post_type=question', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Questions', 'dwp-cf' ),
+							. \__( 'Questions', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -229,14 +229,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Messages', 'dwp-cf' ),
+				'title'  => \__( 'Messages', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-messages',
 				'href'   => \admin_url( 'edit.php?post_type=sensei_message', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Messages', 'dwp-cf' ),
+							. \__( 'Messages', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -248,14 +248,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Settings', 'dwp-cf' ),
+				'title'  => \__( 'Settings', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-sensei-settings',
 				'href'   => \admin_url( 'admin.php?page=sensei-settings', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Settings', 'dwp-cf' ),
+							. \__( 'Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -267,14 +267,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Analytics', 'dwp-cf' ),
+				'title'  => \__( 'Analytics', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-courses',
 				'id'     => 'cf-shortcuts-courses-analytics',
 				'href'   => \admin_url( 'admin.php?page=sensei_analysis', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Analytics', 'dwp-cf' ),
+							. \__( 'Analytics', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

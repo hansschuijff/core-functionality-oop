@@ -26,9 +26,9 @@ class FluentSmtp extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-fluentsmtp',
-				title:   __( 'Emails Send', 'dwp-cf' ),
+				title:   __( 'Emails Send', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=fluent-mail#/logs?per_page=10&page=1&status=&search=' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'FluentSMTP', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'FluentSMTP', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

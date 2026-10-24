@@ -43,9 +43,9 @@ class WoocommercePreOrders extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-my-account-pre-orders',
- 				title:   __( 'My Account: Pre-orders', 'dwp-cf' ),
-				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'pre-orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/pre-orders/', 'dwp-cf' ) ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'My Account: Pre-orders', 'dwp-cf' ),
+ 				title:   __( 'My Account: Pre-orders', 'core-functionality' ),
+				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'pre-orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/pre-orders/', 'core-functionality' ) ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Pre-orders', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
 		);

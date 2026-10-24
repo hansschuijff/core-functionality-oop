@@ -73,7 +73,7 @@ class Pushover implements PushNoticeInterface {
 
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Pushover (App Notificaties)', 'dwp-cf' );
+		return __( 'Pushover (App Notificaties)', 'core-functionality' );
 	}
 
 	#[Override]
@@ -81,18 +81,18 @@ class Pushover implements PushNoticeInterface {
 		return array(
 			'token' => array(
 				'type'  => 'text',
-				'label' => __( 'Pushover Application Token', 'dwp-cf' ),
-				'desc'  => __( 'Your unique Pushover API application token key.', 'dwp-cf' ),
+				'label' => __( 'Pushover Application Token', 'core-functionality' ),
+				'desc'  => __( 'Your unique Pushover API application token key.', 'core-functionality' ),
 			),
 			'user'  => array(
 				'type'  => 'text',
-				'label' => __( 'Pushover User Key', 'dwp-cf' ),
-				'desc'  => __( 'Your personal Pushover user account key identifier.', 'dwp-cf' ),
+				'label' => __( 'Pushover User Key', 'core-functionality' ),
+				'desc'  => __( 'Your personal Pushover user account key identifier.', 'core-functionality' ),
 			),
 			'title' => array(
 				'type'  => 'text',
-				'label' => __( 'Notifier Title', 'dwp-cf' ),
-				'desc'  => __( 'Optional title prefix (Defaults to [DeWittePrins]).', 'dwp-cf' ),
+				'label' => __( 'Notifier Title', 'core-functionality' ),
+				'desc'  => __( 'Optional title prefix (Defaults to [DeWittePrins]).', 'core-functionality' ),
 			),
 		);
 	}

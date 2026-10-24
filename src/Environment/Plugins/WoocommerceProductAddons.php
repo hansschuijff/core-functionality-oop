@@ -41,9 +41,9 @@ class WoocommerceProductAddons extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-product-add-ons',
-				title:   __( 'Product Add-ons', 'dwp-cf' ),
+				title:   __( 'Product Add-ons', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=product&page=addons' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce', 'dwp-cf' ) . ' ' . __( 'Product Add-ons', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce', 'core-functionality' ) . ' ' . __( 'Product Add-ons', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

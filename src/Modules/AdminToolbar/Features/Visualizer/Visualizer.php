@@ -139,7 +139,7 @@ class Visualizer implements FeatureInterface {
 		$wp_admin_bar->add_node(
 			array(
 				'id'    => $root_inspector_id,
-				'title' => __( 'Node ID\'s', 'dwp-cf' ),
+				'title' => __( 'Node ID\'s', 'core-functionality' ),
 				'href'  => '#',
 			)
 		);

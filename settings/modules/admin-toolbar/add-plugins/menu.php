@@ -22,7 +22,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Plugins', 'dwp-cf' ),
+				'title'  => \__( 'Plugins', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-plugins',
 				'href'   => \admin_url( 'plugins.php', 'admin' ),

@@ -133,14 +133,14 @@ class FileService {
 			$this->plugin->notices->add(
 				'error',
 				sprintf(
-					__( 'Critical Error: Failed to write updates toward configuration file: %1$s.', 'dwp-cf' ),
+					__( 'Critical Error: Failed to write updates toward configuration file: %1$s.', 'core-functionality' ),
 					$this->get_register_full_path( $register )
 				)
 			);
 			return false;
 		}
 
-		return __( 'Settings saved successfully. Remember to commit changes in Git! 🚀', 'dwp-cf' );
+		return __( 'Settings saved successfully. Remember to commit changes in Git! 🚀', 'core-functionality' );
 	}
 
 	/**
@@ -311,7 +311,7 @@ class FileService {
 		if ( empty( $path ) || ! is_dir( $path ) ) {
 			$this->plugin->notices->add(
 				'error',
-				__( 'Path to the component registers could not be retrieved, fallback paths used. Please inform Support', 'dwp-cf' )
+				__( 'Path to the component registers could not be retrieved, fallback paths used. Please inform Support', 'core-functionality' )
 			);
 
 			$path = $this->plugin->get_data( 'settings-dir' );

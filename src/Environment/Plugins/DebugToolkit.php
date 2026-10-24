@@ -73,9 +73,9 @@ class DebugToolkit extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'debug_toolkit_link',
-				title:   __( '🛠️ Debug Toolkit', 'dwp-cf' ),
+				title:   __( '🛠️ Debug Toolkit', 'core-functionality' ),
 				href:    admin_url( 'plugins.php?plugin_status=active' ),
-				label:   __( 'Debug Toolkit Diagnostics', 'dwp-cf' ),
+				label:   __( 'Debug Toolkit Diagnostics', 'core-functionality' ),
 				meta:    array( 'class' => 'dwp-debug-bar-item' ), // Safely injects your custom CSS styling class
 				orientation: Orientation::ADMIN,
 			),

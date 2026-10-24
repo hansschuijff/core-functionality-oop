@@ -26,9 +26,9 @@ class BrokenLinkChecker extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-view-broken-links',
-				title:   __( 'Broken Links Checker', 'dwp-cf' ),
+				title:   __( 'Broken Links Checker', 'core-functionality' ),
 				href:    admin_url( 'tools.php?page=view-broken-links' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Broken Links Checker', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Broken Links Checker', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

@@ -74,9 +74,9 @@ class AnyGenesis extends AbstractTheme {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-genesis-theme-settings',
-				title:   __( 'Genesis Framework', 'dwp-cf' ),
+				title:   __( 'Genesis Framework', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=genesis' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Genesis Framework', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Framework', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

@@ -35,9 +35,9 @@ enum Deployment: string {
 	 */
 	public function get_label(): string {
 		return match ( $this ) {
-			self::DEVELOPMENT => __( '🧪 Development', 'dewitteprins-core' ),
-			self::STAGING     => __( '🔬 Staging', 'dewitteprins-core' ),
-			self::PRODUCTION  => __( '🌐 Production', 'dewitteprins-core' ),
+			self::DEVELOPMENT => __( '🧪 Development', 'core-functionality' ),
+			self::STAGING     => __( '🔬 Staging', 'core-functionality' ),
+			self::PRODUCTION  => __( '🌐 Production', 'core-functionality' ),
 		};
 	}
 }

@@ -315,7 +315,7 @@ class Settings {
 		// Only the options managementSettings section is allowed to call this method
 		if ( OptionsManagementSettings::class !== $caller_fqcn ) {
 			$called_method = $caller['method'] ?? 'unknown';
-			_doing_it_wrong( $called_method, __( "Calling Settings->get_options() is only allowed, use Settings->get(), Settings->save() or Settings->delete() instead. For getting unmanaged options, you can use Settings->get_unmanaged().", 'dwp-cf' ), '1.0.0' );
+			_doing_it_wrong( $called_method, __( "Calling Settings->get_options() is only allowed, use Settings->get(), Settings->save() or Settings->delete() instead. For getting unmanaged options, you can use Settings->get_unmanaged().", 'core-functionality' ), '1.0.0' );
 			return false;
 		}
 		return true;

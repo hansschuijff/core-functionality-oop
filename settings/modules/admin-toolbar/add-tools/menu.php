@@ -20,7 +20,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Tools', 'dwp-cf' ),
+				'title'  => \__( 'Tools', 'core-functionality' ),
 				'parent' => 'site-name',
 				'id'     => 'cf-shortcuts-tools',
 				'href'   => '#',
@@ -31,14 +31,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Updraft Backups', 'dwp-cf' ),
+				'title'  => \__( 'Updraft Backups', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-backups',
 				'href'   => \admin_url( 'options-general.php?page=updraftplus', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Updraft Backups', 'dwp-cf' ),
+							. \__( 'Updraft Backups', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -50,14 +50,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Emails Send', 'dwp-cf' ),
+				'title'  => \__( 'Emails Send', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-fluentsmtp',
 				'href'   => \admin_url( 'options-general.php?page=fluent-mail#/logs?per_page=10&page=1&status=&search=', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'FluentSMTP', 'dwp-cf' ),
+							. \__( 'FluentSMTP', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -69,14 +69,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Redirects', 'dwp-cf' ),
+				'title'  => \__( 'Redirects', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-redirects',
 				'href'   => \admin_url( 'options-general.php?page=seo-redirection-premium.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'SEO Redirects', 'dwp-cf' ),
+							. \__( 'SEO Redirects', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -88,14 +88,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Redirects', 'dwp-cf' ),
+				'title'  => \__( 'Redirects', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools-redirects',
 				'id'     => 'cf-shortcuts-tools-redirects-all',
 				'href'   => \admin_url( 'options-general.php?page=seo-redirection-premium.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'SEO Redirects', 'dwp-cf' ),
+							. \__( 'SEO Redirects', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -107,14 +107,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Redirect 404s', 'dwp-cf' ),
+				'title'  => \__( 'Redirect 404s', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools-redirects',
 				'id'     => 'cf-shortcuts-tools-redirects-404',
 				'href'   => \admin_url( 'options-general.php?page=seo-redirection-premium.php&SR_tab=404_manager', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Redirect 404s', 'dwp-cf' ),
+							. \__( 'Redirect 404s', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -126,14 +126,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Translate', 'dwp-cf' ),
+				'title'  => \__( 'Translate', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-translate',
 				'href'   => \admin_url( 'admin.php?page=loco', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Translations', 'dwp-cf' ),
+							. \__( 'Translations', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -145,14 +145,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Translations', 'dwp-cf' ),
+				'title'  => \__( 'Translations', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools-translate',
 				'id'     => 'cf-shortcuts-tools-translate-all',
 				'href'   => \admin_url( 'admin.php?page=loco', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Translations', 'dwp-cf' ),
+							. \__( 'Translations', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -164,14 +164,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Plugin Translations', 'dwp-cf' ),
+				'title'  => \__( 'Plugin Translations', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools-translate',
 				'id'     => 'cf-shortcuts-tools-translate-plugins',
 				'href'   => \admin_url( 'admin.php?page=loco-plugin', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Plugin Translations', 'dwp-cf' ),
+							. \__( 'Plugin Translations', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -183,14 +183,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Theme Translations', 'dwp-cf' ),
+				'title'  => \__( 'Theme Translations', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools-translate',
 				'id'     => 'cf-shortcuts-tools-translate-theme',
 				'href'   => \admin_url( 'admin.php?page=loco-theme', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Theme Translations', 'dwp-cf' ),
+							. \__( 'Theme Translations', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -203,14 +203,14 @@ return array(
 
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Database editor', 'dwp-cf' ),
+				'title'  => \__( 'Database editor', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-phpmyadmin',
 				'href'   => \admin_url( 'options-general.php?page=wp-phpmyadmin-extension&isactivation', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'phpMyAdmin', 'dwp-cf' ),
+							. \__( 'phpMyAdmin', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -223,14 +223,14 @@ return array(
 
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Redis Cache', 'dwp-cf' ),
+				'title'  => \__( 'Redis Cache', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-redis',
 				'href'   => \admin_url( 'options-general.php?page=redis-cache', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Redis Cache Settings', 'dwp-cf' ),
+							. \__( 'Redis Cache Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -242,14 +242,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Broken Links Checker', 'dwp-cf' ),
+				'title'  => \__( 'Broken Links Checker', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-tools',
 				'id'     => 'cf-shortcuts-tools-broken-links',
 				'href'   => \admin_url( 'tools.php?page=view-broken-links', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 								. ' '
-								. \__( 'Broken Links Checker', 'dwp-cf' ),
+								. \__( 'Broken Links Checker', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

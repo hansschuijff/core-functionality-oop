@@ -92,7 +92,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Options Vault Management', 'dwp-cf' );
+		return __( 'Options Vault Management', 'core-functionality' );
 	}
 
 	/**
@@ -103,7 +103,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Review unmapped feature settings inside the Quarantine pool. Choose to transport them in bulk to standalone or grouped database keys, or delete them permanently from the system.', 'dwp-cf' );
+		return __( 'Review unmapped feature settings inside the Quarantine pool. Choose to transport them in bulk to standalone or grouped database keys, or delete them permanently from the system.', 'core-functionality' );
 	}
 
 	/**
@@ -175,7 +175,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		if ( isset( $posted_data['dwp_vault_bulk_action'] ) && 'custom_standalone' === $posted_data['dwp_vault_bulk_action'] ) {
 			$custom_dest = sanitize_text_field( $posted_data['dwp_vault_custom_destination'] ?? '' );
 			if ( empty( $custom_dest ) ) {
-				return new WP_Error( 'missing_field', __( 'Please provide a custom destination option name.', 'dwp-cf' ) );
+				return new WP_Error( 'missing_field', __( 'Please provide a custom destination option name.', 'core-functionality' ) );
 			}
 		}
 		return true;
@@ -190,13 +190,13 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 */
 	private function allowed_to_save( array $posted_data ): bool {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify the Options Vault.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify the Options Vault.', 'core-functionality' ) );
 			return false;
 		}
 
 		$nonce = $posted_data['dwp_vault_management_nonce'] ?? '';
 		if ( ! wp_verify_nonce( $nonce, 'dwp_vault_management_action' ) ) {
-			$this->plugin->notices->add( 'error', __( 'Security Check Failed: The security token has expired or is invalid. Please refresh and try again.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Security Check Failed: The security token has expired or is invalid. Please refresh and try again.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -265,7 +265,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_quarantine_section_header(): void {
-		$title = esc_html__( 'Feature Tokens in Quarantine Pool', 'dwp-cf' );
+		$title = esc_html__( 'Feature Tokens in Quarantine Pool', 'core-functionality' );
 
 		echo <<<HTML
 		<div class="dwp-card-panel" style="background: #fff; border: 1px solid #ccd0d4; padding: 25px; box-shadow: 0 1px 1px rgba(0,0,0,.04); border-radius: 4px;">
@@ -291,7 +291,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_quarentine_section_empty(): void {
-		$empty_msg = esc_html__( '🎉 Beautiful! The quarantine pool is currently completely empty.', 'dwp-cf' );
+		$empty_msg = esc_html__( '🎉 Beautiful! The quarantine pool is currently completely empty.', 'core-functionality' );
 		echo "<tr><td colspan='3' style='padding: 15px; color: #16a34a; font-style: italic; font-weight: 600;'>{$empty_msg}</td></tr>";
 	}
 
@@ -307,8 +307,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$token_attr = esc_attr( $q_token );
 		$token_html = esc_html( $q_token );
 		$size_info  = is_array( $q_data )
-			? sprintf( __( 'Array (%d elements)', 'dwp-cf' ), count( $q_data ) )
-			: sprintf( __( 'String (%d characters)', 'dwp-cf' ), strlen( (string) $q_data ) );
+			? sprintf( __( 'Array (%d elements)', 'core-functionality' ), count( $q_data ) )
+			: sprintf( __( 'String (%d characters)', 'core-functionality' ), strlen( (string) $q_data ) );
 
 		echo <<<HTML
 		<tr>
@@ -338,14 +338,14 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			echo '</div>'; // Closes the central .dwp-card-panel box loepzuiver
 		}
 
-		$action_title = esc_html__( 'Transport Quarantine Tokens:', 'dwp-cf' );
-		$label_select = esc_html__( 'Choose Transport Target Key:', 'dwp-cf' );
-		$opt_auto     = esc_html__( 'Automatically map to own row: dwp-cf-{token}', 'dwp-cf' );
-		$group_shared = esc_attr__( 'Add to existing grouped feature settings option:', 'dwp-cf' );
-		$group_manual = esc_attr__( 'Manual / Custom inputs allocation:', 'dwp-cf' );
-		$opt_manual_s = esc_html__( 'New manual Standalone option key...', 'dwp-cf' );
-		$opt_manual_m = esc_html__( 'New manual Grouped feature settings option...', 'dwp-cf' );
-		$label_custom = esc_html__( 'Type manual option name:', 'dwp-cf' );
+		$action_title = esc_html__( 'Transport Quarantine Tokens:', 'core-functionality' );
+		$label_select = esc_html__( 'Choose Transport Target Key:', 'core-functionality' );
+		$opt_auto     = esc_html__( 'Automatically map to own row: dwp-cf-{token}', 'core-functionality' );
+		$group_shared = esc_attr__( 'Add to existing grouped feature settings option:', 'core-functionality' );
+		$group_manual = esc_attr__( 'Manual / Custom inputs allocation:', 'core-functionality' );
+		$opt_manual_s = esc_html__( 'New manual Standalone option key...', 'core-functionality' );
+		$opt_manual_m = esc_html__( 'New manual Grouped feature settings option...', 'core-functionality' );
+		$label_custom = esc_html__( 'Type manual option name:', 'core-functionality' );
 
 		echo <<<HTML
 			<div class="dwp-transport-form-box" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-left: 4px solid #475569; margin-top: 15px; border-radius: 4px;">
@@ -427,7 +427,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_registered_keys_section_header( bool $is_empty_keys ): void {
-		$section_title = esc_html__( 'Active Registered Feature Settings', 'dwp-cf' );
+		$section_title = esc_html__( 'Active Registered Feature Settings', 'core-functionality' );
 
 		echo <<<HTML
 		<div class="dwp-card-panel" style="background: #fff; border: 1px solid #ccd0d4; padding: 25px; box-shadow: 0 1px 1px rgba(0,0,0,.04); border-radius: 4px;">
@@ -435,7 +435,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		HTML;
 
 		if ( $is_empty_keys ) {
-			$empty_txt = esc_html__( 'There are currently no active feature settings configured.', 'dwp-cf' );
+			$empty_txt = esc_html__( 'There are currently no active feature settings configured.', 'core-functionality' );
 			echo <<<HTML
 				<div style='padding: 15px; color: #64748b; font-style: italic; border: 1px dashed #cbd5e1; background: #f8fafc;'>
 					{$empty_txt}
@@ -460,7 +460,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 */
 	private function render_grouped_option_block( string $master_key, array $tokens ): void {
 		$master_html = esc_html( $master_key );
-		$entry_count = sprintf( _n( '%d entry', '%d entries', count( $tokens ), 'dwp-cf' ), count( $tokens ) );
+		$entry_count = sprintf( _n( '%d entry', '%d entries', count( $tokens ), 'core-functionality' ), count( $tokens ) );
 
 		echo <<<HTML
 			<div class="dwp-matrix-cluster-block" style="border: 1px solid #cbd5e1; border-radius: 4px; overflow: hidden;">
@@ -501,10 +501,10 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_standalone_options_list( array $standalone_options ): void {
-		$block_title = esc_html__( 'Standalone Database Options (Own Row)', 'dwp-cf' );
-		$th_sel      = esc_html__( 'Sel.', 'dwp-cf' );
-		$th_token    = esc_html__( 'Abstract Intent Token', 'dwp-cf' );
-		$th_key      = esc_html__( 'Physical Database Option Key', 'dwp-cf' );
+		$block_title = esc_html__( 'Standalone Database Options (Own Row)', 'core-functionality' );
+		$th_sel      = esc_html__( 'Sel.', 'core-functionality' );
+		$th_token    = esc_html__( 'Abstract Intent Token', 'core-functionality' );
+		$th_key      = esc_html__( 'Physical Database Option Key', 'core-functionality' );
 
 		echo <<<HTML
 			<div class="dwp-matrix-cluster-block" style="border: 1px solid #cbd5e1; border-radius: 4px; overflow: hidden;">
@@ -553,10 +553,10 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_registered_keys_section_actions(): void {
-		$action_title     = esc_html__( 'Active Settings Bulk Actions Panel:', 'dwp-cf' );
-		$label_select     = esc_html__( 'Choose Action for Selected Active Tokens:', 'dwp-cf' );
-		$opt_quarantine   = esc_html__( '↩️ De-register: Move tokens back to Quarantine pool', 'dwp-cf' );
-		$label_select_all = esc_html__( 'Select all active features tokens across all blocks', 'dwp-cf' );
+		$action_title     = esc_html__( 'Active Settings Bulk Actions Panel:', 'core-functionality' );
+		$label_select     = esc_html__( 'Choose Action for Selected Active Tokens:', 'core-functionality' );
+		$opt_quarantine   = esc_html__( '↩️ De-register: Move tokens back to Quarantine pool', 'core-functionality' );
+		$label_select_all = esc_html__( 'Select all active features tokens across all blocks', 'core-functionality' );
 
 		echo <<<HTML
 		<div class="dwp-transport-form-box" style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-left: 4px solid #2271b1; margin-top: 15px; border-radius: 4px;">
@@ -587,8 +587,8 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_danger_zone_panel(): void {
-		$zone_title  = esc_html__( 'Danger Zone Panel Area', 'dwp-cf' );
-		$zone_desc   = esc_html__( 'Erase Configuration Strategy: Select feature settings tokens via checkboxes across either list above to submit them for hard erasure. Applying the button action inside the footer below will permanently scrub the keys and clear out data structures directly from the WordPress database rows context allocations.', 'dwp-cf' );
+		$zone_title  = esc_html__( 'Danger Zone Panel Area', 'core-functionality' );
+		$zone_desc   = esc_html__( 'Erase Configuration Strategy: Select feature settings tokens via checkboxes across either list above to submit them for hard erasure. Applying the button action inside the footer below will permanently scrub the keys and clear out data structures directly from the WordPress database rows context allocations.', 'core-functionality' );
 
 		echo <<<HTML
 		<div class="dwp-danger-zone-panel" style="background: #fff5f5; border: 1px solid #fee2e2; border-left: 4px solid #ef4444; padding: 20px; margin-top: 30px; border-radius: 4px;">
@@ -605,10 +605,10 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 * @return array<string, string> Dictionary indexing raw HTML button element blocks strings.
 	 */
 	public function get_action_buttons(): array {
-		$btn_transport = esc_attr__( 'Add keys to options', 'dwp-cf' );
-		$btn_matrix    = esc_attr__( 'Remove keys from options', 'dwp-cf' );
-		$btn_purge     = esc_attr__( 'Permanently Erase Options', 'dwp-cf' );
-		$confirm_purge = esc_attr__( 'CRITICAL WARNING: Are you absolutely certain you want to permanently erase the selected tokens and all their entries from storage? This action cannot be reverted.', 'dwp-cf' );
+		$btn_transport = esc_attr__( 'Add keys to options', 'core-functionality' );
+		$btn_matrix    = esc_attr__( 'Remove keys from options', 'core-functionality' );
+		$btn_purge     = esc_attr__( 'Permanently Erase Options', 'core-functionality' );
+		$confirm_purge = esc_attr__( 'CRITICAL WARNING: Are you absolutely certain you want to permanently erase the selected tokens and all their entries from storage? This action cannot be reverted.', 'core-functionality' );
 
 		return array(
 			'transport' => <<<HTML
@@ -648,12 +648,12 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$selected_action = sanitize_text_field( $posted_data['dwp_vault_bulk_action'] ?? '' );
 
 		if ( empty( $selected_tokens ) ) {
-			$this->plugin->notices->add( 'warning', __( 'No Tokens were selected. Please select the quarantine tokens you want processed.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'warning', __( 'No Tokens were selected. Please select the quarantine tokens you want processed.', 'core-functionality' ) );
 			return false;
 		}
 
 		if ( empty( $selected_action ) ) {
-			$this->plugin->notices->add( 'error', __( 'Please select an action you want to perform on the tokens you selected.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Please select an action you want to perform on the tokens you selected.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -665,7 +665,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		if ( 'auto_map_dash' === $selected_action ) {
 			// Resolved autonomously inside transport loop execution path
 		} elseif ( empty( $target_key ) ) {
-			$this->plugin->notices->add( 'error', __( 'Bulk Action Failed: Target destination key cannot be empty.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Bulk Action Failed: Target destination key cannot be empty.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -679,7 +679,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			}
 		}
 
-		return sprintf( __( 'Bulk transport complete! %d feature tokens successfully moved to active storage destinations.', 'dwp-cf' ), $count );
+		return sprintf( __( 'Bulk transport complete! %d feature tokens successfully moved to active storage destinations.', 'core-functionality' ), $count );
 	}
 
 	/**
@@ -691,7 +691,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 	 */
 	private function handle_key_option_actions( array $posted_data ): string|bool {
 		if ( empty( $posted_data['dwp_bulk_matrix_tokens'] ) ) {
-			$this->plugin->notices->add( 'warning', __( 'Bulk Action Failed: No active features tokens were selected for processing.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'warning', __( 'Bulk Action Failed: No active features tokens were selected for processing.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -709,7 +709,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 					$count++;
 				}
 			}
-			return sprintf( __( '%d keys successfully de-registered and safely returned to quarantine via the Vault.', 'dwp-cf' ), $count );
+			return sprintf( __( '%d keys successfully de-registered and safely returned to quarantine via the Vault.', 'core-functionality' ), $count );
 		}
 
 		return true;
@@ -730,7 +730,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 		$tokens_to_purge = array_merge( $quarantine_tokens, $matrix_tokens );
 
 		if ( empty( $tokens_to_purge ) ) {
-			$this->plugin->notices->add( 'warning', __( 'Deep Purge Failed: No tokens were checked from either section lists.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'warning', __( 'Deep Purge Failed: No tokens were checked from either section lists.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -746,7 +746,7 @@ class OptionsManagementSettings implements SettingsSectionInterface {
 			}
 		}
 
-		return sprintf( __( 'Deep Purge Completed! %d configurations tokens and data structures fully erased from the database.', 'dwp-cf' ), $count );
+		return sprintf( __( 'Deep Purge Completed! %d configurations tokens and data structures fully erased from the database.', 'core-functionality' ), $count );
 	}
 
 	/*-------------------------------------------------------------------------

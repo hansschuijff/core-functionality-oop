@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Courses', 'dwp-cf' ),
+				'title'  => \__( 'Courses', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view',
 				'id'     => 'cf-shortcuts-view-sensei-lms',
 				'href'   => \get_site_url( null, '/cursussen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Courses', 'dwp-cf' ),
+							. \__( 'Courses', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Course List', 'dwp-cf' ),
+				'title'  => \__( 'Course List', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-courses-list',
 				'href'   => \get_site_url( null, '/cursusoverzicht/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Course List', 'dwp-cf' ),
+							. \__( 'Course List', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Course-category: Mediumschap', 'dwp-cf' ),
+				'title'  => \__( 'Course-category: Mediumschap', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-category-mediumschap',
 				'href'   => \get_site_url( null, '/cursuscategorie/mediumschap/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Course-category: Mediumschap', 'dwp-cf' ),
+							. \__( 'Course-category: Mediumschap', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -77,14 +77,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'My Courses', 'dwp-cf' ),
+				'title'  => \__( 'My Courses', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-my-courses',
 				'href'   => \get_site_url( null, '/mijn-cursussen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'My Courses', 'dwp-cf' ),
+							. \__( 'My Courses', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -96,14 +96,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Learners Profile', 'dwp-cf' ),
+				'title'  => \__( 'Learners Profile', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-learners-profile',
 				'href'   => \get_site_url( null, '/student/hansepans/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Learners Profile', 'dwp-cf' ),
+							. \__( 'Learners Profile', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -115,14 +115,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Course: Basis Mediumschap', 'dwp-cf' ),
+				'title'  => \__( 'Course: Basis Mediumschap', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-basis-mediumschap',
 				'href'   => \get_site_url( null, '/cursus/mediumschap-basis/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Course: Basis Mediumschap', 'dwp-cf' ),
+							. \__( 'Course: Basis Mediumschap', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -134,14 +134,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Course results', 'dwp-cf' ),
+				'title'  => \__( 'Course results', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms-basis-mediumschap',
 				'id'     => 'cf-shortcuts-view-sensei-lms-basis-mediumschap-results',
 				'href'   => \get_site_url( null, '/cursus/mediumschap-basis/results/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Course results', 'dwp-cf' ),
+							. \__( 'Course results', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -153,14 +153,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Module: Orakelen als een orakel', 'dwp-cf' ),
+				'title'  => \__( 'Module: Orakelen als een orakel', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-module-orakelen',
 				'href'   => \get_site_url( null, '/modules/orakelen-als-een-orakel/?course_id=6732' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Module: Orakelen als een orakel', 'dwp-cf' ),
+							. \__( 'Module: Orakelen als een orakel', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -172,14 +172,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Lessons', 'dwp-cf' ),
+				'title'  => \__( 'Lessons', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-lessons',
 				'href'   => \get_site_url( null, '/les/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Lessons', 'dwp-cf' ),
+							. \__( 'Lessons', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -191,14 +191,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Lesson-tag: Aura', 'dwp-cf' ),
+				'title'  => \__( 'Lesson-tag: Aura', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-lesson-tag-aura',
 				'href'   => \get_site_url( null, '/lestag/aura/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Lesson-tag: Aura', 'dwp-cf' ),
+							. \__( 'Lesson-tag: Aura', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -210,14 +210,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Lesson: Aura Reading', 'dwp-cf' ),
+				'title'  => \__( 'Lesson: Aura Reading', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-lesson-aura-reading',
 				'href'   => \get_site_url( null, '/les/auras-waarnemen-en-lezen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Lesson: Aura Reading', 'dwp-cf' ),
+							. \__( 'Lesson: Aura Reading', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -229,14 +229,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Quiz: The History of My Psychic Ability', 'dwp-cf' ),
+				'title'  => \__( 'Quiz: The History of My Psychic Ability', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-quiz-my-psychic-ability',
 				'href'   => \get_site_url( null, '/test/hoe-ik-mijn-mediumschap-ontwikkelde/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Quiz: The History of My Psychic Ability', 'dwp-cf' ),
+							. \__( 'Quiz: The History of My Psychic Ability', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -248,14 +248,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Messages', 'dwp-cf' ),
+				'title'  => \__( 'Messages', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-messages',
 				'href'   => \get_site_url( null, '/berichten/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Messages', 'dwp-cf' ),
+							. \__( 'Messages', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -267,14 +267,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Message: I have some questions', 'dwp-cf' ),
+				'title'  => \__( 'Message: I have some questions', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-sensei-lms',
 				'id'     => 'cf-shortcuts-view-sensei-lms-message-questions',
 				'href'   => \get_site_url( null, '/berichten/ik-heb-een-paar-vragen-over-de-roos/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to Sensei LMS', 'dwp-cf' )
+					'title' => \__( 'Link to Sensei LMS', 'core-functionality' )
 							. ' '
-							. \__( 'Message: I have some questions', 'dwp-cf' ),
+							. \__( 'Message: I have some questions', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

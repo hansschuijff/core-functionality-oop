@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Updates', 'dwp-cf' ),
+				'title'  => \__( 'Updates', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins',
 				'id'     => 'cf-shortcuts-plugins-updates',
 				'href'   => \admin_url( 'update-core.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Plugins & Themes Updates', 'dwp-cf' ),
+							. \__( 'Plugins & Themes Updates', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -36,14 +36,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Installed Plugins', 'dwp-cf' ),
+				'title'  => \__( 'Installed Plugins', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins',
 				'id'     => 'plugins',
 				'href'   => \admin_url( 'plugins.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Installed Plugins', 'dwp-cf' ),
+							. \__( 'Installed Plugins', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -52,14 +52,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Add Plugin', 'dwp-cf' ),
+				'title'  => \__( 'Add Plugin', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins',
 				'id'     => 'cf-shortcuts-plugins-new',
 				'href'   => \admin_url( 'plugin-install.php', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Add Plugin', 'dwp-cf' ),
+							. \__( 'Add Plugin', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

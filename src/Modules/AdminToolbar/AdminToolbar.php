@@ -39,7 +39,7 @@ class AdminToolbar implements ModuleInterface {
 	 * @return string The human-readable module name.
 	 */
 	public static function get_name(): string {
-		return __( 'Admin Toolbar', 'dwp-cf' );
+		return __( 'Admin Toolbar', 'core-functionality' );
 	}
 
 	/**
@@ -49,7 +49,7 @@ class AdminToolbar implements ModuleInterface {
 	 * @return string Module description.
 	 */
 	public static function get_description(): string {
-		return __( 'Provides advanced layout overrides, performance enhancements, and custom nodes filtering for the WordPress admin bar.', 'dwp-cf' );
+		return __( 'Provides advanced layout overrides, performance enhancements, and custom nodes filtering for the WordPress admin bar.', 'core-functionality' );
 	}
 
 	/**

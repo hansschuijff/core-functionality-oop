@@ -72,7 +72,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Feature Activation', 'dwp-cf' );
+		return __( 'Feature Activation', 'core-functionality' );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Here you can enable and disable the modules and features in this plugin. Refreshing this list, will perform a scan that automatically detect new modules and features if there are any. By default new modules and features will be disabled en need to be enabled to launch them.', 'dwp-cf' );
+		return __( 'Here you can enable and disable the modules and features in this plugin. Refreshing this list, will perform a scan that automatically detect new modules and features if there are any. By default new modules and features will be disabled en need to be enabled to launch them.', 'core-functionality' );
 	}
 
 	/**
@@ -152,8 +152,8 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 	}
 
 	private function render_section_start() {
-		$button_text_select_everything = esc_html( 'Select all', 'dwp-cf' );
-		$button_text_rebuild_register  = esc_html( 'Scan for new features', 'dwp-cf' );
+		$button_text_select_everything = esc_html( 'Select all', 'core-functionality' );
+		$button_text_rebuild_register  = esc_html( 'Scan for new features', 'core-functionality' );
 		echo <<<HTML
 			<div class="dewitteprins-global-actions" style="margin: 20px 0; display: flex; gap: 10px; align-items: center;">
 				<button type="button" class="button button-secondary js-dwp-toggle-all" data-state="select">
@@ -189,7 +189,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 
 	private function render_features_heading(): void {
 
-		$available_features_text = esc_html_e( 'Available features:', 'dwp-cf' );
+		$available_features_text = esc_html_e( 'Available features:', 'core-functionality' );
 
 		echo <<<HTML
 			<!-- features -->
@@ -294,7 +294,7 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 
 		$this->plugin->components_register->save( Register::ENABLED, $enabled_components );
 
-		return __( 'All modules and features where reset to their default settings.', 'dwp-cf' );
+		return __( 'All modules and features where reset to their default settings.', 'core-functionality' );
 	}
 
 	private function get_initial_enabled_components_array() {
@@ -321,11 +321,11 @@ class FeatureActivationSettings implements SettingsSectionInterface {
 		$discovery_results = $this->plugin->components_register->rebuild();
 
 		if ( empty( $discovery_results ) || ! is_array( $discovery_results ) ) {
-			$this->plugin->notices->add( 'error', __( 'Critical Error: Failed to find modules and features in scan. Is this correct?', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Critical Error: Failed to find modules and features in scan. Is this correct?', 'core-functionality' ) );
 			return false;
 		}
 
-		return __( 'Scan was succesful. All Modules and Features succesfully registered.', 'dwp-cf' );
+		return __( 'Scan was succesful. All Modules and Features succesfully registered.', 'core-functionality' );
 	}
 
 	/**

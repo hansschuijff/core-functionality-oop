@@ -243,7 +243,7 @@ class FinderService {
 		// Trigger core WP developer warning if called outside authorized architectural limits.
 		_doing_it_wrong(
 			__METHOD__,
-			__( 'Invalid method call: FinderService->find_modules_and_features() should only be executed from within the Core Functionality admin settings page context.', 'dwp-cf' ),
+			__( 'Invalid method call: FinderService->find_modules_and_features() should only be executed from within the Core Functionality admin settings page context.', 'core-functionality' ),
 			esc_html( $this->plugin->get_data( 'version' ) )
 		);
 

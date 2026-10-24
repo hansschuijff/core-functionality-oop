@@ -26,9 +26,9 @@ class WpPhpMyAdmin extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-phpmyadmin',
-				title:   __( 'Database editor', 'dwp-cf' ),
+				title:   __( 'Database editor', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=wp-phpmyadmin-extension&isactivation' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'phpMyAdmin', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'phpMyAdmin', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

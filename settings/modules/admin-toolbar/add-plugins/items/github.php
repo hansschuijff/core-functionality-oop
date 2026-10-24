@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Github', 'dwp-cf' ),
+				'title'  => \__( 'Github', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins',
 				'id'     => 'cf-shortcuts-plugins-git',
 				'href'   => \admin_url( 'admin.php?page=git-remote-updater', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Git Remote Updater', 'dwp-cf' ),
+							. \__( 'Git Remote Updater', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Remote Updater', 'dwp-cf' ),
+				'title'  => \__( 'Remote Updater', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins-git',
 				'id'     => 'cf-shortcuts-plugins-git-remote-updater',
 				'href'   => \admin_url( 'admin.php?page=git-remote-updater', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Git Remote Updater', 'dwp-cf' ),
+							. \__( 'Git Remote Updater', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,16 +58,16 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Install plugin', 'dwp-cf' ),
+				'title'  => \__( 'Install plugin', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins-git',
 				'id'     => 'cf-shortcuts-plugins-git-updater-plugin-install',
 				'href'   => \admin_url( 'options-general.php?page=git-updater&tab=git_updater_install_plugin', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Git Updater', 'dwp-cf' )
+							. \__( 'Git Updater', 'core-functionality' )
 							. ': '
-							. \__( 'Install Plugin', 'dwp-cf' ),
+							. \__( 'Install Plugin', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -79,16 +79,16 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Install theme', 'dwp-cf' ),
+				'title'  => \__( 'Install theme', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins-git',
 				'id'     => 'cf-shortcuts-plugins-git-updater-theme-install',
 				'href'   => \admin_url( 'options-general.php?page=git-updater&tab=git_updater_install_theme', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Git Updater', 'dwp-cf' )
+							. \__( 'Git Updater', 'core-functionality' )
 							. ': '
-							. \__( 'Install Plugin', 'dwp-cf' ),
+							. \__( 'Install Plugin', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -100,16 +100,16 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Settings', 'dwp-cf' ),
+				'title'  => \__( 'Settings', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins-git',
 				'id'     => 'cf-shortcuts-plugins-git-updater-settings',
 				'href'   => \admin_url( 'options-general.php?page=git-updater&tab=git_updater_settings&subtab=github', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Git Updater', 'dwp-cf' )
+							. \__( 'Git Updater', 'core-functionality' )
 							. ': '
-							. \__( 'Github settings', 'dwp-cf' ),
+							. \__( 'Github settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -121,16 +121,16 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Remote Management', 'dwp-cf' ),
+				'title'  => \__( 'Remote Management', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-plugins-git',
 				'id'     => 'cf-shortcuts-plugins-git-updater-remote-management',
 				'href'   => \admin_url( 'options-general.php?page=git-updater&tab=git_updater_remote_management', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Git Updater', 'dwp-cf' )
+							. \__( 'Git Updater', 'core-functionality' )
 							. ': '
-							. \__( 'Remote Management', 'dwp-cf' ),
+							. \__( 'Remote Management', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

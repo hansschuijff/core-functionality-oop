@@ -91,7 +91,7 @@ class DeploymentSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Deployment Management', 'dwp-cf' );
+		return __( 'Deployment Management', 'core-functionality' );
 	}
 
 	/**
@@ -101,7 +101,7 @@ class DeploymentSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Here you can manage the deployment scope of modules and features. It gives allowance to be launched in the corresponding or lower environments (development, staging, production). Although you can set a feature to a higher deployment than the module it is part of, the feature will not be launched beyond the deployment scope of the parent module. Only if both module and feature are set to production deployment, the feature will be launched in a production environment.', 'dwp-cf' );
+		return __( 'Here you can manage the deployment scope of modules and features. It gives allowance to be launched in the corresponding or lower environments (development, staging, production). Although you can set a feature to a higher deployment than the module it is part of, the feature will not be launched beyond the deployment scope of the parent module. Only if both module and feature are set to production deployment, the feature will be launched in a production environment.', 'core-functionality' );
 	}
 
 	/**
@@ -356,11 +356,11 @@ class DeploymentSettings implements SettingsSectionInterface {
 		$written === $this->plugin->components_register->save( Register::DEPLOYMENT, $cleaned_states );
 
 		if ( false === $written ) {
-			$this->plugin->notices->add( 'error', __( 'Critical Error: Failed to write updates toward the release-states JSON file.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Critical Error: Failed to write updates toward the release-states JSON file.', 'core-functionality' ) );
 			return false;
 		}
 
-		return __( 'Release status settings saved successfully. Remember to commit changes in Git! 🚀', 'dwp-cf' );
+		return __( 'Release status settings saved successfully. Remember to commit changes in Git! 🚀', 'core-functionality' );
 	}
 
 	/**

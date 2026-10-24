@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Events Calendar', 'dwp-cf' ),
+				'title'  => \__( 'Events Calendar', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view',
 				'id'     => 'cf-shortcuts-view-events',
 				'href'   => function_exists( 'tribe_get_events_link' ) ? \tribe_get_events_link() : '#',
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'The Events Calendar', 'dwp-cf' ),
+							. \__( 'The Events Calendar', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -40,14 +40,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Family Constellations', 'dwp-cf' ),
+				'title'  => \__( 'Family Constellations', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-view-events',
 				'id'     => 'cf-shortcuts-view-events-cat-family-constellations',
 				'href'   => \get_site_url( null, '/agenda/categorie/familieopstellingen/' ),
 				'meta'   => array(
-					'title' => \__( 'Link to', 'dwp-cf' )
+					'title' => \__( 'Link to', 'core-functionality' )
 							. ' '
-							. \__( 'Family Constellations', 'dwp-cf' ),
+							. \__( 'Family Constellations', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

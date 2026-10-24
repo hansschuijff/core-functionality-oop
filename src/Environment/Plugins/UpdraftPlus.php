@@ -26,16 +26,16 @@ class UpdraftPlus extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-updraft-backups-menu',
-				title:   __( 'Updraft Backups', 'dwp-cf' ),
+				title:   __( 'Updraft Backups', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=updraftplus' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Updraft Backups', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Updraft Backups', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
 				id:      'cf-updraft-backups',
-				title:   __( 'Updraft Backups', 'dwp-cf' ),
+				title:   __( 'Updraft Backups', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=updraftplus' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Updraft Backups', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Updraft Backups', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

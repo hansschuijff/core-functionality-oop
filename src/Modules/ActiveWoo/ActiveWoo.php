@@ -40,7 +40,7 @@ class ActiveWoo implements ModuleInterface {
 	 * @return string The human-readable module name.
 	 */
 	public static function get_name(): string {
-		return __( 'ActiveWoo', 'dwp-cf' );
+		return __( 'ActiveWoo', 'core-functionality' );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class ActiveWoo implements ModuleInterface {
 	 * @return string Module description.
 	 */
 	public static function get_description(): string {
-		return __( 'Customizations and adaptations for the ActiveWoo plugin.', 'dwp-cf' );
+		return __( 'Customizations and adaptations for the ActiveWoo plugin.', 'core-functionality' );
 	}
 
 	/**

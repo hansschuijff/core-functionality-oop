@@ -103,7 +103,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Push Notice Services', 'dwp-cf' );
+		return __( 'Push Notice Services', 'core-functionality' );
 	}
 
 	/**
@@ -114,7 +114,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Select a service you want to send the automatic push notices to, that are sent to inform you of problems with the website, and set the authentication data to connect the driver to the service.', 'dwp-cf' );
+		return __( 'Select a service you want to send the automatic push notices to, that are sent to inform you of problems with the website, and set the authentication data to connect the driver to the service.', 'core-functionality' );
 	}
 
 	/**
@@ -187,7 +187,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 		if ( isset( $posted_data['dwp_active_driver'] ) && ! empty( $posted_data['dwp_active_driver'] ) ) {
 			$driver = ClassParser::to_single_backslashes( sanitize_text_field( $posted_data['dwp_active_driver'] ) );
 			if ( ! class_exists( $driver ) ) {
-				return new WP_Error( 'invalid_driver', __( 'The selected push notice service driver class does not exist.', 'dwp-cf' ) );
+				return new WP_Error( 'invalid_driver', __( 'The selected push notice service driver class does not exist.', 'core-functionality' ) );
 			}
 		}
 		return true;
@@ -205,12 +205,12 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	public function save( array $posted_data ): string|bool {
 		// Absolute Security Guard Permissions Checks Lookups Gates
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify push notice settings.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify push notice settings.', 'core-functionality' ) );
 			return false;
 		}
 
 		if ( ! isset( $posted_data['dwp_active_driver'] ) || ! is_string( $posted_data['dwp_active_driver'] ) ) {
-			$this->plugin->notices->add( 'error', __( 'Save Failed: No valid active messaging driver payload was submitted.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Save Failed: No valid active messaging driver payload was submitted.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -234,7 +234,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 			}
 		}
 
-		return __( 'Push notice configuration successfully updated.', 'dwp-cf' );
+		return __( 'Push notice configuration successfully updated.', 'core-functionality' );
 	}
 
 	/*-------------------------------------------------------------------------
@@ -250,9 +250,9 @@ class PushNoticeSettings implements SettingsSectionInterface {
 	 * @return void
 	 */
 	private function render_driver_selector_row( array $driver_classes, string $active_driver ): void {
-		$label_driver = esc_html__( 'Active Messaging Service', 'dwp-cf' );
-		$opt_none     = esc_html__( '-- None (Deactivated) --', 'dwp-cf' );
-		$desc_driver  = esc_html__( 'Select the platform where automated push notice notifications should be transmitted to.', 'dwp-cf' );
+		$label_driver = esc_html__( 'Active Messaging Service', 'core-functionality' );
+		$opt_none     = esc_html__( '-- None (Deactivated) --', 'core-functionality' );
+		$desc_driver  = esc_html__( 'Select the platform where automated push notice notifications should be transmitted to.', 'core-functionality' );
 
 		echo <<<HTML
 		<thead>
@@ -302,7 +302,7 @@ class PushNoticeSettings implements SettingsSectionInterface {
 		$slug          = strtolower( ClassParser::fqcn_remove_namespace( $fqcn ) );
 		$slug          = ClassParser::camel_to_kebab( $slug );
 		$driver_name   = esc_html( $fqcn::get_name() );
-		$config_txt    = esc_html__( 'Configuration', 'dwp-cf' );
+		$config_txt    = esc_html__( 'Configuration', 'core-functionality' );
 		$fqcn_clean    = esc_attr( ClassParser::to_single_backslashes( $fqcn ) );
 
 		// Secure lookup mapping passing an empty initialization array to satisfy the 4th parameters signature constraints

@@ -22,7 +22,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Settings', 'dwp-cf' ),
+				'title'  => \__( 'Settings', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-settings',
 				'href'   => '#',

@@ -60,7 +60,7 @@ class KeepLicenseAlive implements FeatureInterface {
 	 * @return string Feature title.
 	 */
 	public static function get_name(): string {
-		return __( 'ActiveWoo Keep License Alive', 'dwp-cf' );
+		return __( 'ActiveWoo Keep License Alive', 'core-functionality' );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class KeepLicenseAlive implements FeatureInterface {
 	 * @return string Feature description.
 	 */
 	public static function get_description(): string {
-		return __( 'Sustains a copy of the license in transient, so the plugin will keep thinking it is licensed.', 'dwp-cf' );
+		return __( 'Sustains a copy of the license in transient, so the plugin will keep thinking it is licensed.', 'core-functionality' );
 	}
 
 	/**

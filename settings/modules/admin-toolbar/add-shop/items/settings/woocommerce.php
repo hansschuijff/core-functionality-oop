@@ -20,7 +20,7 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Settings', 'dwp-cf' ),
+				'title'  => \__( 'Settings', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-settings',
 				'href'   => '#',
@@ -34,14 +34,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'WooCommerce', 'dwp-cf' ),
+				'title'  => \__( 'WooCommerce', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings',
 				'id'     => 'cf-shortcuts-woocommerce-settings-woocommerce',
 				'href'   => \admin_url( 'admin.php?page=wc-settings', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to ', 'dwp-cf' )
+					'title' => \__( 'Link to ', 'core-functionality' )
 							. ' '
-							. \__( 'WooCommerce Settings', 'dwp-cf' ),
+							. \__( 'WooCommerce Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

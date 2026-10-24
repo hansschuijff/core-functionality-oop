@@ -42,9 +42,9 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-settings-pdf-invoice',
-				title:   __( 'PDF-invoice', 'dwp-cf' ),
+				title:   __( 'PDF-invoice', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wpo_wcpdf_options_page' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce PDF-invoice Settings', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce PDF-invoice Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

@@ -41,9 +41,9 @@ class WoocommerceEuVatAssistant extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-settings-eu-vat-assistant',
-				title:   __( 'EU VAT Assistant', 'dwp-cf' ),
+				title:   __( 'EU VAT Assistant', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc_aelia_eu_vat_assistant' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WooCommerce EU VAT Assistant Settings', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce EU VAT Assistant Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

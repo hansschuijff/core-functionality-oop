@@ -40,7 +40,7 @@ class Cleaner implements ModuleInterface {
 	 * @return string The human-readable module name.
 	 */
 	public static function get_name(): string {
-		return __( 'WordPress Cleaner', 'dwp-cf' );
+		return __( 'WordPress Cleaner', 'core-functionality' );
 	}
 
 	/**
@@ -50,7 +50,7 @@ class Cleaner implements ModuleInterface {
 	 * @return string Module description.
 	 */
 	public static function get_description(): string {
-		return __( 'Utilities that keep WordPress performing efficiently.', 'dwp-cf' );
+		return __( 'Utilities that keep WordPress performing efficiently.', 'core-functionality' );
 	}
 
 	/**

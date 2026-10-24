@@ -291,8 +291,8 @@ class Plugin {
 			?>
 			<div class="notice notice-error">
 				<p>
-					<strong><?php esc_html_e( 'De Witte Prins - Core Functionality Gecrasht!', 'dwp-cf' ); ?></strong><br />
-					<?php esc_html_e( 'De plugin-infrastructuur is stopgezet omdat de fysieke installatie corrupt is. De rest van de website functioneert normaal, maar alle acties van deze plugin zijn geblokkeerd.', 'dwp-cf' ); ?><br />
+					<strong><?php esc_html_e( 'De Witte Prins - Core Functionality Gecrasht!', 'core-functionality' ); ?></strong><br />
+					<?php esc_html_e( 'De plugin-infrastructuur is stopgezet omdat de fysieke installatie corrupt is. De rest van de website functioneert normaal, maar alle acties van deze plugin zijn geblokkeerd.', 'core-functionality' ); ?><br />
 					<code style="display: inline-block; margin-top: 5px; background: #f6f7f7; padding: 3px 6px; border-radius: 3px;">
 						<?php echo esc_html( $error_message ); ?>
 					</code>

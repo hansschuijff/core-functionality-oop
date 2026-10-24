@@ -77,12 +77,12 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 	#[Override]
 	public static function get_name(): string {
-		return __( 'Admin Toolbar Menu Builder', 'dwp-cf' );
+		return __( 'Admin Toolbar Menu Builder', 'core-functionality' );
 	}
 
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Design your custom WordPress Admin Toolbar. Filter shortcuts by source provider, select elements from the pool to clone them, and manage hierarchy sequence fields.', 'dwp-cf' );
+		return __( 'Design your custom WordPress Admin Toolbar. Filter shortcuts by source provider, select elements from the pool to clone them, and manage hierarchy sequence fields.', 'core-functionality' );
 	}
 
 	#[Override]
@@ -118,12 +118,12 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 * Renders the structural layout workspace optimized for tree nestings and provider filtering.
 	 */
 	private function render_builder_drag_tree_grid( array $live_registry, array $providers, array $saved_tree ): void {
-		$col_pool_title   = esc_html__( 'Available Shortcuts Pool', 'dwp-cf' );
-		$col_pool_desc    = esc_html__( 'Filter by source plugin. Check items to add them, or drag nodes to build your menu skeleton blueprint.', 'dwp-cf' );
-		$col_active_title = esc_html__( 'Active Admin Toolbar Menu Structure (Max 3 Levels)', 'dwp-cf' );
-		$col_active_desc  = esc_html__( 'Drag nodes vertically to reorder. Expand cards via the arrow to tweak live titles, custom URLs, and adjust indentation levels.', 'dwp-cf' );
-		$filter_label     = esc_html__( 'Filter by Source Provider:', 'dwp-cf' );
-		$all_sources_txt  = esc_html__( 'All Source Providers', 'dwp-cf' );
+		$col_pool_title   = esc_html__( 'Available Shortcuts Pool', 'core-functionality' );
+		$col_pool_desc    = esc_html__( 'Filter by source plugin. Check items to add them, or drag nodes to build your menu skeleton blueprint.', 'core-functionality' );
+		$col_active_title = esc_html__( 'Active Admin Toolbar Menu Structure (Max 3 Levels)', 'core-functionality' );
+		$col_active_desc  = esc_html__( 'Drag nodes vertically to reorder. Expand cards via the arrow to tweak live titles, custom URLs, and adjust indentation levels.', 'core-functionality' );
+		$filter_label     = esc_html__( 'Filter by Source Provider:', 'core-functionality' );
+		$all_sources_txt  = esc_html__( 'All Source Providers', 'core-functionality' );
 
 		echo <<<HTML
 		<div class="dwp-menu-builder-columns" style="display: flex; gap: 20px; flex-wrap: wrap;">
@@ -160,8 +160,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		// Inject dynamic virtual submenu header template node inside the stencil list
 		$virtual_submenu_dto = new ToolbarShortcut(
 			id:          'custom-link-node',
-			title:       __( 'Empty Submenu / Custom Link', 'dwp-cf' ),
-			label:       __( 'Generates an abstract menu parent node group or redirection asset url link', 'dwp-cf' ),
+			title:       __( 'Empty Submenu / Custom Link', 'core-functionality' ),
+			label:       __( 'Generates an abstract menu parent node group or redirection asset url link', 'core-functionality' ),
 			orientation: Orientation::BOTH,
 			href:        '#'
 		);
@@ -192,7 +192,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		HTML;
 
 		if ( empty( $saved_tree ) ) {
-			$empty_txt = esc_html__( 'Toolbar menu is empty. Add shortcuts from the pool and manage your dropdown matrix submenus nesting groups.', 'dwp-cf' );
+			$empty_txt = esc_html__( 'Toolbar menu is empty. Add shortcuts from the pool and manage your dropdown matrix submenus nesting groups.', 'core-functionality' );
 			echo "<div class='dwp-canvas-placeholder-msg' style='color: #64748b; font-style: italic; text-align: center; padding: 50px 10px;'>{$empty_txt}</div>";
 		} else {
 			$flattened_pool = array();
@@ -237,7 +237,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 				$shortcut = new ToolbarShortcut(
 					id:          $meta['id'] ?? $instance_id,
 					title:       $meta['title'] ?? 'Custom Submenu',
-					label:       __( 'Custom Submenu Header Group', 'dwp-cf' ),
+					label:       __( 'Custom Submenu Header Group', 'core-functionality' ),
 					orientation: Orientation::BOTH,
 					href:        $meta['href'] ?? '#'
 				);
@@ -260,7 +260,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 					$shortcut    = new ToolbarShortcut(
 							id: $node_id,
 							title: $node_id,
-							label: __( 'Inactive Component Residual Node', 'dwp-cf' ),
+							label: __( 'Inactive Component Residual Node', 'core-functionality' ),
 							orientation: Orientation::BOTH
 						);
 					$provider_id = 'unknown';
@@ -321,10 +321,10 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		HTML;
 
 		if ( $is_active ) {
-			echo "<span class='dashicons dashicons-arrow-left-alt2 js-dwp-move-outward" . "' title='" . esc_attr__( 'Move Outward (Reduce Depth)', 'dwp-cf' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569;'></span>";
-			echo "<span class='dashicons dashicons-arrow-right-alt2 js-dwp-move-inward" . "' title='" . esc_attr__( 'Move Inward (Increase Depth)', 'dwp-cf' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #2271b1;'></span>";
-			echo "<span class='dashicons dashicons-arrow-down-alt2 js-dwp-toggle-edit' title='" . esc_attr__( 'Toggle configuration panel', 'dwp-cf' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569; transition: transform 0.2s; margin-left: 4px;'></span>";
-			echo "<span class='dashicons dashicons-trash js-dwp-remove-node' title='" . esc_attr__( 'Remove node item', 'dwp-cf' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #ef4444;'></span>";
+			echo "<span class='dashicons dashicons-arrow-left-alt2 js-dwp-move-outward" . "' title='" . esc_attr__( 'Move Outward (Reduce Depth)', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569;'></span>";
+			echo "<span class='dashicons dashicons-arrow-right-alt2 js-dwp-move-inward" . "' title='" . esc_attr__( 'Move Inward (Increase Depth)', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #2271b1;'></span>";
+			echo "<span class='dashicons dashicons-arrow-down-alt2 js-dwp-toggle-edit' title='" . esc_attr__( 'Toggle configuration panel', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569; transition: transform 0.2s; margin-left: 4px;'></span>";
+			echo "<span class='dashicons dashicons-trash js-dwp-remove-node' title='" . esc_attr__( 'Remove node item', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #ef4444;'></span>";
 		}
 
 		echo <<<HTML
@@ -334,9 +334,9 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		HTML;
 
 		if ( $is_active ) {
-			$lbl_title = esc_html__( 'Navigation Label Override', 'dwp-cf' );
-			$lbl_url   = esc_html__( 'Resource URL Reference (Read-Only Copy Source)', 'dwp-cf' );
-			$i18n_warn = esc_html__( '⚠️ Notice: Custom label overrides bypass system i18n core translation files.', 'dwp-cf' );
+			$lbl_title = esc_html__( 'Navigation Label Override', 'core-functionality' );
+			$lbl_url   = esc_html__( 'Resource URL Reference (Read-Only Copy Source)', 'core-functionality' );
+			$i18n_warn = esc_html__( '⚠️ Notice: Custom label overrides bypass system i18n core translation files.', 'core-functionality' );
 
 			$is_readonly_attr = ( 'custom_link' === $p_id_attr ) ? '' : 'readonly="readonly" style="background: #e2e8f0; color: #475569;"';
 
@@ -369,19 +369,19 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	#[Override]
 	public function save( array $posted_data ): string|bool {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify the Admin Menu Builder settings.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Critical Error: You do not have sufficient permissions to modify the Admin Menu Builder settings.', 'core-functionality' ) );
 			return false;
 		}
 
 		$json_payload = $posted_data['dwp_menu_serialized_tree'] ?? '';
 		if ( empty( $json_payload ) ) {
-			$this->plugin->notices->add( 'warning', __( 'Save Aborted: No changes detected or serialization data stream is empty.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'warning', __( 'Save Aborted: No changes detected or serialization data stream is empty.', 'core-functionality' ) );
 			return true;
 		}
 
 		$decoded_tree = json_decode( wp_unslash( $json_payload ), true );
 		if ( ! is_array( $decoded_tree ) ) {
-			$this->plugin->notices->add( 'error', __( 'Save Failed: Transmitted layout configuration matrix map is corrupt.', 'dwp-cf' ) );
+			$this->plugin->notices->add( 'error', __( 'Save Failed: Transmitted layout configuration matrix map is corrupt.', 'core-functionality' ) );
 			return false;
 		}
 
@@ -389,7 +389,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 		$this->plugin->settings->save( $this->menu_builder_tree_option_token, $sanitized_tree );
 
-		return __( 'Admin toolbar multi-level menu hierarchy blueprint saved successfully.', 'dwp-cf' );
+		return __( 'Admin toolbar multi-level menu hierarchy blueprint saved successfully.', 'core-functionality' );
 	}
 
 	/**
@@ -426,7 +426,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function get_action_buttons(): array {
-		$btn_save = esc_attr__( 'Save Toolbar Menu Order Hierarchy', 'dwp-cf' );
+		$btn_save = esc_attr__( 'Save Toolbar Menu Order Hierarchy', 'core-functionality' );
 
 		return array(
 			'save_order' => <<<HTML

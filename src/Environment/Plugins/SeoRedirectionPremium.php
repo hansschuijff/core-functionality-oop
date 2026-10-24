@@ -26,16 +26,16 @@ class SeoRedirectionPremium extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-seo-redirects-all',
-				title:   __( 'Redirects', 'dwp-cf' ),
+				title:   __( 'Redirects', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=seo-redirection-premium.php' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'SEO Redirects', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'SEO Redirects', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
 				id:      'cf-seo-redirects-404',
-				title:   __( 'Redirect 404s', 'dwp-cf' ),
+				title:   __( 'Redirect 404s', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=seo-redirection-premium.php&SR_tab=404_manager' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Redirect 404s', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Redirect 404s', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

@@ -26,9 +26,9 @@ class SharedCounts extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-settings-social-share',
-				title:   __( 'Shared Counts', 'dwp-cf' ),
+				title:   __( 'Shared Counts', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=shared_counts_options' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'Shared Counts', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Shared Counts', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

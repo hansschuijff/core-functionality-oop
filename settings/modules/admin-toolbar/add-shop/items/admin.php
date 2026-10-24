@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Orders', 'dwp-cf' ),
+				'title'  => \__( 'Orders', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-orders',
 				'href'   => \admin_url( 'edit.php?post_type=shop_order', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Orders', 'dwp-cf' ),
+							. \__( 'Orders', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -39,14 +39,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Products', 'dwp-cf' ),
+				'title'  => \__( 'Products', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-products',
 				'href'   => \admin_url( 'edit.php?post_type=product', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Products', 'dwp-cf' ),
+							. \__( 'Products', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -58,14 +58,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Product Add-ons', 'dwp-cf' ),
+				'title'  => \__( 'Product Add-ons', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-product-add-ons',
 				'href'   => \admin_url( 'edit.php?post_type=product&page=addons', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Product Add-ons', 'dwp-cf' ),
+							. \__( 'Product Add-ons', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -77,14 +77,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Subscriptions', 'dwp-cf' ),
+				'title'  => \__( 'Subscriptions', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-subscriptions',
 				'href'   => \admin_url( 'edit.php?post_type=shop_subscription', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Subscriptions', 'dwp-cf' ),
+							. \__( 'Subscriptions', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -96,14 +96,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Coupons', 'dwp-cf' ),
+				'title'  => \__( 'Coupons', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-coupons',
 				'href'   => \admin_url( 'edit.php?post_type=shop_coupon', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Coupons', 'dwp-cf' ),
+							. \__( 'Coupons', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -115,14 +115,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Categories', 'dwp-cf' ),
+				'title'  => \__( 'Categories', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-product-cats',
 				'href'   => \admin_url( 'edit-tags.php?taxonomy=product_cat&post_type=product', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Product Categories', 'dwp-cf' ),
+							. \__( 'Product Categories', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -134,14 +134,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Follow-Up Emails', 'dwp-cf' ),
+				'title'  => \__( 'Follow-Up Emails', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-follow-up-emails',
 				'href'   => \admin_url( 'admin.php?page=followup-emails', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Follow-Up Emails', 'dwp-cf' ),
+							. \__( 'Follow-Up Emails', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -153,14 +153,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Statistics', 'dwp-cf' ),
+				'title'  => \__( 'Statistics', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-analytics',
 				'href'   => \admin_url( 'admin.php?page=wc-admin&path=/analytics/revenue', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Sales Statistics', 'dwp-cf' ),
+							. \__( 'Sales Statistics', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',
@@ -172,14 +172,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'Shop Order CSV Export', 'dwp-cf' ),
+				'title'  => \__( 'Shop Order CSV Export', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce',
 				'id'     => 'cf-shortcuts-woocommerce-settings-csv-export',
 				'href'   => \admin_url( 'admin.php?page=wc_customer_order_csv_export', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'Shop Order CSV Export', 'dwp-cf' ),
+							. \__( 'Shop Order CSV Export', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

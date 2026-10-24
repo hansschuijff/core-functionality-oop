@@ -20,14 +20,14 @@ return array(
 	array(
 		'node_args'  =>
 			array(
-				'title'  => \__( 'EU VAT Assistant', 'dwp-cf' ),
+				'title'  => \__( 'EU VAT Assistant', 'core-functionality' ),
 				'parent' => 'cf-shortcuts-woocommerce-settings',
 				'id'     => 'cf-shortcuts-woocommerce-settings-eu-vat-assistant',
 				'href'   => \admin_url( 'admin.php?page=wc_aelia_eu_vat_assistant', 'admin' ),
 				'meta'   => array(
-					'title' => \__( 'Link to WooCommerce', 'dwp-cf' )
+					'title' => \__( 'Link to WooCommerce', 'core-functionality' )
 							. ' '
-							. \__( 'EU VAT Assistant Settings', 'dwp-cf' ),
+							. \__( 'EU VAT Assistant Settings', 'core-functionality' ),
 				),
 			),
 		'visibility' => 'both',

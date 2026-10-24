@@ -26,9 +26,9 @@ class WpForms extends AbstractPlugin {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-wpforms',
-				title:   __( 'Forms', 'dwp-cf' ),
+				title:   __( 'Forms', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wpforms-overview' ),
-				label:   __( 'Link to', 'dwp-cf' ) . ' ' . __( 'WPForms', 'dwp-cf' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WPForms', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);
