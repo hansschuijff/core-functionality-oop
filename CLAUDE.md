@@ -33,14 +33,18 @@ new modules and features for Hans's own sites.
 
 - Namespace `DeWittePrins\CoreFunctionality\`, PSR-4 under `src/`. PHP 8.2+.
 - Text domain `core-functionality` (the final folder name), Domain Path `/languages`.
-- Prefix `dwp_cf_` for hooks, options, nonces and cron events; settings page slug `dwp-cf-settings`.
-  The brain's `<plugin_slug>/<name>` hook format is not used here yet (see open points).
+- Hooks are `core-functionality/<name>` with a kebab-case name (the brain's `<plugin_slug>/<name>`).
+  Prefix `dwp_cf_` for options, nonces and cron events; settings page slug `dwp-cf-settings`.
+- No `class_exists()` / `interface_exists()` / `function_exists()` wrappers around the plugin's own
+  declarations; Composer loads them once.
+- Guards supply the admin toolbar and menu links of their plugin or theme on purpose (see
+  `docs/ARCHITECTURE.md`, Environment); do not move them to the AdminToolbar module.
 - A **module** is only a container: `src/Modules/<Module>/<Module>.php`, implements `ModuleInterface`, no
   functionality of its own (`launch()` stays empty).
 - A **feature** holds the functionality: `src/Modules/<Module>/Features/<Feature>/<Feature>.php`, implements
   `FeatureInterface`, constructor `( ModuleInterface $module, Plugin $plugin )`, hooks in `launch()`.
   Its assets live next to it (`assets/css`, `assets/js`); a settings tab is a class implementing
-  `SettingsSectionInterface`, registered on `dwp_cf_register_settings_sections`.
+  `SettingsSectionInterface`, registered on `core-functionality/register-settings-sections`.
 - Metadata on modules and features is static (`get_id`, `get_name`, `get_description`, `get_orientation`,
   `get_dependencies`, `uses_features`), so the kernel can check them before creating an instance.
 - Dependencies use environment ids: a plugin id (`woocommerce`), a theme id with `-theme`

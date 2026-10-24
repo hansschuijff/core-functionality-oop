@@ -34,14 +34,14 @@ New customizations are added as new features without touching the kernel.
    `ComponentsRegister` and the `Kernel`.
 3. `plugins_loaded`, admin only: `Plugin::setup()` builds `Notices`, the settings page and the
    `PluginIntegrityWatch`.
-4. `init` priority 0 (filter `dwp_cf_launch_timing`): `Kernel::boot()` does everything in one step. It lets
+4. `init` priority 0 (filter `core-functionality/launch-timing`): `Kernel::boot()` does everything in one step. It lets
    every active environment guard register its toolbar and menu nodes, takes the launchable components
    from the `ComponentsRegister` (already filtered on activation, deployment tier and orientation), keeps
    those whose environment dependencies are ready, creates the modules and their features, drops features
    whose required features are missing (`uses_features()`), calls `launch()` on every instance, marks the
-   plugin ready and fires `dwp_cf_ready`. All plugins and the theme have loaded by then, so the guards see
+   plugin ready and fires `core-functionality/ready`. All plugins and the theme have loaded by then, so the guards see
    what really started; features can still hook into `init` itself.
-5. Other code waits for that with `Plugin::call_when_ready()` or the `dwp_cf_ready` action.
+5. Other code waits for that with `Plugin::call_when_ready()` or the `core-functionality/ready` action.
 
 Until October 2026 the Kernel scheduled on `plugins_loaded` and launched on `init`, a leftover from when
 components were scheduled from outside; the filter `dwp_cf_plugin_load_timing` went with it.
@@ -104,6 +104,17 @@ theme ids to theme name and author. `get_dependencies()` returns one id or an `a
 
 The plugin and theme guards also supply admin toolbar and admin menu links for their plugin or theme
 (`get_toolbar_nodes()`, `get_menu_nodes()`), collected in `AdminToolbarRegister` and `AdminMenuRegister`.
+This is deliberate: a guard is the plugin's internal representative of something outside, so it is the
+one that knows that plugin's screens. The links are building blocks ("lego bricks") from which Hans
+composes his own quick menu in the admin toolbar, because the admin menu is long and needs scrolling.
+Custom links can be added on the settings page as well. Blocks of a plugin that is not active must not
+show in the menu. (The legacy plugin did it the other way round, from config, and had to test every
+item's dependencies itself.)
+
+Planned (not built): the settings screen needs the full catalogue of nodes, also of inactive plugins, to
+compose the menu; at runtime the composed menu is matched against the guards that are ready, like the
+components register does for loading. Guards therefore need a way to hand over their nodes outside
+`is_ready()`. The admin menu feature has a similar, latent mechanism for menu items.
 
 ## Settings and options
 
@@ -121,7 +132,7 @@ The plugin and theme guards also supply admin toolbar and admin menu links for t
 
 Settings → Core Functionality (`dwp-cf-settings`): one page with a sidebar of sections. Core sections:
 Feature Activation, Push Notices, Deployment, Options Management. Features add their own section on
-`dwp_cf_register_settings_sections`. `PluginIntegrityWatch` reports structural problems such as duplicate
+`core-functionality/register-settings-sections`. `PluginIntegrityWatch` reports structural problems such as duplicate
 ids in the error log and as an admin notice.
 
 ## Naming
@@ -130,7 +141,8 @@ ids in the error log and as an admin notice.
 |---|---|
 | PHP namespace | `DeWittePrins\CoreFunctionality\`, PSR-4 under `src/` |
 | Text domain | `core-functionality` (final folder name) |
-| Hooks, options, nonces, cron | `dwp_cf_…` (two filters still use `dwp_core_…`) |
+| Hooks | `core-functionality/<kebab-name>` |
+| Options, nonces, cron events | `dwp_cf_…` |
 | Settings page slug | `dwp-cf-settings` |
 | Module | `src/Modules/<Module>/<Module>.php` |
 | Feature | `src/Modules/<Module>/Features/<Feature>/<Feature>.php` |
@@ -140,11 +152,11 @@ ids in the error log and as an admin notice.
 
 | Hook | Type | Purpose |
 |---|---|---|
-| `dwp_cf_ready` | action | Everything is launched |
-| `dwp_cf_register_settings_sections` | action | Add a section to the settings page (`AdminSettingsPage` argument) |
-| `dwp_cf_launch_timing` | filter | `array( hook, priority )` on which the Kernel boots (default `init`, 0) |
-| `dwp_core_admin_menu_config_nodes` | filter | Admin menu nodes |
-| `dwp_core_admin_menu_removals` | filter | Admin menu items to remove |
+| `core-functionality/ready` | action | Everything is launched |
+| `core-functionality/register-settings-sections` | action | Add a section to the settings page (`AdminSettingsPage` argument) |
+| `core-functionality/launch-timing` | filter | `array( hook, priority )` on which the Kernel boots (default `init`, 0) |
+| `core-functionality/admin-menu-config-nodes` | filter | Admin menu nodes |
+| `core-functionality/admin-menu-removals` | filter | Admin menu items to remove |
 
 ## Decisions
 
@@ -159,7 +171,10 @@ ids in the error log and as an admin notice.
 | Settings as files plus overrides | Files are the defaults and live in git, the database holds changes | Site data is versioned and can be reset to defaults |
 | Fail closed | Stop the whole plugin on corrupt settings | Half a kernel is worse than none |
 | One boot step on `init` 0 | Check, create and launch together | The register delivers a complete list; on `init` plugins and theme have loaded, so proofs can check what started |
-| PHP 8.2+ | Enums, readonly properties, named arguments | Production runs PHP 8.5 |
+| PHP 8.2+ | Enums, readonly properties, named arguments | Use current PHP features without going far back; production runs PHP 8.5 |
+| Guards supply links | Each plugin/theme guard hands in its own toolbar and menu links | The guard knows the external plugin; the menu is composed from these blocks |
+| Hook names | `core-functionality/<name>` (October 2026, before production) | "core" alone suggests WordPress core; replaces `dwp_cf_` and `dwp_core_` hooks |
+| External contract | Only the ready moment (`core-functionality/ready`, `call_when_ready()`) is promised to other code | Internal timing may change |
 
 ## Open points
 
@@ -184,32 +199,31 @@ Environment proofs (reviewed October 2026):
   removed: that action does not exist in the Tribe plugins.)
 - Verified on the local site at Kernel timing: The Events Calendar (+ Pro), Event Tickets (+ Plus),
   WooCommerce, Loco Translate, SEO Redirection Premium, Debug Toolkit. Checked in the sources only: the
-  other installed plugins. Not installed locally, proof and basename unverified (confirm): Redis Cache
-  and Sensei Pro (both in use). Festinger Vault: which folder production uses, left for later.
+  other installed plugins, including Redis Cache and Sensei Pro (WC Paid Courses, folder
+  `woothemes-sensei`, which bundles Sensei LMS; its guard extends SenseiLms for the course links).
+  Festinger Vault: which folder production uses, left for later. `sensei-paid-courses` may be an old
+  name of Sensei Pro (confirm).
 - AutomateWoo replaced WooCommerce Follow-Up Emails; the guards for Follow-Up Emails, EU VAT Assistant
   (legacy) and WP phpMyAdmin (not needed) were removed. The AdminToolbar settings files
-  (`settings/modules/admin-toolbar/`) still contain links for those three plugins.
-- Site-specific URLs live in guard code (`/evenementen/`, `/agenda/categorie/familieopstellingen/`,
-  `/artikelen/`, the `course-payment-plans` product category); they belong in settings files.
+  (`settings/modules/admin-toolbar/`) are legacy, copied from the old plugin and no longer used; they are
+  removed or replaced once the toolbar feature works.
+- Site-specific URLs in guard code (`/evenementen/`, `/agenda/categorie/familieopstellingen/`,
+  `/artikelen/`, the `course-payment-plans` product category) stay for now; they could also become custom
+  links on the settings page.
 
-Structure proposal (Claude, October 2026; not decided):
+Structure (agreed direction, October 2026; to be planned and built):
 
-1. **Less boilerplate per component.** `AbstractModule` and `AbstractFeature` with defaults (orientation
-   both, no dependencies, no `uses_features`, the constructor and `get_module()`), so a new feature only
-   writes its id, name, description and `launch()`. Interfaces stay as the contract.
-2. **Code and site state apart.** What exists follows from the code: rebuild the components register
-   automatically when the plugin version changes. Enabled state and deployment level are site choices and
-   belong only in the database; the `kernel/` files become defaults for a fresh install and are no longer
-   written at runtime. Today the database copy wins, so a feature added in an update probably stays
-   invisible until someone rescans, and on production the plugin folder is often not writable and is
-   replaced on every update (confirm).
-3. **Environment only answers "is it there".** Move toolbar and menu links out of the guard classes into
-   the AdminToolbar and AdminMenu modules (a small provider file per integration). Now every new guard has
-   to know about the toolbar, and shop links exist twice (`Plugins/Woocommerce.php` and
-   `settings/modules/admin-toolbar/add-shop/`).
-4. **Hook names.** Decide whether new hooks follow the brain's `core_functionality/<name>` format; existing
-   `dwp_cf_` hooks stay. Align the two `dwp_core_` filters either way.
-5. **Interfaces** need no `interface_exists()` wrapper with Composer autoloading.
+1. **Less boilerplate per component.** Hans's idea: a DTO with the descriptive data (id, name,
+   description, orientation, dependencies, `uses_features`), filled by one method of the feature; an
+   `AbstractFeature` (and `AbstractModule`) implements the interface getters from it, so a feature class
+   holds only its functionality. Modules are already almost empty shells. Keeping a feature's
+   administration on a settings screen was considered, but options do not travel with an update to another
+   site.
+2. **Code and site state apart.** Confirmed: `ComponentsRegister::get_register()` uses the option when it
+   exists and only falls back to the `kernel/` file, so a feature added in an update stays invisible until
+   someone rescans. The options are there for speed; the file is always written as well. Hans's direction:
+   store the plugin version with the options; on a version difference, update the options from the file
+   (new components get their file defaults, existing ones keep the site's choices).
 
 Missing:
 
