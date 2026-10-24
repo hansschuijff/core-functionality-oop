@@ -56,10 +56,8 @@ class AnyGenesis extends AbstractTheme {
 	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		// Theme code (functions.php) loads after plugins_loaded, when the Kernel checks dependencies,
-		// so Genesis constants such as PARENT_THEME_VERSION do not exist yet. The activation check in
-		// ThemeInspector (template and stylesheet options) is the proof here.
-		return new ProofRequirement();
+		// Genesis defines this on genesis_init, while its functions.php loads (before the Kernel boots on init).
+		return new ProofRequirement( constants: 'PARENT_THEME_VERSION' );
 	}
 
 	/**
