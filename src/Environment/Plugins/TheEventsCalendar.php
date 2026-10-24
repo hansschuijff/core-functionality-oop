@@ -72,7 +72,7 @@ class TheEventsCalendar extends AbstractPlugin {
 	 * @return ToolbarShortcut[] Collection of plugin toolbar shortcut DTOs.
 	 */
 	#[Override]
-	protected function get_toolbar_nodes(): array {
+	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-admin-events-menu',

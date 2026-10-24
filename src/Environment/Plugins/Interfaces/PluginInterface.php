@@ -14,6 +14,7 @@ declare( strict_types=1 );
 namespace DeWittePrins\CoreFunctionality\Environment\Plugins\Interfaces;
 
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;
+use DeWittePrins\CoreFunctionality\Environment\Interfaces\ToolbarProviderInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -24,6 +25,5 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-interface PluginInterface extends DependencyInterface {
-	// The abstract protected nodes reside exclusively inside AbstractPlugin now.
+interface PluginInterface extends DependencyInterface, ToolbarProviderInterface {
 }

@@ -20,7 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DeWittePrins\CoreFunctionality\Environment\Themes\Interfaces\ThemeInterface;
 use DeWittePrins\CoreFunctionality\Environment\Themes\Services\ThemeInspector;
 use DeWittePrins\CoreFunctionality\Environment\EnvironmentLookup;
-use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminMenuRegister;
 use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
 use DeWittePrins\CoreFunctionality\Services\ClassParser;
@@ -61,7 +60,8 @@ abstract class AbstractTheme implements ThemeInterface {
 	/**
 	 * Inspects theme parameters using the centralized service.
 	 *
-	 * Feeds the shared master registries dynamically once readiness is affirmatively verified.
+	 * Feeds the admin menu register once readiness is affirmatively verified. The toolbar nodes go
+	 * to the catalogue through get_toolbar_nodes(), active or not.
 	 *
 	 * @since 1.0.0
 	 * @return bool True if the theme config matches the environment, false otherwise.
@@ -81,11 +81,23 @@ abstract class AbstractTheme implements ThemeInterface {
 			return false;
 		}
 
-		// Feed the static master registries immediately upon successful validation.
-		AdminToolbarRegister::register( $this->get_id(), $this->get_toolbar_nodes() );
 		AdminMenuRegister::register( $this->get_id(), $this->get_menu_nodes() );
 
 		return true;
+	}
+
+	/**
+	 * Checks whether the theme is installed, active or not.
+	 *
+	 * @since  1.0.0
+	 * @return bool True if a theme with this name (and author) is installed.
+	 */
+	public function is_installed(): bool {
+		if ( empty( $this->theme['name'] ) ) {
+			return false;
+		}
+
+		return ThemeInspector::is_theme_installed( $this->theme['name'], $this->theme['author'] ?? '' );
 	}
 
 	/**
@@ -130,15 +142,6 @@ abstract class AbstractTheme implements ThemeInterface {
 	protected function is_legacy_theme(): bool {
 		return ThemeInspector::is_legacy_theme();
 	}
-
-	/**
-	 * Compiles and returns the available pool of toolbar shortcuts this theme can offer.
-	 *
-	 * Must be implemented by child classes to supply their links to the register feed.
-	 *
-	 * @return \DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut[]
-	 */
-	abstract protected function get_toolbar_nodes(): array;
 
 	/**
 	 * Compiles and returns the available pool of admin menu blocks this theme can offer.

@@ -24,7 +24,8 @@ readonly class ToolbarShortcut {
 	 * @param string          $id           Unique sub-identifier.
 	 * @param string          $title        The title rendered in the toolbar.
 	 * @param string          $label        Human-readable name for the settings page.
-	 * @param Orientation     $orientation  Context indicator ('frontend', 'admin').
+	 * @param Orientation     $orientation  The kind of link: to an admin page or to a page on the site.
+	 *                                      Where the node is shown is set per node in the menu builder.
 	 * @param string          $parent       The parent toolbar node ID.
 	 * @param string|callable $href         The target URL or a lazy loading callable.
 	 * @param array           $meta         Optional metadata attributes.

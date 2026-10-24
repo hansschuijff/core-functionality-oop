@@ -14,6 +14,7 @@ declare( strict_types=1 );
 namespace DeWittePrins\CoreFunctionality\Environment\Themes\Interfaces;
 
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;
+use DeWittePrins\CoreFunctionality\Environment\Interfaces\ToolbarProviderInterface;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -24,6 +25,5 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-interface ThemeInterface extends DependencyInterface {
-
+interface ThemeInterface extends DependencyInterface, ToolbarProviderInterface {
 }

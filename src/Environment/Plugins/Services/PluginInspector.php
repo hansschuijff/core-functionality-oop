@@ -20,6 +20,7 @@ use function defined;
 use function did_action;
 use function doing_action;
 use function explode;
+use function file_exists;
 use function function_exists;
 use function is_array;
 use function is_plugin_active;
@@ -60,6 +61,22 @@ class PluginInspector {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
 		return is_plugin_active( $plugin_basename );
+	}
+
+	/**
+	 * Checks if a plugin is installed, active or not.
+	 *
+	 * @since 1.0.0
+	 * @param string $plugin_basename The plugin path relative to the plugins directory (e.g., 'slug/plugin.php').
+	 * @return bool True if the plugin file exists, false otherwise.
+	 */
+	public static function is_plugin_installed( string $plugin_basename ): bool {
+		$plugin_basename = trim( $plugin_basename );
+		if ( empty( $plugin_basename ) ) {
+			return false;
+		}
+
+		return file_exists( WP_PLUGIN_DIR . '/' . $plugin_basename );
 	}
 
 	/**

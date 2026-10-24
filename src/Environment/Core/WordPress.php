@@ -17,7 +17,7 @@ use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\DTO\AdminMenuBlock;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\EnvironmentInterface;
-use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
+use DeWittePrins\CoreFunctionality\Environment\Interfaces\ToolbarProviderInterface;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminMenuRegister;
 use Override;
 
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class WordPress implements EnvironmentInterface {
+class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 
 	/**
 	 * Unique identifier token for this specific ecosystem component.
@@ -51,15 +51,13 @@ class WordPress implements EnvironmentInterface {
 	/**
 	 * Evaluates the runtime environment state.
 	 *
-	 * Feeds the shared master registries dynamically once readiness is verified.
+	 * Feeds the admin menu register; the toolbar nodes go to the catalogue through get_toolbar_nodes().
 	 *
 	 * @since 1.0.0
 	 * @return bool Always true since the framework runs post core bootstrap.
 	 */
 	#[Override]
 	public function is_ready(): bool {
-		// Feed the static master registries immediately upon execution kickoff.
-		AdminToolbarRegister::register( $this->get_id(), $this->get_toolbar_nodes() );
 		AdminMenuRegister::register( $this->get_id(), $this->get_menu_nodes() );
 
 		return true;
@@ -76,12 +74,24 @@ class WordPress implements EnvironmentInterface {
 	}
 
 	/**
+	 * The core is always installed.
+	 *
+	 * @since  1.0.0
+	 * @return bool Always true.
+	 */
+	#[Override]
+	public function is_installed(): bool {
+		return true;
+	}
+
+	/**
 	 * Compiles and returns the pool of native WordPress core toolbar shortcuts clustered by topic.
 	 *
 	 * @since  1.0.0
 	 * @return ToolbarShortcut[] Array of clustered native core toolbar node DTO objects.
 	 */
-	protected function get_toolbar_nodes(): array {
+	#[Override]
+	public function get_toolbar_nodes(): array {
 
 		// CLUSTER 1: PLUGIN MANAGEMENT SHORTCUTS [5].
 		$plugin_nodes = array(

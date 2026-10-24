@@ -1,390 +1,622 @@
 /**
- * Advanced Framework Admin Menu Builder Tree Layout Orchestrator.
- * Handles unified event delegation for precise reordering, cloning, and button-driven depth steps.
+ * Admin Toolbar Menu Builder settings tab.
+ *
+ * Builds the pool of shortcuts and the menu tree from the JSON the tab renders, and writes the
+ * tree back to a hidden field as nested JSON on every change. The tree is kept as a flat list of
+ * nodes with a depth; a node's children are the nodes after it that are deeper.
  *
  * @since 1.0.0
  */
-document.addEventListener('DOMContentLoaded', function() {
-    const canvas       = document.querySelector('.js-dwp-active-tree-canvas');
-    const pool         = document.querySelector('.js-dwp-builder-pool');
-    const form         = document.querySelector('.dwp-gutenberg-section-form');
-    const jsonInput    = document.getElementById('js-dwp-serialized-tree-input');
-    const bulkBox      = document.querySelector('.js-dwp-bulk-management-box');
+(function () {
+	'use strict';
 
-    if (!canvas || !pool || !form || !jsonInput || !bulkBox) {
-        return;
-    }
+	document.addEventListener('DOMContentLoaded', function () {
+		const root = document.querySelector('.js-dwp-menu-builder');
+		if (!root) {
+			return;
+		}
 
-    let draggedItem = null;
+		const data       = JSON.parse(root.querySelector('.js-dwp-mb-data').textContent);
+		const t          = data.i18n;
+		const maxDepth   = data.maxDepth;
+		const pool       = root.querySelector('.js-dwp-mb-pool');
+		const tree       = root.querySelector('.js-dwp-mb-tree');
+		const filter     = root.querySelector('.js-dwp-mb-filter');
+		const actions    = root.querySelector('.js-dwp-mb-pool-actions');
+		const serialized = root.querySelector('.js-dwp-mb-serialized');
+		const form       = root.closest('form');
 
-    // 1. RESTRUCTURE CONTROLS PANEL: Groups Button and Select All inside the top of the unified grey box
-    const bulkControlBar = document.createElement('div');
-    bulkControlBar.style.cssText = 'border-bottom: 1px solid #cbd5e1; padding-bottom: 12px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 10px; width: 100%; box-sizing: border-box;';
+		// The data behind each pool item and tree node.
+		const rows = new WeakMap();
 
-    const selectAllText = (typeof dwp_cf_builder_i18n_select_all !== 'undefined') ? dwp_cf_builder_i18n_select_all : 'Select All Visible';
-    bulkControlBar.innerHTML = `
-        <button type="button" id="js-dwp-bulk-insert-btn" class="button button-secondary" style="width: 100%; font-weight: 600; height: 32px; border-color: #cbd5e1; text-align: center; line-height: 30px;">
-            👇 Add Selected Shortcuts to Menu
-        </button>
-        <div style="display: flex; align-items: center; gap: 8px; padding-left: 2px;">
-            <input type="checkbox" id="js-dwp-pool-select-all" style="margin: 0;" />
-            <label for="js-dwp-pool-select-all" style="font-weight: 600; font-size: 13px; color: #475569; cursor: pointer; user-select: none;">${selectAllText}</label>
-        </div>
-    `;
-    bulkBox.insertBefore(bulkControlBar, pool);
+		let dragged = null; // { origin: 'pool' | 'tree', nodes: Element[] }
 
-    const insertBtn = document.getElementById('js-dwp-bulk-insert-btn');
+		/* ------------------------------------------------------------------ helpers */
 
-    // Select All Checkbox Handler (Only targets currently visible filtered nodes)
-    document.getElementById('js-dwp-pool-select-all').addEventListener('change', function() {
-        const isChecked = this.checked;
-        pool.querySelectorAll('.js-dwp-tree-node').forEach(item => {
-            if (item.style.display !== 'none') {
-                const cb = item.querySelector('.js-pool-checkbox');
-                if (cb) cb.checked = isChecked;
-            }
-        });
-    });
+		function el(tag, className, text) {
+			const element = document.createElement(tag);
+			if (className) {
+				element.className = className;
+			}
+			if (undefined !== text) {
+				element.textContent = text;
+			}
+			return element;
+		}
 
-    // 2. PROVIDER FILTER LOGIC
-    const sourceFilter = document.getElementById('js-dwp-provider-filter');
-    if (sourceFilter) {
-        sourceFilter.addEventListener('change', function() {
-            const filterValue = this.value;
-            const selectAllCb = document.getElementById('js-dwp-pool-select-all');
-            if (selectAllCb) selectAllCb.checked = false;
+		function iconButton(icon, label, className) {
+			const button = el('button', 'dwp-mb-icon-button ' + className);
+			button.type = 'button';
+			button.title = label;
+			button.setAttribute('aria-label', label);
+			button.appendChild(el('span', 'dashicons ' + icon));
+			return button;
+		}
 
-            pool.querySelectorAll('.js-dwp-tree-node').forEach(item => {
-                const provider = item.getAttribute('data-provider');
-                const cb = item.querySelector('.js-pool-checkbox');
-                if (cb) cb.checked = false; // Reset checkboxes on filter shift
+		function badge(modifier, text, tip) {
+			const element = el('span', 'dwp-mb-badge dwp-mb-badge--' + modifier, text);
+			if (tip) {
+				element.title = tip;
+			}
+			return element;
+		}
 
-                if (filterValue === 'all' || provider === filterValue) {
-                    item.style.setProperty('display', 'flex', 'important');
-                } else {
-                    item.style.setProperty('display', 'none', 'important');
-                }
-            });
-        });
-    }
+		function statusText(status) {
+			return {
+				'active': t.statusActive,
+				'inactive': t.statusInactive,
+				'not-installed': t.statusMissing,
+			}[status] || t.statusUnknown;
+		}
 
-    // 3. SELECTION BULK INSERTION ENGINE (Now passes live data-href attributes)
-    insertBtn.addEventListener('click', function() {
-        const checkedBoxes = pool.querySelectorAll('.js-pool-checkbox:checked');
-        if (checkedBoxes.length === 0) {
-            alert('Please select at least one shortcut checkbox to insert.');
-            return;
-        }
+		function newInstanceId() {
+			return 'inst-' + Math.random().toString(36).slice(2, 11);
+		}
 
-        clearCanvasPlaceholder();
+		/* ------------------------------------------------------------------ badges */
 
-        checkedBoxes.forEach(cb => {
-            const sourceNode = cb.closest('.js-dwp-tree-node');
-            if (sourceNode) {
-                cloneAndInsertNode(
-                    sourceNode.getAttribute('data-id'),
-                    sourceNode.querySelector('.js-node-title').innerText,
-                    sourceNode.getAttribute('data-provider'),
-                    sourceNode.getAttribute('data-type') || 'shortcut',
-                    sourceNode.getAttribute('data-href') || '#', // FIXED: Plucks real provider URLs straight out of DOM markup
-                    0,
-                    null
-                );
-                cb.checked = false;
-            }
-        });
+		// Source, link kind (admin or front end) and, if not active, the provider status.
+		function metaLine(row) {
+			const line = el('span', 'dwp-mb-meta');
+			line.appendChild(el('span', 'dwp-mb-source', row.providerName));
 
-        const selectAllCb = document.getElementById('js-dwp-pool-select-all');
-        if (selectAllCb) selectAllCb.checked = false;
+			if ('admin' === row.kind) {
+				const kind = badge('admin', t.kindAdmin, t.kindAdminTip);
+				kind.prepend(el('span', 'dashicons dashicons-dashboard'));
+				line.appendChild(kind);
+			} else if ('frontend' === row.kind) {
+				const kind = badge('frontend', t.kindFrontend, t.kindFrontendTip);
+				kind.prepend(el('span', 'dashicons dashicons-admin-home'));
+				line.appendChild(kind);
+			}
 
-        serializeActiveTreeStructure();
-    });
+			if ('active' !== row.status) {
+				line.appendChild(badge(row.status, statusText(row.status), t.inactiveHint));
+			}
 
-    // Helper function to remove placeholder cleanly
-    function clearCanvasPlaceholder() {
-        const placeholder = canvas.querySelector('.dwp-canvas-placeholder-msg');
-        if (placeholder) {
-            placeholder.parentNode.removeChild(placeholder);
-        }
-    }
+			return line;
+		}
 
-    // 4. CLONE CONSTRUCTOR HOOK FUNCTION
-    function cloneAndInsertNode(id, title, provider, type, href, depth, referenceNode) {
-        const instanceId = 'inst-' + Math.random().toString(36).substr(2, 9);
-        const borderLeft = (provider === 'custom_link') ? '4px solid #16a34a' : '4px solid #2271b1';
-        const friendlySource = provider.toUpperCase().replace(/[-_]/g, ' ');
+		function visibilityBadge(visibility) {
+			if ('admin' === visibility) {
+				return badge('visibility', t.visibleAdmin);
+			}
+			if ('frontend' === visibility) {
+				return badge('visibility', t.visibleFrontend);
+			}
+			return null;
+		}
 
-        let targetId = id;
-        if (provider === 'custom_link' && id === 'custom-link-node') {
-            targetId = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-\$)/g, '');
-            if (!targetId) targetId = 'custom-link';
-        }
+		/* ------------------------------------------------------------------ pool */
 
-        const item = document.createElement('div');
-        item.className = 'dwp-tree-node-item js-dwp-tree-node';
-        item.setAttribute('data-id', targetId);
-        item.setAttribute('data-instance', instanceId);
-        item.setAttribute('data-type', type);
-        item.setAttribute('data-provider', provider);
-        item.setAttribute('data-depth', depth);
-        item.setAttribute('draggable', 'true');
-        item.style.cssText = `background: #fff; border: 1px solid #cbd5e1; border-left: ${borderLeft}; padding: 10px 15px; margin-left: ${depth * 30}px; border-radius: 3px; display: flex; flex-direction: column; cursor: move; box-shadow: 0 1px 2px rgba(0,0,0,0.05); position: relative; transition: margin-left 0.15s ease;`;
+		function createPoolItem(row) {
+			const item = el('div', 'dwp-mb-node dwp-mb-node--pool js-dwp-mb-pool-item');
+			item.draggable = true;
+			item.dataset.provider = row.provider;
+			item.dataset.type = row.type;
+			if ('active' !== row.status) {
+				item.classList.add('is-inactive');
+			}
+			if (row.label) {
+				item.title = row.label;
+			}
 
-        const isReadOnlyAttr = (provider === 'custom_link') ? '' : 'readonly="readonly" style="background: #e2e8f0; color: #475569;"';
+			const checkbox = el('input', 'js-dwp-mb-check');
+			checkbox.type = 'checkbox';
+			checkbox.setAttribute('aria-label', row.defaultTitle);
 
-        item.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 0; width: 100%; box-sizing: border-box;">
-                <div style="display: flex; align-items: center; gap: 10px; max-width: 65%;">
-                    <div style="display: flex; flex-direction: column; gap: 2px;">
-                        <strong class="js-node-title" style="font-size: 13px; color: #1e293b;">${title}</strong>
-                        <span style="font-size: 10px; background: #e2e8f0; color: #475569; padding: 1px 5px; border-radius: 3px; font-weight: 600; width: fit-content; margin-top: 3px; font-family: sans-serif;">${friendlySource}</span>
-                    </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px; color: #94a3b8;">
-                    <span class="dashicons dashicons-arrow-left-alt2 js-dwp-move-outward" title="Move Outward (Reduce Depth)" style="cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569;"></span>
-                    <span class="dashicons dashicons-arrow-right-alt2 js-dwp-move-inward" title="Move Inward (Increase Depth)" style="cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #2271b1;"></span>
-                    <span class="dashicons dashicons-arrow-down-alt2 js-dwp-toggle-edit" title="Toggle Configuration" style="cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569; transition: transform 0.2s; margin-left: 4px;"></span>
-                    <span class="dashicons dashicons-trash js-dwp-remove-node" title="Remove item" style="cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #ef4444;"></span>
-                    <span class="dashicons dashicons-editor-justify" style="font-size: 18px; width: 18px; height: 18px; margin-left: 2px;"></span>
-                </div>
-            </div>
-            <div class="js-dwp-edit-panel" style="display: none; background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 15px; margin-top: 10px; box-sizing: border-box; width: 100%;">
-                <div style="margin-bottom: 10px;">
-                    <label style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px;">Navigation Label Override</label>
-                    <input type="text" class="js-dwp-edit-title regular-text" value="${title}" style="width: 100%; height: 28px; font-size: 12px;" />
-                    <span style="display: block; font-size: 10px; color: #b91c1c; margin-top: 4px; font-style: italic;">⚠️ Notice: Custom label overrides bypass system i18n core translation files.</span>
-                </div>
-                <div>
-                    <label style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px;">Resource URL Reference (Read-Only Copy Source)</label>
-                    <div style="display: flex; gap: 6px;">
-                        <input type="text" class="js-dwp-edit-url regular-text" id="url-${instanceId}" value="${href}" ${isReadOnlyAttr} style="flex: 1; height: 28px; font-size: 12px; font-family: monospace;" />
-                        <button type="button" class="button button-small" onclick="navigator.clipboard.writeText(document.getElementById('url-${instanceId}').value); alert('URL successfully copied to clipboard!');" style="height: 28px; line-height: 26px; font-size: 11px;">📋 Copy</button>
-                    </div>
-                </div>
-            </div>
-        `;
+			const body = el('span', 'dwp-mb-node-body');
+			body.appendChild(el('strong', 'dwp-mb-title', row.defaultTitle));
+			body.appendChild(metaLine(row));
 
-        if (referenceNode && referenceNode.parentNode === canvas) {
-            canvas.insertBefore(item, referenceNode);
-        } else {
-            canvas.appendChild(item);
-        }
-        return item;
-    }
+			item.append(checkbox, body);
+			rows.set(item, row);
+			return item;
+		}
 
-    // 5. UNIFIED DRAG & DROP COUPLING SYSTEM (Now injects dynamic data-href lookups on drop)
-    document.addEventListener('dragstart', function(e) {
-        const node = e.target.closest('.js-dwp-tree-node');
-        if (node) {
-            draggedItem = node;
-            node.style.opacity = '0.4';
-            e.dataTransfer.setData('text/plain', node.getAttribute('data-id'));
+		function buildFilter() {
+			filter.appendChild(new Option(t.allSources, 'all'));
 
-            const origin = node.closest('.js-dwp-builder-pool') ? 'pool' : 'canvas';
-            node.setAttribute('data-drag-origin', origin);
-        }
-    });
+			[ 'active', 'inactive', 'not-installed' ].forEach(function (status) {
+				const providers = data.providers.filter(function (provider) {
+					return provider.status === status;
+				});
+				if (!providers.length) {
+					return;
+				}
 
-    document.addEventListener('dragend', function(e) {
-        if (draggedItem) {
-            draggedItem.style.opacity = '1';
-            draggedItem.removeAttribute('data-drag-origin');
-            draggedItem = null;
-            serializeActiveTreeStructure();
-        }
-    });
+				const group = el('optgroup');
+				group.label = statusText(status);
+				providers.forEach(function (provider) {
+					group.appendChild(new Option(provider.name, provider.id));
+				});
+				filter.appendChild(group);
+			});
 
-    canvas.addEventListener('dragover', function(e) {
-        e.preventDefault();
-        if (!draggedItem) return;
+			filter.addEventListener('change', function () {
+				selectAll.checked = false;
+				pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
+					const visible = 'all' === filter.value || 'submenu' === item.dataset.type || item.dataset.provider === filter.value;
+					item.hidden = !visible;
+					item.querySelector('.js-dwp-mb-check').checked = false;
+				});
+			});
+		}
 
-        if (draggedItem.getAttribute('data-drag-origin') === 'canvas') {
-            const afterElement = getDragAfterElement(canvas, e.clientY);
-            if (afterElement == null) {
-                canvas.appendChild(draggedItem);
-            } else {
-                canvas.insertBefore(draggedItem, afterElement);
-            }
-        }
-    });
+		const addButton = el('button', 'button button-secondary', t.addSelected);
+		addButton.type = 'button';
 
-    canvas.addEventListener('drop', function(e) {
-        e.preventDefault();
-        if (!draggedItem) return;
+		const selectAll = el('input');
+		selectAll.type = 'checkbox';
+		selectAll.id = 'js-dwp-mb-select-all';
 
-        const dragOrigin = draggedItem.getAttribute('data-drag-origin');
+		const selectAllLabel = el('label', '', t.selectAll);
+		selectAllLabel.htmlFor = selectAll.id;
 
-        if (dragOrigin === 'pool') {
-            clearCanvasPlaceholder();
-            const afterElement = getDragAfterElement(canvas, e.clientY);
-            const insertedNode = cloneAndInsertNode(
-                draggedItem.getAttribute('data-id'),
-                draggedItem.querySelector('.js-node-title').innerText,
-                draggedItem.getAttribute('data-provider'),
-                draggedItem.getAttribute('data-type') || 'shortcut',
-                draggedItem.getAttribute('data-href') || '#', // FIXED: Plucks real provider URLs straight out of dynamic drag markups
-                0,
-                afterElement
-            );
+		actions.append(addButton, selectAll, selectAllLabel);
 
-            if (insertedNode.getAttribute('data-provider') === 'custom_link') {
-                const editPanel = insertedNode.querySelector('.js-dwp-edit-panel');
-                const toggleBtn = insertedNode.querySelector('.js-dwp-toggle-edit');
-                if (editPanel) editPanel.style.display = 'block';
-                if (toggleBtn) toggleBtn.style.transform = 'rotate(180deg)';
-            }
-        }
+		selectAll.addEventListener('change', function () {
+			pool.querySelectorAll('.js-dwp-mb-pool-item:not([hidden]) .js-dwp-mb-check').forEach(function (checkbox) {
+				checkbox.checked = selectAll.checked;
+			});
+		});
 
-        serializeActiveTreeStructure();
-    });
+		addButton.addEventListener('click', function () {
+			const checked = [ ...pool.querySelectorAll('.js-dwp-mb-check:checked') ];
+			if (!checked.length) {
+				window.alert(t.selectFirst);
+				return;
+			}
 
-    // 6. INLINE INTERACTIVE CONTROLS & STEPPER ENGINE DELEGATION
-    document.addEventListener('click', function(e) {
-        if (e.target.classList.contains('js-dwp-toggle-edit')) {
-            const card = e.target.closest('.js-dwp-tree-node');
-            const panel = card.querySelector('.js-dwp-edit-panel');
-            if (panel) {
-                const isHidden = panel.style.display === 'none';
-                panel.style.display = isHidden ? 'block' : 'none';
-                e.target.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-            }
-        }
+			insertRows(checked.map(function (checkbox) {
+				checkbox.checked = false;
+				return rows.get(checkbox.closest('.js-dwp-mb-pool-item'));
+			}), null);
+			selectAll.checked = false;
+		});
 
-        // STEPPER INWARD: Shifts level indentation 1 layer deeper (Max depth 2)
-        if (e.target.classList.contains('js-dwp-move-inward')) {
-            const card = e.target.closest('.js-dwp-tree-node');
-            let depth = parseInt(card.getAttribute('data-depth') || '0', 10);
-            if (depth < 2) {
-                depth++;
-                card.setAttribute('data-depth', depth.toString());
-                card.style.marginLeft = (depth * 30) + 'px';
-                serializeActiveTreeStructure();
-            }
-        }
+		/* ------------------------------------------------------------------ tree */
 
-        // STEPPER OUTWARD: Decrements indentation level 1 layer (Min depth 0)
-        if (e.target.classList.contains('js-dwp-move-outward')) {
-            const card = e.target.closest('.js-dwp-tree-node');
-            let depth = parseInt(card.getAttribute('data-depth') || '0', 10);
-            if (depth > 0) {
-                depth--;
-                card.setAttribute('data-depth', depth.toString());
-                card.style.marginLeft = (depth * 30) + 'px';
-                serializeActiveTreeStructure();
-            }
-        }
+		function treeNodes() {
+			return [ ...tree.querySelectorAll('.js-dwp-mb-tree-node') ];
+		}
 
-        // CASCADING WIPE WITH DEFENSIVE CONFIRMATION DIALOG GATES
-        if (e.target.classList.contains('js-dwp-remove-node')) {
-            const currentItem = e.target.closest('.js-dwp-tree-node');
-            if (currentItem) {
-                const nodes = [...canvas.querySelectorAll('.js-dwp-tree-node')];
-                const currentIndex = nodes.indexOf(currentItem);
-                const currentDepth = parseInt(currentItem.getAttribute('data-depth') || '0', 10);
+		function depthOf(node) {
+			return parseInt(node.dataset.depth, 10) || 0;
+		}
 
-                let itemsToRemove = [currentItem];
+		function setDepth(node, depth) {
+			node.dataset.depth = String(depth);
+			node.style.setProperty('--depth', String(depth));
+		}
 
-                // Track and collect all nested child nodes following this parent row parameters
-                for (let i = currentIndex + 1; i < nodes.length; i++) {
-                    const nextDepth = parseInt(nodes[i].getAttribute('data-depth') || '0', 10);
-                    if (nextDepth > currentDepth) {
-                        itemsToRemove.push(nodes[i]);
-                    } else {
-                        break;
-                    }
-                }
+		// The node and the nodes below it.
+		function branchOf(node) {
+			const nodes  = treeNodes();
+			const start  = nodes.indexOf(node);
+			const branch = [ node ];
+			for (let i = start + 1; i < nodes.length && depthOf(nodes[ i ]) > depthOf(node); i++) {
+				branch.push(nodes[ i ]);
+			}
+			return branch;
+		}
 
-                // CRITICAL FIREWALL GATES: If the item houses nested children, force a descriptive confirmation prompt
-                if (itemsToRemove.length > 1) {
-                    const confirmMsg = `CRITICAL WARNING:\n\nThis node contains ${itemsToRemove.length - 1} nested sub-menu items.\n\nAre you absolutely sure you want to permanently delete this entire menu branch hierarchy from the canvas? This action cannot be undone.`;
-                    if (!confirm(confirmMsg)) {
-                        return; // Abort wipe operation immediately if user declines the prompt
-                    }
-                }
+		function displayTitle(state) {
+			if (state.title) {
+				return state.title;
+			}
+			return 'submenu' === state.type ? t.submenuTitle : state.defaultTitle;
+		}
 
-                // Execute the clean cascading scrub from the active workspace canvas DOM
-                itemsToRemove.forEach(item => item.parentNode.removeChild(item));
-                serializeActiveTreeStructure();
+		function refreshHeader(node) {
+			const state = rows.get(node);
+			node.querySelector('.dwp-mb-title').textContent = displayTitle(state);
 
-                if (canvas.querySelectorAll('.js-dwp-tree-node').length === 0) {
-                    canvas.innerHTML = `<div class='dwp-canvas-placeholder-msg' style='color: #64748b; font-style: italic; text-align: center; padding: 50px 10px;'>Toolbar menu is empty. Add shortcuts from the pool and manage your dropdown matrix submenus nesting groups.</div>`;
-                }
-            }
-        }
-    });
+			const old = node.querySelector('.dwp-mb-badge--visibility');
+			if (old) {
+				old.remove();
+			}
+			const visibility = visibilityBadge(state.visibility);
+			if (visibility) {
+				node.querySelector('.dwp-mb-meta').appendChild(visibility);
+			}
+		}
 
-    document.addEventListener('input', function(e) {
-        if (e.target.classList.contains('js-dwp-edit-title')) {
-            const card = e.target.closest('.js-dwp-tree-node');
-            card.querySelector('.js-node-title').innerText = e.target.value.trim();
-            serializeActiveTreeStructure();
-        }
-        if (e.target.classList.contains('js-dwp-edit-url')) {
-            serializeActiveTreeStructure();
-        }
-    });
+		function field(labelText, input, hint) {
+			const wrapper = el('div', 'dwp-mb-field');
+			const label   = el('label', '', labelText);
+			input.id      = 'dwp-mb-' + Math.random().toString(36).slice(2, 11);
+			label.htmlFor = input.id;
+			wrapper.append(label, input);
+			if (hint) {
+				wrapper.appendChild(el('p', 'description', hint));
+			}
+			return wrapper;
+		}
 
-    function getDragAfterElement(container, y) {
-        const draggableElements = [...container.querySelectorAll('.js-dwp-tree-node')];
-        return draggableElements.reduce((closest, child) => {
-            if (child === draggedItem) {
-                return closest;
-            }
+		function createEditPanel(node, state) {
+			const panel = el('div', 'dwp-mb-edit');
+			panel.hidden = true;
 
-            const box = child.getBoundingClientRect();
-            const offset = y - box.top - box.height / 2;
+			const title = el('input', 'regular-text');
+			title.type = 'text';
+			title.value = state.title;
+			title.placeholder = 'submenu' === state.type ? t.submenuTitle : state.defaultTitle;
+			title.addEventListener('input', function () {
+				state.title = title.value.trim();
+				refreshHeader(node);
+				serialize();
+			});
+			panel.appendChild(field(t.title, title, 'submenu' === state.type ? '' : t.titleHint));
 
-            if (offset < 0 && offset > closest.offset) {
-                return { offset: offset, element: child };
-            } else {
-                return closest;
-            }
-        }, { offset: -Infinity }).element;
-    }
+			const url = el('input', 'regular-text code');
+			url.type = 'text';
+			url.value = state.href;
+			if ('submenu' === state.type) {
+				url.addEventListener('input', function () {
+					state.href = url.value.trim();
+					serialize();
+				});
+				panel.appendChild(field(t.url, url, t.urlHint));
+			} else {
+				url.readOnly = true;
+				const copy = el('button', 'button button-small', t.copy);
+				copy.type = 'button';
+				copy.addEventListener('click', function () {
+					navigator.clipboard.writeText(url.value).then(function () {
+						copy.textContent = t.copied;
+						window.setTimeout(function () {
+							copy.textContent = t.copy;
+						}, 1500);
+					});
+				});
+				const urlField = field(t.url, url);
+				urlField.appendChild(copy);
+				urlField.classList.add('dwp-mb-field--url');
+				panel.appendChild(urlField);
+			}
 
-    function serializeActiveTreeStructure() {
-        const nodes = [...canvas.querySelectorAll('.js-dwp-tree-node')];
-        const treeResult = {};
+			const visibility = el('select');
+			[ [ 'both', t.visibleBoth ], [ 'admin', t.visibleAdmin ], [ 'frontend', t.visibleFrontend ] ].forEach(function (option) {
+				visibility.appendChild(new Option(option[ 1 ], option[ 0 ], false, option[ 0 ] === state.visibility));
+			});
+			visibility.addEventListener('change', function () {
+				state.visibility = visibility.value;
+				refreshHeader(node);
+				serialize();
+			});
+			panel.appendChild(field(t.visibility, visibility));
 
-        let level0Key = null;
-        let level1Key = null;
+			return panel;
+		}
 
-        nodes.forEach(node => {
-            const id = node.getAttribute('data-id');
-            const instanceId = node.getAttribute('data-instance');
-            const type = node.getAttribute('data-type') || 'shortcut';
-            const depth = parseInt(node.getAttribute('data-depth') || '0', 10);
+		function createTreeNode(row, depth) {
+			const state = {
+				id: row.id,
+				type: row.type,
+				defaultTitle: row.defaultTitle,
+				title: row.title || '',
+				href: row.href || '',
+				visibility: row.visibility || 'both',
+			};
 
-            const nodePayload = {
-                id: id,
-                type: type,
-                title: node.querySelector('.js-node-title').innerText,
-                href: node.querySelector('.js-dwp-edit-url') ? node.querySelector('.js-dwp-edit-url').value.trim() : '#',
-                children: {}
-            };
+			const node = el('div', 'dwp-mb-node dwp-mb-node--tree js-dwp-mb-tree-node');
+			node.draggable = true;
+			node.dataset.instance = row.instance || newInstanceId();
+			if ('submenu' === row.type) {
+				node.classList.add('is-submenu');
+			}
+			if ('active' !== row.status) {
+				node.classList.add('is-inactive');
+			}
+			setDepth(node, depth);
+			rows.set(node, state);
 
-            if (depth === 0) {
-                treeResult[instanceId] = nodePayload;
-                level0Key = instanceId;
-                level1Key = null;
-            } else if (depth === 1 && level0Key) {
-                treeResult[level0Key].children[instanceId] = nodePayload;
-                level1Key = instanceId;
-            } else if (depth === 2 && level0Key && level1Key) {
-                treeResult[level0Key].children[level1Key].children[instanceId] = nodePayload;
-            } else {
-                treeResult[instanceId] = nodePayload;
-                level0Key = instanceId;
-                level1Key = null;
-                node.setAttribute('data-depth', '0');
-                node.style.marginLeft = '0px';
-            }
-        });
+			const header = el('div', 'dwp-mb-node-header');
+			const body   = el('span', 'dwp-mb-node-body');
+			body.appendChild(el('strong', 'dwp-mb-title'));
+			body.appendChild(metaLine(row));
 
-        jsonInput.value = JSON.stringify(treeResult);
-    }
+			const controls = el('span', 'dwp-mb-controls');
+			controls.append(
+				iconButton('dashicons-arrow-left-alt2', t.moveOut, 'js-dwp-mb-out'),
+				iconButton('dashicons-arrow-right-alt2', t.moveIn, 'js-dwp-mb-in'),
+				iconButton('dashicons-admin-generic', t.edit, 'js-dwp-mb-edit'),
+				iconButton('dashicons-trash', t.remove, 'js-dwp-mb-remove'),
+				el('span', 'dashicons dashicons-menu dwp-mb-handle')
+			);
 
-    form.addEventListener('submit', function() {
-        serializeActiveTreeStructure();
-    });
-});
+			header.append(body, controls);
+			node.append(header, createEditPanel(node, state));
+			refreshHeader(node);
+			return node;
+		}
+
+		function updateEmptyState() {
+			let message = tree.querySelector('.dwp-mb-empty');
+			if (treeNodes().length) {
+				if (message) {
+					message.remove();
+				}
+			} else if (!message) {
+				message = el('p', 'dwp-mb-empty', t.emptyTree);
+				tree.appendChild(message);
+			}
+		}
+
+		// New nodes take the depth of the node they are inserted before, so they never take over
+		// that node's children; at the end they take the depth of the last node.
+		function insertionDepth(before) {
+			if (before) {
+				return depthOf(before);
+			}
+			const nodes = treeNodes();
+			return nodes.length ? depthOf(nodes[ nodes.length - 1 ]) : 0;
+		}
+
+		function insertRows(newRows, before) {
+			const depth = insertionDepth(before);
+			newRows.forEach(function (row) {
+				const node = createTreeNode(row, depth);
+				tree.insertBefore(node, before);
+				if ('submenu' === row.type) {
+					node.querySelector('.dwp-mb-edit').hidden = false;
+				}
+			});
+			updateEmptyState();
+			serialize();
+		}
+
+		// Moves a branch in or out by one level, if the result is still a valid tree. Moving out
+		// places the branch after its old parent's branch, so it does not take over its siblings.
+		function shiftBranch(node, delta) {
+			const branch   = branchOf(node);
+			const nodes    = treeNodes();
+			const index    = nodes.indexOf(node);
+			const previous = nodes[ index - 1 ];
+			const newDepth = depthOf(node) + delta;
+			const deepest  = Math.max(...branch.map(depthOf)) + delta;
+
+			if (newDepth < 0 || deepest > maxDepth) {
+				return;
+			}
+			if (delta > 0 && (!previous || newDepth > depthOf(previous) + 1)) {
+				return;
+			}
+
+			if (delta < 0) {
+				const parent = nodes.slice(0, index).reverse().find(function (item) {
+					return depthOf(item) < depthOf(node);
+				});
+				const parentBranch = branchOf(parent);
+				const anchor       = parentBranch[ parentBranch.length - 1 ].nextElementSibling;
+				branch.forEach(function (item) {
+					tree.insertBefore(item, anchor);
+				});
+			}
+
+			branch.forEach(function (item) {
+				setDepth(item, depthOf(item) + delta);
+			});
+			serialize();
+		}
+
+		function removeBranch(node) {
+			const branch = branchOf(node);
+			if (branch.length > 1 && !window.confirm(t.removeConfirm.replace('%d', String(branch.length - 1)))) {
+				return;
+			}
+			branch.forEach(function (item) {
+				item.remove();
+			});
+			updateEmptyState();
+			serialize();
+		}
+
+		tree.addEventListener('click', function (event) {
+			const button = event.target.closest('button');
+			const node   = event.target.closest('.js-dwp-mb-tree-node');
+			if (!button || !node) {
+				return;
+			}
+
+			if (button.classList.contains('js-dwp-mb-out')) {
+				shiftBranch(node, -1);
+			} else if (button.classList.contains('js-dwp-mb-in')) {
+				shiftBranch(node, 1);
+			} else if (button.classList.contains('js-dwp-mb-edit')) {
+				const panel = node.querySelector('.dwp-mb-edit');
+				panel.hidden = !panel.hidden;
+				button.classList.toggle('is-open', !panel.hidden);
+			} else if (button.classList.contains('js-dwp-mb-remove')) {
+				removeBranch(node);
+			}
+		});
+
+		/* ------------------------------------------------------------------ drag and drop */
+
+		function clearDropMarker() {
+			root.querySelectorAll('.is-drop-before').forEach(function (node) {
+				node.classList.remove('is-drop-before');
+			});
+			tree.classList.remove('is-drop-end');
+		}
+
+		// The first node (outside the dragged branch) whose middle is below the pointer.
+		function nodeAfterPointer(y) {
+			return treeNodes().find(function (node) {
+				if (dragged && dragged.nodes.includes(node)) {
+					return false;
+				}
+				const box = node.getBoundingClientRect();
+				return y < box.top + box.height / 2;
+			}) || null;
+		}
+
+		root.addEventListener('dragstart', function (event) {
+			if (event.target.closest('input, select, button')) {
+				return;
+			}
+
+			const treeNode = event.target.closest('.js-dwp-mb-tree-node');
+			const poolItem = event.target.closest('.js-dwp-mb-pool-item');
+
+			if (treeNode) {
+				dragged = { origin: 'tree', nodes: branchOf(treeNode) };
+			} else if (poolItem) {
+				dragged = { origin: 'pool', nodes: [ poolItem ] };
+			} else {
+				return;
+			}
+
+			event.dataTransfer.effectAllowed = 'tree' === dragged.origin ? 'move' : 'copy';
+			event.dataTransfer.setData('text/plain', '');
+			dragged.nodes.forEach(function (node) {
+				node.classList.add('is-dragging');
+			});
+		});
+
+		root.addEventListener('dragend', function () {
+			if (dragged) {
+				dragged.nodes.forEach(function (node) {
+					node.classList.remove('is-dragging');
+				});
+			}
+			dragged = null;
+			clearDropMarker();
+		});
+
+		tree.addEventListener('dragover', function (event) {
+			if (!dragged) {
+				return;
+			}
+			event.preventDefault();
+
+			// Scroll the tree while dragging near its top or bottom edge.
+			const box = tree.getBoundingClientRect();
+			if (event.clientY < box.top + 40) {
+				tree.scrollTop -= 12;
+			} else if (event.clientY > box.bottom - 40) {
+				tree.scrollTop += 12;
+			}
+
+			clearDropMarker();
+			const after = nodeAfterPointer(event.clientY);
+			if (after) {
+				after.classList.add('is-drop-before');
+			} else {
+				tree.classList.add('is-drop-end');
+			}
+		});
+
+		tree.addEventListener('dragleave', function (event) {
+			if (!tree.contains(event.relatedTarget)) {
+				clearDropMarker();
+			}
+		});
+
+		tree.addEventListener('drop', function (event) {
+			if (!dragged) {
+				return;
+			}
+			event.preventDefault();
+			const after = nodeAfterPointer(event.clientY);
+			clearDropMarker();
+
+			if ('pool' === dragged.origin) {
+				insertRows([ rows.get(dragged.nodes[ 0 ]) ], after);
+				return;
+			}
+
+			// Move the whole branch; it takes the depth of the node it lands before, like a new node.
+			const delta = insertionDepthAfterMove(after) - depthOf(dragged.nodes[ 0 ]);
+			dragged.nodes.forEach(function (node) {
+				tree.insertBefore(node, after);
+				setDepth(node, Math.min(maxDepth, Math.max(0, depthOf(node) + delta)));
+			});
+			serialize();
+		});
+
+		// Like insertionDepth(), but ignoring the branch that is being moved.
+		function insertionDepthAfterMove(before) {
+			if (before) {
+				return depthOf(before);
+			}
+			const nodes = treeNodes().filter(function (node) {
+				return !dragged.nodes.includes(node);
+			});
+			return nodes.length ? depthOf(nodes[ nodes.length - 1 ]) : 0;
+		}
+
+		/* ------------------------------------------------------------------ serialize */
+
+		// Writes the tree as nested JSON. A node can be at most one level deeper than the one before it.
+		function serialize() {
+			const result = {};
+			const stack  = []; // stack[ depth ] = children object of the last node at that depth.
+			let previous = -1;
+
+			treeNodes().forEach(function (node) {
+				const state = rows.get(node);
+				const depth = Math.min(depthOf(node), previous + 1, maxDepth);
+				if (depth !== depthOf(node)) {
+					setDepth(node, depth);
+				}
+
+				const payload = {
+					id: state.id,
+					type: state.type,
+					title: state.title,
+					href: 'submenu' === state.type ? state.href : '',
+					visibility: state.visibility,
+					children: {},
+				};
+
+				const parent = 0 === depth ? result : stack[ depth - 1 ];
+				parent[ node.dataset.instance ] = payload;
+				stack[ depth ] = payload.children;
+				stack.length = depth + 1;
+				previous = depth;
+			});
+
+			serialized.value = JSON.stringify(result);
+		}
+
+		/* ------------------------------------------------------------------ start */
+
+		data.pool.forEach(function (row) {
+			pool.appendChild(createPoolItem(row));
+		});
+		buildFilter();
+
+		data.tree.forEach(function (row) {
+			tree.appendChild(createTreeNode(row, row.depth));
+		});
+		updateEmptyState();
+		serialize();
+
+		if (form) {
+			form.addEventListener('submit', serialize);
+		}
+	});
+}());

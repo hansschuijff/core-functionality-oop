@@ -20,7 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Environment\Themes\Services\ThemeInspector;
-use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminMenuRegister;
 use Override;
 
@@ -63,10 +62,20 @@ class AnyBlockTheme extends AbstractTheme {
 			return false;
 		}
 
-		AdminToolbarRegister::register( $this->get_id(), $this->get_toolbar_nodes() );
 		AdminMenuRegister::register( $this->get_id(), $this->get_menu_nodes() );
 
 		return true;
+	}
+
+	/**
+	 * Checks whether any block theme is installed.
+	 *
+	 * @since  1.0.0
+	 * @return bool True if at least one installed theme is a block theme.
+	 */
+	#[Override]
+	public function is_installed(): bool {
+		return ThemeInspector::is_block_theme_installed();
 	}
 
 	/**
@@ -91,7 +100,7 @@ class AnyBlockTheme extends AbstractTheme {
 	 * @return ToolbarShortcut[] Collection of theme toolbar shortcut DTOs.
 	 */
 	#[Override]
-	protected function get_toolbar_nodes(): array {
+	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-site-editor',

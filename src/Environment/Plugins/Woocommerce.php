@@ -61,7 +61,7 @@ class Woocommerce extends AbstractPlugin {
 	 * @return ToolbarShortcut[] The toolbar links.
 	 */
 	#[Override]
-	protected function get_toolbar_nodes(): array {
+	public function get_toolbar_nodes(): array {
 		return array(
 			// Admin Area Links - Safe to call directly because admin_url is purely string manipulation.
 			new ToolbarShortcut(

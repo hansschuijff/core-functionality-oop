@@ -58,7 +58,7 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 	 * @return ToolbarShortcut[] The toolbar links.
 	 */
 	#[Override]
-	protected function get_toolbar_nodes(): array {
+	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-admin-woocommerce-subscriptions',

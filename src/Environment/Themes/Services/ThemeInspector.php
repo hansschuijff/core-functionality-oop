@@ -24,6 +24,7 @@ use function function_exists;
 use function strip_tags;
 use function strtolower;
 use function wp_get_theme;
+use function wp_get_themes;
 use function wp_is_block_theme;
 
 /**
@@ -123,6 +124,44 @@ class ThemeInspector {
 	public static function has_parent_theme(): bool {
 		$theme = wp_get_theme();
 		return $theme->exists() && $theme->parent() instanceof WP_Theme;
+	}
+
+	/**
+	 * Checks if a theme is installed, active or not.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $theme_name   The exact expected name of the theme.
+	 * @param string $theme_author Optional. The expected author of the theme. Default empty string.
+	 * @return bool True if an installed theme matches the criteria (case-insensitive), false otherwise.
+	 */
+	public static function is_theme_installed( string $theme_name, string $theme_author = '' ): bool {
+		foreach ( wp_get_themes() as $theme ) {
+			$author = strtolower( strip_tags( (string) $theme->get( 'Author' ) ) );
+
+			if ( strtolower( (string) $theme->get( 'Name' ) ) === strtolower( $theme_name )
+				&& ( ! $theme_author || strtolower( $theme_author ) === $author ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Checks if any installed theme is a block theme.
+	 *
+	 * @since 1.0.0
+	 * @return bool True if at least one installed theme is a block theme.
+	 */
+	public static function is_block_theme_installed(): bool {
+		foreach ( wp_get_themes() as $theme ) {
+			if ( $theme->is_block_theme() ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

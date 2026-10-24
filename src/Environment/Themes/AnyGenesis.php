@@ -69,7 +69,7 @@ class AnyGenesis extends AbstractTheme {
 	 * @return ToolbarShortcut[] Collection of theme toolbar shortcut DTOs.
 	 */
 	#[Override]
-	protected function get_toolbar_nodes(): array {
+	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
 				id:      'cf-genesis-theme-settings',

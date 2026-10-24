@@ -16,7 +16,6 @@ namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 use DeWittePrins\CoreFunctionality\Environment\Plugins\Interfaces\PluginInterface;
 use DeWittePrins\CoreFunctionality\Environment\Plugins\Services\PluginInspector;
 use DeWittePrins\CoreFunctionality\Environment\EnvironmentLookup;
-use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminMenuRegister;
 use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
 use DeWittePrins\CoreFunctionality\Services\ClassParser;
@@ -63,7 +62,8 @@ abstract class AbstractPlugin implements PluginInterface {
 	/**
 	 * Inspects plugin parameters using the centralized service.
 	 *
-	 * Feeds the shared registries dynamically once readiness is affirmatively verified.
+	 * Feeds the admin menu register once readiness is affirmatively verified. The toolbar nodes go
+	 * to the catalogue through get_toolbar_nodes(), active or not.
 	 *
 	 * @since 1.0.0
 	 * @return bool True if the target plugin is active in the environment, false otherwise.
@@ -84,11 +84,20 @@ abstract class AbstractPlugin implements PluginInterface {
 			return false;
 		}
 
-		// Feed the static master registries immediately upon successful validation.
-		AdminToolbarRegister::register( $this->get_id(), $this->get_toolbar_nodes() );
 		AdminMenuRegister::register( $this->get_id(), $this->get_menu_nodes() );
 
 		return true;
+	}
+
+	/**
+	 * Checks whether the plugin is installed, active or not.
+	 *
+	 * @since  1.0.0
+	 * @return bool True if the plugin file exists.
+	 */
+	#[Override]
+	public function is_installed(): bool {
+		return PluginInspector::is_plugin_installed( $this->plugin_basename );
 	}
 
 	/**
@@ -113,15 +122,6 @@ abstract class AbstractPlugin implements PluginInterface {
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement();
 	}
-
-	/**
-	 * Compiles and returns the available pool of toolbar shortcuts this plugin can offer.
-	 *
-	 * Must be implemented by child classes to supply their links to the register feed.
-	 *
-	 * @return \DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut[]
-	 */
-	abstract protected function get_toolbar_nodes(): array;
 
 	/**
 	 * Compiles and returns the available pool of admin menu blocks this plugin can offer.

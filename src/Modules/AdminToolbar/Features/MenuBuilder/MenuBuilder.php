@@ -28,7 +28,6 @@ use function current_user_can;
 use function is_admin;
 use function is_admin_bar_showing;
 use function is_array;
-use function esc_attr;
 use function esc_html;
 use function esc_url;
 use function add_action;
@@ -105,108 +104,107 @@ class MenuBuilder extends AbstractFeature {
 			return;
 		}
 
-		// 1. Gather all environment-passed shortcuts from the centralized repository register.
-		$master_registry = AdminToolbarRegister::get();
-		if ( empty( $master_registry ) || ! is_array( $master_registry ) ) {
-			$master_registry = array();
-		}
-
-		// Flatten the registry collection to quickly look up active DTO objects by their node string keys.
-		$flattened_pool = array();
-		foreach ( $master_registry as $provider_id => $shortcuts ) {
-			if ( is_array( $shortcuts ) ) {
-				foreach ( $shortcuts as $shortcut ) {
-					if ( $shortcut instanceof ToolbarShortcut ) {
-						$flattened_pool[ $shortcut->id ] = $shortcut;
-					}
-				}
-			}
-		}
-
-		// 2. Fetch the live initialized shared singleton options service out of settings.
 		$saved_tree = $this->plugin->settings->get( $this->menu_builder_tree_key, '', false, array() );
-
 		if ( empty( $saved_tree ) || ! is_array( $saved_tree ) ) {
 			return;
 		}
 
-		$current_orientation = is_admin() ? Orientation::ADMIN : Orientation::FRONTEND;
+		// Only the nodes of active plugins and themes; the saved tree may also hold those of inactive ones.
+		$pool = array();
+		foreach ( AdminToolbarRegister::get_active() as $shortcuts ) {
+			foreach ( $shortcuts as $shortcut ) {
+				$pool[ $shortcut->id ] = $shortcut;
+			}
+		}
 
-		// 3. Kickstart the cascading recursive traversal process starting at the 'site-name' root anchor level.
-		$this->render_tree_nodes_recursively( $wp_admin_bar, $saved_tree, $flattened_pool, 'site-name', $current_orientation );
+		$side = is_admin() ? Orientation::ADMIN : Orientation::FRONTEND;
+
+		$this->render_tree_nodes_recursively( $wp_admin_bar, $saved_tree, $pool, 'site-name', $side );
 	}
 
 	/**
-	 * Cascades recursively down through the saved menu array tree branch structures to register WP_Admin_Bar nodes.
+	 * Adds the nodes of one level of the saved tree to the toolbar, and their children.
 	 *
-	 * Handles abstract parent titles, dynamic URL matching over closures, and visibility orientations tracking.
+	 * A shortcut whose provider is not active is left out, with its children. A custom submenu
+	 * without a link of its own is left out when none of its children is shown.
 	 *
 	 * @since  1.0.0
-	 * @param  WP_Admin_Bar $wp_admin_bar  Global WordPress admin bar context orchestration instance.
-	 * @param  array        $tree_level    Current depth layout level dictionary map containing node configs.
-	 * @param  array        $pool          Flattened directory library mapping node keys to core ToolbarShortcut DTO objects.
-	 * @param  string       $parent_id     The physical parent admin toolbar anchor string identification handle.
-	 * @param  Orientation  $orientation   Current viewing environment signature ('admin' or 'frontend').
-	 * @return void
+	 * @param  WP_Admin_Bar $wp_admin_bar The WordPress admin bar.
+	 * @param  array        $tree_level   One level of the saved tree: instance id => node settings.
+	 * @param  array        $pool         The shortcuts of the active providers, by node id.
+	 * @param  string       $parent_id    The toolbar id of the parent node.
+	 * @param  Orientation  $side         Whether this is an admin page or the front end.
+	 * @return int The number of nodes added on this level.
 	 */
-	private function render_tree_nodes_recursively( WP_Admin_Bar $wp_admin_bar, array $tree_level, array $pool, string $parent_id, Orientation $orientation ): void {
+	private function render_tree_nodes_recursively( WP_Admin_Bar $wp_admin_bar, array $tree_level, array $pool, string $parent_id, Orientation $side ): int {
+		$added = 0;
+
 		foreach ( $tree_level as $instance_id => $node_meta ) {
+			if ( ! $this->is_visible_on( $node_meta, $side ) ) {
+				continue;
+			}
+
 			$type    = $node_meta['type'] ?? 'shortcut';
 			$node_id = $node_meta['id'] ?? $instance_id;
+			$title   = (string) ( $node_meta['title'] ?? '' );
 
-			$final_title = $node_meta['title'] ?? '';
-			$final_href  = $node_meta['href'] ?? '#';
-			$final_label = $final_title;
-
-			// Check orientation and parameters filters if the target represents a hard code environment provider asset.
 			if ( 'shortcut' === $type ) {
-				$shortcut_dto = $pool[ $node_id ] ?? null;
-
-				if ( $shortcut_dto instanceof ToolbarShortcut ) {
-					// Guard: Enforce visibility rules mapping current admin vs front status.
-					$dto_orientation = $shortcut_dto->orientation ?? Orientation::BOTH;
-					if ( Orientation::BOTH !== $dto_orientation && $orientation !== $dto_orientation ) {
-						continue;
-					}
-
-					// If the label override is empty or matching its original signature, fall back to the live translatable DTO value.
-					if ( empty( $final_title ) ) {
-						$final_title = $shortcut_dto->title;
-					}
-
-					// Resolve the target URL safely if no custom overrides are configured on the card face.
-					if ( empty( $final_href ) || '#' === $final_href ) {
-						$final_href = $shortcut_dto->get_href();
-					}
-
-					$final_label = $shortcut_dto->label;
-				} else {
-					// Skip rendering completely if the environment provider component has been safely decoupled or deactivated.
+				$shortcut = $pool[ $node_id ] ?? null;
+				if ( ! $shortcut instanceof ToolbarShortcut ) {
 					continue;
 				}
+
+				// An empty title follows the (translated) title of the shortcut; the URL always comes from the shortcut.
+				$title = '' !== $title ? $title : $shortcut->title;
+				$href  = $shortcut->get_href();
+				$label = $shortcut->label;
+			} else {
+				$href  = (string) ( $node_meta['href'] ?? '' );
+				$href  = '#' === $href ? '' : $href;
+				$label = $title;
 			}
 
-			// Generate a truly unique node ID per tree instance location to prevent toolbar registration collisions on duplications.
-			$wp_toolbar_node_id = 'wp-admin-bar-dwp-' . $node_id . '-' . $instance_id;
+			$toolbar_node_id = 'dwp-' . $node_id . '-' . $instance_id;
 
-			// Map arguments directly into the native parameters structural array layout expected by WordPress core.
-			$node_args = array(
-				'id'     => esc_attr( $wp_toolbar_node_id ),
-				'title'  => esc_html( $final_title ),
-				'parent' => esc_attr( $parent_id ),
-				'href'   => esc_url( (string) $final_href ),
-				'meta'   => array(
-					'title' => esc_attr( $final_label ),
-				),
+			$wp_admin_bar->add_node(
+				array(
+					'id'     => $toolbar_node_id,
+					'title'  => esc_html( $title ),
+					'parent' => $parent_id,
+					'href'   => '' !== $href ? esc_url( $href ) : false,
+					'meta'   => array(
+						'title' => $label,
+					),
+				)
 			);
 
-			$wp_admin_bar->add_node( $node_args );
+			$children = ( ! empty( $node_meta['children'] ) && is_array( $node_meta['children'] ) )
+				? $this->render_tree_nodes_recursively( $wp_admin_bar, $node_meta['children'], $pool, $toolbar_node_id, $side )
+				: 0;
 
-			// Cascading down recursively if child entries populate the nested array dictionary layer.
-			if ( ! empty( $node_meta['children'] ) && is_array( $node_meta['children'] ) ) {
-				$this->render_tree_nodes_recursively( $wp_admin_bar, $node_meta['children'], $pool, $wp_toolbar_node_id, $orientation );
+			if ( 'shortcut' !== $type && '' === $href && 0 === $children ) {
+				$wp_admin_bar->remove_node( $toolbar_node_id );
+				continue;
 			}
+
+			++$added;
 		}
+
+		return $added;
+	}
+
+	/**
+	 * Checks whether a node of the saved tree is shown on this side (admin pages or front end).
+	 *
+	 * @since  1.0.0
+	 * @param  array       $node_meta The node settings from the saved tree.
+	 * @param  Orientation $side      Whether this is an admin page or the front end.
+	 * @return bool True if the node is shown here.
+	 */
+	private function is_visible_on( array $node_meta, Orientation $side ): bool {
+		$visibility = Orientation::tryFrom( (string) ( $node_meta['visibility'] ?? '' ) ) ?? Orientation::BOTH;
+
+		return Orientation::BOTH === $visibility || $side === $visibility;
 	}
 
 	/**

@@ -19,18 +19,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use DeWittePrins\CoreFunctionality\Plugin;
+use DeWittePrins\CoreFunctionality\Enums\ProviderStatus;
 use DeWittePrins\CoreFunctionality\Environment\Core\WordPress;
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;
+use DeWittePrins\CoreFunctionality\Environment\Plugins\Interfaces\PluginInterface;
+use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Environment\Services\PreflightRestructurer;
+use DeWittePrins\CoreFunctionality\Environment\Themes\Interfaces\ThemeInterface;
 use DeWittePrins\CoreFunctionality\Services\ClassParser;
 use InvalidArgumentException;
 use Throwable;
 
 // Import global PHP and WordPress functions.
-use function class_exists;
+use function array_key_exists;
+use function basename;
+use function glob;
 use function is_array;
+use function str_starts_with;
 use function is_string;
-use function str_ends_with;
 use function sprintf;
 use function esc_html;
 use function error_log;
@@ -66,15 +72,38 @@ class Environment {
 	private array $readiness_cache = array();
 
 	/**
+	 * The plugin guards created so far (null: no guard class for that id).
+	 *
+	 * @var array<string, PluginInterface|null>
+	 */
+	private array $plugins = array();
+
+	/**
+	 * The theme guards created so far (null: no guard class for that id).
+	 *
+	 * @var array<string, ThemeInterface|null>
+	 */
+	private array $themes = array();
+
+	/**
+	 * The guard of the WordPress core, once created.
+	 *
+	 * @var WordPress|null
+	 */
+	private ?WordPress $wordpress = null;
+
+	/**
 	 * Environment Class Constructor.
 	 *
-	 * Purely passive initialization to ensure full lifecycle immunity.
+	 * Purely passive initialization: the toolbar catalogue is only filled when it is first asked for.
 	 *
 	 * @since 1.0.0
 	 * @param Plugin $plugin The main plugin instance.
 	 */
 	public function __construct( private readonly Plugin $plugin ) {
 		$this->lookup = new EnvironmentLookup( $this->plugin );
+
+		AdminToolbarRegister::set_loader( array( $this, 'load_toolbar_catalogue' ) );
 	}
 
 	/**
@@ -169,35 +198,160 @@ class Environment {
 			return true;
 		}
 
-		if ( 'wordpress-core' === $dependency_id ) {
-			$is_ready = ( new WordPress() )->is_ready();
-			if ( true === $is_ready ) {
-				$this->readiness_cache[ $dependency_id ] = true;
-				return true;
-			}
+		$guard = $this->get_guard( $dependency_id );
+
+		if ( null === $guard ) {
+			_doing_it_wrong(
+				__METHOD__,
+				sprintf( 'Environment Contract Violation: no guard class implementing DependencyInterface for "%s".', esc_html( $dependency_id ) ),
+				'1.0.0'
+			);
 			return false;
 		}
 
-		$class = $this->get_dependency_class_name( $dependency_id );
-
-		// FIX: Use the unified DependencyInterface contract to validate existence safely.
-		if ( ClassParser::is_implementation_of( $class, DependencyInterface::class ) ) {
-			$is_ready = ( new $class( $this->lookup ) )->is_ready();
-
-			// FIX: Only freeze the value if the live runtime proof answers affirmatively.
-			if ( true === $is_ready ) {
-				$this->readiness_cache[ $dependency_id ] = true;
-				return true;
-			}
-		} else {
-			_doing_it_wrong(
-				__METHOD__,
-				sprintf( 'Environment Contract Violation: Class "%s" fails to implement DependencyInterface.', esc_html( $class ) ),
-				'1.0.0'
-			);
+		// Only freeze the value if the live runtime proof answers affirmatively.
+		if ( true === $guard->is_ready() ) {
+			$this->readiness_cache[ $dependency_id ] = true;
+			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns the guard of the WordPress core.
+	 *
+	 * @since  1.0.0
+	 * @return WordPress The core guard.
+	 */
+	public function get_wordpress(): WordPress {
+		$this->wordpress ??= new WordPress();
+
+		return $this->wordpress;
+	}
+
+	/**
+	 * Returns the guard of a plugin, created once per request.
+	 *
+	 * @since  1.0.0
+	 * @param  string $plugin_id The plugin id (the guard's class name in kebab-case).
+	 * @return PluginInterface|null The guard, or null if there is no guard class for this id.
+	 */
+	public function get_plugin( string $plugin_id ): ?PluginInterface {
+		if ( ! array_key_exists( $plugin_id, $this->plugins ) ) {
+			$class = $this->get_dependency_class_name( $plugin_id );
+
+			$this->plugins[ $plugin_id ] = ClassParser::is_implementation_of( $class, PluginInterface::class )
+				? new $class( $this->lookup )
+				: null;
+		}
+
+		return $this->plugins[ $plugin_id ];
+	}
+
+	/**
+	 * Returns the guard of a theme, created once per request.
+	 *
+	 * @since  1.0.0
+	 * @param  string $theme_id The theme id (the guard's class name in kebab-case plus "-theme").
+	 * @return ThemeInterface|null The guard, or null if there is no guard class for this id.
+	 */
+	public function get_theme( string $theme_id ): ?ThemeInterface {
+		if ( ! array_key_exists( $theme_id, $this->themes ) ) {
+			$class = $this->get_dependency_class_name( $theme_id );
+
+			$this->themes[ $theme_id ] = ClassParser::is_implementation_of( $class, ThemeInterface::class )
+				? new $class( $this->lookup )
+				: null;
+		}
+
+		return $this->themes[ $theme_id ];
+	}
+
+	/**
+	 * Fills the admin toolbar catalogue with the nodes of the core and every known plugin and theme.
+	 *
+	 * Known means: a guard class exists in Environment/Plugins or Environment/Themes. Each provider
+	 * is registered with its status, so the settings page can offer all nodes and the toolbar shows
+	 * only those of active providers. Called by AdminToolbarRegister on first use.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function load_toolbar_catalogue(): void {
+		$core = $this->get_wordpress();
+		AdminToolbarRegister::register( $core->get_id(), $core->get_toolbar_nodes(), ProviderStatus::ACTIVE );
+
+		foreach ( $this->get_known_guard_ids() as $dependency_id ) {
+			$guard = ClassParser::is_theme_id( $dependency_id )
+				? $this->get_theme( $dependency_id )
+				: $this->get_plugin( $dependency_id );
+
+			if ( null === $guard ) {
+				continue;
+			}
+
+			$status = ProviderStatus::NOT_INSTALLED;
+			if ( $this->is_ready( $dependency_id ) ) {
+				$status = ProviderStatus::ACTIVE;
+			} elseif ( $guard->is_installed() ) {
+				$status = ProviderStatus::INACTIVE;
+			}
+
+			AdminToolbarRegister::register( $guard->get_id(), $guard->get_toolbar_nodes(), $status );
+		}
+	}
+
+	/**
+	 * Returns the ids of all plugin and theme guard classes.
+	 *
+	 * @since  1.0.0
+	 * @return string[] Plugin ids and theme ids (with the "-theme" suffix).
+	 */
+	private function get_known_guard_ids(): array {
+		$ids = array();
+
+		$folders = array(
+			'Plugins' => '',
+			'Themes'  => '-theme',
+		);
+
+		foreach ( $folders as $folder => $suffix ) {
+			$files = glob( __DIR__ . '/' . $folder . '/*.php' );
+
+			foreach ( false !== $files ? $files : array() as $file ) {
+				$class_name = basename( $file, '.php' );
+				if ( str_starts_with( $class_name, 'Abstract' ) ) {
+					continue;
+				}
+
+				$ids[] = ClassParser::camel_to_kebab( $class_name ) . $suffix;
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Returns the guard for a dependency id: the core, a plugin, a theme or a server environment.
+	 *
+	 * @since  1.0.0
+	 * @param  string $dependency_id The identifier of the core, a theme, plugin, or server environment.
+	 * @return DependencyInterface|null The guard, or null if there is no guard class for this id.
+	 */
+	private function get_guard( string $dependency_id ): ?DependencyInterface {
+		if ( 'wordpress-core' === $dependency_id ) {
+			return $this->get_wordpress();
+		}
+		if ( ClassParser::is_theme_id( $dependency_id ) ) {
+			return $this->get_theme( $dependency_id );
+		}
+		if ( ClassParser::is_environment_id( $dependency_id ) ) {
+			$class = $this->get_dependency_class_name( $dependency_id );
+			return ClassParser::is_implementation_of( $class, DependencyInterface::class ) ? new $class( $this->lookup ) : null;
+		}
+
+		return $this->get_plugin( $dependency_id );
 	}
 
 	/**
@@ -208,10 +362,6 @@ class Environment {
 	 * @return string                The fully qualified class name for the dependency.
 	 */
 	private function get_dependency_class_name( string $dependency_id ): string {
-		if ( 'wordpress-core' === $dependency_id ) {
-			return WordPress::class;
-		}
-
 		$clean_id   = ClassParser::get_clean_id( $dependency_id );
 		$class_name = ClassParser::to_camel_case( $clean_id );
 		$namespace  = $this->get_dependency_namespace( $dependency_id );

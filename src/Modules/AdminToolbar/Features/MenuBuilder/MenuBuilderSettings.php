@@ -16,6 +16,7 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuild
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\Interfaces\SettingsSectionInterface;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
+use DeWittePrins\CoreFunctionality\Enums\ProviderStatus;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Plugin;
 use WP_Error;
@@ -23,19 +24,20 @@ use Override;
 
 // Import global PHP and WordPress core abstraction functions.
 use function __;
-use function esc_html;
-use function esc_attr;
+use function esc_attr__;
+use function esc_html__;
+use function esc_url_raw;
 use function is_array;
+use function json_decode;
+use function plugins_url;
 use function sanitize_key;
 use function sanitize_text_field;
-use function count;
-use function sprintf;
-use function _n;
-use function wp_unslash;
+use function sanitize_title;
+use function str_replace;
+use function ucwords;
 use function current_user_can;
-use function json_decode;
-use function array_keys;
-use function plugins_url;
+use function wp_json_encode;
+use function wp_unslash;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -44,11 +46,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class MenuBuilderSettings
  *
- * Implements an advanced multi-instance menu tree orchestrator with dynamic submenu additions.
+ * The settings tab where the toolbar menu is composed from the shortcuts of all known plugins,
+ * themes and the core. The tab renders a skeleton and the data as JSON; menu-builder-settings.js
+ * builds the pool and the menu tree from that data.
+ *
+ * The saved tree holds per node: id, type (shortcut or submenu), title (empty: the shortcut's own,
+ * translated title), href (submenus only), visibility (admin, frontend or both) and children.
  *
  * @since 1.0.0
  */
 class MenuBuilderSettings implements SettingsSectionInterface {
+
+	/**
+	 * The maximum depth of the menu (0-based), so three levels.
+	 *
+	 * @var int
+	 */
+	private const MAX_DEPTH = 2;
 
 	/**
 	 * Configuration settings keys inside the options vault.
@@ -106,7 +120,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Design your custom WordPress Admin Toolbar. Filter shortcuts by source provider, select elements from the pool to clone them, and manage hierarchy sequence fields.', 'core-functionality' );
+		return __( 'Compose the shortcuts menu of the admin toolbar from the links of all known plugins and themes. Links of plugins that are not active are kept, but only shown once the plugin is active.', 'core-functionality' );
 	}
 
 	/**
@@ -117,7 +131,9 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_stylesheets(): array {
-		return array();
+		return array(
+			'dwp-cf-admin-toolbar-menu-builder-css' => plugins_url( 'assets/css/menu-builder-settings.css', __FILE__ ),
+		);
 	}
 
 	/**
@@ -128,10 +144,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_scripts(): array {
-		$base_url = plugins_url( 'assets/js/', __FILE__ );
-
 		return array(
-			'dwp-cf-admin-toolbar-menu-builder-js' => $base_url . 'menu-builder-settings.js',
+			'dwp-cf-admin-toolbar-menu-builder-js' => plugins_url( 'assets/js/menu-builder-settings.js', __FILE__ ),
 		);
 	}
 
@@ -149,268 +163,261 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			$saved_tree = array();
 		}
 
-		$live_registry = AdminToolbarRegister::get();
-		$providers     = array_keys( $live_registry );
-
-		echo '<div class="dwp-menu-builder-canvas-wrapper" style="display: flex; flex-direction: column; gap: 25px; margin-top: 15px;">';
-		$this->render_builder_drag_tree_grid( $live_registry, $providers, $saved_tree );
-		echo '</div>';
-	}
-
-	/**
-	 * Renders the structural layout workspace optimized for tree nestings and provider filtering.
-	 *
-	 * @since  1.0.0
-	 * @param  array $live_registry The toolbar shortcuts offered by the active guards, per provider.
-	 * @param  array $providers     The providers (plugins and themes) for the filter.
-	 * @param  array $saved_tree    The saved menu tree.
-	 * @return void
-	 */
-	private function render_builder_drag_tree_grid( array $live_registry, array $providers, array $saved_tree ): void {
-		$col_pool_title   = esc_html__( 'Available Shortcuts Pool', 'core-functionality' );
-		$col_pool_desc    = esc_html__( 'Filter by source plugin. Check items to add them, or drag nodes to build your menu skeleton blueprint.', 'core-functionality' );
-		$col_active_title = esc_html__( 'Active Admin Toolbar Menu Structure (Max 3 Levels)', 'core-functionality' );
-		$col_active_desc  = esc_html__( 'Drag nodes vertically to reorder. Expand cards via the arrow to tweak live titles, custom URLs, and adjust indentation levels.', 'core-functionality' );
-		$filter_label     = esc_html__( 'Filter by Source Provider:', 'core-functionality' );
-		$all_sources_txt  = esc_html__( 'All Source Providers', 'core-functionality' );
-
-		echo <<<HTML
-		<div class="dwp-menu-builder-columns" style="display: flex; gap: 20px; flex-wrap: wrap;">
-
-			<!-- LEFT POOL COLUMN -->
-			<div class="dwp-builder-column" style="flex: 1; min-width: 320px; background: #fff; border: 1px solid #ccd0d4; padding: 20px; border-radius: 4px;">
-				<h3 style="margin-top: 0; margin-bottom: 5px; font-size: 15px; font-weight: 600; color: #1d2327;">{$col_pool_title}</h3>
-				<p class="description" style="margin-bottom: 15px;">{$col_pool_desc}</p>
-
-				<div class="dwp-provider-filter-wrapper" style="margin-bottom: 15px; padding: 10px; background: #f1f5f9; border-radius: 3px; border: 1px solid #e2e8f0;">
-					<label style="display: block; font-weight: 600; font-size: 12px; color: #475569; margin-bottom: 6px;">{$filter_label}</label>
-					<select id="js-dwp-provider-filter" style="width: 100%; height: 32px; border-color: #cbd5e1;">
-						<option value="all">{$all_sources_txt}</option>
-		HTML;
-
-		foreach ( $providers as $provider_id ) {
-			$clean_id          = esc_attr( $provider_id );
-			$friendly_provider = esc_html( ucwords( str_replace( array( '_', '-' ), ' ', $provider_id ) ) );
-			echo "<option value='{$clean_id}'>{$friendly_provider}</option>";
-		}
-
-		echo <<<HTML
-					</select>
-				</div>
-
-				<!-- UNIFIED GREY CONTAINER BOX: Houses actions controls and node elements lists together -->
-				<div class="js-dwp-bulk-management-box" style="background: #f8fafc; border: 1px solid #cbd5e1; padding: 15px; border-radius: 4px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box;">
-
-					<!-- DYNAMIC GENERATED CONTROLS WILL INJECT HERE VIA JS -->
-
-					<div class="dwp-builder-items-pool js-dwp-builder-pool" style="display: flex; flex-direction: column; gap: 8px; max-height: 450px; overflow-y: auto; padding: 5px; background: #fff; border: 1px solid #e2e8f0; border-radius: 3px;">
-		HTML;
-
-		// Inject dynamic virtual submenu header template node inside the stencil list.
-		$virtual_submenu_dto = new ToolbarShortcut(
-			id:          'custom-link-node',
-			title:       __( 'Empty Submenu / Custom Link', 'core-functionality' ),
-			label:       __( 'Generates an abstract menu parent node group or redirection asset url link', 'core-functionality' ),
-			orientation: Orientation::BOTH,
-			href:        '#'
+		$data = array(
+			'maxDepth'  => self::MAX_DEPTH,
+			'i18n'      => $this->get_script_strings(),
+			'providers' => $this->get_provider_rows(),
+			'pool'      => $this->get_pool_rows(),
+			'tree'      => array(),
 		);
-		$this->render_draggable_tree_node( $virtual_submenu_dto, 'custom_link', 0, false, '' );
+		$this->flatten_saved_tree( $saved_tree, $this->get_catalogue_index(), 0, $data['tree'] );
 
-		// Render the active environment registered shortcuts pool items.
-		foreach ( $live_registry as $provider_id => $shortcuts ) {
-			if ( is_array( $shortcuts ) ) {
-				foreach ( $shortcuts as $shortcut ) {
-					if ( $shortcut instanceof ToolbarShortcut ) {
-						$this->render_draggable_tree_node( $shortcut, $provider_id, 0, false, '' );
-					}
-				}
-			}
-		}
+		$pool_title   = esc_html__( 'Available shortcuts', 'core-functionality' );
+		$pool_desc    = esc_html__( 'Shortcuts of all known plugins and themes. Check them and add them, or drag them into the menu.', 'core-functionality' );
+		$filter_label = esc_html__( 'Source', 'core-functionality' );
+		$tree_title   = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
+		$tree_desc    = esc_html__( 'Drag to reorder and use the arrows to indent. Open a node to change its title or where it is shown.', 'core-functionality' );
+		$json         = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
+		// The data is JSON in a script block; JSON_HEX_TAG keeps it from closing the block.
+		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo <<<HTML
-					</div>
-				</div>
+		<div class="dwp-menu-builder js-dwp-menu-builder">
+			<div class="dwp-mb-column">
+				<h3>{$pool_title}</h3>
+				<p class="description">{$pool_desc}</p>
+				<label class="dwp-mb-filter">
+					<span>{$filter_label}</span>
+					<select class="js-dwp-mb-filter"></select>
+				</label>
+				<div class="dwp-mb-pool-actions js-dwp-mb-pool-actions"></div>
+				<div class="dwp-mb-pool js-dwp-mb-pool"></div>
 			</div>
-
-			<!-- RIGHT ACTIVE BLUEPRINT CANVAS TREE COLUMN -->
-			<div class="dwp-builder-column" style="flex: 1; min-width: 380px; background: #fff; border: 1px solid #ccd0d4; padding: 20px; border-radius: 4px; border-top: 4px solid #2271b1;">
-				<h3 style="margin-top: 0; margin-bottom: 5px; font-size: 15px; font-weight: 600; color: #1c3d5a;">{$col_active_title}</h3>
-				<p class="description" style="margin-bottom: 15px;">{$col_active_desc}</p>
-
-				<div class="dwp-builder-active-tree-canvas js-dwp-active-tree-canvas" style="display: flex; flex-direction: column; gap: 8px; min-height: 480px; max-height: 650px; overflow-y: auto; padding: 15px; background: #f0f4f8; border: 2px dashed #cbd5e1; border-radius: 3px; position: relative;">
-		HTML;
-
-		if ( empty( $saved_tree ) ) {
-			$empty_txt = esc_html__( 'Toolbar menu is empty. Add shortcuts from the pool and manage your dropdown matrix submenus nesting groups.', 'core-functionality' );
-			echo "<div class='dwp-canvas-placeholder-msg' style='color: #64748b; font-style: italic; text-align: center; padding: 50px 10px;'>{$empty_txt}</div>";
-		} else {
-			$flattened_pool = array();
-			foreach ( $live_registry as $p_id => $shortcuts ) {
-				if ( is_array( $shortcuts ) ) {
-					foreach ( $shortcuts as $s ) {
-						if ( $s instanceof ToolbarShortcut ) {
-							$flattened_pool[ $s->id ] = array(
-								'shortcut' => $s,
-								'provider' => $p_id,
-							);
-						}
-					}
-				}
-			}
-			$this->render_recursive_tree_branches( $saved_tree, $flattened_pool, 0 );
-		}
-
-		echo <<<HTML
-				</div>
-				<input type="hidden" name="dwp_menu_serialized_tree" id="js-dwp-serialized-tree-input" value="" />
+			<div class="dwp-mb-column dwp-mb-column--tree">
+				<h3>{$tree_title}</h3>
+				<p class="description">{$tree_desc}</p>
+				<div class="dwp-mb-tree js-dwp-mb-tree"></div>
+				<input type="hidden" name="dwp_menu_serialized_tree" class="js-dwp-mb-serialized" value="" />
 			</div>
-
+			<script type="application/json" class="js-dwp-mb-data">{$json}</script>
 		</div>
 		HTML;
+		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
-	 * Recursively renders nested hierarchy paths based on unique instance configurations maps.
-	 *
-	 * Supports mixed node rendering (both real cloned shortcuts and custom virtual submenu links).
+	 * Returns the providers for the source filter, with their status.
 	 *
 	 * @since  1.0.0
-	 * @param  array $tree_level      The active layout data hierarchy layer.
-	 * @param  array $flattened_pool  Flattened reference maps collections indexing all live shortcuts DTOs.
-	 * @param  int   $depth           Current indentation hierarchy depth index tracking markers.
+	 * @return array<int, array{id: string, name: string, status: string}> The providers.
+	 */
+	private function get_provider_rows(): array {
+		$rows = array();
+		foreach ( AdminToolbarRegister::get_all() as $provider_id => $shortcuts ) {
+			if ( empty( $shortcuts ) ) {
+				continue;
+			}
+
+			$rows[] = array(
+				'id'     => $provider_id,
+				'name'   => $this->get_provider_name( $provider_id ),
+				'status' => ( AdminToolbarRegister::get_status( $provider_id ) ?? ProviderStatus::NOT_INSTALLED )->value,
+			);
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Returns the pool: a custom submenu and every shortcut in the catalogue.
+	 *
+	 * @since  1.0.0
+	 * @return array<int, array<string, mixed>> The pool rows.
+	 */
+	private function get_pool_rows(): array {
+		$rows = array(
+			array(
+				'id'           => 'custom-submenu',
+				'type'         => 'submenu',
+				'provider'     => '',
+				'providerName' => __( 'Custom', 'core-functionality' ),
+				'status'       => ProviderStatus::ACTIVE->value,
+				'kind'         => Orientation::BOTH->value,
+				'defaultTitle' => __( 'Submenu or custom link', 'core-functionality' ),
+				'label'        => __( 'A parent for other nodes, or a link of your own', 'core-functionality' ),
+				'href'         => '',
+			),
+		);
+
+		foreach ( AdminToolbarRegister::get_all() as $provider_id => $shortcuts ) {
+			foreach ( $shortcuts as $shortcut ) {
+				$rows[] = $this->get_shortcut_row( $shortcut, $provider_id );
+			}
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Returns the data of a shortcut for the script.
+	 *
+	 * @since  1.0.0
+	 * @param  ToolbarShortcut $shortcut    The shortcut.
+	 * @param  string          $provider_id The plugin, theme or core that offers it.
+	 * @return array<string, mixed> The row.
+	 */
+	private function get_shortcut_row( ToolbarShortcut $shortcut, string $provider_id ): array {
+		return array(
+			'id'           => $shortcut->id,
+			'type'         => 'shortcut',
+			'provider'     => $provider_id,
+			'providerName' => $this->get_provider_name( $provider_id ),
+			'status'       => ( AdminToolbarRegister::get_status( $provider_id ) ?? ProviderStatus::NOT_INSTALLED )->value,
+			'kind'         => $shortcut->orientation->value,
+			'defaultTitle' => $shortcut->title,
+			'label'        => $shortcut->label,
+			'href'         => $shortcut->get_href(),
+		);
+	}
+
+	/**
+	 * Turns the saved tree into a flat list in display order, with the depth of each node.
+	 *
+	 * @since  1.0.0
+	 * @param  array $tree_level One level of the saved tree.
+	 * @param  array $index      The catalogue: node id => array( shortcut, provider ).
+	 * @param  int   $depth      The depth of this level.
+	 * @param  array $rows       The list, filled by reference.
 	 * @return void
 	 */
-	private function render_recursive_tree_branches( array $tree_level, array $flattened_pool, int $depth ): void {
+	private function flatten_saved_tree( array $tree_level, array $index, int $depth, array &$rows ): void {
 		foreach ( $tree_level as $instance_id => $meta ) {
+			if ( ! is_array( $meta ) ) {
+				continue;
+			}
 
-			$type = $meta['type'] ?? 'shortcut';
+			$type  = $meta['type'] ?? 'shortcut';
+			$id    = (string) ( $meta['id'] ?? '' );
+			$title = (string) ( $meta['title'] ?? '' );
 
 			if ( 'submenu' === $type ) {
-				$shortcut    = new ToolbarShortcut(
-					id:          $meta['id'] ?? $instance_id,
-					title:       $meta['title'] ?? 'Custom Submenu',
-					label:       __( 'Custom Submenu Header Group', 'core-functionality' ),
-					orientation: Orientation::BOTH,
-					href:        $meta['href'] ?? '#'
+				$row = array(
+					'id'           => $id,
+					'type'         => 'submenu',
+					'provider'     => '',
+					'providerName' => __( 'Custom', 'core-functionality' ),
+					'status'       => ProviderStatus::ACTIVE->value,
+					'kind'         => Orientation::BOTH->value,
+					'defaultTitle' => '',
+					'label'        => '',
+					'href'         => '#' === ( $meta['href'] ?? '' ) ? '' : (string) ( $meta['href'] ?? '' ),
 				);
-				$provider_id = 'custom_link';
+			} elseif ( isset( $index[ $id ] ) ) {
+				$row = $this->get_shortcut_row( $index[ $id ]['shortcut'], $index[ $id ]['provider'] );
+				// A title equal to the shortcut's own title is no override; it keeps following the translation.
+				$title = $title === $row['defaultTitle'] ? '' : $title;
 			} else {
-				$node_id   = $meta['id'] ?? '';
-				$pool_item = $flattened_pool[ $node_id ] ?? null;
-
-				if ( is_array( $pool_item ) ) {
-					$shortcut    = new ToolbarShortcut(
-						id:          $pool_item['shortcut']->id,
-						title:       $meta['title'] ?? $pool_item['shortcut']->title,
-						label:       $pool_item['shortcut']->label,
-						orientation: $pool_item['shortcut']->orientation,
-						parent:      $pool_item['shortcut']->parent,
-						href:        $meta['href'] ?? $pool_item['shortcut']->get_href()
-					);
-					$provider_id = $pool_item['provider'];
-				} else {
-					$shortcut    = new ToolbarShortcut(
-						id: $node_id,
-						title: $node_id,
-						label: __( 'Inactive Component Residual Node', 'core-functionality' ),
-						orientation: Orientation::BOTH
-					);
-					$provider_id = 'unknown';
-				}
+				$row = array(
+					'id'           => $id,
+					'type'         => 'shortcut',
+					'provider'     => '',
+					'providerName' => __( 'Unknown', 'core-functionality' ),
+					'status'       => 'unknown',
+					'kind'         => Orientation::BOTH->value,
+					'defaultTitle' => '' !== $title ? $title : $id,
+					'label'        => __( 'No known plugin or theme offers this shortcut any more.', 'core-functionality' ),
+					'href'         => '',
+				);
 			}
 
-			$this->render_draggable_tree_node( $shortcut, $provider_id, $depth, true, $instance_id );
+			$rows[] = $row + array(
+				'instance'   => (string) $instance_id,
+				'title'      => $title,
+				'visibility' => ( Orientation::tryFrom( (string) ( $meta['visibility'] ?? '' ) ) ?? Orientation::BOTH )->value,
+				'depth'      => $depth,
+			);
 
-			if ( ! empty( $meta['children'] ) && is_array( $meta['children'] ) && $depth < 2 ) {
-				$this->render_recursive_tree_branches( $meta['children'], $flattened_pool, $depth + 1 );
+			if ( ! empty( $meta['children'] ) && is_array( $meta['children'] ) && $depth < self::MAX_DEPTH ) {
+				$this->flatten_saved_tree( $meta['children'], $index, $depth + 1, $rows );
 			}
 		}
 	}
 
 	/**
-	 * Outputs an individual dynamic node element container block, fully supporting multiple duplicate instances.
-	 *
-	 * FIXED OVERRIDE: Added data-href attribute tag onto the root face layout block to ensure dynamic script translation lookups.
+	 * Returns every shortcut in the catalogue by node id, with its provider.
 	 *
 	 * @since  1.0.0
-	 * @param  ToolbarShortcut $shortcut    The shortcut node configuration DTO parameters.
-	 * @param  string          $provider_id The dynamic component origin source identifier string handle.
-	 * @param  int             $depth       Current nested hierarchical indentation depth layer index tracking.
-	 * @param  bool            $is_active   True if rendering inside the canvas workspace, false inside pool lists.
-	 * @param  string          $instance_id Optional. Cryptographic temporary execution identity string key.
-	 * @return void
+	 * @return array<string, array{shortcut: ToolbarShortcut, provider: string}> The index.
 	 */
-	private function render_draggable_tree_node( ToolbarShortcut $shortcut, string $provider_id, int $depth, bool $is_active, string $instance_id = '' ): void {
-		$id_attr         = esc_attr( $shortcut->id );
-		$p_id_attr       = esc_attr( $provider_id );
-		$inst_attr       = esc_attr( $instance_id );
-		$title_html      = esc_html( $shortcut->title );
-		$href_attr       = esc_attr( $shortcut->get_href() );
-		$friendly_source = esc_html( strtoupper( str_replace( array( '_', '-' ), ' ', $provider_id ) ) );
-
-		$margin_left = $is_active ? ( $depth * 30 ) . 'px' : '0px';
-		$border_left = ( 'custom_link' === $p_id_attr ) ? '4px solid #16a34a' : ( $is_active ? '4px solid #2271b1' : '4px solid #94a3b8' );
-		$opacity     = ( 'unknown' === $p_id_attr ) ? '0.5' : '1';
-		$type_attr   = ( 'custom_link' === $p_id_attr ) ? 'submenu' : 'shortcut';
-
-		echo <<<HTML
-		<div class="dwp-tree-node-item js-dwp-tree-node" data-id="{$id_attr}" data-instance="{$inst_attr}" data-type="{$type_attr}" data-provider="{$p_id_attr}" data-depth="{$depth}" data-href="{$href_attr}" draggable="true" style="background: #fff; border: 1px solid #cbd5e1; border-left: {$border_left}; margin-left: {$margin_left}; border-radius: 3px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.05); opacity: {$opacity}; transition: margin-left 0.15s ease, opacity 0.2s;">
-			<div style="display: flex; align-items: center; justify-content: space-between; padding: 10px 15px; width: 100%; box-sizing: border-box;">
-				<div style="display: flex; align-items: center; gap: 10px; max-width: 65%;">
-		HTML;
-
-		if ( ! $is_active ) {
-			echo "<input type='checkbox' class='js-pool-checkbox' value='{$id_attr}' style='margin: 0;' />";
+	private function get_catalogue_index(): array {
+		$index = array();
+		foreach ( AdminToolbarRegister::get_all() as $provider_id => $shortcuts ) {
+			foreach ( $shortcuts as $shortcut ) {
+				$index[ $shortcut->id ] ??= array(
+					'shortcut' => $shortcut,
+					'provider' => $provider_id,
+				);
+			}
 		}
 
-		echo <<<HTML
-					<div style="display: flex; flex-direction: column; gap: 2px;">
-						<strong class="js-node-title" style="font-size: 13px; color: #1e293b;">{$title_html}</strong>
-						<span style="font-size: 10px; background: #e2e8f0; color: #475569; padding: 1px 5px; border-radius: 3px; font-weight: 600; width: fit-content; margin-top: 3px; font-family: sans-serif;">{$friendly_source}</span>
-					</div>
-				</div>
-				<div style="display: flex; align-items: center; gap: 10px; color: #94a3b8;">
-		HTML;
+		return $index;
+	}
 
-		if ( $is_active ) {
-			echo "<span class='dashicons dashicons-arrow-left-alt2 js-dwp-move-outward" . "' title='" . esc_attr__( 'Move Outward (Reduce Depth)', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569;'></span>";
-			echo "<span class='dashicons dashicons-arrow-right-alt2 js-dwp-move-inward" . "' title='" . esc_attr__( 'Move Inward (Increase Depth)', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #2271b1;'></span>";
-			echo "<span class='dashicons dashicons-arrow-down-alt2 js-dwp-toggle-edit' title='" . esc_attr__( 'Toggle configuration panel', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #475569; transition: transform 0.2s; margin-left: 4px;'></span>";
-			echo "<span class='dashicons dashicons-trash js-dwp-remove-node' title='" . esc_attr__( 'Remove node item', 'core-functionality' ) . "' style='cursor: pointer; font-size: 16px; width: 16px; height: 16px; color: #ef4444;'></span>";
+	/**
+	 * Returns a readable name for a provider id.
+	 *
+	 * @since  1.0.0
+	 * @param  string $provider_id The plugin, theme or core id.
+	 * @return string The name.
+	 */
+	private function get_provider_name( string $provider_id ): string {
+		if ( 'wordpress-core' === $provider_id ) {
+			return 'WordPress';
 		}
 
-		echo <<<HTML
-					<span class="dashicons dashicons-editor-justify" style="font-size: 18px; width: 18px; height: 18px; margin-left: 2px;"></span>
-				</div>
-			</div>
-		HTML;
+		return ucwords( str_replace( '-', ' ', $provider_id ) );
+	}
 
-		if ( $is_active ) {
-			$lbl_title = esc_html__( 'Navigation Label Override', 'core-functionality' );
-			$lbl_url   = esc_html__( 'Resource URL Reference (Read-Only Copy Source)', 'core-functionality' );
-			$i18n_warn = esc_html__( '⚠️ Notice: Custom label overrides bypass system i18n core translation files.', 'core-functionality' );
-
-			$is_readonly_attr = ( 'custom_link' === $p_id_attr ) ? '' : 'readonly="readonly" style="background: #e2e8f0; color: #475569;"';
-
-			echo <<<HTML
-			<div class="js-dwp-edit-panel" style="display: none; background: #f8fafc; border-top: 1px solid #e2e8f0; padding: 15px; box-sizing: border-box; width: 100%;">
-				<div style="margin-bottom: 10px;">
-					<label style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px;">{$lbl_title}</label>
-					<input type="text" class="js-dwp-edit-title regular-text" value="{$title_html}" style="width: 100%; height: 28px; font-size: 12px;" />
-					<span style="display: block; font-size: 10px; color: #b91c1c; margin-top: 4px; font-style: italic;">{$i18n_warn}</span>
-				</div>
-				<div>
-					<label style="display: block; font-size: 11px; font-weight: 600; color: #475569; margin-bottom: 4px;">{$lbl_url}</label>
-					<div style="display: flex; gap: 6px;">
-						<input type="text" class="js-dwp-edit-url regular-text" id="url-{$inst_attr}" value="{$href_attr}" {$is_readonly_attr} style="flex: 1; height: 28px; font-size: 12px; font-family: monospace;" />
-						<button type="button" class="button button-small" onclick="navigator.clipboard.writeText(document.getElementById('url-{$inst_attr}').value); alert('URL successfully copied to clipboard!');" style="height: 28px; line-height: 26px; font-size: 11px;">📋 Copy</button>
-					</div>
-				</div>
-			</div>
-			HTML;
-		}
-
-		echo '</div>';
+	/**
+	 * Returns the strings the script shows.
+	 *
+	 * @since  1.0.0
+	 * @return array<string, string> Key => translated string.
+	 */
+	private function get_script_strings(): array {
+		return array(
+			'allSources'      => __( 'All sources', 'core-functionality' ),
+			'statusActive'    => __( 'Active', 'core-functionality' ),
+			'statusInactive'  => __( 'Inactive', 'core-functionality' ),
+			'statusMissing'   => __( 'Not installed', 'core-functionality' ),
+			'statusUnknown'   => __( 'Unknown', 'core-functionality' ),
+			'kindAdmin'       => __( 'Admin', 'core-functionality' ),
+			'kindFrontend'    => __( 'Front', 'core-functionality' ),
+			'kindAdminTip'    => __( 'Links to an admin page', 'core-functionality' ),
+			'kindFrontendTip' => __( 'Links to a page on the site', 'core-functionality' ),
+			'visibleAdmin'    => __( 'Only on admin pages', 'core-functionality' ),
+			'visibleFrontend' => __( 'Only on the front end', 'core-functionality' ),
+			'visibleBoth'     => __( 'On admin pages and the front end', 'core-functionality' ),
+			'visibility'      => __( 'Show', 'core-functionality' ),
+			'addSelected'     => __( 'Add selected', 'core-functionality' ),
+			'selectAll'       => __( 'Select all visible', 'core-functionality' ),
+			'selectFirst'     => __( 'Select at least one shortcut first.', 'core-functionality' ),
+			'emptyTree'       => __( 'The menu is empty. Add shortcuts from the list.', 'core-functionality' ),
+			'title'           => __( 'Title', 'core-functionality' ),
+			'titleHint'       => __( 'Leave empty to use the title of the shortcut, which follows the translation.', 'core-functionality' ),
+			'submenuTitle'    => __( 'Submenu', 'core-functionality' ),
+			'url'             => __( 'URL', 'core-functionality' ),
+			'urlHint'         => __( 'Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown.', 'core-functionality' ),
+			'copy'            => __( 'Copy', 'core-functionality' ),
+			'copied'          => __( 'Copied', 'core-functionality' ),
+			'moveOut'         => __( 'Move out (one level up)', 'core-functionality' ),
+			'moveIn'          => __( 'Move in (one level down)', 'core-functionality' ),
+			'edit'            => __( 'Settings', 'core-functionality' ),
+			'remove'          => __( 'Remove', 'core-functionality' ),
+			/* translators: %d: number of items below the node. */
+			'removeConfirm'   => __( 'This node has %d items below it. Remove the node together with those items?', 'core-functionality' ),
+			'inactiveHint'    => __( 'Shown once this plugin or theme is active.', 'core-functionality' ),
+		);
 	}
 
 	/**
@@ -451,7 +458,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			return false;
 		}
 
-		$sanitized_tree = $this->sanitize_recursive_tree_payload( $decoded_tree );
+		$sanitized_tree = $this->sanitize_recursive_tree_payload( $decoded_tree, $this->get_catalogue_index(), 0 );
 
 		$this->plugin->settings->save( $this->menu_builder_tree_option_token, $sanitized_tree );
 
@@ -459,30 +466,51 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Recursively sanitizes keys, attributes, and children nested inside the json payload layout tree.
+	 * Sanitizes one level of the submitted tree, and its children.
+	 *
+	 * A shortcut's title is only kept when it differs from the shortcut's own title, and a
+	 * shortcut never keeps a URL: both then follow the plugin (translations, changed URLs).
 	 *
 	 * @since  1.0.0
 	 * @param  array $tree_level One level of the submitted menu tree.
+	 * @param  array $index      The catalogue: node id => array( shortcut, provider ).
+	 * @param  int   $depth      The depth of this level.
 	 * @return array             The sanitized level.
 	 */
-	private function sanitize_recursive_tree_payload( array $tree_level ): array {
+	private function sanitize_recursive_tree_payload( array $tree_level, array $index, int $depth ): array {
 		$sanitized = array();
 		foreach ( $tree_level as $instance_id => $meta ) {
-			$clean_instance = sanitize_key( $instance_id );
-			$type           = sanitize_text_field( $meta['type'] ?? 'shortcut' );
+			if ( ! is_array( $meta ) ) {
+				continue;
+			}
 
-			$node_id = ( 'submenu' === $type ) ? sanitize_title( $meta['title'] ?? 'custom-link' ) : sanitize_key( $meta['id'] ?? '' );
+			$type  = 'submenu' === ( $meta['type'] ?? '' ) ? 'submenu' : 'shortcut';
+			$title = sanitize_text_field( (string) ( $meta['title'] ?? '' ) );
 
-			$sanitized[ $clean_instance ] = array(
-				'id'       => $node_id,
-				'type'     => $type,
-				'title'    => sanitize_text_field( $meta['title'] ?? '' ),
-				'href'     => sanitize_text_field( $meta['href'] ?? '#' ),
-				'children' => ( ! empty( $meta['children'] ) && is_array( $meta['children'] ) )
-					? $this->sanitize_recursive_tree_payload( $meta['children'] )
+			if ( 'submenu' === $type ) {
+				$title   = '' !== $title ? $title : __( 'Submenu', 'core-functionality' );
+				$node_id = sanitize_title( $title );
+				$href    = esc_url_raw( (string) ( $meta['href'] ?? '' ) );
+			} else {
+				$node_id = sanitize_key( (string) ( $meta['id'] ?? '' ) );
+				$href    = '';
+				if ( isset( $index[ $node_id ] ) && $title === $index[ $node_id ]['shortcut']->title ) {
+					$title = '';
+				}
+			}
+
+			$sanitized[ sanitize_key( (string) $instance_id ) ] = array(
+				'id'         => $node_id,
+				'type'       => $type,
+				'title'      => $title,
+				'href'       => $href,
+				'visibility' => ( Orientation::tryFrom( (string) ( $meta['visibility'] ?? '' ) ) ?? Orientation::BOTH )->value,
+				'children'   => ( ! empty( $meta['children'] ) && is_array( $meta['children'] ) && $depth < self::MAX_DEPTH )
+					? $this->sanitize_recursive_tree_payload( $meta['children'], $index, $depth + 1 )
 					: array(),
 			);
 		}
+
 		return $sanitized;
 	}
 
