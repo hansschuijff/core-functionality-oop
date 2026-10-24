@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T00:36:49+02:00\n"
+"POT-Creation-Date: 2026-10-25T00:37:15+02:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -1882,7 +1882,6 @@ msgstr "Menubouwer admin-toolbar (oude versie)"
 
 #: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:48
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:66
-#: src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/MenuBuilder.php:57
 msgid "The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar."
 msgstr "Bouwt een menu met snelkoppelingen in de admin-toolbar."
 
@@ -2074,10 +2073,6 @@ msgstr "Menustructuur van de admin-toolbar opgeslagen."
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:527
 msgid "Save Toolbar Menu Order Hierarchy"
 msgstr "Menustructuur toolbar opslaan"
-
-#: src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/MenuBuilder.php:56
-msgid "Admin Toolbar Menu Feature"
-msgstr "Menu admin-toolbar"
 
 #: src/Modules/AdminToolbar/Features/StylesFixer/StylesFixer.php:45
 msgid "Admin Toolbar Styles Fixer Feature"

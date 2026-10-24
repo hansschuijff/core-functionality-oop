@@ -240,8 +240,7 @@ Known issues:
 - Menu builder (October 2026): titles saved before this version are stored as overrides, also where
   they equal the English title; clearing the title field makes a node follow the translation again.
   Still to do: a better long-list experience (search, insert at a selected spot, keyboard, collapsing
-  branches). `src/Modules/AdminToolbar/Features/MenuBuilderAlleNodes/` is an old copy of the menu
-  builder (same class name, not loaded) that can go (confirm).
+  branches).
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):
