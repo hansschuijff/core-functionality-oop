@@ -19,6 +19,8 @@
  * @package DeWittePrins\CoreFunctionality
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality;
 
 if ( ! defined( 'ABSPATH' ) ) {

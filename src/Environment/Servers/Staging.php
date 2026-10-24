@@ -6,6 +6,8 @@
  * @since   1.0.0
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\Environment\Servers;
 
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;

@@ -16,6 +16,8 @@
  * als er een fout was en true als de invoer is goedgekeurd.
  */
 
+declare( strict_types=1 );
+
 /**
  * File containing the FeatureClassValidator Value Object.
  *

@@ -24,6 +24,8 @@
  * @package DeWittePrins\CoreFunctionality\Interfaces
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\Interfaces;
 /**
  * De PSR-3 Logger interface

@@ -5,6 +5,8 @@
  * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
 use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;

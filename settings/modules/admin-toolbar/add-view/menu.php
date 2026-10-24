@@ -11,6 +11,8 @@
  * @license     GNU-2.0+
  */
 
+declare( strict_types=1 );
+
 use DeWittePrins\Corefunctionality\Modules\AdminToolbar\AdminToolbar;
 
 if ( ! defined( 'ABSPATH' ) ) {

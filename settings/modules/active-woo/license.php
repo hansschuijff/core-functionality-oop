@@ -9,6 +9,8 @@
  * @license     GNU-2.0+
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\ActiveWoo;
 
 return json_decode(

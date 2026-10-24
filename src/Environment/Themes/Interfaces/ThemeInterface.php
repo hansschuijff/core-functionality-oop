@@ -9,6 +9,8 @@
  * @since      1.0.0
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\Environment\Themes\Interfaces;
 
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;

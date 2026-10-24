@@ -8,6 +8,8 @@
  * @since   1.0.0
  */
 
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\Admin\Services\Settings;
 
 if ( ! defined( 'ABSPATH' ) ) {

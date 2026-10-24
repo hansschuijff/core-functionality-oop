@@ -11,6 +11,8 @@
  * @license     GNU-2.0+
  */
 
+declare( strict_types=1 );
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

@@ -5,6 +5,9 @@
  * @package DeWittePrins\CoreFunctionality\Enums
  * @since   1.0.0
  */
+
+declare( strict_types=1 );
+
 namespace DeWittePrins\CoreFunctionality\Enums;
 
 if ( ! defined( 'ABSPATH' ) ) {
