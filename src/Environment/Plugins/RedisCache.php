@@ -18,7 +18,8 @@ class RedisCache extends AbstractPlugin {
 
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		return new ProofRequirement( constants: 'WP_REDIS_VERSION' );
+		// The main file creates the plugin instance as soon as it loads.
+		return new ProofRequirement( classes: 'Rhubarb\\RedisCache\\Plugin' );
 	}
 
 	#[Override]

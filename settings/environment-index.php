@@ -38,7 +38,7 @@ return array(
 		'seo-redirection-premium'         => 'seo-redirection-premium/seo-redirection-premium.php',
 		'updraft-plus'                    => 'updraftplus/updraftplus.php',
 		'wp-forms'                        => 'wpforms/wpforms.php',
-		'redis-cache'                     => 'redis-cache/redis-cache.php', // confirm.
+		'redis-cache'                     => 'redis-cache/redis-cache.php',
 
 		// Updates and licences.
 		'git-updater'                     => 'git-updater/git-updater.php',
@@ -68,7 +68,7 @@ return array(
 
 		// Sensei LMS Stack.
 		'sensei-lms'                      => 'sensei-lms/sensei-lms.php',
-		'sensei-pro'                      => 'sensei-pro/sensei-pro.php', // confirm.
+		'sensei-pro'                      => 'woothemes-sensei/woothemes-sensei.php', // Sensei Pro (WC Paid Courses).
 		'sensei-content-drip'             => 'sensei-content-drip/sensei-content-drip.php',
 		'sensei-paid-courses'             => 'sensei-paid-courses/sensei-paid-courses.php',
 
