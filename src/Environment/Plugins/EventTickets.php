@@ -60,9 +60,8 @@ class EventTickets extends AbstractPlugin {
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement(
-			classes:     'Tribe__Tickets__Main',
-			functions:   array( 'tribe_tickets', 'tribe_events_has_tickets', 'tribe_tickets_parent_post' ),
-			not_actions: 'tribe_extensions_failed_requirements' // Global version mismatch monitor guard
+			classes:   'Tribe__Tickets__Main',
+			functions: array( 'tribe_tickets', 'tribe_events_has_tickets', 'tribe_tickets_parent_post' )
 		);
 	}
 

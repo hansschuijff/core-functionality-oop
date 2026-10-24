@@ -58,9 +58,8 @@ class TheEventsCalendar extends AbstractPlugin {
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
 		return new ProofRequirement(
-			classes:     'Tribe__Events__Main',
-			functions:   $this->get_defensive_template_tags(),
-			not_actions: 'tribe_extensions_failed_requirements' // Negative action hook firewall!
+			classes:   'Tribe__Events__Main',
+			functions: $this->get_defensive_template_tags()
 		);
 	}
 
