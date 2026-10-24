@@ -36,13 +36,6 @@ use function wp_get_environment_type;
 class EnvironmentLookup {
 
 	/**
-	 * Central core plugin controller reference.
-	 *
-	 * @var Plugin
-	 */
-	private Plugin $plugin;
-
-	/**
 	 * Centralized register containing token-to-plugin_basename strings.
 	 *
 	 * @var array<string, string>
@@ -62,8 +55,7 @@ class EnvironmentLookup {
 	 * @since 1.0.0
 	 * @param Plugin $plugin De globale hoofd-plugin container shell.
 	 */
-	public function __construct( Plugin $plugin ) {
-		$this->plugin = $plugin;
+	public function __construct( private readonly Plugin $plugin ) {
 		$this->set_lookup_registries_from_settings();
 	}
 
