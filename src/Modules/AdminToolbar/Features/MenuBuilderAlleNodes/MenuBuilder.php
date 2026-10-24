@@ -18,11 +18,10 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuild
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
-
-use function __;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use WP_Admin_Bar;
 
+use function __;
 use function current_user_can;
 use function is_admin;
 use function is_admin_bar_showing;

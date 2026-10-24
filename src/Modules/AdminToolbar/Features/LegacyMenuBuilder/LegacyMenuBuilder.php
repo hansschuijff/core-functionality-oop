@@ -14,11 +14,10 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\LegacyMen
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
-
-use function __;
 use DeWittePrins\Corefunctionality\Modules\AdminToolbar\AdminToolbar;
 use WP_Admin_Bar;
 
+use function __;
 use function current_user_can;
 use function is_admin;
 

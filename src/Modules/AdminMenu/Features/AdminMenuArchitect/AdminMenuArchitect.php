@@ -12,10 +12,9 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminMenu\Features\AdminMenuArc
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
-
-use function __;
 use DeWittePrins\CoreFunctionality\Modules\AdminMenu\DTO\AdminMenuConfigNode;
 
+use function __;
 use function add_action;
 use function add_menu_page;
 use function add_submenu_page;
