@@ -157,6 +157,8 @@ class Settings {
 	 * @return bool          True on successful database update, false otherwise.
 	 */
 	public function save( string $key, mixed $value ): bool {
+		$this->forget_cached( $key );
+
 		return $this->options->update( $key, $value );
 	}
 
@@ -179,7 +181,22 @@ class Settings {
 	 * @return bool        True on successful database purge, false otherwise.
 	 */
 	public function delete( string $key ): bool {
+		$this->forget_cached( $key );
+
 		return $this->options->delete( $key );
+	}
+
+	/**
+	 * Removes a key from the runtime cache, for every module, so the next get() reads the new value.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key The configuration identifier that changed.
+	 * @return void
+	 */
+	private function forget_cached( string $key ): void {
+		foreach ( array_keys( $this->runtime_cache ) as $module_id ) {
+			unset( $this->runtime_cache[ $module_id ][ $key ] );
+		}
 	}
 
 	/**
