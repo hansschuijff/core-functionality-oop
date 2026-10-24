@@ -42,6 +42,7 @@ use function error_log;
 use function esc_html;
 use function esc_html_e;
 use function current_user_can;
+use function wp_doing_ajax;
 use function class_exists;
 use function method_exists;
 use function sprintf;
@@ -233,7 +234,8 @@ class Plugin {
 	 * @return void
 	 */
 	public function notify_new_components(): void {
-		if ( ! current_user_can( 'manage_options' ) ) {
+		// admin_init also runs for Ajax (such as the heartbeat), which renders no notices.
+		if ( wp_doing_ajax() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 
