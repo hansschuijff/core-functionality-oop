@@ -19,7 +19,6 @@ return array(
 	 */
 	'environment-index'             => 'environment-index',
 	'push-notice-available-drivers' => 'push-notice-drivers',
-	'modules'                       => 'modules',
 
 	/**
 	 * Feature: Activewoo->KeepLicenseAlive.

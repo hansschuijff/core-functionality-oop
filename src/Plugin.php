@@ -19,7 +19,6 @@ use DeWittePrins\CoreFunctionality\Services\PluginIntegrityWatch;
 use DeWittePrins\CoreFunctionality\Notifiers\Notices;
 use DeWittePrins\CoreFunctionality\Services\InterDependenciesGuard;
 use DeWittePrins\CoreFunctionality\Services\FileSystem\FileService;
-use DeWittePrins\CoreFunctionality\Services\Loaders\ModuleLoader;
 use DeWittePrins\CoreFunctionality\Services\Settings;
 use DeWittePrins\CoreFunctionality\Diagnostics\Logger;
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
@@ -66,13 +65,6 @@ class Plugin {
 	 * @var Notices
 	 */
 	public Notices $notices;
-
-	/**
-	 * Runtime module and feature lifecycle executor.
-	 *
-	 * @var ModuleLoader
-	 */
-	private ModuleLoader $module_loader;
 
 	/**
 	 * Database settings layer storage service (Protected Shroud).
