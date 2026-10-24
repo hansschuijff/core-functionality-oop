@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Verification Guard.
+ * WooCommerce Pre-Orders Verification Guard.
  *
  * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  */
@@ -20,13 +20,12 @@ use function admin_url;
 use function home_url;
 
 /**
- * Class Woocommerce
+ * Class WoocommercePreOrders
  */
 class WoocommercePreOrders extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
 		return 'woocommerce_pre_orders';
 	}
 

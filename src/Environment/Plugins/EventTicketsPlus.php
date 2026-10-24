@@ -77,8 +77,8 @@ class EventTicketsPlus extends AbstractPlugin {
 			new ToolbarShortcut(
 				id:      'event-tickets-plus-link',
 				title:   __( 'Event Tickets Plus', 'core-functionality' ),
-				href:    admin_url( 'admin.php?page=tickets-plus-settings' ),
-				label:   __( 'Event Tickets Plus Dashboard', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
+				label:   __( 'Event Tickets Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

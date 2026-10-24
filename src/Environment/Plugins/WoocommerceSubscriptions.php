@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Verification Guard.
+ * WooCommerce Subscriptions Verification Guard.
  *
  * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  */
@@ -24,7 +24,7 @@ use function get_term_by;
 use function get_term_link;
 
 /**
- * Class Woocommerce
+ * Class WoocommerceSubscriptions
  */
 class WoocommerceSubscriptions extends AbstractPlugin {
 
@@ -52,7 +52,7 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-front-my-account-subscriptions',
  				title:   __( 'My Account: Subscriptions', 'core-functionality' ),
-				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'core-functionality' ) ),
+				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'subscriptions', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Subscriptions', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),

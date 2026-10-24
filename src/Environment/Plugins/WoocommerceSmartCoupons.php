@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Verification Guard.
+ * WooCommerce Smart Coupons Verification Guard.
  *
  * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  */
@@ -20,13 +20,12 @@ use function admin_url;
 use function home_url;
 
 /**
- * Class Woocommerce
+ * Class WoocommerceSmartCoupons
  */
 class WoocommerceSmartCoupons extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
 		return 'woocommerce_smart_coupons';
 	}
 

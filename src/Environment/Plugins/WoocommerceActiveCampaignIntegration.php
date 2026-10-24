@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Verification Guard.
+ * WooCommerce ActiveCampaign (ActiveWoo) Verification Guard.
  *
  * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  */
@@ -19,7 +19,7 @@ use function __;
 use function admin_url;
 
 /**
- * Class Woocommerce
+ * Class WoocommerceActiveCampaignIntegration
  */
 class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 

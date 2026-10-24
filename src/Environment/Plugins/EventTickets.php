@@ -80,8 +80,8 @@ class EventTickets extends AbstractPlugin {
 			new ToolbarShortcut(
 				id:      'event-tickets-link',
 				title:   __( 'Event Tickets', 'core-functionality' ),
-				href:    admin_url( 'plugins.php#event-tickets' ),
-				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Tickets Dashboard', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Tickets Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Verification Guard.
+ * WooCommerce Follow-Up Emails Verification Guard.
  *
  * @package DeWittePrins\CoreFunctionality\Environment\Plugins
  */
@@ -19,13 +19,12 @@ use function __;
 use function admin_url;
 
 /**
- * Class Woocommerce
+ * Class WoocommerceFollowUpEmails
  */
 class WoocommerceFollowUpEmails extends AbstractPlugin {
 
 	#[Override]
 	public function get_id(): string {
-		// Full plugin name is WooCommerce PDF Invoices & Packing Slips
 		return 'woocommerce_follow_up_emails';
 	}
 

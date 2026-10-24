@@ -27,8 +27,8 @@ class GitUpdater extends AbstractPlugin {
 			new ToolbarShortcut(
 				id:      'cf-git-updater-menu',
 				title:   __( 'Github', 'core-functionality' ),
-				href:    admin_url( 'admin.php?page=git-remote-updater' ),
-				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Remote Updater', 'core-functionality' ),
+				href:    admin_url( 'options-general.php?page=git-updater' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Updater', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
@@ -49,7 +49,7 @@ class GitUpdater extends AbstractPlugin {
 				id:      'cf-git-updater-theme-install',
 				title:   __( 'Install theme', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=git-updater&tab=git_updater_install_theme' ),
-				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Updater: Install Plugin', 'core-functionality' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Updater: Install Theme', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
