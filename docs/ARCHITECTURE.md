@@ -179,14 +179,16 @@ Environment proofs (reviewed October 2026):
 - Guards for plugins that are not installed locally (Carbon Fields, Carbon Fields Helper, SearchWP,
   ActiveWoo API Helper, Schema Glue, Sensei Paid Courses) only use the activation check until a proof is
   confirmed.
-- The Tribe guards use `not_actions: 'tribe_extensions_failed_requirements'`, but that action does not
-  exist in the current Tribe plugins, so it has no effect. The template-function check is what catches
-  a Tribe plugin that switched itself off.
+- The Tribe guards check the Tribe template functions, which catch a Tribe plugin that switched itself
+  off after a version conflict. (A `not_actions` check on `tribe_extensions_failed_requirements` was
+  removed: that action does not exist in the Tribe plugins.)
 - Verified on the local site at Kernel timing: The Events Calendar (+ Pro), Event Tickets (+ Plus),
   WooCommerce, Loco Translate, SEO Redirection Premium, Debug Toolkit. Checked in the sources only: the
-  other installed plugins. Not installed locally, proof and basename unverified (confirm): Redis Cache,
-  WP phpMyAdmin, EU VAT Assistant, Follow-Up Emails (no proof yet), Sensei Pro; which Festinger Vault
-  folder production uses.
+  other installed plugins. Not installed locally, proof and basename unverified (confirm): Redis Cache
+  and Sensei Pro (both in use). Festinger Vault: which folder production uses, left for later.
+- AutomateWoo replaced WooCommerce Follow-Up Emails; the guards for Follow-Up Emails, EU VAT Assistant
+  (legacy) and WP phpMyAdmin (not needed) were removed. The AdminToolbar settings files
+  (`settings/modules/admin-toolbar/`) still contain links for those three plugins.
 - Site-specific URLs live in guard code (`/evenementen/`, `/agenda/categorie/familieopstellingen/`,
   `/artikelen/`, the `course-payment-plans` product category); they belong in settings files.
 
