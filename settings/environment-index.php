@@ -39,7 +39,6 @@ return array(
 		'updraft-plus'                    => 'updraftplus/updraftplus.php',
 		'wp-forms'                        => 'wpforms/wpforms.php',
 		'redis-cache'                     => 'redis-cache/redis-cache.php', // confirm.
-		'wp-php-my-admin'                 => 'wp-phpmyadmin-extension/index.php', // confirm.
 
 		// Updates and licences.
 		'git-updater'                     => 'git-updater/git-updater.php',
@@ -58,8 +57,7 @@ return array(
 		'woocommerce-pre-orders'          => 'woocommerce-pre-orders/woocommerce-pre-orders.php',
 		'woocommerce-product-addons'      => 'woocommerce-product-addons/woocommerce-product-addons.php',
 		'woocommerce-smart-coupons'       => 'woocommerce-smart-coupons/woocommerce-smart-coupons.php',
-		'woocommerce-eu-vat-assistant'    => 'woocommerce-eu-vat-assistant/woocommerce-eu-vat-assistant.php', // confirm.
-		'woocommerce-follow-up-emails'    => 'woocommerce-follow-up-emails/woocommerce-follow-up-emails.php', // confirm.
+		'automatewoo'                     => 'automatewoo/automatewoo.php',
 
 		// The Events Calendar Stack.
 		'the-events-calendar'             => 'the-events-calendar/the-events-calendar.php',
