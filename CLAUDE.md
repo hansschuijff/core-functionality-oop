@@ -47,9 +47,9 @@ new modules and features for Hans's own sites.
   (`any-genesis-theme`) or a server id with `-environment` (`production-environment`). Each id needs a guard class in
   `src/Environment/Plugins|Themes|Servers/`; its `get_id()` is the class name in kebab-case and equals the
   key in `settings/environment-index.php` (plugins: basename, themes: name and author).
-- A guard's proof must hold on `plugins_loaded` priority 10: prefer a constant, function or class that the
-  plugin's main file defines, or one verified on the local site. Autoloaded classes usually do not exist
-  yet (`class_exists( $class, false )`), and theme code is not loaded yet.
+- A guard's proof must hold when the Kernel boots (`init` priority 0): use a constant, function or class
+  that the plugin defines once it has started, verified in its source or on the local site. Proofs use
+  `class_exists( $class, false )`, so a class that is only autoloaded on first use does not count.
 - Site-specific data (menus, links, licences) goes into settings files, not into code:
   `settings/modules/<module-folder>/...`, mapped in `settings/setup/modules-settings-path.php` and
   `settings/setup/key-slugs-translation.php`. Read them with `$plugin->settings->get( $key, $module_id )`.

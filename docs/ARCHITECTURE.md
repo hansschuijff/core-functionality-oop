@@ -32,14 +32,19 @@ New customizations are added as new features without touching the kernel.
 2. `Plugin::__construct()` builds `Settings` (stops here on failure, see Principles), then
    `InterDependenciesGuard`, `EnvironmentLookup` (server tier), `Environment`, `FileService`,
    `ComponentsRegister` and the `Kernel`.
-3. `plugins_loaded` (filter `dwp_cf_plugin_load_timing`): `Kernel::schedule_launches()` lets every active
-   environment guard register its data, takes the launchable components from the `ComponentsRegister`,
-   checks orientation and dependencies, and creates the module and feature instances.
-   In admin, `Plugin::setup()` also builds `Notices`, the settings page and the `PluginIntegrityWatch`.
-4. `init` (filter `dwp_cf_launch_timing`): `Kernel::launch()` drops instances whose required features are
-   missing (`uses_features()`), calls `launch()` on every instance, marks the plugin ready and fires
-   `dwp_cf_ready`.
+3. `plugins_loaded`, admin only: `Plugin::setup()` builds `Notices`, the settings page and the
+   `PluginIntegrityWatch`.
+4. `init` priority 0 (filter `dwp_cf_launch_timing`): `Kernel::boot()` does everything in one step. It lets
+   every active environment guard register its toolbar and menu nodes, takes the launchable components
+   from the `ComponentsRegister` (already filtered on activation, deployment tier and orientation), keeps
+   those whose environment dependencies are ready, creates the modules and their features, drops features
+   whose required features are missing (`uses_features()`), calls `launch()` on every instance, marks the
+   plugin ready and fires `dwp_cf_ready`. All plugins and the theme have loaded by then, so the guards see
+   what really started; features can still hook into `init` itself.
 5. Other code waits for that with `Plugin::call_when_ready()` or the `dwp_cf_ready` action.
+
+Until October 2026 the Kernel scheduled on `plugins_loaded` and launched on `init`, a leftover from when
+components were scheduled from outside; the filter `dwp_cf_plugin_load_timing` went with it.
 
 ## Structure
 
@@ -137,8 +142,7 @@ ids in the error log and as an admin notice.
 |---|---|---|
 | `dwp_cf_ready` | action | Everything is launched |
 | `dwp_cf_register_settings_sections` | action | Add a section to the settings page (`AdminSettingsPage` argument) |
-| `dwp_cf_plugin_load_timing` | filter | `array( hook, priority )` for scheduling (default `plugins_loaded`, 10) |
-| `dwp_cf_launch_timing` | filter | `array( hook, priority )` for launching (default `init`, 10) |
+| `dwp_cf_launch_timing` | filter | `array( hook, priority )` on which the Kernel boots (default `init`, 0) |
 | `dwp_core_admin_menu_config_nodes` | filter | Admin menu nodes |
 | `dwp_core_admin_menu_removals` | filter | Admin menu items to remove |
 
@@ -154,31 +158,27 @@ ids in the error log and as an admin notice.
 | Deployment tiers | Per component, set in admin | Experimental features only on development or staging |
 | Settings as files plus overrides | Files are the defaults and live in git, the database holds changes | Site data is versioned and can be reset to defaults |
 | Fail closed | Stop the whole plugin on corrupt settings | Half a kernel is worse than none |
+| One boot step on `init` 0 | Check, create and launch together | The register delivers a complete list; on `init` plugins and theme have loaded, so proofs can check what started |
 | PHP 8.2+ | Enums, readonly properties, named arguments | Production runs PHP 8.5 |
 
 ## Open points
 
-Known errors (to fix first):
+Known issues:
 
-- 14 keys in `environment-index.php` have no guard class (jetpack, carbon_fields, searchwp, mollie, the
-  Genesis and Sensei add-ons, ...). When such a plugin is active, `Environment` raises
-  `_doing_it_wrong()` on every request. Add a guard or remove the key.
-- `CF::initialize()` is never called, so the `Api` facade and functions always answer "not ready".
-  `src/Api/helpers.php` is not autoloaded and calls a `Core` class that no longer exists.
-- `Plugin` imports `Services\Loaders\ModuleLoader`, which does not exist.
-- `Kernel` contains unused code: the location and class guards and the `components_register_cache`.
-- The option `wp_cf_options_token_translations` uses `wp_cf_` instead of `dwp_cf_`.
-- `settings/modules.php` lists old feature namespaces and is not read anywhere (the `modules` key is mapped
-  but never requested) (confirm: remove?).
+- The public API is not worked out yet (parked): `CF::initialize()` is never called, so the `Api` facade
+  and functions answer "not ready", and `src/Api/helpers.php` is a placeholder (not autoloaded; it calls a
+  `Core` class that no longer exists).
 - About half of the PHP files lack `declare( strict_types=1 );`; phpcs has not been run over everything.
+- Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):
 
-- The Kernel checks dependencies on `plugins_loaded` priority 10. Plugins that initialise later (Event
-  Tickets Plus at 50, Yoast at 14, Gravity Forms after the Kernel) can only be proven by what their main
-  file defines, not by their own successful start; themes cannot be proven at all before `functions.php`
-  loads, so theme guards rely on the activation check. Option: schedule later (a later default in
-  `dwp_cf_plugin_load_timing`) and check themes on `after_setup_theme`.
+- Most proofs were chosen when the Kernel still checked on `plugins_loaded` 10, so they use what a plugin's
+  main file defines. Now that the Kernel boots on `init`, they could check a plugin's successful start
+  instead (for example Event Tickets Plus, which starts on `plugins_loaded` 50). Optional tightening.
+- Guards for plugins that are not installed locally (Carbon Fields, Carbon Fields Helper, SearchWP,
+  ActiveWoo API Helper, Schema Glue, Sensei Paid Courses) only use the activation check until a proof is
+  confirmed.
 - The Tribe guards use `not_actions: 'tribe_extensions_failed_requirements'`, but that action does not
   exist in the current Tribe plugins, so it has no effect. The template-function check is what catches
   a Tribe plugin that switched itself off.
