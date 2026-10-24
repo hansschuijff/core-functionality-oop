@@ -41,6 +41,12 @@ use function plugin_dir_url;
 use function error_log;
 use function esc_html;
 use function esc_html_e;
+use function current_user_can;
+use function class_exists;
+use function method_exists;
+use function sprintf;
+use function implode;
+use function __;
 
 /**
  * Class Plugin
@@ -198,12 +204,50 @@ class Plugin {
 
 		$this->notices = new Notices();
 
+		// On admin_init, after init, so the component names can be translated.
+		add_action( 'admin_init', array( $this, 'notify_new_components' ) );
+
 		new AdminSettingsPage( $this );
 
 		$watchdog = new PluginIntegrityWatch( $this );
 		if ( ! $watchdog->monitor_integrity() ) {
 			return;
 		}
+	}
+
+	/**
+	 * Tells an administrator which modules and features the last plugin update added.
+	 *
+	 * New components get their enabled state from the register file of the new version; the notice
+	 * is a reminder to check whether they should be switched on or off on this site.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	public function notify_new_components(): void {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$new_components = $this->components_register->pull_new_components();
+		if ( empty( $new_components ) ) {
+			return;
+		}
+
+		$names = array();
+		foreach ( $new_components as $fqcn ) {
+			$names[] = class_exists( $fqcn ) && method_exists( $fqcn, 'get_name' ) ? $fqcn::get_name() : $fqcn;
+		}
+
+		$this->notices->add(
+			'info',
+			sprintf(
+				/* translators: 1: plugin version, 2: comma-separated list of module and feature names. */
+				__( 'Core Functionality %1$s added: %2$s. Check under Settings → Core Functionality whether they should be enabled on this site.', 'core-functionality' ),
+				$this->version(),
+				implode( ', ', $names )
+			)
+		);
 	}
 
 	/**

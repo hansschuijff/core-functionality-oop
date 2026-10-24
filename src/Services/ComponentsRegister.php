@@ -96,6 +96,20 @@ class ComponentsRegister {
 	private Deployment $default_deployment = Deployment::DEVELOPMENT;
 
 	/**
+	 * Settings token under which the plugin version of the stored registers is kept.
+	 *
+	 * @var string
+	 */
+	private const VERSION_SETTING = 'components-register-version';
+
+	/**
+	 * Transient that holds the components added by the last plugin update, for an admin notice.
+	 *
+	 * @var string
+	 */
+	private const NEW_COMPONENTS_TRANSIENT = 'dwp_cf_new_components';
+
+	/**
 	 * ComponentsRegister Constructor.
 	 *
 	 * Hydrates all framework register matrices seamlessly using the unified
@@ -111,10 +125,117 @@ class ComponentsRegister {
 		$this->current_deployment    = $this->plugin->get_deployment();
 		$this->current_orientation   = $this->plugin->get_orientation();
 
-		// FIX: Added $this-> prefix to ensure correct method routing during object construction.
+		// Must run before the registers are read, so an update's register file wins over a stale option.
+		$this->sync_with_plugin_version();
+
 		$this->enabled_components    = $this->get_register( Register::ENABLED );
 		$this->components_register   = $this->get_register( Register::COMPONENTS );
 		$this->components_deployment = $this->get_register( Register::DEPLOYMENT );
+	}
+
+	/**
+	 * Refreshes the stored registers after a plugin update.
+	 *
+	 * The registers are kept in options for speed and fall back to the files in kernel/ when the
+	 * option is missing. After an update the components option would still describe the previous
+	 * version, so a new feature would stay invisible. When the stored version differs from the plugin
+	 * version, the components option is removed (get_register() then refills it from this version's
+	 * file) and the components that are new get their enabled state and deployment tier from the
+	 * files. The site's own choices for existing components are kept.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	private function sync_with_plugin_version(): void {
+		$plugin_version = $this->plugin->version();
+		$stored_version = $this->plugin->settings->get( self::VERSION_SETTING, default: '' );
+
+		if ( $plugin_version === $stored_version ) {
+			return;
+		}
+
+		$previous_components = $this->plugin->settings->get( RegisterSetting::COMPONENTS->value, default: array() );
+		$previous_components = is_array( $previous_components ) ? $previous_components : array();
+
+		$this->plugin->settings->delete( RegisterSetting::COMPONENTS->value );
+		$components = $this->get_register( Register::COMPONENTS );
+
+		$new_components = array_values(
+			array_diff( $this->flatten_components( $components ), $this->flatten_components( $previous_components ) )
+		);
+
+		if ( ! empty( $previous_components ) && ! empty( $new_components ) ) {
+			$this->add_file_defaults( Register::ENABLED, $new_components );
+			$this->add_file_defaults( Register::DEPLOYMENT, $new_components );
+			set_transient( self::NEW_COMPONENTS_TRANSIENT, $new_components, WEEK_IN_SECONDS );
+		}
+
+		$this->plugin->settings->save( self::VERSION_SETTING, $plugin_version );
+	}
+
+	/**
+	 * Adds the file values of the given components to a register option that holds the site's choices.
+	 *
+	 * Components that already have a value in the option keep it.
+	 *
+	 * @since  1.0.0
+	 * @param  Register $register Register::ENABLED or Register::DEPLOYMENT.
+	 * @param  string[] $fqcns    Fully qualified class names of the new modules and features.
+	 * @return void
+	 */
+	private function add_file_defaults( Register $register, array $fqcns ): void {
+		$settings_key = $this->get_register_setting_key( $register );
+		$site_values  = $this->plugin->settings->get( $settings_key, default: null );
+
+		// Without site values get_register() reads the file anyway.
+		if ( ! is_array( $site_values ) ) {
+			return;
+		}
+
+		$file_values = $this->plugin->file_service->get_register( $register );
+		foreach ( $fqcns as $fqcn ) {
+			if ( array_key_exists( $fqcn, $file_values ) && ! array_key_exists( $fqcn, $site_values ) ) {
+				$site_values[ $fqcn ] = $file_values[ $fqcn ];
+			}
+		}
+
+		$this->plugin->settings->save( $settings_key, $site_values );
+	}
+
+	/**
+	 * Returns the modules and features of a components register as one flat list.
+	 *
+	 * @since  1.0.0
+	 * @param  array<string, string[]> $components Module class name => feature class names.
+	 * @return string[]                            All module and feature class names.
+	 */
+	private function flatten_components( array $components ): array {
+		$fqcns = array();
+		foreach ( $components as $module_fqcn => $features_fqcn ) {
+			$fqcns[] = $module_fqcn;
+			foreach ( (array) $features_fqcn as $feature_fqcn ) {
+				$fqcns[] = $feature_fqcn;
+			}
+		}
+
+		return $fqcns;
+	}
+
+	/**
+	 * Returns, once, the components that the last plugin update added.
+	 *
+	 * @since  1.0.0
+	 * @return string[] Fully qualified class names, or an empty array.
+	 */
+	public function pull_new_components(): array {
+		$new_components = get_transient( self::NEW_COMPONENTS_TRANSIENT );
+		if ( false === $new_components ) {
+			return array();
+		}
+
+		delete_transient( self::NEW_COMPONENTS_TRANSIENT );
+
+		return is_array( $new_components ) ? $new_components : array();
 	}
 
 	/**
@@ -464,7 +585,8 @@ class ComponentsRegister {
 	 * @since  1.0.0
 	 * @param  Register $register      Enum tracking the targeted architectural register.
 	 * @param  array    $register_data The structured payload data matrix tree to persist.
-	 * @return string|bool             False if both settings and file where written unsuccesfull, otherwise result of file save.
+	 * @return string|bool             False if neither the option nor the file was written; otherwise the file's
+	 *                                 success message, or true when only the option was written.
 	 */
 	public function save( Register $register, array $register_data ): string|bool {
 		if ( empty( $register_data ) ) {
@@ -479,7 +601,9 @@ class ComponentsRegister {
 			$register_data = $this->validate_and_restructure_enabled_list( $register_data );
 		}
 
-		$settings_written = $this->plugin->settings->save( $settings_key, $register_data );
+		// update_option() also answers false when the value did not change; that counts as saved.
+		$settings_written = $this->plugin->settings->save( $settings_key, $register_data )
+			|| $this->plugin->settings->get( $settings_key, default: null ) === $register_data;
 
 		// Commit directly toward the physical file blueprints (The Git Source of Truth).
 		$file_written = $this->plugin->file_service->save_register( $register, $register_data );
@@ -490,7 +614,9 @@ class ComponentsRegister {
 		if ( false === $settings_written && false === $file_written ) {
 			return false;
 		}
-		return $file_written;
+
+		// The file is a fallback for the option; the option alone is a successful save.
+		return false === $file_written ? true : $file_written;
 	}
 
 	/**
