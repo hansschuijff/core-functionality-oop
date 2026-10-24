@@ -15,11 +15,10 @@ declare(strict_types=1);
 
 namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuilder;
 
-use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
+use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use Override;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
-use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use WP_Admin_Bar;
 
 use function current_user_can;
@@ -41,76 +40,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class MenuBuilder implements FeatureInterface {
+class MenuBuilder extends AbstractFeature {
 
 	/**
-	 * Constructor.
-	 *
-	 * @param ModuleInterface $module Parent module context.
-	 */
-	public function __construct(
-		private readonly ModuleInterface $module,
-		private readonly Plugin $plugin
-	) {}
-
-	/**
-	 * Returns the unique identification string for this feature.
+	 * Returns the descriptive data of this feature.
 	 *
 	 * @since  1.0.0
-	 * @return string The unique micro-feature string key.
+	 * @return ComponentMeta Id, name, description and requirements.
 	 */
-	public static function get_id(): string {
-		return 'admin_toolbar_builder';
-	}
-
-	/**
-	 * Retrieves the human-readable name of the feature.
-	 *
-	 * @since  1.0.0
-	 * @return string Module title.
-	 */
-	public static function get_name(): string {
-		return 'Admin Toolbar Menu Feature.';
-	}
-
-	/**
-	 * Retrieves the contextual description of what the feature provides.
-	 *
-	 * @since  1.0.0
-	 * @return string Module description.
-	 */
-	public static function get_description(): string {
-		return 'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.';
-	}
-
-	/**
-	 * Retrieves feature-specific environment prerequisites.
-	 *
-	 * @since  1.0.0
-	 * @return string|array A single string dependency or a multi-dimensional preflight checks matrix.
-	 */
-	public static function get_dependencies(): string|array {
-		return '';
-	}
-
-	/**
-	 * Returns an array with internal dependencies with other features or modules.
-	 *
-	 * @since  1.0.0
-	 * @return array<int, string> List of fully qualified feature class strings.
-	 */
-	public static function uses_features(): array {
-		return array();
-	}
-
-	/**
-	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
-	 *
-	 * @since  1.0.0
-	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
-	 */
-	public static function get_orientation(): Orientation {
-		return Orientation::BOTH;
+	#[Override]
+	public static function get_meta(): ComponentMeta {
+		return new ComponentMeta(
+			id:            'admin_toolbar_builder',
+			name:          'Admin Toolbar Menu Feature.',
+			description:   'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.',
+		);
 	}
 
 	/**
@@ -208,15 +152,5 @@ class MenuBuilder implements FeatureInterface {
 		}
 
 		$wp_admin_bar->remove_node( 'appearance' );
-	}
-
-	/**
-	 * Exposes the parent module instance.
-	 *
-	 * @since  1.0.0
-	 * @return ModuleInterface
-	 */
-	public function get_module(): ModuleInterface {
-		return $this->module;
 	}
 }

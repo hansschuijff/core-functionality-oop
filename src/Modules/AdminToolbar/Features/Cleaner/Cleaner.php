@@ -19,12 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use Override;
 use WP_Admin_Bar;
-use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
 use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\Cleaner\CleanerSettings;
-use DeWittePrins\CoreFunctionality\Enums\Orientation;
 
 use function __;
 use function is_admin_bar_showing;
@@ -40,76 +39,21 @@ use function add_action;
  *
  * @since 1.0.0
  */
-class Cleaner implements FeatureInterface {
+class Cleaner extends AbstractFeature {
 
 	/**
-	 * Constructor.
-	 *
-	 * @param ModuleInterface $module Parent module context.
-	 */
-	public function __construct(
-		private readonly ModuleInterface $module,
-		private readonly Plugin $plugin
-	) {}
-
-	/**
-	 * Returns the unique identification string for this feature toggle.
+	 * Returns the descriptive data of this feature.
 	 *
 	 * @since  1.0.0
-	 * @return string The unique micro-feature string key.
+	 * @return ComponentMeta Id, name, description and requirements.
 	 */
-	public static function get_id(): string {
-		return 'admin_toolbar_cleaner';
-	}
-
-	/**
-	 * Retrieves the human-readable name of the feature.
-	 *
-	 * @since  1.0.0
-	 * @return string Feature title.
-	 */
-	public static function get_name(): string {
-		return __( 'Admin Toolbar Cleaner Feature', 'core-functionality' );
-	}
-
-	/**
-	 * Retrieves the contextual description of what the feature provides.
-	 *
-	 * @since  1.0.0
-	 * @return string Feature description.
-	 */
-	public static function get_description(): string {
-		return __( 'Moves unwanted Admin Toolbar shortcuts to an overflow submenu, based on a negative-selection user matrix.', 'core-functionality' );
-	}
-
-	/**
-	 * Retrieves feature-specific environment prerequisites.
-	 *
-	 * @since  1.0.0
-	 * @return string|array String dependency or multi-dimensional preflight checks matrix.
-	 */
-	public static function get_dependencies(): string|array {
-		return array();
-	}
-
-	/**
-	 * Returns an array with internal dependencies with other features or modules.
-	 *
-	 * @since  1.0.0
-	 * @return array<int, string> List of fully qualified feature class strings.
-	 */
-	public static function uses_features(): array {
-		return array();
-	}
-
-	/**
-	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
-	 *
-	 * @since  1.0.0
-	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
-	 */
-	public static function get_orientation(): Orientation {
-		return Orientation::BOTH;
+	#[Override]
+	public static function get_meta(): ComponentMeta {
+		return new ComponentMeta(
+			id:            'admin_toolbar_cleaner',
+			name:          __( 'Admin Toolbar Cleaner Feature', 'core-functionality' ),
+			description:   __( 'Moves unwanted Admin Toolbar shortcuts to an overflow submenu, based on a negative-selection user matrix.', 'core-functionality' ),
+		);
 	}
 
 	/**
@@ -260,16 +204,6 @@ class Cleaner implements FeatureInterface {
 			}
 		}
 		return $movable_top_level_nodes;
-	}
-
-	/**
-	 * Exposes the parent module instance.
-	 *
-	 * @since  1.0.0
-	 * @return ModuleInterface
-	 */
-	public function get_module(): ModuleInterface {
-		return $this->module;
 	}
 
 	public static function get_movable_nodes_key(): string {

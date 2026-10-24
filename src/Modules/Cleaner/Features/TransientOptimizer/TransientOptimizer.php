@@ -15,10 +15,8 @@ declare( strict_types=1 );
 
 namespace DeWittePrins\CoreFunctionality\Modules\Cleaner\Features\TransientOptimizer;
 
-use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
-use DeWittePrins\CoreFunctionality\Enums\Orientation;
-use DeWittePrins\CoreFunctionality\Plugin;
+use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
 
 // Import global PHP and WordPress core abstraction functions.
@@ -40,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class TransientOptimizer implements FeatureInterface {
+class TransientOptimizer extends AbstractFeature {
 
 	/**
 	 * The unique identification hook string handle mapped for cron event triggers.
@@ -49,45 +47,19 @@ class TransientOptimizer implements FeatureInterface {
 	 */
 	private string $cron_hook_identifier = 'dwp_cf_cleaner_transient_cleanup_cron';
 
-	#[Override]
-	public static function get_id(): string {
-		return 'cleaner_transient_optimizer';
-	}
-
-	#[Override]
-	public static function get_name(): string {
-		return __( 'Transient Optimizer Feature', 'core-functionality' );
-	}
-
-	#[Override]
-	public static function get_description(): string {
-		return __( 'Monitors, indexes, and flushes expired or orphaned core transients clusters using automated background crons to optimize the options table.', 'core-functionality' );
-	}
-
-	#[Override]
-	public static function get_dependencies(): string|array {
-		return array();
-	}
-
-	#[Override]
-	public static function uses_features(): array {
-		return array();
-	}
-
 	/**
-	 * TransientOptimizer Constructor.
+	 * Returns the descriptive data of this feature.
 	 *
-	 * @since 1.0.0
-	 * @param ModuleInterface $module Parent module context reference.
+	 * @since  1.0.0
+	 * @return ComponentMeta Id, name, description and requirements.
 	 */
-	public function __construct(
-		private readonly ModuleInterface $module,
-		private readonly Plugin $plugin
-	) {}
-
 	#[Override]
-	public static function get_orientation(): Orientation {
-		return Orientation::BOTH;
+	public static function get_meta(): ComponentMeta {
+		return new ComponentMeta(
+			id:            'cleaner_transient_optimizer',
+			name:          __( 'Transient Optimizer Feature', 'core-functionality' ),
+			description:   __( 'Monitors, indexes, and flushes expired or orphaned core transients clusters using automated background crons to optimize the options table.', 'core-functionality' ),
+		);
 	}
 
 	#[Override]
@@ -202,10 +174,5 @@ class TransientOptimizer implements FeatureInterface {
 	 */
 	public function deactivate(): void {
 		wp_clear_scheduled_hook( $this->cron_hook_identifier );
-	}
-
-	#[Override]
-	public function get_module(): ModuleInterface {
-		return $this->module;
 	}
 }

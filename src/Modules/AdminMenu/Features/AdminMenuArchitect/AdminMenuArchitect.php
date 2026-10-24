@@ -9,12 +9,10 @@ declare(strict_types=1);
 
 namespace DeWittePrins\CoreFunctionality\Modules\AdminMenu\Features\AdminMenuArchitect;
 
-use DeWittePrins\CoreFunctionality\Interfaces\FeatureInterface;
-use DeWittePrins\CoreFunctionality\Interfaces\ModuleInterface;
-use DeWittePrins\CoreFunctionality\Plugin;
+use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use Override;
 use DeWittePrins\CoreFunctionality\Modules\AdminMenu\DTO\AdminMenuConfigNode;
-use DeWittePrins\CoreFunctionality\Enums\Orientation;
-
 
 use function add_action;
 use function add_menu_page;
@@ -27,17 +25,22 @@ use function current_user_can;
  *
  * Compiles, orders, filters, and cleans up the WordPress admin sidebar navigation.
  */
-class AdminMenuArchitect implements FeatureInterface {
+class AdminMenuArchitect extends AbstractFeature {
 
 	/**
-	 * Constructor.
+	 * Returns the descriptive data of this feature.
 	 *
-	 * @param ModuleInterface $module Parent module context.
+	 * @since  1.0.0
+	 * @return ComponentMeta Id, name, description and requirements.
 	 */
-	public function __construct(
-		private readonly ModuleInterface $module,
-		private readonly Plugin $plugin
-	) {}
+	#[Override]
+	public static function get_meta(): ComponentMeta {
+		return new ComponentMeta(
+			id:            'admin_menu_architect',
+			name:          'Admin Menu Architect',
+			description:   'Architects, structures and cleans up the admin side navigation.',
+		);
+	}
 
 	/**
 	 * Launches the operational execution lifecycle for this feature.
@@ -142,39 +145,4 @@ class AdminMenuArchitect implements FeatureInterface {
 			}
 		}
 	}
-
-	public static function get_id(): string { return 'admin_menu_architect'; }
-	public static function get_name(): string { return 'Admin Menu Architect'; }
-	public static function get_description(): string { return 'Architects, structures and cleans up the admin side navigation.'; }
-	public function get_module(): ModuleInterface { return $this->module; }
-
-	/**
-	 * Retrieves feature-specific environment prerequisites.
-	 *
-	 * @return string|array String dependency or multi-dimensional preflight checks matrix.
-	 */
-	public static function get_dependencies(): string|array {
-		return array();
-	}
-
-	/**
-	 * Returns an array with internal dependencies with other features or modules.
-	 *
-	 * @since  1.0.0
-	 * @return array<int, string> List of fully qualified feature class strings.
-	 */
-	public static function uses_features(): array {
-		return array();
-	}
-
-	/**
-	 * Requests the current usage-target of the feature (Frontend, Admin, Both).
-	 *
-	 * @since  1.0.0
-	 * @return Orientation Enum indication if the feature is meant for use on the Frontend, Admin or both.
-	 */
-	public static function get_orientation(): Orientation {
-		return Orientation::BOTH;
-	}
-
 }
