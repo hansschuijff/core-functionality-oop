@@ -41,7 +41,7 @@ class LegacyMenuBuilder extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:            'legacy_admin_toolbar_builder',
-			name:          'Legacy Admin Toolbar Builder Feature.',
+			name:          'Legacy Admin Toolbar Builder Feature',
 			description:   'The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar.',
 		);
 	}
