@@ -49,7 +49,7 @@ class Options {
 	 *
 	 * @var string
 	 */
-	private string $token_translations_option_key = 'wp_cf_options_token_translations';
+	private string $token_translations_option_key = 'dwp_cf_options_token_translations';
 
 	/**
 	 * The option key used to store the unregistered fallback quarantine data pool.
