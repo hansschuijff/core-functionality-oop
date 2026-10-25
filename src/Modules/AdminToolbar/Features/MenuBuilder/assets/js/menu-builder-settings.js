@@ -26,8 +26,9 @@
 		const serialized = root.querySelector('.js-dwp-mb-serialized');
 		const form       = root.closest('form');
 
-		// The data behind each pool item and tree node.
-		const rows = new WeakMap();
+		// The data behind each pool item and tree node, and the row each tree node was made from.
+		const rows    = new WeakMap();
+		const sources = new WeakMap();
 
 		let dragged = null; // { origin: 'pool' | 'tree', nodes: Element[] }
 
@@ -387,6 +388,7 @@
 			title.addEventListener('input', function () {
 				state.title = title.value.trim();
 				refreshHeader(node);
+				typingIn = node;
 				serialize();
 			});
 			panel.appendChild(field(t.title, title, 'submenu' === state.type ? '' : t.titleHint));
@@ -397,6 +399,7 @@
 			if ('submenu' === state.type) {
 				url.addEventListener('input', function () {
 					state.href = url.value.trim();
+					typingIn = node;
 					serialize();
 				});
 				panel.appendChild(field(t.url, url, t.urlHint));
@@ -445,6 +448,7 @@
 			}
 			setDepth(node, depth);
 			rows.set(node, state);
+			sources.set(node, row);
 
 			// Two rows in a grid: toggle, checkbox, title and buttons; below them the source and
 			// badges, and the visibility switch under the buttons.
@@ -492,13 +496,40 @@
 		}
 
 		// New nodes take the depth of the node they are inserted before, so they never take over
-		// that node's children; at the end they take the depth of the last node.
-		function insertionDepth(before) {
+		// that node's children; at the end they take the depth of the last visible node (not of a
+		// node hidden in a collapsed branch, which would put them inside that branch unseen).
+		// Nodes in "ignore" (a branch being moved) do not count.
+		function insertionDepth(before, ignore) {
 			if (before) {
 				return depthOf(before);
 			}
-			const nodes = treeNodes();
+			const nodes = visibleNodes().filter(function (node) {
+				return !ignore || !ignore.includes(node);
+			});
 			return nodes.length ? depthOf(nodes[ nodes.length - 1 ]) : 0;
+		}
+
+		// Opens the collapsed branches around a node, so a node that is moved or added never
+		// disappears into a closed branch.
+		function reveal(node) {
+			const nodes = treeNodes();
+			let depth   = depthOf(node);
+			let changed = false;
+
+			for (let i = nodes.indexOf(node) - 1; i >= 0 && depth > 0; i--) {
+				if (depthOf(nodes[ i ]) < depth) {
+					depth = depthOf(nodes[ i ]);
+					if (!expanded.has(nodes[ i ].dataset.instance)) {
+						expanded.add(nodes[ i ].dataset.instance);
+						changed = true;
+					}
+				}
+			}
+
+			if (changed) {
+				saveSet('dwp-mb-expanded', expanded);
+				refreshTreeState();
+			}
 		}
 
 		function insertRows(newRows, before, depth) {
@@ -514,6 +545,7 @@
 			updateEmptyState();
 			serialize();
 			if (added.length) {
+				reveal(added[ 0 ]);
 				added[ 0 ].scrollIntoView({ block: 'nearest' });
 			}
 		}
@@ -621,6 +653,7 @@
 				setDepth(item, depthOf(item) + delta);
 			});
 			serialize();
+			reveal(node);
 		}
 
 		function removeNodes(nodes) {
@@ -913,8 +946,17 @@
 				return;
 			}
 
+			// Dropped where it already was (one branch, landing before its own next node): no change.
+			const last = dragged.nodes[ dragged.nodes.length - 1 ];
+			const next = last.nextElementSibling && last.nextElementSibling.classList.contains('js-dwp-mb-tree-node')
+				? last.nextElementSibling
+				: null;
+			if (1 === dragged.roots.length && after === next) {
+				return;
+			}
+
 			// Move each branch; its top node takes the depth of the node it lands before, like a new node.
-			const depth = insertionDepthAfterMove(after);
+			const depth = insertionDepth(after, dragged.nodes);
 			dragged.roots.forEach(function (root) {
 				const delta = depth - depthOf(root);
 				branchOf(root).forEach(function (node) {
@@ -923,18 +965,8 @@
 				});
 			});
 			serialize();
+			reveal(dragged.roots[ 0 ]);
 		});
-
-		// Like insertionDepth(), but ignoring the branch that is being moved.
-		function insertionDepthAfterMove(before) {
-			if (before) {
-				return depthOf(before);
-			}
-			const nodes = treeNodes().filter(function (node) {
-				return !dragged.nodes.includes(node);
-			});
-			return nodes.length ? depthOf(nodes[ nodes.length - 1 ]) : 0;
-		}
 
 		/* ------------------------------------------------------------------ keyboard */
 
@@ -987,12 +1019,18 @@
 			return selected.has(node) ? selectedRoots() : [ node ];
 		}
 
-		// Moves a branch past its previous or next sibling (with that sibling's branch).
+		// Moves a branch past its previous or next sibling (with that sibling's branch). The first
+		// child moving up, or the last child moving down, leaves its parent: it becomes the sibling
+		// just before or just after the parent.
 		function moveBranch(node, direction) {
 			const nodes  = treeNodes();
 			const branch = branchOf(node);
 			const depth  = depthOf(node);
+			const parent = nodes.slice(0, nodes.indexOf(node)).reverse().find(function (item) {
+				return depthOf(item) < depth;
+			});
 			let before;
+			let newDepth = depth;
 
 			if (direction < 0) {
 				let sibling = null;
@@ -1002,21 +1040,32 @@
 						break;
 					}
 				}
-				if (!sibling) {
+				if (sibling) {
+					before = sibling;
+				} else if (parent) {
+					before   = parent;
+					newDepth = depthOf(parent);
+				} else {
 					return;
 				}
-				before = sibling;
 			} else {
-				const next = branch[ branch.length - 1 ].nextElementSibling;
-				if (!next || !next.classList.contains('js-dwp-mb-tree-node') || depthOf(next) !== depth) {
+				const after = branch[ branch.length - 1 ].nextElementSibling;
+				const next  = after && after.classList.contains('js-dwp-mb-tree-node') ? after : null;
+				if (next && depthOf(next) === depth) {
+					const siblingBranch = branchOf(next);
+					before = siblingBranch[ siblingBranch.length - 1 ].nextElementSibling;
+				} else if (parent) {
+					before   = next; // The parent's branch ends with this branch.
+					newDepth = depthOf(parent);
+				} else {
 					return;
 				}
-				const siblingBranch = branchOf(next);
-				before = siblingBranch[ siblingBranch.length - 1 ].nextElementSibling;
 			}
 
+			const delta = newDepth - depth;
 			branch.forEach(function (item) {
 				tree.insertBefore(item, before);
+				setDepth(item, depthOf(item) + delta);
 			});
 		}
 
@@ -1055,12 +1104,14 @@
 					moveBranch(root, 'ArrowUp' === event.key ? -1 : 1);
 				});
 				serialize();
+				reveal(node);
 				focusNode(node);
 			} else if (event.altKey && ('ArrowLeft' === event.key || 'ArrowRight' === event.key)) {
 				const roots = keyTargets(node);
 				('ArrowRight' === event.key ? roots : roots.slice().reverse()).forEach(function (root) {
 					shiftBranch(root, 'ArrowRight' === event.key ? 1 : -1);
 				});
+				reveal(node);
 				focusNode(node);
 			} else if ('ArrowUp' === event.key || 'ArrowDown' === event.key || 'Home' === event.key || 'End' === event.key) {
 				const target = {
@@ -1283,7 +1334,111 @@
 
 			serialized.value = JSON.stringify(result);
 			refreshTreeState();
+			recordHistory(serialized.value);
 		}
+
+		/* ------------------------------------------------------------------ undo and redo */
+
+		// Every change to the menu goes through serialize(), which records the state before it.
+		// Typing in one field counts as one step.
+		const undoStack     = [];
+		const redoStack     = [];
+		const historyLimit  = 50;
+		let currentJson     = null;
+		let currentSnapshot = null;
+		let restoring       = false;
+		let typingIn        = null; // The node whose title or URL is being typed in, set by its input.
+		let lastTyped       = { node: null, at: 0 };
+
+		function snapshot() {
+			return treeNodes().map(function (node) {
+				const state = rows.get(node);
+				return Object.assign({}, sources.get(node), {
+					title: state.title,
+					href: state.href,
+					visibility: state.visibility,
+					instance: node.dataset.instance,
+					depth: depthOf(node),
+				});
+			});
+		}
+
+		function recordHistory(json) {
+			const now      = Date.now();
+			const typing   = typingIn;
+			const sameEdit = null !== typing && typing === lastTyped.node && now - lastTyped.at < 2000;
+			typingIn       = null;
+			lastTyped      = { node: typing, at: now };
+
+			if (!restoring && null !== currentJson && json !== currentJson) {
+				if (!sameEdit) {
+					undoStack.push(currentSnapshot);
+					if (undoStack.length > historyLimit) {
+						undoStack.shift();
+					}
+				}
+				redoStack.length = 0;
+			}
+
+			currentJson     = json;
+			currentSnapshot = snapshot();
+			updateHistoryButtons();
+		}
+
+		function restore(state) {
+			restoring = true;
+			clearSelection();
+			treeNodes().forEach(function (node) {
+				node.remove();
+			});
+			state.forEach(function (row) {
+				tree.appendChild(createTreeNode(row, row.depth));
+			});
+			updateEmptyState();
+			serialize();
+			restoring = false;
+		}
+
+		function undo() {
+			if (undoStack.length) {
+				redoStack.push(currentSnapshot);
+				restore(undoStack.pop());
+			}
+		}
+
+		function redo() {
+			if (redoStack.length) {
+				undoStack.push(currentSnapshot);
+				restore(redoStack.pop());
+			}
+		}
+
+		function updateHistoryButtons() {
+			undoButton.disabled = 0 === undoStack.length;
+			redoButton.disabled = 0 === redoStack.length;
+		}
+
+		const undoButton = iconButton('dashicons-undo', t.undo, 'dwp-mb-history');
+		const redoButton = iconButton('dashicons-redo', t.redo, 'dwp-mb-history');
+		undoButton.addEventListener('click', undo);
+		redoButton.addEventListener('click', redo);
+		treeTools.prepend(undoButton, redoButton);
+
+		// Ctrl+Z / Ctrl+Y (or Ctrl+Shift+Z), except while typing in a field, which has its own undo.
+		document.addEventListener('keydown', function (event) {
+			const target = event.target instanceof Element ? event.target : null;
+			if (!(event.ctrlKey || event.metaKey) || event.altKey || (target && target.closest('input, textarea, select, [contenteditable]'))) {
+				return;
+			}
+			const key = event.key.toLowerCase();
+			if ('z' === key && !event.shiftKey) {
+				event.preventDefault();
+				undo();
+			} else if ('y' === key || ('z' === key && event.shiftKey)) {
+				event.preventDefault();
+				redo();
+			}
+		});
 
 		/* ------------------------------------------------------------------ start */
 

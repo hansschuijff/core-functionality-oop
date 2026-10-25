@@ -296,6 +296,17 @@
 	display: none !important;
 }
 
+.dwp-mb-tools .dwp-mb-history {
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--dwp-mb-border);
+}
+
+.dwp-mb-tools .dwp-mb-history:disabled {
+	opacity: 0.4;
+	cursor: default;
+}
+
 .dwp-mb-tool.is-open {
 	background: #f0f6fc !important;
 }
