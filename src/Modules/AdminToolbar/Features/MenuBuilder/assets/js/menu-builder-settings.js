@@ -344,6 +344,11 @@
 			rows.set(node, state);
 
 			const header = el('div', 'dwp-mb-node-header');
+			const select = el('input', 'dwp-mb-select js-dwp-mb-select');
+			select.type = 'checkbox';
+			select.setAttribute('aria-label', t.select);
+			header.appendChild(select);
+
 			const body   = el('span', 'dwp-mb-node-body');
 			const meta   = metaLine(row);
 			meta.appendChild(createVisibilityControl());
@@ -434,21 +439,154 @@
 			serialize();
 		}
 
+		function removeNodes(nodes) {
+			nodes.forEach(function (item) {
+				selected.delete(item);
+				item.remove();
+			});
+			updateEmptyState();
+			updateBulkBar();
+			serialize();
+		}
+
 		function removeBranch(node) {
 			const branch = branchOf(node);
 			if (branch.length > 1 && !window.confirm(t.removeConfirm.replace('%d', String(branch.length - 1)))) {
 				return;
 			}
-			branch.forEach(function (item) {
-				item.remove();
-			});
-			updateEmptyState();
-			serialize();
+			removeNodes(branch);
 		}
 
-		tree.addEventListener('click', function (event) {
+		/* ------------------------------------------------------------------ selection and bulk actions */
+
+		const selected = new Set();
+		let anchor     = null; // The node a shift-click range starts from.
+
+		function setSelected(node, on) {
+			if (on) {
+				selected.add(node);
+			} else {
+				selected.delete(node);
+			}
+			node.classList.toggle('is-selected', on);
+			node.querySelector('.js-dwp-mb-select').checked = on;
+		}
+
+		function clearSelection() {
+			[ ...selected ].forEach(function (node) {
+				setSelected(node, false);
+			});
+			updateBulkBar();
+		}
+
+		// Plain click toggles a node; shift-click selects the range from the last clicked node.
+		function clickSelect(node, range) {
+			const nodes = treeNodes();
+			if (range && anchor && nodes.includes(anchor)) {
+				const from = nodes.indexOf(anchor);
+				const to   = nodes.indexOf(node);
+				nodes.slice(Math.min(from, to), Math.max(from, to) + 1).forEach(function (item) {
+					setSelected(item, true);
+				});
+			} else {
+				setSelected(node, !selected.has(node));
+			}
+			anchor = node;
+			updateBulkBar();
+		}
+
+		// The selected nodes in tree order, leaving out those that lie in the branch of another
+		// selected node: moving or removing a node always takes its branch along.
+		function selectedRoots() {
+			const roots = [];
+			let coveredBelow = -1; // Nodes deeper than this depth lie in the branch of the last root.
+
+			treeNodes().forEach(function (node) {
+				if (coveredBelow >= 0 && depthOf(node) > coveredBelow) {
+					return;
+				}
+				coveredBelow = -1;
+				if (selected.has(node)) {
+					roots.push(node);
+					coveredBelow = depthOf(node);
+				}
+			});
+			return roots;
+		}
+
+		function branchesOf(roots) {
+			return roots.flatMap(branchOf);
+		}
+
+		const bulkBar   = el('div', 'dwp-mb-bulk');
+		const bulkCount = el('span', 'dwp-mb-bulk-count');
+		const bulkShow  = createVisibilityControl();
+		bulkShow.querySelector('.dwp-mb-inherited').remove();
+		bulkShow.prepend(el('span', 'dwp-mb-bulk-label', t.visibility));
+
+		function bulkButton(text, className, tip) {
+			const button = el('button', 'button button-small ' + className, text);
+			button.type = 'button';
+			if (tip) {
+				button.title = tip;
+			}
+			return button;
+		}
+
+		bulkBar.append(
+			bulkCount,
+			bulkShow,
+			bulkButton(t.resetTitles, 'js-dwp-mb-bulk-reset', t.resetTitlesTip),
+			bulkButton(t.remove, 'js-dwp-mb-bulk-remove'),
+			bulkButton(t.clearSelection, 'js-dwp-mb-bulk-clear')
+		);
+		bulkBar.hidden = true;
+		tree.before(bulkBar);
+
+		function updateBulkBar() {
+			bulkBar.hidden = 0 === selected.size;
+			bulkCount.textContent = t.selectedCount.replace('%d', String(selected.size));
+		}
+
+		bulkBar.addEventListener('click', function (event) {
 			const button = event.target.closest('button');
-			const node   = event.target.closest('.js-dwp-mb-tree-node');
+			if (!button) {
+				return;
+			}
+
+			if (button.dataset.visibility) {
+				selected.forEach(function (node) {
+					rows.get(node).visibility = button.dataset.visibility;
+				});
+				serialize();
+			} else if (button.classList.contains('js-dwp-mb-bulk-reset')) {
+				selected.forEach(function (node) {
+					const state = rows.get(node);
+					if ('shortcut' === state.type) {
+						state.title = '';
+						node.querySelector('.dwp-mb-edit input[type="text"]').value = '';
+						refreshHeader(node);
+					}
+				});
+				serialize();
+			} else if (button.classList.contains('js-dwp-mb-bulk-remove')) {
+				const nodes = branchesOf(selectedRoots());
+				if (window.confirm(t.removeSelectedConfirm.replace('%d', String(nodes.length)))) {
+					removeNodes(nodes);
+				}
+			} else if (button.classList.contains('js-dwp-mb-bulk-clear')) {
+				clearSelection();
+			}
+		});
+
+		tree.addEventListener('click', function (event) {
+			const node = event.target.closest('.js-dwp-mb-tree-node');
+			if (node && event.target.classList.contains('js-dwp-mb-select')) {
+				clickSelect(node, event.shiftKey);
+				return;
+			}
+
+			const button = event.target.closest('button');
 			if (!button || !node) {
 				return;
 			}
@@ -498,7 +636,9 @@
 			const poolItem = event.target.closest('.js-dwp-mb-pool-item');
 
 			if (treeNode) {
-				dragged = { origin: 'tree', nodes: branchOf(treeNode) };
+				// Dragging a selected node drags the whole selection, each with its branch.
+				const roots = selected.has(treeNode) ? selectedRoots() : [ treeNode ];
+				dragged = { origin: 'tree', roots: roots, nodes: branchesOf(roots) };
 			} else if (poolItem) {
 				dragged = { origin: 'pool', nodes: [ poolItem ] };
 			} else {
@@ -564,11 +704,14 @@
 				return;
 			}
 
-			// Move the whole branch; it takes the depth of the node it lands before, like a new node.
-			const delta = insertionDepthAfterMove(after) - depthOf(dragged.nodes[ 0 ]);
-			dragged.nodes.forEach(function (node) {
-				tree.insertBefore(node, after);
-				setDepth(node, Math.min(maxDepth, Math.max(0, depthOf(node) + delta)));
+			// Move each branch; its top node takes the depth of the node it lands before, like a new node.
+			const depth = insertionDepthAfterMove(after);
+			dragged.roots.forEach(function (root) {
+				const delta = depth - depthOf(root);
+				branchOf(root).forEach(function (node) {
+					tree.insertBefore(node, after);
+					setDepth(node, Math.min(maxDepth, Math.max(0, depthOf(node) + delta)));
+				});
 			});
 			serialize();
 		});
