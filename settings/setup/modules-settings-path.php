@@ -16,4 +16,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 return array(
 	'admin_toolbar' => 'admin-toolbar/',
+	'active-woo'    => 'active-woo/',
 );

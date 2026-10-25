@@ -185,7 +185,7 @@ class Plugin {
 
 		// If settings thrown an error the method has stopped, so from here we're good.
 		// These services are ONLY born when Settings successfully passed its internal constraints!
-		$interdependency_checker         = new InterDependenciesGuard( new Logger() );
+		$interdependency_checker         = new InterDependenciesGuard( new Logger( $this->settings ) );
 		$lookup                          = new EnvironmentLookup( $this );
 		$this->current_deployment        = $lookup->get_current_deployment_env();
 		$environment                     = new Environment( $this );

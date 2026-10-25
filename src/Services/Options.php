@@ -203,6 +203,20 @@ class Options {
 	}
 
 	/**
+	 * Saves an option under its exact name, bypassing the token translation layer.
+	 *
+	 * For options that belong to WordPress or another plugin, whose name is fixed.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key   The exact WordPress database option key (e.g., 'aw_license').
+	 * @param  mixed  $value The value to store.
+	 * @return bool          True if the value changed, false if it was the same or saving failed.
+	 */
+	public function update_unmanaged( string $key, mixed $value ): bool {
+		return update_option( $key, $value );
+	}
+
+	/**
 	 * Saves data safely, dynamically distributing parameters to standalone rows or shared grouped collections.
 	 *
 	 * @since  1.0.0

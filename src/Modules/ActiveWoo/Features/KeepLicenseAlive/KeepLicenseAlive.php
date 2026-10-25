@@ -19,14 +19,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use DeWittePrins\CoreFunctionality\Modules\ActiveWoo\ActiveWoo;
 use Override;
 use DeWittePrins\CoreFunctionality\Plugin;
 
 use function __;
 use function get_transient;
 use function set_transient;
-use function update_option;
 use function delete_transient;
+use function is_object;
 
 /**
  * Class KeepLicense
@@ -69,15 +70,20 @@ class KeepLicenseAlive extends AbstractFeature {
 	 */
 	private function set_license_data() {
 
-		$license_data = $this->plugin->settings->get( 'activewoo-license-data' );
+		// The license data lives in the module's settings folder (settings/modules/active-woo/).
+		$license_data = $this->plugin->settings->get( 'activewoo-license-data', ActiveWoo::get_id() );
+		if ( ! is_object( $license_data ) || empty( $license_data->license_key ) ) {
+			return;
+		}
 
 		$transient_license_data = get_transient( 'aw_license_data' );
 
-		if ( $license_data !== $transient_license_data ) {
+		if ( $license_data != $transient_license_data ) { // phpcs:ignore Universal.Operators.StrictComparisons.LooseNotEqual -- Objects: compare the data, not the instance.
 			// bewaar license_data een jaar lang als transient.
 			delete_transient( 'aw_license_data' );
 			set_transient( 'aw_license_data', $license_data, \YEAR_IN_SECONDS );
-			update_option( 'aw_license', $license_data->license_key );
+			// ActiveWoo's own option, under its fixed name.
+			$this->plugin->settings->save_unmanaged( 'aw_license', $license_data->license_key );
 		}
 	}
 }

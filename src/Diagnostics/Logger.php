@@ -11,7 +11,9 @@ declare( strict_types=1 );
 namespace DeWittePrins\CoreFunctionality\Diagnostics;
 
 use DeWittePrins\CoreFunctionality\Services\ClassParser;
+use DeWittePrins\CoreFunctionality\Services\Settings;
 
+use function is_array;
 use function str_starts_with;
 use function str_replace;
 use function trailingslashit;
@@ -41,13 +43,13 @@ class Logger {
 	/**
 	 * Logger constructor.
 	 *
-	 * Extracts structural settings profiles mapping fallback configurations securely.
+	 * Reads its settings (option dwp_log_settings) through the plugin's Settings.
 	 *
 	 * @since 1.0.0
-	 * @see get_option()
+	 * @param Settings $plugin_settings The plugin's settings service.
 	 */
-	public function __construct() {
-		$this->settings = get_option(
+	public function __construct( Settings $plugin_settings ) {
+		$settings = $plugin_settings->get_unmanaged(
 			'dwp_log_settings',
 			array(
 				'activate_log'  => true,
@@ -56,6 +58,8 @@ class Logger {
 				'log_file'      => WP_CONTENT_DIR . '/_core-functionality.log',
 			)
 		);
+
+		$this->settings = is_array( $settings ) ? $settings : array();
 	}
 
 	/**

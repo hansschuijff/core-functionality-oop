@@ -220,6 +220,20 @@ class Settings {
 	}
 
 	/**
+	 * Saves an option under its exact name via the Options Vault, bypassing token translation.
+	 *
+	 * For options of WordPress or another plugin, whose name is fixed.
+	 *
+	 * @since  1.0.0
+	 * @param  string $key   The exact database option key.
+	 * @param  mixed  $value The value to store.
+	 * @return bool          True if the value changed, false if it was the same or saving failed.
+	 */
+	public function save_unmanaged( string $key, mixed $value ): bool {
+		return $this->options->update_unmanaged( $key, $value );
+	}
+
+	/**
 	 * Persists updated configuration records into the unified options key.
 	 *
 	 * @since  1.0.0
