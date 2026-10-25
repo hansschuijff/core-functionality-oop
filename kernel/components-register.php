@@ -13,10 +13,9 @@ return array (
   'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\AdminToolbar' => 
   array (
     0 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\MenuBuilder\\MenuBuilder',
-    1 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\LegacyMenuBuilder\\LegacyMenuBuilder',
-    2 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\Visualizer\\Visualizer',
-    3 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\StylesFixer\\StylesFixer',
-    4 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\Cleaner\\Cleaner',
+    1 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\Visualizer\\Visualizer',
+    2 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\StylesFixer\\StylesFixer',
+    3 => 'DeWittePrins\\CoreFunctionality\\Modules\\AdminToolbar\\Features\\Cleaner\\Cleaner',
   ),
   'DeWittePrins\\CoreFunctionality\\Modules\\AdminMenu\\AdminMenu' => 
   array (
