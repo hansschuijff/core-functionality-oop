@@ -138,8 +138,25 @@
 	display: inline-flex !important;
 }
 
-.dwp-mb-node.is-collapsed > .dwp-mb-node-header > .dwp-mb-collapse .dashicons {
-	transform: rotate(-90deg);
+/* The same triangle as in the pool group headings: down when open, right when collapsed. */
+.dwp-mb-collapse .dashicons {
+	display: none;
+}
+
+.dwp-mb-collapse::before {
+	content: "\25B8";
+	display: inline-block;
+	width: 16px;
+	font-size: 18px;
+	line-height: 1;
+	text-align: center;
+	color: #50575e;
+	transform: rotate(90deg);
+	transition: transform 0.15s ease;
+}
+
+.dwp-mb-node.is-collapsed > .dwp-mb-node-header > .dwp-mb-collapse::before {
+	transform: none;
 }
 
 .dwp-mb-pool-actions {
