@@ -1087,7 +1087,7 @@
 			} else if ('Escape' === event.key && selected.size) {
 				clearSelection();
 			} else if ('?' === event.key) {
-				shortcutsDialog.showModal();
+				openShortcuts();
 			} else {
 				handled = false;
 			}
@@ -1099,10 +1099,18 @@
 
 		/* ------------------------------------------------------------------ shortcuts overview */
 
+		// The dialog hangs directly under <body>: inside the fixed settings frame it would not reach
+		// the top layer in every browser, and the frame's footer would cover it.
 		const shortcutsDialog = el('dialog', 'dwp-mb-dialog');
+		const dialogInner     = el('div', 'dwp-mb-dialog-inner');
+		const dialogFooter    = el('div', 'dwp-mb-dialog-footer');
+		const dialogOverlay   = el('div', 'dwp-mb-overlay');
+		const dialogHeader    = el('div', 'dwp-mb-dialog-header');
 		const dialogTitle     = el('h2', '', t.shortcutsTitle);
+		const dialogBody      = el('div', 'dwp-mb-dialog-body');
 		const shortcutsTable  = el('table', 'widefat striped');
-		const closeDialog     = el('button', 'button button-primary', t.close);
+		const closeIcon       = iconButton('dashicons-no-alt', t.close, 'js-dwp-mb-dialog-close');
+		const closeDialog     = el('button', 'button button-primary js-dwp-mb-dialog-close', t.close);
 
 		dialogTitle.id = 'dwp-mb-shortcuts-title';
 		shortcutsDialog.setAttribute('aria-labelledby', dialogTitle.id);
@@ -1112,18 +1120,37 @@
 			shortcutsTable.appendChild(line);
 		});
 		closeDialog.type = 'button';
-		closeDialog.addEventListener('click', function () {
+		dialogHeader.append(dialogTitle, closeIcon);
+		dialogBody.append(shortcutsTable, el('p', 'description', t.shortcutsNote));
+		dialogFooter.appendChild(closeDialog);
+		dialogInner.append(dialogHeader, dialogBody, dialogFooter);
+		shortcutsDialog.appendChild(dialogInner);
+
+		// An overlay of our own dims the page and closes the dialog on a click, whether or not the
+		// browser draws a ::backdrop. Esc closes the dialog as well (built in).
+		dialogOverlay.hidden = true;
+		dialogOverlay.addEventListener('click', function () {
 			shortcutsDialog.close();
 		});
-		shortcutsDialog.append(dialogTitle, shortcutsTable, el('p', 'description', t.shortcutsNote), closeDialog);
-		root.appendChild(shortcutsDialog);
+		shortcutsDialog.addEventListener('click', function (event) {
+			if (event.target === shortcutsDialog || event.target.closest('.js-dwp-mb-dialog-close')) {
+				shortcutsDialog.close();
+			}
+		});
+		shortcutsDialog.addEventListener('close', function () {
+			dialogOverlay.hidden = true;
+		});
+		document.body.append(dialogOverlay, shortcutsDialog);
+
+		function openShortcuts() {
+			dialogOverlay.hidden = false;
+			shortcutsDialog.showModal();
+		}
 
 		const helpButton = el('button', 'button button-small dwp-mb-help', t.shortcutsButton);
 		helpButton.type = 'button';
 		helpButton.prepend(el('span', 'dashicons dashicons-editor-help'));
-		helpButton.addEventListener('click', function () {
-			shortcutsDialog.showModal();
-		});
+		helpButton.addEventListener('click', openShortcuts);
 		tree.closest('.dwp-mb-column').querySelector('h3').appendChild(helpButton);
 
 		/* ------------------------------------------------------------------ serialize */

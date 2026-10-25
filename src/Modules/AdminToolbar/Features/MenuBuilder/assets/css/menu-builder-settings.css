@@ -286,20 +286,75 @@
 	font-size: 16px;
 }
 
+/* Centred in the window, never taller than it; the list scrolls inside, the close buttons stay.
+   The layout sits on an inner box, so it does not depend on how a browser displays <dialog>. */
 .dwp-mb-dialog {
-	max-width: 640px;
-	padding: 20px 24px;
+	position: fixed;
+	inset: 0;
+	z-index: 100001;
+	box-sizing: border-box;
+	width: min(640px, calc(100vw - 32px));
+	height: fit-content;
+	max-height: calc(100vh - 64px);
+	margin: auto;
+	padding: 0;
+	overflow: hidden;
+	background: #fff;
 	border: 1px solid var(--dwp-mb-border);
 	border-radius: 4px;
 	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .dwp-mb-dialog::backdrop {
+	background: transparent;
+}
+
+.dwp-mb-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
 	background: rgba(0, 0, 0, 0.35);
 }
 
-.dwp-mb-dialog h2 {
-	margin-top: 0;
+.dwp-mb-overlay[hidden] {
+	display: none;
+}
+
+.dwp-mb-dialog-inner {
+	display: flex;
+	flex-direction: column;
+	max-height: calc(100vh - 64px);
+}
+
+.dwp-mb-dialog-footer {
+	flex-shrink: 0;
+	padding: 12px 24px;
+	border-top: 1px solid #dcdcde;
+	text-align: right;
+}
+
+.dwp-mb-dialog-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 14px 16px 10px 24px;
+	border-bottom: 1px solid #dcdcde;
+}
+
+.dwp-mb-dialog-header h2 {
+	margin: 0;
+}
+
+.dwp-mb-dialog-body {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+	padding: 12px 24px;
+}
+
+.dwp-mb-dialog-header {
+	flex-shrink: 0;
 }
 
 .dwp-mb-dialog th {
