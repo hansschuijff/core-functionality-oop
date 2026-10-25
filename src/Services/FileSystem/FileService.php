@@ -146,9 +146,7 @@ class FileService {
 	 * @return bool               True if the file can be written, false otherwise.
 	 */
 	private function is_writable_register( Register $register ): bool {
-		$path = $this->get_register_full_path( $register );
-
-		return file_exists( $path ) ? wp_is_writable( $path ) : wp_is_writable( dirname( $path ) );
+		return PhpArrayFile::is_writable( $this->get_register_full_path( $register ) );
 	}
 
 	/**
@@ -163,44 +161,8 @@ class FileService {
 		if ( empty( $register_data ) ) {
 			return false;
 		}
-		$path = $this->get_register_full_path( $register );
 
-		// FIX: Stripped the floating redundant row, leveraging the builder method cleanly.
-		$file_content = $this->build_file_content_php( $register_data );
-		$bytes        = file_put_contents( $path, $file_content, LOCK_EX );
-
-		if ( false !== $bytes ) {
-			$this->clear_opcache( $path );
-		}
-
-		return false !== $bytes;
-	}
-
-	/**
-	 * This is a fix for the problem that opcache returned old versions
-	 * of just updated files.
-	 *
-	 * The fix solves it, but since it depends on server
-	 * configuration we decided to read the files only as failsave, when
-	 * wp option has no values.
-	 *
-	 * @param string $path Path of the file that was just written.
-	 * @return void
-	 */
-	private function clear_opcache( string $path ): void {
-		/**
-		 * FIX 1: Force the OS to synchronize the disk-state immediately.
-		 */
-		clearstatcache( true, $path );
-
-		/**
-		 * FIX 2: Destroy the OPcache for this specific path!
-		 * The 'true' parameter forces the cache-clearing, even if the
-		 * timestamp is still unchanged.
-		 */
-		if ( function_exists( 'opcache_invalidate' ) ) {
-			opcache_invalidate( $path, true );
-		}
+		return PhpArrayFile::write( $this->get_register_full_path( $register ), $register_data );
 	}
 
 	/**
@@ -222,34 +184,10 @@ class FileService {
 		$bytes = file_put_contents( $path, $json_string, LOCK_EX );
 
 		if ( false !== $bytes ) {
-			$this->clear_opcache( $path );
+			PhpArrayFile::forget_cached( $path );
 		}
 
 		return false !== $bytes;
-	}
-
-	/**
-	 * Synthesizes valid PHP compilation file content source headers wrap around a given array.
-	 *
-	 * @since 1.0.0
-	 * @param array<mixed> $array The specific configuration blueprint payload matrix to dump.
-	 * @return string              Generated execution-ready PHP file code string.
-	 */
-	private function build_file_content_php( array $array ): string {
-		$html  = '<?php' . PHP_EOL;
-		$html .= '/**' . PHP_EOL;
-		$html .= ' * Auto-generated configuration file.' . PHP_EOL;
-		$html .= ' *' . PHP_EOL;
-		$html .= ' * @since 1.0.0' . PHP_EOL;
-		$html .= ' */' . PHP_EOL;
-		$html .= PHP_EOL;
-		$html .= "if ( ! defined( 'ABSPATH' ) ) {" . PHP_EOL;
-		$html .= "\texit;" . PHP_EOL;
-		$html .= '}' . PHP_EOL;
-		$html .= PHP_EOL;
-		$html .= 'return ' . var_export( $array, true ) . ';' . PHP_EOL; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_var_export
-
-		return $html;
 	}
 
 	/**
