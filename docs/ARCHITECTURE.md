@@ -161,7 +161,12 @@ shown) without changing it. Nodes can be selected (shift-click for a range) and 
 visibility, reset titles, remove, and dragging or keyboard moves of the whole selection, each node with
 its branch. The pool is grouped per source with search and an "only active" filter; tree branches can be
 collapsed (remembered in the browser). The tree is an ARIA tree with keyboard control (arrows, Alt+arrows
-to move and indent, Space to select, Enter, Delete, Esc).
+to move and indent, Space to select, Ctrl+Space or Ctrl-click for a node with its branch, Enter, Delete,
+Esc); "Keyboard shortcuts" (or ?) shows the overview. When the columns fit side by side, the builder fills
+the visible part of the settings page, so only the lists scroll.
+
+The settings page frame is fixed beside the admin menu (from 783px wide), so a long admin menu scrolls on
+its own and the footer with the buttons stays in view.
 
 ## Settings and options
 
