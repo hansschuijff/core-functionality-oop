@@ -42,6 +42,10 @@ new modules and features for Hans's own sites.
   `init` (priority -10). Source strings English, every string also in the nl_NL `.po`.
 - Hooks are `core-functionality/<name>` with a kebab-case name (the brain's `<plugin_slug>/<name>`).
   Prefix `dwp_cf_` for options, nonces and cron events; settings page slug `dwp-cf-settings`.
+- All option access goes through `Settings` (never `get_option()` / `update_option()` / `delete_option()`
+  directly). The plugin's own settings use `get()` / `get_whole()` / `save()` / `reset()` with a token;
+  `get_unmanaged()` / `save_unmanaged()` are only for options that are not part of this plugin (of
+  WordPress or another plugin), under their exact name.
 - No `class_exists()` / `interface_exists()` / `function_exists()` wrappers around the plugin's own
   declarations; Composer loads them once.
 - Guards supply the admin toolbar and menu links of their plugin or theme on purpose (see
