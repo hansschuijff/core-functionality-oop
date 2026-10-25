@@ -59,8 +59,9 @@ core-functionality-oop/
 │   ├── Enums/                    Orientation, Deployment, Register, RegisterSetting, ...
 │   ├── DTO/                      AdminMenuBlock, ToolbarShortcut, ComponentMeta
 │   ├── ValueObjects/             module, feature and environment validators
-│   ├── Services/                 ComponentsRegister, Settings, Options, InterDependenciesGuard,
-│   │                             PluginIntegrityWatch, ClassParser, FileSystem/ (scan and file writes)
+│   ├── Services/                 ComponentsRegister (+ ComponentsRegisterFiles), Settings (+ SettingsFiles,
+│   │                             Options), InterDependenciesGuard, PluginIntegrityWatch, ClassParser,
+│   │                             FileSystem/ (FileService, the scanners)
 │   ├── Environment/              Environment, EnvironmentLookup, Core/WordPress,
 │   │                             Plugins/, Themes/ (one guard class per id), Registers/
 │   ├── Admin/Services/Settings/  settings page (Settings → Core Functionality) with sections (tabs)
@@ -91,7 +92,8 @@ site. It combines:
 The kernel then checks the environment dependencies of whatever passes. The registers are kept in the
 database through the options vault and also written to `kernel/components-register.php`,
 `components-enabled-register.php` and `components-deployment-register.php`; when the database has no value
-the files are read and copied into it. The options are there for speed; the files are a fallback and are
+the files are read and copied into it (through `ComponentsRegisterFiles`, which knows which register lives
+in which file). The options are there for speed; the files are a fallback and are
 only written when the `kernel/` folder is writable (on production it often is not, and the option then
 keeps the change).
 
@@ -169,7 +171,12 @@ The menu can travel with the plugin: "Save as default" (on a site where the sett
 in practice development) writes it to `settings/modules/admin-toolbar/menu-builder.php` and lets the site
 follow it; committed, it goes along with the release. A site without a menu of its own uses that default
 (`Settings::get_whole()`), and "Restore default" drops a site's own menu. A status line above the tree says
-which applies. Merging a default into a site's own menu is not offered (not needed so far).
+which applies. "Merge with default" (after a confirmation) adds the items of the default that the site's
+menu lacks, recognised by instance id so nothing is added twice: an item goes after its predecessor from
+the default if the site has it, else first under its parent from the default, else at the end of the top
+level. The site's own items, titles, visibility and arrangement stay; default items the site removed come
+back, which is what merging means (quicker to remove again than to rebuild a structure). This is a
+deliberate action, unlike `Settings::get()`'s merge on every read, which would make removals impossible.
 
 The settings page frame is fixed beside the admin menu (from 783px wide), so a long admin menu scrolls on
 its own and the footer with the buttons stays in view.
@@ -193,8 +200,10 @@ its own and the footer with the buttons stays in view.
 - `Settings` is the holder of all settings, with two helpers: **`SettingsFiles`** for the files (mapping,
   reading, writing) and the **Options vault** (`Options`) for the database: it maps setting tokens to real
   option names, either standalone or grouped in one option, and keeps unknown tokens in a quarantine pool
-  until they are assigned. `PhpArrayFile` writes the PHP files for both the settings and the kernel
-  registers. All option access belongs behind `Settings`.
+  until they are assigned. All option access belongs behind `Settings`.
+- **Files**: `FileService` is the general reader and writer of data files (PHP files returning an array,
+  or JSON, by extension; it creates missing folders). The layers on top say what the files are:
+  `SettingsFiles` for the settings defaults, `ComponentsRegisterFiles` for the registers in `kernel/`.
 
 ## Admin
 
