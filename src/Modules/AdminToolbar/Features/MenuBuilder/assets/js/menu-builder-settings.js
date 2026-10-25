@@ -1099,9 +1099,10 @@
 
 		/* ------------------------------------------------------------------ shortcuts overview */
 
-		// The dialog hangs directly under <body>: inside the fixed settings frame it would not reach
-		// the top layer in every browser, and the frame's footer would cover it.
-		const shortcutsDialog = el('dialog', 'dwp-mb-dialog');
+		// A plain element with the dialog role, shown and hidden by the script: the <dialog> element
+		// is not available in every browser (where it is not, it shows on load and cannot close).
+		// It hangs directly under <body>, so the fixed settings frame cannot clip or cover it.
+		const shortcutsDialog = el('div', 'dwp-mb-dialog');
 		const dialogInner     = el('div', 'dwp-mb-dialog-inner');
 		const dialogFooter    = el('div', 'dwp-mb-dialog-footer');
 		const dialogOverlay   = el('div', 'dwp-mb-overlay');
@@ -1113,6 +1114,9 @@
 		const closeDialog     = el('button', 'button button-primary js-dwp-mb-dialog-close', t.close);
 
 		dialogTitle.id = 'dwp-mb-shortcuts-title';
+		shortcutsDialog.hidden = true;
+		shortcutsDialog.setAttribute('role', 'dialog');
+		shortcutsDialog.setAttribute('aria-modal', 'true');
 		shortcutsDialog.setAttribute('aria-labelledby', dialogTitle.id);
 		t.shortcuts.forEach(function (shortcut) {
 			const line = el('tr');
@@ -1126,26 +1130,40 @@
 		dialogInner.append(dialogHeader, dialogBody, dialogFooter);
 		shortcutsDialog.appendChild(dialogInner);
 
-		// An overlay of our own dims the page and closes the dialog on a click, whether or not the
-		// browser draws a ::backdrop. Esc closes the dialog as well (built in).
+		let focusBeforeDialog = null;
+
+		// Opening moves the focus to the close button (so Enter closes it too); closing returns it.
+		function openShortcuts() {
+			focusBeforeDialog = document.activeElement;
+			dialogOverlay.hidden = false;
+			shortcutsDialog.hidden = false;
+			closeIcon.focus();
+		}
+
+		function closeShortcuts() {
+			dialogOverlay.hidden = true;
+			shortcutsDialog.hidden = true;
+			if (focusBeforeDialog && document.contains(focusBeforeDialog)) {
+				focusBeforeDialog.focus();
+			}
+		}
+
+		// Close with either button, a click on the dimmed page around it, or Esc.
 		dialogOverlay.hidden = true;
-		dialogOverlay.addEventListener('click', function () {
-			shortcutsDialog.close();
-		});
+		dialogOverlay.addEventListener('click', closeShortcuts);
 		shortcutsDialog.addEventListener('click', function (event) {
-			if (event.target === shortcutsDialog || event.target.closest('.js-dwp-mb-dialog-close')) {
-				shortcutsDialog.close();
+			if (event.target.closest('.js-dwp-mb-dialog-close')) {
+				closeShortcuts();
 			}
 		});
-		shortcutsDialog.addEventListener('close', function () {
-			dialogOverlay.hidden = true;
-		});
+		document.addEventListener('keydown', function (event) {
+			if ('Escape' === event.key && !shortcutsDialog.hidden) {
+				event.preventDefault();
+				event.stopPropagation();
+				closeShortcuts();
+			}
+		}, true);
 		document.body.append(dialogOverlay, shortcutsDialog);
-
-		function openShortcuts() {
-			dialogOverlay.hidden = false;
-			shortcutsDialog.showModal();
-		}
 
 		const helpButton = el('button', 'button button-small dwp-mb-help', t.shortcutsButton);
 		helpButton.type = 'button';

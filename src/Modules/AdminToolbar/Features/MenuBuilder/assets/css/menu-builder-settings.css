@@ -286,8 +286,7 @@
 	font-size: 16px;
 }
 
-/* Centred in the window, never taller than it; the list scrolls inside, the close buttons stay.
-   The layout sits on an inner box, so it does not depend on how a browser displays <dialog>. */
+/* Centred in the window, never taller than it; the list scrolls inside, the close buttons stay. */
 .dwp-mb-dialog {
 	position: fixed;
 	inset: 0;
@@ -305,8 +304,8 @@
 	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
-.dwp-mb-dialog::backdrop {
-	background: transparent;
+.dwp-mb-dialog[hidden] {
+	display: none;
 }
 
 .dwp-mb-overlay {
