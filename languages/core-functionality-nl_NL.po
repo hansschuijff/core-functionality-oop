@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T10:38:29+01:00\n"
+"POT-Creation-Date: 2026-10-25T11:11:36+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -36,148 +36,20 @@ msgstr ""
 msgid "https://dewitteprins.nl"
 msgstr ""
 
-#: settings/modules/admin-toolbar/add-courses/menu.php:25
-#: settings/modules/admin-toolbar/add-courses/menu.php:32
-#: settings/modules/admin-toolbar/add-courses/menu.php:51
-#: settings/modules/admin-toolbar/add-courses/menu.php:108
-#: settings/modules/admin-toolbar/add-view/items/courses.php:25
-#: settings/modules/admin-toolbar/add-view/items/courses.php:32
-#: settings/modules/admin-toolbar/add-view/items/shop.php:63
-#: settings/modules/admin-toolbar/add-view/items/shop.php:70
-#: src/Environment/Plugins/SenseiLms.php:64
-#: src/Environment/Plugins/SenseiLms.php:162
-#: src/Environment/Plugins/Woocommerce.php:153
-msgid "Courses"
-msgstr "Cursussen"
+#: src/Admin/Services/Settings/AdminSettingsPage.php:118
+#: src/Admin/Services/Settings/AdminSettingsPage.php:428
+msgid "Core Functionality Settings"
+msgstr "Instellingen Core Functionality"
 
-#: settings/modules/admin-toolbar/add-courses/menu.php:30
-#: settings/modules/admin-toolbar/add-courses/menu.php:49
-#: settings/modules/admin-toolbar/add-courses/menu.php:68
-#: settings/modules/admin-toolbar/add-courses/menu.php:87
-#: settings/modules/admin-toolbar/add-courses/menu.php:106
-#: settings/modules/admin-toolbar/add-courses/menu.php:125
-#: settings/modules/admin-toolbar/add-courses/menu.php:144
-#: settings/modules/admin-toolbar/add-courses/menu.php:163
-#: settings/modules/admin-toolbar/add-courses/menu.php:182
-#: settings/modules/admin-toolbar/add-courses/menu.php:201
-#: settings/modules/admin-toolbar/add-courses/menu.php:220
-#: settings/modules/admin-toolbar/add-courses/menu.php:239
-#: settings/modules/admin-toolbar/add-courses/menu.php:258
-#: settings/modules/admin-toolbar/add-courses/menu.php:277
-#: settings/modules/admin-toolbar/add-view/items/courses.php:30
-#: settings/modules/admin-toolbar/add-view/items/courses.php:49
-#: settings/modules/admin-toolbar/add-view/items/courses.php:68
-#: settings/modules/admin-toolbar/add-view/items/courses.php:87
-#: settings/modules/admin-toolbar/add-view/items/courses.php:106
-#: settings/modules/admin-toolbar/add-view/items/courses.php:125
-#: settings/modules/admin-toolbar/add-view/items/courses.php:144
-#: settings/modules/admin-toolbar/add-view/items/courses.php:163
-#: settings/modules/admin-toolbar/add-view/items/courses.php:182
-#: settings/modules/admin-toolbar/add-view/items/courses.php:201
-#: settings/modules/admin-toolbar/add-view/items/courses.php:220
-#: settings/modules/admin-toolbar/add-view/items/courses.php:239
-#: settings/modules/admin-toolbar/add-view/items/courses.php:258
-#: settings/modules/admin-toolbar/add-view/items/courses.php:277
-msgid "Link to Sensei LMS"
-msgstr "Link naar Sensei LMS"
+#: src/Admin/Services/Settings/AdminSettingsPage.php:119
+#: src/Environment/Core/WordPress.php:224
+msgid "Core Functionality"
+msgstr "Core Functionality"
 
-#: settings/modules/admin-toolbar/add-courses/menu.php:44
-#: settings/modules/admin-toolbar/add-events/menu.php:44
-#: settings/modules/admin-toolbar/add-posts/menu.php:45
-#: settings/modules/admin-toolbar/add-view/menu.php:27
-#: src/Environment/Plugins/SenseiLms.php:155
-msgid "View"
-msgstr "Bekijken"
+#: src/Admin/Services/Settings/AdminSettingsPage.php:310
+msgid "Type to search... (↑↓ to navigate, Enter)"
+msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 
-#: settings/modules/admin-toolbar/add-courses/menu.php:63
-#: settings/modules/admin-toolbar/add-courses/menu.php:70
-#: src/Environment/Plugins/SenseiLms.php:71
-msgid "Grading"
-msgstr "Beoordelen"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:82
-#: settings/modules/admin-toolbar/add-courses/menu.php:89
-#: src/Environment/Plugins/SenseiLms.php:78
-msgid "Student Management"
-msgstr "Cursistenbeheer"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:101
-#: settings/modules/admin-toolbar/add-events/menu.php:63
-#: settings/modules/admin-toolbar/add-posts/menu.php:63
-#: src/Environment/Plugins/TheEventsCalendar.php:86
-msgid "Edit"
-msgstr "Bewerken"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:120
-#: settings/modules/admin-toolbar/add-courses/menu.php:127
-#: settings/modules/admin-toolbar/add-view/items/courses.php:177
-#: settings/modules/admin-toolbar/add-view/items/courses.php:184
-#: src/Environment/Plugins/SenseiLms.php:92
-#: src/Environment/Plugins/SenseiLms.php:218
-msgid "Lessons"
-msgstr "Lessen"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:139
-#: settings/modules/admin-toolbar/add-events/menu.php:120
-#: settings/modules/admin-toolbar/add-events/menu.php:127
-#: settings/modules/admin-toolbar/add-posts/menu.php:95
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:120
-#: src/Environment/Core/WordPress.php:178
-#: src/Environment/Core/WordPress.php:180
-#: src/Environment/Plugins/SenseiLms.php:99
-#: src/Environment/Plugins/TheEventsCalendar.php:107
-#: src/Environment/Plugins/Woocommerce.php:90
-msgid "Categories"
-msgstr "Categorieën"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:146
-msgid "Course Categories"
-msgstr "Cursuscategorieën"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:158
-#: settings/modules/admin-toolbar/add-courses/menu.php:165
-#: src/Environment/Plugins/SenseiLms.php:106
-msgid "Modules"
-msgstr "Modules"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:177
-#: settings/modules/admin-toolbar/add-courses/menu.php:184
-#: src/Environment/Plugins/SenseiLms.php:113
-msgid "Module Order"
-msgstr "Volgorde modules"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:196
-#: settings/modules/admin-toolbar/add-courses/menu.php:203
-#: src/Environment/Plugins/SenseiLms.php:120
-msgid "Lesson Tags"
-msgstr "Lestags"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:215
-#: settings/modules/admin-toolbar/add-courses/menu.php:222
-#: src/Environment/Plugins/SenseiLms.php:127
-msgid "Questions"
-msgstr "Vragen"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:234
-#: settings/modules/admin-toolbar/add-courses/menu.php:241
-#: settings/modules/admin-toolbar/add-view/items/courses.php:253
-#: settings/modules/admin-toolbar/add-view/items/courses.php:260
-#: src/Environment/Plugins/SenseiLms.php:134
-#: src/Environment/Plugins/SenseiLms.php:246
-msgid "Messages"
-msgstr "Berichten"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:253
-#: settings/modules/admin-toolbar/add-courses/menu.php:260
-#: settings/modules/admin-toolbar/add-events/menu.php:139
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:164
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:171
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:309
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:316
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:105
-#: settings/modules/admin-toolbar/add-settings/menu.php:25
-#: settings/modules/admin-toolbar/add-shop/items/settings.php:27
-#: settings/modules/admin-toolbar/add-shop/items/settings/woocommerce.php:25
 #: src/Admin/Services/Settings/AdminSettingsPage.php:341
 #: src/Environment/Plugins/FestingerVault.php:105
 #: src/Environment/Plugins/FestingerVault.php:107
@@ -186,949 +58,9 @@ msgstr "Berichten"
 #: src/Environment/Plugins/TheEventsCalendar.php:114
 #: src/Environment/Plugins/Woocommerce.php:104
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:66
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:430
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:458
 msgid "Settings"
 msgstr "Instellingen"
-
-#: settings/modules/admin-toolbar/add-courses/menu.php:272
-#: settings/modules/admin-toolbar/add-courses/menu.php:279
-#: src/Environment/Plugins/SenseiLms.php:148
-msgid "Analytics"
-msgstr "Analyse"
-
-#: settings/modules/admin-toolbar/add-events/menu.php:25
-#: settings/modules/admin-toolbar/add-events/menu.php:32
-#: settings/modules/admin-toolbar/add-events/menu.php:70
-#: src/Environment/Plugins/TheEventsCalendar.php:79
-#: src/Environment/Plugins/TheEventsCalendar.php:81
-#: src/Environment/Plugins/TheEventsCalendar.php:88
-#: src/Environment/Plugins/TheEventsCalendar.php:122
-msgid "Events"
-msgstr "Evenementen"
-
-#: settings/modules/admin-toolbar/add-events/menu.php:30
-#: settings/modules/admin-toolbar/add-events/menu.php:49
-#: settings/modules/admin-toolbar/add-events/menu.php:68
-#: settings/modules/admin-toolbar/add-events/menu.php:144
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:30
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:49
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:68
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:87
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:106
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:125
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:144
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:55
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:74
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:93
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:112
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:131
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:150
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:169
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:188
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:219
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:238
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:257
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:276
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:295
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:314
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:30
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:49
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:68
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:89
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:110
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:131
-#: settings/modules/admin-toolbar/add-plugins/items/nobuna.php:30
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:30
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:46
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:62
-#: settings/modules/admin-toolbar/add-posts/menu.php:34
-#: settings/modules/admin-toolbar/add-posts/menu.php:52
-#: settings/modules/admin-toolbar/add-posts/menu.php:68
-#: settings/modules/admin-toolbar/add-posts/menu.php:84
-#: settings/modules/admin-toolbar/add-posts/menu.php:100
-#: settings/modules/admin-toolbar/add-posts/menu.php:116
-#: settings/modules/admin-toolbar/add-settings/menu.php:41
-#: settings/modules/admin-toolbar/add-settings/menu.php:57
-#: settings/modules/admin-toolbar/add-settings/menu.php:76
-#: settings/modules/admin-toolbar/add-settings/menu.php:92
-#: settings/modules/admin-toolbar/add-settings/menu.php:108
-#: settings/modules/admin-toolbar/add-settings/menu.php:127
-#: settings/modules/admin-toolbar/add-settings/menu.php:146
-#: settings/modules/admin-toolbar/add-site/menu.php:41
-#: settings/modules/admin-toolbar/add-site/menu.php:60
-#: settings/modules/admin-toolbar/add-site/menu.php:76
-#: settings/modules/admin-toolbar/add-site/menu.php:92
-#: settings/modules/admin-toolbar/add-site/menu.php:108
-#: settings/modules/admin-toolbar/add-site/menu.php:124
-#: settings/modules/admin-toolbar/add-site/menu.php:143
-#: settings/modules/admin-toolbar/add-tools/menu.php:41
-#: settings/modules/admin-toolbar/add-tools/menu.php:60
-#: settings/modules/admin-toolbar/add-tools/menu.php:79
-#: settings/modules/admin-toolbar/add-tools/menu.php:98
-#: settings/modules/admin-toolbar/add-tools/menu.php:117
-#: settings/modules/admin-toolbar/add-tools/menu.php:136
-#: settings/modules/admin-toolbar/add-tools/menu.php:155
-#: settings/modules/admin-toolbar/add-tools/menu.php:174
-#: settings/modules/admin-toolbar/add-tools/menu.php:193
-#: settings/modules/admin-toolbar/add-tools/menu.php:213
-#: settings/modules/admin-toolbar/add-tools/menu.php:233
-#: settings/modules/admin-toolbar/add-tools/menu.php:252
-#: settings/modules/admin-toolbar/add-view/items/events.php:30
-#: settings/modules/admin-toolbar/add-view/items/events.php:50
-#: settings/modules/admin-toolbar/add-view/menu.php:49
-#: settings/modules/admin-toolbar/add-view/menu.php:65
-#: settings/modules/admin-toolbar/add-view/menu.php:81
-#: src/Environment/Core/WordPress.php:102
-#: src/Environment/Core/WordPress.php:109
-#: src/Environment/Core/WordPress.php:116
-#: src/Environment/Core/WordPress.php:127
-#: src/Environment/Core/WordPress.php:134
-#: src/Environment/Core/WordPress.php:141
-#: src/Environment/Core/WordPress.php:148
-#: src/Environment/Core/WordPress.php:159
-#: src/Environment/Core/WordPress.php:166
-#: src/Environment/Core/WordPress.php:173
-#: src/Environment/Core/WordPress.php:180
-#: src/Environment/Core/WordPress.php:187
-#: src/Environment/Core/WordPress.php:194
-#: src/Environment/Core/WordPress.php:201
-#: src/Environment/Core/WordPress.php:208
-#: src/Environment/Core/WordPress.php:215
-#: src/Environment/Core/WordPress.php:226
-#: src/Environment/Core/WordPress.php:233
-#: src/Environment/Core/WordPress.php:240
-#: src/Environment/Plugins/Automatewoo.php:73
-#: src/Environment/Plugins/Automatewoo.php:80
-#: src/Environment/Plugins/BrokenLinkChecker.php:65
-#: src/Environment/Plugins/EventTickets.php:83
-#: src/Environment/Plugins/FestingerVault.php:65
-#: src/Environment/Plugins/FestingerVault.php:72
-#: src/Environment/Plugins/FestingerVault.php:79
-#: src/Environment/Plugins/FestingerVault.php:86
-#: src/Environment/Plugins/FestingerVault.php:93
-#: src/Environment/Plugins/FestingerVault.php:100
-#: src/Environment/Plugins/FestingerVault.php:107
-#: src/Environment/Plugins/FestingerVault.php:114
-#: src/Environment/Plugins/FluentSmtp.php:65
-#: src/Environment/Plugins/GitRemoteUpdater.php:66
-#: src/Environment/Plugins/GitUpdater.php:65
-#: src/Environment/Plugins/GitUpdater.php:72
-#: src/Environment/Plugins/GitUpdater.php:79
-#: src/Environment/Plugins/GitUpdater.php:86
-#: src/Environment/Plugins/GitUpdater.php:93
-#: src/Environment/Plugins/GravityForms.php:65
-#: src/Environment/Plugins/LocoTranslate.php:65
-#: src/Environment/Plugins/LocoTranslate.php:72
-#: src/Environment/Plugins/LocoTranslate.php:79
-#: src/Environment/Plugins/Nobuna.php:65
-#: src/Environment/Plugins/RedisCache.php:66
-#: src/Environment/Plugins/SenseiLms.php:66
-#: src/Environment/Plugins/SenseiLms.php:73
-#: src/Environment/Plugins/SenseiLms.php:80
-#: src/Environment/Plugins/SenseiLms.php:87
-#: src/Environment/Plugins/SenseiLms.php:94
-#: src/Environment/Plugins/SenseiLms.php:101
-#: src/Environment/Plugins/SenseiLms.php:108
-#: src/Environment/Plugins/SenseiLms.php:115
-#: src/Environment/Plugins/SenseiLms.php:122
-#: src/Environment/Plugins/SenseiLms.php:129
-#: src/Environment/Plugins/SenseiLms.php:136
-#: src/Environment/Plugins/SenseiLms.php:143
-#: src/Environment/Plugins/SenseiLms.php:150
-#: src/Environment/Plugins/SenseiLms.php:157
-#: src/Environment/Plugins/SenseiLms.php:164
-#: src/Environment/Plugins/SenseiLms.php:171
-#: src/Environment/Plugins/SenseiLms.php:178
-#: src/Environment/Plugins/SenseiLms.php:185
-#: src/Environment/Plugins/SenseiLms.php:192
-#: src/Environment/Plugins/SenseiLms.php:199
-#: src/Environment/Plugins/SenseiLms.php:206
-#: src/Environment/Plugins/SenseiLms.php:213
-#: src/Environment/Plugins/SenseiLms.php:220
-#: src/Environment/Plugins/SenseiLms.php:227
-#: src/Environment/Plugins/SenseiLms.php:234
-#: src/Environment/Plugins/SenseiLms.php:241
-#: src/Environment/Plugins/SenseiLms.php:248
-#: src/Environment/Plugins/SenseiLms.php:255
-#: src/Environment/Plugins/SeoRedirectionPremium.php:65
-#: src/Environment/Plugins/SeoRedirectionPremium.php:72
-#: src/Environment/Plugins/SharedCounts.php:65
-#: src/Environment/Plugins/TheEventsCalendar.php:81
-#: src/Environment/Plugins/TheEventsCalendar.php:88
-#: src/Environment/Plugins/TheEventsCalendar.php:95
-#: src/Environment/Plugins/TheEventsCalendar.php:102
-#: src/Environment/Plugins/TheEventsCalendar.php:109
-#: src/Environment/Plugins/TheEventsCalendar.php:116
-#: src/Environment/Plugins/TheEventsCalendar.php:124
-#: src/Environment/Plugins/TheEventsCalendar.php:131
-#: src/Environment/Plugins/UpdraftPlus.php:65
-#: src/Environment/Plugins/UpdraftPlus.php:72
-#: src/Environment/Plugins/Woocommerce.php:71
-#: src/Environment/Plugins/Woocommerce.php:78
-#: src/Environment/Plugins/Woocommerce.php:85
-#: src/Environment/Plugins/Woocommerce.php:92
-#: src/Environment/Plugins/Woocommerce.php:99
-#: src/Environment/Plugins/Woocommerce.php:106
-#: src/Environment/Plugins/Woocommerce.php:114
-#: src/Environment/Plugins/Woocommerce.php:121
-#: src/Environment/Plugins/Woocommerce.php:128
-#: src/Environment/Plugins/Woocommerce.php:135
-#: src/Environment/Plugins/Woocommerce.php:142
-#: src/Environment/Plugins/Woocommerce.php:149
-#: src/Environment/Plugins/Woocommerce.php:156
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:61
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:68
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:75
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:82
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:89
-#: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:61
-#: src/Environment/Plugins/WoocommercePdfInvoices.php:62
-#: src/Environment/Plugins/WoocommercePreOrders.php:62
-#: src/Environment/Plugins/WoocommerceProductAddons.php:61
-#: src/Environment/Plugins/WoocommerceSmartCoupons.php:62
-#: src/Environment/Plugins/WoocommerceSubscriptions.php:67
-#: src/Environment/Plugins/WoocommerceSubscriptions.php:75
-#: src/Environment/Plugins/WoocommerceSubscriptions.php:82
-#: src/Environment/Plugins/WpForms.php:65
-#: src/Environment/Plugins/YoastSeo.php:80
-#: src/Environment/Themes/AnyBlockTheme.php:109
-#: src/Environment/Themes/AnyGenesis.php:78
-msgid "Link to"
-msgstr "Link naar"
-
-#: settings/modules/admin-toolbar/add-events/menu.php:51
-#: settings/modules/admin-toolbar/add-view/items/events.php:32
-#: src/Environment/Plugins/TheEventsCalendar.php:124
-msgid "The Events Calendar"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-events/menu.php:82
-#: settings/modules/admin-toolbar/add-events/menu.php:89
-#: src/Environment/Plugins/TheEventsCalendar.php:93
-msgid "Organizers"
-msgstr "Organisatoren"
-
-#: settings/modules/admin-toolbar/add-events/menu.php:87
-#: settings/modules/admin-toolbar/add-events/menu.php:106
-#: settings/modules/admin-toolbar/add-events/menu.php:125
-msgid "Link to Event"
-msgstr "Link naar evenement"
-
-#: settings/modules/admin-toolbar/add-events/menu.php:101
-#: settings/modules/admin-toolbar/add-events/menu.php:108
-#: src/Environment/Plugins/TheEventsCalendar.php:100
-msgid "Venues"
-msgstr "Locaties"
-
-#: settings/modules/admin-toolbar/add-events/menu.php:146
-#: src/Environment/Plugins/TheEventsCalendar.php:116
-msgid "Events Calendar Settings"
-msgstr "Instellingen evenementenkalender"
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:25
-msgid "Edit Other"
-msgstr "Overige bewerken"
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:32
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:63
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:70
-#: src/Environment/Core/WordPress.php:199
-#: src/Environment/Core/WordPress.php:201
-msgid "Pages"
-msgstr "Pagina's"
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:44
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:51
-#: src/Environment/Core/WordPress.php:192
-#: src/Environment/Core/WordPress.php:194
-msgid "Reusable blocks"
-msgstr "Herbruikbare blokken"
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:82
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:89
-#: src/Environment/Core/WordPress.php:206
-#: src/Environment/Core/WordPress.php:208
-msgid "Comments"
-msgstr "Reacties"
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:101
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:120
-#: src/Environment/Plugins/GravityForms.php:63
-#: src/Environment/Plugins/WpForms.php:63
-msgid "Forms"
-msgstr "Formulieren"
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:108
-#: src/Environment/Plugins/GravityForms.php:65
-msgid "Gravity Forms"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:127
-#: src/Environment/Plugins/WpForms.php:65
-msgid "WPForms"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:139
-#: settings/modules/admin-toolbar/add-other-edits/menu.php:146
-#: src/Environment/Core/WordPress.php:213
-#: src/Environment/Core/WordPress.php:215
-msgid "Users"
-msgstr "Gebruikers"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:50
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:214
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:240
-#: src/Environment/Plugins/FestingerVault.php:63
-#: src/Environment/Plugins/FestingerVault.php:65
-#: src/Environment/Plugins/FestingerVault.php:72
-#: src/Environment/Plugins/FestingerVault.php:79
-#: src/Environment/Plugins/FestingerVault.php:86
-#: src/Environment/Plugins/FestingerVault.php:93
-#: src/Environment/Plugins/FestingerVault.php:100
-#: src/Environment/Plugins/FestingerVault.php:107
-#: src/Environment/Plugins/FestingerVault.php:114
-msgid "Festinger Vault"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:57
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:133
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:221
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:252
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:259
-#: src/Environment/Plugins/FestingerVault.php:65
-#: src/Environment/Plugins/FestingerVault.php:72
-msgid "Plugin Updates"
-msgstr "Plugin-updates"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:69
-#: settings/modules/admin-toolbar/add-plugins/menu.php:27
-#: src/Environment/Plugins/FestingerVault.php:77
-#: src/Environment/Plugins/FestingerVault.php:79
-msgid "Plugins"
-msgstr "Plugins"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:76
-msgid "Festinger Vault Plugins"
-msgstr "Festinger Vault-plugins"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:88
-#: settings/modules/admin-toolbar/add-settings/menu.php:36
-#: settings/modules/admin-toolbar/add-settings/menu.php:43
-#: settings/modules/admin-toolbar/add-site/menu.php:103
-#: settings/modules/admin-toolbar/add-site/menu.php:110
-#: src/Environment/Core/WordPress.php:146
-#: src/Environment/Core/WordPress.php:148
-#: src/Environment/Plugins/FestingerVault.php:84
-#: src/Environment/Plugins/FestingerVault.php:86
-msgid "Themes"
-msgstr "Thema's"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:95
-msgid "Festinger Vault Themes"
-msgstr "Festinger Vault-thema's"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:107
-#: src/Environment/Plugins/FestingerVault.php:91
-#: src/Environment/Plugins/FestingerVault.php:93
-msgid "Elementor Template Kits"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:114
-msgid "Festinger Vault Elementor Template Kits"
-msgstr "Festinger Vault Elementor Template Kits"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:126
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:25
-#: src/Environment/Core/WordPress.php:107
-#: src/Environment/Plugins/FestingerVault.php:70
-msgid "Updates"
-msgstr "Updates"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:145
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:152
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:290
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:297
-#: src/Environment/Plugins/FestingerVault.php:98
-#: src/Environment/Plugins/FestingerVault.php:100
-msgid "History"
-msgstr "Geschiedenis"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:183
-#: src/Environment/Plugins/FestingerVault.php:112
-msgid "Support"
-msgstr "Ondersteuning"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:190
-#: src/Environment/Plugins/FestingerVault.php:114
-msgid "support"
-msgstr "ondersteuning"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:233
-msgid "Vault"
-msgstr "Vault"
-
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:271
-#: settings/modules/admin-toolbar/add-plugins/items/festinger-vault.php:278
-msgid "Theme Updates"
-msgstr "Thema-updates"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:25
-#: src/Environment/Plugins/GitUpdater.php:63
-msgid "Github"
-msgstr "GitHub"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:32
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:51
-#: src/Environment/Plugins/GitRemoteUpdater.php:66
-msgid "Git Remote Updater"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:44
-#: src/Environment/Plugins/GitRemoteUpdater.php:64
-msgid "Remote Updater"
-msgstr "Remote Updater"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:63
-#: src/Environment/Plugins/GitUpdater.php:77
-msgid "Install plugin"
-msgstr "Plugin installeren"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:70
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:91
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:112
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:133
-#: src/Environment/Plugins/GitUpdater.php:65
-msgid "Git Updater"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:72
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:93
-msgid "Install Plugin"
-msgstr "Plugin installeren"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:84
-#: src/Environment/Plugins/GitUpdater.php:84
-msgid "Install theme"
-msgstr "Thema installeren"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:114
-msgid "Github settings"
-msgstr "GitHub-instellingen"
-
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:126
-#: settings/modules/admin-toolbar/add-plugins/items/github.php:135
-#: src/Environment/Plugins/GitUpdater.php:91
-msgid "Remote Management"
-msgstr "Beheer op afstand"
-
-#: settings/modules/admin-toolbar/add-plugins/items/nobuna.php:25
-#: src/Environment/Plugins/Nobuna.php:63
-msgid "Nobuna"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-plugins/items/nobuna.php:32
-#: src/Environment/Plugins/Nobuna.php:65
-msgid "Nobuna Plugins"
-msgstr "Nobuna-plugins"
-
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:32
-#: src/Environment/Core/WordPress.php:109
-msgid "Plugins & Themes Updates"
-msgstr "Updates van plugins en thema's"
-
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:41
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:48
-#: src/Environment/Core/WordPress.php:100
-#: src/Environment/Core/WordPress.php:102
-msgid "Installed Plugins"
-msgstr "Geïnstalleerde plugins"
-
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:57
-#: settings/modules/admin-toolbar/add-plugins/items/wp-core.php:64
-#: src/Environment/Core/WordPress.php:114
-#: src/Environment/Core/WordPress.php:116
-msgid "Add Plugin"
-msgstr "Plugin toevoegen"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:27
-#: settings/modules/admin-toolbar/add-posts/menu.php:70
-#: settings/modules/admin-toolbar/add-view/menu.php:41
-msgid "Posts"
-msgstr "Berichten"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:36
-#: settings/modules/admin-toolbar/add-posts/menu.php:54
-#: settings/modules/admin-toolbar/add-view/menu.php:51
-msgid "the posts"
-msgstr "de berichten"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:79
-#: src/Environment/Core/WordPress.php:171
-#: src/Environment/Core/WordPress.php:173
-msgid "New Post"
-msgstr "Nieuw bericht"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:86
-msgid "Add New Post"
-msgstr "Nieuw bericht toevoegen"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:102
-msgid "Post categories"
-msgstr "Berichtcategorieën"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:111
-#: src/Environment/Core/WordPress.php:185
-#: src/Environment/Core/WordPress.php:187
-msgid "Tags"
-msgstr "Tags"
-
-#: settings/modules/admin-toolbar/add-posts/menu.php:118
-msgid "Post tags"
-msgstr "Berichttags"
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:52
-#: settings/modules/admin-toolbar/add-settings/menu.php:59
-#: settings/modules/admin-toolbar/add-site/menu.php:119
-#: settings/modules/admin-toolbar/add-site/menu.php:126
-#: src/Environment/Themes/AnyGenesis.php:76
-#: src/Environment/Themes/AnyGenesis.php:78
-msgid "Genesis Framework"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:71
-#: settings/modules/admin-toolbar/add-settings/menu.php:78
-#: settings/modules/admin-toolbar/add-site/menu.php:87
-#: settings/modules/admin-toolbar/add-site/menu.php:94
-#: src/Environment/Core/WordPress.php:139
-#: src/Environment/Core/WordPress.php:141
-msgid "Menus"
-msgstr "Menu's"
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:87
-#: settings/modules/admin-toolbar/add-settings/menu.php:94
-#: settings/modules/admin-toolbar/add-site/menu.php:71
-#: settings/modules/admin-toolbar/add-site/menu.php:78
-#: src/Environment/Core/WordPress.php:132
-#: src/Environment/Core/WordPress.php:134
-msgid "Widgets"
-msgstr "Widgets"
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:103
-#: settings/modules/admin-toolbar/add-settings/menu.php:110
-#: src/Environment/Plugins/SharedCounts.php:63
-#: src/Environment/Plugins/SharedCounts.php:65
-msgid "Shared Counts"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:122
-#: settings/modules/admin-toolbar/add-settings/menu.php:129
-#: settings/modules/admin-toolbar/add-tools/menu.php:247
-#: settings/modules/admin-toolbar/add-tools/menu.php:254
-#: src/Environment/Plugins/BrokenLinkChecker.php:63
-#: src/Environment/Plugins/BrokenLinkChecker.php:65
-msgid "Broken Links Checker"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:141
-#: src/Admin/Services/Settings/AdminSettingsPage.php:119
-#: src/Environment/Core/WordPress.php:224
-msgid "Core Functionality"
-msgstr "Core Functionality"
-
-#: settings/modules/admin-toolbar/add-settings/menu.php:148
-#: src/Environment/Core/WordPress.php:226
-msgid "Core functionality settings"
-msgstr "Instellingen Core Functionality"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:25
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:32
-#: settings/modules/admin-toolbar/add-shop/items/front.php:32
-#: settings/modules/admin-toolbar/add-shop/menu.php:34
-#: src/Environment/Plugins/Woocommerce.php:69
-msgid "Orders"
-msgstr "Bestellingen"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:30
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:49
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:68
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:87
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:106
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:125
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:144
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:163
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:182
-#: settings/modules/admin-toolbar/add-shop/items/front.php:30
-#: settings/modules/admin-toolbar/add-shop/items/front.php:49
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:30
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:49
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:68
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:87
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:106
-#: settings/modules/admin-toolbar/add-shop/items/settings/eu-vat-assistant.php:30
-#: settings/modules/admin-toolbar/add-shop/items/settings/pdf-invoices.php:30
-#: settings/modules/admin-toolbar/add-shop/menu.php:32
-#: settings/modules/admin-toolbar/add-view/items/shop.php:30
-#: settings/modules/admin-toolbar/add-view/items/shop.php:49
-#: settings/modules/admin-toolbar/add-view/items/shop.php:68
-#: settings/modules/admin-toolbar/add-view/items/shop.php:87
-msgid "Link to WooCommerce"
-msgstr "Link naar WooCommerce"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:44
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:51
-#: src/Environment/Plugins/Woocommerce.php:76
-msgid "Products"
-msgstr "Producten"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:63
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:70
-#: src/Environment/Plugins/WoocommerceProductAddons.php:59
-#: src/Environment/Plugins/WoocommerceProductAddons.php:61
-msgid "Product Add-ons"
-msgstr "Productopties"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:82
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:89
-#: src/Environment/Plugins/WoocommerceSubscriptions.php:65
-msgid "Subscriptions"
-msgstr "Abonnementen"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:101
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:108
-#: src/Environment/Plugins/Woocommerce.php:83
-msgid "Coupons"
-msgstr "Kortingsbonnen"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:127
-msgid "Product Categories"
-msgstr "Productcategorieën"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:139
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:146
-msgid "Follow-Up Emails"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:158
-#: src/Environment/Plugins/Woocommerce.php:97
-msgid "Statistics"
-msgstr "Statistieken"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:165
-msgid "Sales Statistics"
-msgstr "Verkoopstatistieken"
-
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:177
-#: settings/modules/admin-toolbar/add-shop/items/admin.php:184
-#: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:59
-msgid "Shop Order CSV Export"
-msgstr "CSV-export bestellingen"
-
-#: settings/modules/admin-toolbar/add-shop/items/front.php:25
-msgid "Shop front"
-msgstr "Winkel (voorkant)"
-
-#: settings/modules/admin-toolbar/add-shop/items/front.php:44
-#: settings/modules/admin-toolbar/add-shop/items/front.php:51
-#: settings/modules/admin-toolbar/add-shop/menu.php:27
-#: settings/modules/admin-toolbar/add-view/items/shop.php:25
-#: settings/modules/admin-toolbar/add-view/items/shop.php:32
-#: src/Environment/Plugins/Woocommerce.php:112
-msgid "Shop"
-msgstr "Winkel"
-
-#: settings/modules/admin-toolbar/add-shop/items/front.php:63
-#: settings/modules/admin-toolbar/add-view/items/shop.php:44
-#: settings/modules/admin-toolbar/add-view/items/shop.php:51
-#: src/Environment/Plugins/Woocommerce.php:119
-#: src/Environment/Plugins/Woocommerce.php:121
-msgid "My Account"
-msgstr "Mijn account"
-
-#: settings/modules/admin-toolbar/add-shop/items/front.php:68
-msgid "Link to My Account"
-msgstr "Link naar Mijn account"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:25
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:44
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:59
-#: src/Modules/ActiveWoo/ActiveWoo.php:41
-msgid "ActiveWoo"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:32
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:51
-msgid "ActiveWoo Settings"
-msgstr "ActiveWoo-instellingen"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:63
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:73
-msgid "Advanced Settings"
-msgstr "Geavanceerde instellingen"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:70
-msgid "ActiveWoo Advanced Settings"
-msgstr "Geavanceerde ActiveWoo-instellingen"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:82
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:80
-msgid "Recover Cart Settings"
-msgstr "Instellingen verlaten winkelwagens"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:89
-msgid "ActiveWoo Recover Cart Settings"
-msgstr "ActiveWoo-instellingen verlaten winkelwagens"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:101
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:87
-msgid "Coupons Settings"
-msgstr "Instellingen kortingsbonnen"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/activewoo.php:108
-msgid "ActiveWoo Coupons Settings"
-msgstr "ActiveWoo-instellingen kortingsbonnen"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/eu-vat-assistant.php:25
-msgid "EU VAT Assistant"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/eu-vat-assistant.php:32
-msgid "EU VAT Assistant Settings"
-msgstr "Instellingen EU VAT Assistant"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/pdf-invoices.php:25
-#: src/Environment/Plugins/WoocommercePdfInvoices.php:60
-msgid "PDF-invoice"
-msgstr "PDF-factuur"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/pdf-invoices.php:32
-msgid "PDF-invoice Settings"
-msgstr "Instellingen PDF-factuur"
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/woocommerce.php:39
-#: src/Environment/Plugins/WoocommerceProductAddons.php:61
-msgid "WooCommerce"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/woocommerce.php:44
-msgid "Link to "
-msgstr "Link naar "
-
-#: settings/modules/admin-toolbar/add-shop/items/settings/woocommerce.php:46
-#: src/Environment/Plugins/Woocommerce.php:106
-msgid "WooCommerce Settings"
-msgstr "WooCommerce-instellingen"
-
-#: settings/modules/admin-toolbar/add-site/menu.php:25
-msgid "Site"
-msgstr "Site"
-
-#: settings/modules/admin-toolbar/add-site/menu.php:36
-#: settings/modules/admin-toolbar/add-site/menu.php:43
-#: src/Environment/Themes/AnyBlockTheme.php:107
-#: src/Environment/Themes/AnyBlockTheme.php:109
-msgid "Site editor"
-msgstr "Site-editor"
-
-#: settings/modules/admin-toolbar/add-site/menu.php:55
-#: settings/modules/admin-toolbar/add-site/menu.php:62
-#: src/Environment/Core/WordPress.php:125
-#: src/Environment/Core/WordPress.php:127
-msgid "Customizer"
-msgstr "Customizer"
-
-#: settings/modules/admin-toolbar/add-site/menu.php:138
-#: settings/modules/admin-toolbar/add-site/menu.php:145
-#: settings/modules/admin-toolbar/add-tools/menu.php:36
-#: settings/modules/admin-toolbar/add-tools/menu.php:43
-#: src/Environment/Plugins/UpdraftPlus.php:63
-#: src/Environment/Plugins/UpdraftPlus.php:65
-#: src/Environment/Plugins/UpdraftPlus.php:70
-#: src/Environment/Plugins/UpdraftPlus.php:72
-msgid "Updraft Backups"
-msgstr "Updraft-back-ups"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:25
-msgid "Tools"
-msgstr "Gereedschap"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:55
-#: src/Environment/Plugins/FluentSmtp.php:63
-msgid "Emails Send"
-msgstr "Verzonden e-mails"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:62
-#: src/Environment/Plugins/FluentSmtp.php:65
-msgid "FluentSMTP"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:74
-#: settings/modules/admin-toolbar/add-tools/menu.php:93
-#: src/Environment/Plugins/SeoRedirectionPremium.php:63
-msgid "Redirects"
-msgstr "Doorverwijzingen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:81
-#: settings/modules/admin-toolbar/add-tools/menu.php:100
-#: src/Environment/Plugins/SeoRedirectionPremium.php:65
-msgid "SEO Redirects"
-msgstr "SEO-doorverwijzingen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:112
-#: settings/modules/admin-toolbar/add-tools/menu.php:119
-#: src/Environment/Plugins/SeoRedirectionPremium.php:70
-#: src/Environment/Plugins/SeoRedirectionPremium.php:72
-msgid "Redirect 404s"
-msgstr "404's doorverwijzen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:131
-msgid "Translate"
-msgstr "Vertalen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:138
-#: settings/modules/admin-toolbar/add-tools/menu.php:150
-#: settings/modules/admin-toolbar/add-tools/menu.php:157
-#: src/Environment/Plugins/LocoTranslate.php:63
-#: src/Environment/Plugins/LocoTranslate.php:65
-msgid "Translations"
-msgstr "Vertalingen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:169
-#: settings/modules/admin-toolbar/add-tools/menu.php:176
-#: src/Environment/Plugins/LocoTranslate.php:70
-#: src/Environment/Plugins/LocoTranslate.php:72
-msgid "Plugin Translations"
-msgstr "Pluginvertalingen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:188
-#: settings/modules/admin-toolbar/add-tools/menu.php:195
-#: src/Environment/Plugins/LocoTranslate.php:77
-#: src/Environment/Plugins/LocoTranslate.php:79
-msgid "Theme Translations"
-msgstr "Themavertalingen"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:208
-msgid "Database editor"
-msgstr "Database-editor"
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:215
-msgid "phpMyAdmin"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:228
-#: src/Environment/Plugins/RedisCache.php:64
-msgid "Redis Cache"
-msgstr ""
-
-#: settings/modules/admin-toolbar/add-tools/menu.php:235
-#: src/Environment/Plugins/RedisCache.php:66
-msgid "Redis Cache Settings"
-msgstr "Instellingen Redis Cache"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:44
-#: settings/modules/admin-toolbar/add-view/items/courses.php:51
-#: src/Environment/Plugins/SenseiLms.php:169
-msgid "Course List"
-msgstr "Cursuslijst"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:63
-#: settings/modules/admin-toolbar/add-view/items/courses.php:70
-#: src/Environment/Plugins/SenseiLms.php:176
-msgid "Course-category: Mediumschap"
-msgstr "Cursuscategorie: Mediumschap"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:82
-#: settings/modules/admin-toolbar/add-view/items/courses.php:89
-#: src/Environment/Plugins/SenseiLms.php:183
-msgid "My Courses"
-msgstr "Mijn cursussen"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:101
-#: settings/modules/admin-toolbar/add-view/items/courses.php:108
-#: src/Environment/Plugins/SenseiLms.php:190
-msgid "Learners Profile"
-msgstr "Cursistenprofiel"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:120
-#: settings/modules/admin-toolbar/add-view/items/courses.php:127
-#: src/Environment/Plugins/SenseiLms.php:197
-msgid "Course: Basis Mediumschap"
-msgstr "Cursus: Basis Mediumschap"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:139
-#: settings/modules/admin-toolbar/add-view/items/courses.php:146
-#: src/Environment/Plugins/SenseiLms.php:204
-msgid "Course results"
-msgstr "Cursusresultaten"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:158
-#: settings/modules/admin-toolbar/add-view/items/courses.php:165
-#: src/Environment/Plugins/SenseiLms.php:211
-msgid "Module: Orakelen als een orakel"
-msgstr "Module: Orakelen als een orakel"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:196
-#: settings/modules/admin-toolbar/add-view/items/courses.php:203
-#: src/Environment/Plugins/SenseiLms.php:225
-msgid "Lesson-tag: Aura"
-msgstr "Lestag: Aura"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:215
-#: settings/modules/admin-toolbar/add-view/items/courses.php:222
-#: src/Environment/Plugins/SenseiLms.php:232
-msgid "Lesson: Aura Reading"
-msgstr "Les: Aura Reading"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:234
-#: settings/modules/admin-toolbar/add-view/items/courses.php:241
-#: src/Environment/Plugins/SenseiLms.php:239
-msgid "Quiz: The History of My Psychic Ability"
-msgstr "Quiz: De geschiedenis van mijn paranormale gave"
-
-#: settings/modules/admin-toolbar/add-view/items/courses.php:272
-#: settings/modules/admin-toolbar/add-view/items/courses.php:279
-#: src/Environment/Plugins/SenseiLms.php:253
-msgid "Message: I have some questions"
-msgstr "Bericht: Ik heb een paar vragen"
-
-#: settings/modules/admin-toolbar/add-view/items/events.php:25
-msgid "Events Calendar"
-msgstr "Evenementenkalender"
-
-#: settings/modules/admin-toolbar/add-view/items/events.php:45
-#: settings/modules/admin-toolbar/add-view/items/events.php:52
-#: src/Environment/Plugins/TheEventsCalendar.php:129
-#: src/Environment/Plugins/TheEventsCalendar.php:131
-msgid "Family Constellations"
-msgstr "Familieopstellingen"
-
-#: settings/modules/admin-toolbar/add-view/items/shop.php:82
-#: settings/modules/admin-toolbar/add-view/items/shop.php:89
-#: src/Environment/Plugins/WoocommerceSubscriptions.php:80
-msgid "Course Payment Plans"
-msgstr "Betaalplannen cursussen"
-
-#: settings/modules/admin-toolbar/add-view/menu.php:60
-#: settings/modules/admin-toolbar/add-view/menu.php:67
-#: src/Environment/Core/WordPress.php:231
-#: src/Environment/Core/WordPress.php:233
-msgid "Frontpage"
-msgstr "Voorpagina"
-
-#: settings/modules/admin-toolbar/add-view/menu.php:76
-#: settings/modules/admin-toolbar/add-view/menu.php:83
-#: src/Environment/Core/WordPress.php:238
-#: src/Environment/Core/WordPress.php:240
-msgid "Testimonials"
-msgstr "Ervaringen"
-
-#: src/Admin/Services/Settings/AdminSettingsPage.php:118
-#: src/Admin/Services/Settings/AdminSettingsPage.php:428
-msgid "Core Functionality Settings"
-msgstr "Instellingen Core Functionality"
-
-#: src/Admin/Services/Settings/AdminSettingsPage.php:310
-msgid "Type to search... (↑↓ to navigate, Enter)"
-msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 
 #: src/Admin/Services/Settings/AdminSettingsPage.php:411
 msgid "Search... (/)"
@@ -1464,6 +396,165 @@ msgstr "🔬 Staging"
 msgid "🌐 Production"
 msgstr "🌐 Productie"
 
+#: src/Environment/Core/WordPress.php:100
+#: src/Environment/Core/WordPress.php:102
+msgid "Installed Plugins"
+msgstr "Geïnstalleerde plugins"
+
+#: src/Environment/Core/WordPress.php:102
+#: src/Environment/Core/WordPress.php:109
+#: src/Environment/Core/WordPress.php:116
+#: src/Environment/Core/WordPress.php:127
+#: src/Environment/Core/WordPress.php:134
+#: src/Environment/Core/WordPress.php:141
+#: src/Environment/Core/WordPress.php:148
+#: src/Environment/Core/WordPress.php:159
+#: src/Environment/Core/WordPress.php:166
+#: src/Environment/Core/WordPress.php:173
+#: src/Environment/Core/WordPress.php:180
+#: src/Environment/Core/WordPress.php:187
+#: src/Environment/Core/WordPress.php:194
+#: src/Environment/Core/WordPress.php:201
+#: src/Environment/Core/WordPress.php:208
+#: src/Environment/Core/WordPress.php:215
+#: src/Environment/Core/WordPress.php:226
+#: src/Environment/Core/WordPress.php:233
+#: src/Environment/Core/WordPress.php:240
+#: src/Environment/Plugins/Automatewoo.php:73
+#: src/Environment/Plugins/Automatewoo.php:80
+#: src/Environment/Plugins/BrokenLinkChecker.php:65
+#: src/Environment/Plugins/EventTickets.php:83
+#: src/Environment/Plugins/FestingerVault.php:65
+#: src/Environment/Plugins/FestingerVault.php:72
+#: src/Environment/Plugins/FestingerVault.php:79
+#: src/Environment/Plugins/FestingerVault.php:86
+#: src/Environment/Plugins/FestingerVault.php:93
+#: src/Environment/Plugins/FestingerVault.php:100
+#: src/Environment/Plugins/FestingerVault.php:107
+#: src/Environment/Plugins/FestingerVault.php:114
+#: src/Environment/Plugins/FluentSmtp.php:65
+#: src/Environment/Plugins/GitRemoteUpdater.php:66
+#: src/Environment/Plugins/GitUpdater.php:65
+#: src/Environment/Plugins/GitUpdater.php:72
+#: src/Environment/Plugins/GitUpdater.php:79
+#: src/Environment/Plugins/GitUpdater.php:86
+#: src/Environment/Plugins/GitUpdater.php:93
+#: src/Environment/Plugins/GravityForms.php:65
+#: src/Environment/Plugins/LocoTranslate.php:65
+#: src/Environment/Plugins/LocoTranslate.php:72
+#: src/Environment/Plugins/LocoTranslate.php:79
+#: src/Environment/Plugins/Nobuna.php:65
+#: src/Environment/Plugins/RedisCache.php:66
+#: src/Environment/Plugins/SenseiLms.php:66
+#: src/Environment/Plugins/SenseiLms.php:73
+#: src/Environment/Plugins/SenseiLms.php:80
+#: src/Environment/Plugins/SenseiLms.php:87
+#: src/Environment/Plugins/SenseiLms.php:94
+#: src/Environment/Plugins/SenseiLms.php:101
+#: src/Environment/Plugins/SenseiLms.php:108
+#: src/Environment/Plugins/SenseiLms.php:115
+#: src/Environment/Plugins/SenseiLms.php:122
+#: src/Environment/Plugins/SenseiLms.php:129
+#: src/Environment/Plugins/SenseiLms.php:136
+#: src/Environment/Plugins/SenseiLms.php:143
+#: src/Environment/Plugins/SenseiLms.php:150
+#: src/Environment/Plugins/SenseiLms.php:157
+#: src/Environment/Plugins/SenseiLms.php:164
+#: src/Environment/Plugins/SenseiLms.php:171
+#: src/Environment/Plugins/SenseiLms.php:178
+#: src/Environment/Plugins/SenseiLms.php:185
+#: src/Environment/Plugins/SenseiLms.php:192
+#: src/Environment/Plugins/SenseiLms.php:199
+#: src/Environment/Plugins/SenseiLms.php:206
+#: src/Environment/Plugins/SenseiLms.php:213
+#: src/Environment/Plugins/SenseiLms.php:220
+#: src/Environment/Plugins/SenseiLms.php:227
+#: src/Environment/Plugins/SenseiLms.php:234
+#: src/Environment/Plugins/SenseiLms.php:241
+#: src/Environment/Plugins/SenseiLms.php:248
+#: src/Environment/Plugins/SenseiLms.php:255
+#: src/Environment/Plugins/SeoRedirectionPremium.php:65
+#: src/Environment/Plugins/SeoRedirectionPremium.php:72
+#: src/Environment/Plugins/SharedCounts.php:65
+#: src/Environment/Plugins/TheEventsCalendar.php:81
+#: src/Environment/Plugins/TheEventsCalendar.php:88
+#: src/Environment/Plugins/TheEventsCalendar.php:95
+#: src/Environment/Plugins/TheEventsCalendar.php:102
+#: src/Environment/Plugins/TheEventsCalendar.php:109
+#: src/Environment/Plugins/TheEventsCalendar.php:116
+#: src/Environment/Plugins/TheEventsCalendar.php:124
+#: src/Environment/Plugins/TheEventsCalendar.php:131
+#: src/Environment/Plugins/UpdraftPlus.php:65
+#: src/Environment/Plugins/UpdraftPlus.php:72
+#: src/Environment/Plugins/Woocommerce.php:71
+#: src/Environment/Plugins/Woocommerce.php:78
+#: src/Environment/Plugins/Woocommerce.php:85
+#: src/Environment/Plugins/Woocommerce.php:92
+#: src/Environment/Plugins/Woocommerce.php:99
+#: src/Environment/Plugins/Woocommerce.php:106
+#: src/Environment/Plugins/Woocommerce.php:114
+#: src/Environment/Plugins/Woocommerce.php:121
+#: src/Environment/Plugins/Woocommerce.php:128
+#: src/Environment/Plugins/Woocommerce.php:135
+#: src/Environment/Plugins/Woocommerce.php:142
+#: src/Environment/Plugins/Woocommerce.php:149
+#: src/Environment/Plugins/Woocommerce.php:156
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:61
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:68
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:75
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:82
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:89
+#: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:61
+#: src/Environment/Plugins/WoocommercePdfInvoices.php:62
+#: src/Environment/Plugins/WoocommercePreOrders.php:62
+#: src/Environment/Plugins/WoocommerceProductAddons.php:61
+#: src/Environment/Plugins/WoocommerceSmartCoupons.php:62
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:67
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:75
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:82
+#: src/Environment/Plugins/WpForms.php:65
+#: src/Environment/Plugins/YoastSeo.php:80
+#: src/Environment/Themes/AnyBlockTheme.php:109
+#: src/Environment/Themes/AnyGenesis.php:78
+msgid "Link to"
+msgstr "Link naar"
+
+#: src/Environment/Core/WordPress.php:107
+#: src/Environment/Plugins/FestingerVault.php:70
+msgid "Updates"
+msgstr "Updates"
+
+#: src/Environment/Core/WordPress.php:109
+msgid "Plugins & Themes Updates"
+msgstr "Updates van plugins en thema's"
+
+#: src/Environment/Core/WordPress.php:114
+#: src/Environment/Core/WordPress.php:116
+msgid "Add Plugin"
+msgstr "Plugin toevoegen"
+
+#: src/Environment/Core/WordPress.php:125
+#: src/Environment/Core/WordPress.php:127
+msgid "Customizer"
+msgstr "Customizer"
+
+#: src/Environment/Core/WordPress.php:132
+#: src/Environment/Core/WordPress.php:134
+msgid "Widgets"
+msgstr "Widgets"
+
+#: src/Environment/Core/WordPress.php:139
+#: src/Environment/Core/WordPress.php:141
+msgid "Menus"
+msgstr "Menu's"
+
+#: src/Environment/Core/WordPress.php:146
+#: src/Environment/Core/WordPress.php:148
+#: src/Environment/Plugins/FestingerVault.php:84
+#: src/Environment/Plugins/FestingerVault.php:86
+msgid "Themes"
+msgstr "Thema's"
+
 #: src/Environment/Core/WordPress.php:157
 #: src/Environment/Core/WordPress.php:159
 msgid "View Posts"
@@ -1473,6 +564,58 @@ msgstr "Berichten bekijken"
 #: src/Environment/Core/WordPress.php:166
 msgid "Edit Posts"
 msgstr "Berichten bewerken"
+
+#: src/Environment/Core/WordPress.php:171
+#: src/Environment/Core/WordPress.php:173
+msgid "New Post"
+msgstr "Nieuw bericht"
+
+#: src/Environment/Core/WordPress.php:178
+#: src/Environment/Core/WordPress.php:180
+#: src/Environment/Plugins/SenseiLms.php:99
+#: src/Environment/Plugins/TheEventsCalendar.php:107
+#: src/Environment/Plugins/Woocommerce.php:90
+msgid "Categories"
+msgstr "Categorieën"
+
+#: src/Environment/Core/WordPress.php:185
+#: src/Environment/Core/WordPress.php:187
+msgid "Tags"
+msgstr "Tags"
+
+#: src/Environment/Core/WordPress.php:192
+#: src/Environment/Core/WordPress.php:194
+msgid "Reusable blocks"
+msgstr "Herbruikbare blokken"
+
+#: src/Environment/Core/WordPress.php:199
+#: src/Environment/Core/WordPress.php:201
+msgid "Pages"
+msgstr "Pagina's"
+
+#: src/Environment/Core/WordPress.php:206
+#: src/Environment/Core/WordPress.php:208
+msgid "Comments"
+msgstr "Reacties"
+
+#: src/Environment/Core/WordPress.php:213
+#: src/Environment/Core/WordPress.php:215
+msgid "Users"
+msgstr "Gebruikers"
+
+#: src/Environment/Core/WordPress.php:226
+msgid "Core functionality settings"
+msgstr "Instellingen Core Functionality"
+
+#: src/Environment/Core/WordPress.php:231
+#: src/Environment/Core/WordPress.php:233
+msgid "Frontpage"
+msgstr "Voorpagina"
+
+#: src/Environment/Core/WordPress.php:238
+#: src/Environment/Core/WordPress.php:240
+msgid "Testimonials"
+msgstr "Ervaringen"
 
 #: src/Environment/Plugins/Automatewoo.php:71
 msgid "AutomateWoo"
@@ -1489,6 +632,11 @@ msgstr "Workflows"
 #: src/Environment/Plugins/Automatewoo.php:80
 msgid "AutomateWoo Workflows"
 msgstr "AutomateWoo-workflows"
+
+#: src/Environment/Plugins/BrokenLinkChecker.php:63
+#: src/Environment/Plugins/BrokenLinkChecker.php:65
+msgid "Broken Links Checker"
+msgstr ""
 
 #: src/Environment/Plugins/DebugToolkit.php:76
 msgid "🛠️ Debug Toolkit"
@@ -1511,21 +659,143 @@ msgstr "Instellingen Event Tickets"
 msgid "Event Tickets Plus"
 msgstr ""
 
+#: src/Environment/Plugins/FestingerVault.php:63
+#: src/Environment/Plugins/FestingerVault.php:65
+#: src/Environment/Plugins/FestingerVault.php:72
+#: src/Environment/Plugins/FestingerVault.php:79
+#: src/Environment/Plugins/FestingerVault.php:86
+#: src/Environment/Plugins/FestingerVault.php:93
+#: src/Environment/Plugins/FestingerVault.php:100
+#: src/Environment/Plugins/FestingerVault.php:107
+#: src/Environment/Plugins/FestingerVault.php:114
+msgid "Festinger Vault"
+msgstr ""
+
+#: src/Environment/Plugins/FestingerVault.php:65
+#: src/Environment/Plugins/FestingerVault.php:72
+msgid "Plugin Updates"
+msgstr "Plugin-updates"
+
+#: src/Environment/Plugins/FestingerVault.php:77
+#: src/Environment/Plugins/FestingerVault.php:79
+msgid "Plugins"
+msgstr "Plugins"
+
+#: src/Environment/Plugins/FestingerVault.php:91
+#: src/Environment/Plugins/FestingerVault.php:93
+msgid "Elementor Template Kits"
+msgstr ""
+
+#: src/Environment/Plugins/FestingerVault.php:98
+#: src/Environment/Plugins/FestingerVault.php:100
+msgid "History"
+msgstr "Geschiedenis"
+
+#: src/Environment/Plugins/FestingerVault.php:112
+msgid "Support"
+msgstr "Ondersteuning"
+
+#: src/Environment/Plugins/FestingerVault.php:114
+msgid "support"
+msgstr "ondersteuning"
+
+#: src/Environment/Plugins/FluentSmtp.php:63
+msgid "Emails Send"
+msgstr "Verzonden e-mails"
+
+#: src/Environment/Plugins/FluentSmtp.php:65
+msgid "FluentSMTP"
+msgstr ""
+
+#: src/Environment/Plugins/GitRemoteUpdater.php:64
+msgid "Remote Updater"
+msgstr "Remote Updater"
+
+#: src/Environment/Plugins/GitRemoteUpdater.php:66
+msgid "Git Remote Updater"
+msgstr ""
+
+#: src/Environment/Plugins/GitUpdater.php:63
+msgid "Github"
+msgstr "GitHub"
+
+#: src/Environment/Plugins/GitUpdater.php:65
+msgid "Git Updater"
+msgstr ""
+
 #: src/Environment/Plugins/GitUpdater.php:72
 msgid "Git Updater: Github settings"
 msgstr "Git Updater: GitHub-instellingen"
+
+#: src/Environment/Plugins/GitUpdater.php:77
+msgid "Install plugin"
+msgstr "Plugin installeren"
 
 #: src/Environment/Plugins/GitUpdater.php:79
 msgid "Git Updater: Install Plugin"
 msgstr "Git Updater: plugin installeren"
 
+#: src/Environment/Plugins/GitUpdater.php:84
+msgid "Install theme"
+msgstr "Thema installeren"
+
 #: src/Environment/Plugins/GitUpdater.php:86
 msgid "Git Updater: Install Theme"
 msgstr "Git Updater: thema installeren"
 
+#: src/Environment/Plugins/GitUpdater.php:91
+msgid "Remote Management"
+msgstr "Beheer op afstand"
+
 #: src/Environment/Plugins/GitUpdater.php:93
 msgid "Git Updater: Remote Management"
 msgstr "Git Updater: beheer op afstand"
+
+#: src/Environment/Plugins/GravityForms.php:63
+#: src/Environment/Plugins/WpForms.php:63
+msgid "Forms"
+msgstr "Formulieren"
+
+#: src/Environment/Plugins/GravityForms.php:65
+msgid "Gravity Forms"
+msgstr ""
+
+#: src/Environment/Plugins/LocoTranslate.php:63
+#: src/Environment/Plugins/LocoTranslate.php:65
+msgid "Translations"
+msgstr "Vertalingen"
+
+#: src/Environment/Plugins/LocoTranslate.php:70
+#: src/Environment/Plugins/LocoTranslate.php:72
+msgid "Plugin Translations"
+msgstr "Pluginvertalingen"
+
+#: src/Environment/Plugins/LocoTranslate.php:77
+#: src/Environment/Plugins/LocoTranslate.php:79
+msgid "Theme Translations"
+msgstr "Themavertalingen"
+
+#: src/Environment/Plugins/Nobuna.php:63
+msgid "Nobuna"
+msgstr ""
+
+#: src/Environment/Plugins/Nobuna.php:65
+msgid "Nobuna Plugins"
+msgstr "Nobuna-plugins"
+
+#: src/Environment/Plugins/RedisCache.php:64
+msgid "Redis Cache"
+msgstr ""
+
+#: src/Environment/Plugins/RedisCache.php:66
+msgid "Redis Cache Settings"
+msgstr "Instellingen Redis Cache"
+
+#: src/Environment/Plugins/SenseiLms.php:64
+#: src/Environment/Plugins/SenseiLms.php:162
+#: src/Environment/Plugins/Woocommerce.php:153
+msgid "Courses"
+msgstr "Cursussen"
 
 #: src/Environment/Plugins/SenseiLms.php:66
 #: src/Environment/Plugins/SenseiLms.php:87
@@ -1534,9 +804,17 @@ msgstr "Git Updater: beheer op afstand"
 msgid "Sensei LMS Courses"
 msgstr "Sensei LMS-cursussen"
 
+#: src/Environment/Plugins/SenseiLms.php:71
+msgid "Grading"
+msgstr "Beoordelen"
+
 #: src/Environment/Plugins/SenseiLms.php:73
 msgid "Sensei LMS Grading"
 msgstr "Sensei LMS: beoordelen"
+
+#: src/Environment/Plugins/SenseiLms.php:78
+msgid "Student Management"
+msgstr "Cursistenbeheer"
 
 #: src/Environment/Plugins/SenseiLms.php:80
 msgid "Sensei LMS Student Management"
@@ -1545,6 +823,11 @@ msgstr "Sensei LMS: cursistenbeheer"
 #: src/Environment/Plugins/SenseiLms.php:85
 msgid "Edit Courses"
 msgstr "Cursussen bewerken"
+
+#: src/Environment/Plugins/SenseiLms.php:92
+#: src/Environment/Plugins/SenseiLms.php:218
+msgid "Lessons"
+msgstr "Lessen"
 
 #: src/Environment/Plugins/SenseiLms.php:94
 #: src/Environment/Plugins/SenseiLms.php:220
@@ -1555,21 +838,42 @@ msgstr "Sensei LMS-lessen"
 msgid "Sensei LMS Course Categories"
 msgstr "Sensei LMS-cursuscategorieën"
 
+#: src/Environment/Plugins/SenseiLms.php:106
+msgid "Modules"
+msgstr "Modules"
+
 #: src/Environment/Plugins/SenseiLms.php:108
 msgid "Sensei LMS Modules"
 msgstr "Sensei LMS-modules"
+
+#: src/Environment/Plugins/SenseiLms.php:113
+msgid "Module Order"
+msgstr "Volgorde modules"
 
 #: src/Environment/Plugins/SenseiLms.php:115
 msgid "Sensei LMS Module Order"
 msgstr "Sensei LMS: volgorde modules"
 
+#: src/Environment/Plugins/SenseiLms.php:120
+msgid "Lesson Tags"
+msgstr "Lestags"
+
 #: src/Environment/Plugins/SenseiLms.php:122
 msgid "Sensei LMS Lesson Tags"
 msgstr "Sensei LMS-lestags"
 
+#: src/Environment/Plugins/SenseiLms.php:127
+msgid "Questions"
+msgstr "Vragen"
+
 #: src/Environment/Plugins/SenseiLms.php:129
 msgid "Sensei LMS Questions"
 msgstr "Sensei LMS-vragen"
+
+#: src/Environment/Plugins/SenseiLms.php:134
+#: src/Environment/Plugins/SenseiLms.php:246
+msgid "Messages"
+msgstr "Berichten"
 
 #: src/Environment/Plugins/SenseiLms.php:136
 #: src/Environment/Plugins/SenseiLms.php:248
@@ -1580,57 +884,146 @@ msgstr "Sensei LMS-berichten"
 msgid "Sensei LMS Settings"
 msgstr "Sensei LMS-instellingen"
 
+#: src/Environment/Plugins/SenseiLms.php:148
+msgid "Analytics"
+msgstr "Analyse"
+
 #: src/Environment/Plugins/SenseiLms.php:150
 msgid "Sensei LMS Analytics"
 msgstr "Sensei LMS-analyse"
+
+#: src/Environment/Plugins/SenseiLms.php:155
+msgid "View"
+msgstr "Bekijken"
+
+#: src/Environment/Plugins/SenseiLms.php:169
+msgid "Course List"
+msgstr "Cursuslijst"
 
 #: src/Environment/Plugins/SenseiLms.php:171
 msgid "Sensei LMS Course List"
 msgstr "Sensei LMS-cursuslijst"
 
+#: src/Environment/Plugins/SenseiLms.php:176
+msgid "Course-category: Mediumschap"
+msgstr "Cursuscategorie: Mediumschap"
+
 #: src/Environment/Plugins/SenseiLms.php:178
 msgid "Sensei LMS Course-category: Mediumschap"
 msgstr "Sensei LMS-cursuscategorie: Mediumschap"
+
+#: src/Environment/Plugins/SenseiLms.php:183
+msgid "My Courses"
+msgstr "Mijn cursussen"
 
 #: src/Environment/Plugins/SenseiLms.php:185
 msgid "Sensei LMS My Courses"
 msgstr "Sensei LMS: mijn cursussen"
 
+#: src/Environment/Plugins/SenseiLms.php:190
+msgid "Learners Profile"
+msgstr "Cursistenprofiel"
+
 #: src/Environment/Plugins/SenseiLms.php:192
 msgid "Sensei LMS Learners Profile"
 msgstr "Sensei LMS-cursistenprofiel"
+
+#: src/Environment/Plugins/SenseiLms.php:197
+msgid "Course: Basis Mediumschap"
+msgstr "Cursus: Basis Mediumschap"
 
 #: src/Environment/Plugins/SenseiLms.php:199
 msgid "Sensei LMS Course: Basis Mediumschap"
 msgstr "Sensei LMS-cursus: Basis Mediumschap"
 
+#: src/Environment/Plugins/SenseiLms.php:204
+msgid "Course results"
+msgstr "Cursusresultaten"
+
 #: src/Environment/Plugins/SenseiLms.php:206
 msgid "Sensei LMS Course results"
 msgstr "Sensei LMS-cursusresultaten"
+
+#: src/Environment/Plugins/SenseiLms.php:211
+msgid "Module: Orakelen als een orakel"
+msgstr "Module: Orakelen als een orakel"
 
 #: src/Environment/Plugins/SenseiLms.php:213
 msgid "Sensei LMS Module: Orakelen als een orakel"
 msgstr "Sensei LMS-module: Orakelen als een orakel"
 
+#: src/Environment/Plugins/SenseiLms.php:225
+msgid "Lesson-tag: Aura"
+msgstr "Lestag: Aura"
+
 #: src/Environment/Plugins/SenseiLms.php:227
 msgid "Sensei LMS Lesson-tag: Aura"
 msgstr "Sensei LMS-lestag: Aura"
+
+#: src/Environment/Plugins/SenseiLms.php:232
+msgid "Lesson: Aura Reading"
+msgstr "Les: Aura Reading"
 
 #: src/Environment/Plugins/SenseiLms.php:234
 msgid "Sensei LMS Lesson: Aura Reading"
 msgstr "Sensei LMS-les: Aura Reading"
 
+#: src/Environment/Plugins/SenseiLms.php:239
+msgid "Quiz: The History of My Psychic Ability"
+msgstr "Quiz: De geschiedenis van mijn paranormale gave"
+
 #: src/Environment/Plugins/SenseiLms.php:241
 msgid "Sensei LMS Quiz: The History of My Psychic Ability"
 msgstr "Sensei LMS-quiz: De geschiedenis van mijn paranormale gave"
+
+#: src/Environment/Plugins/SenseiLms.php:253
+msgid "Message: I have some questions"
+msgstr "Bericht: Ik heb een paar vragen"
 
 #: src/Environment/Plugins/SenseiLms.php:255
 msgid "Sensei LMS Message: I have some questions"
 msgstr "Sensei LMS-bericht: Ik heb een paar vragen"
 
+#: src/Environment/Plugins/SeoRedirectionPremium.php:63
+msgid "Redirects"
+msgstr "Doorverwijzingen"
+
+#: src/Environment/Plugins/SeoRedirectionPremium.php:65
+msgid "SEO Redirects"
+msgstr "SEO-doorverwijzingen"
+
+#: src/Environment/Plugins/SeoRedirectionPremium.php:70
+#: src/Environment/Plugins/SeoRedirectionPremium.php:72
+msgid "Redirect 404s"
+msgstr "404's doorverwijzen"
+
+#: src/Environment/Plugins/SharedCounts.php:63
+#: src/Environment/Plugins/SharedCounts.php:65
+msgid "Shared Counts"
+msgstr ""
+
+#: src/Environment/Plugins/TheEventsCalendar.php:79
+#: src/Environment/Plugins/TheEventsCalendar.php:81
+#: src/Environment/Plugins/TheEventsCalendar.php:88
+#: src/Environment/Plugins/TheEventsCalendar.php:122
+msgid "Events"
+msgstr "Evenementen"
+
+#: src/Environment/Plugins/TheEventsCalendar.php:86
+msgid "Edit"
+msgstr "Bewerken"
+
+#: src/Environment/Plugins/TheEventsCalendar.php:93
+msgid "Organizers"
+msgstr "Organisatoren"
+
 #: src/Environment/Plugins/TheEventsCalendar.php:95
 msgid "Event Organizers"
 msgstr "Organisatoren evenementen"
+
+#: src/Environment/Plugins/TheEventsCalendar.php:100
+msgid "Venues"
+msgstr "Locaties"
 
 #: src/Environment/Plugins/TheEventsCalendar.php:102
 msgid "Event Venues"
@@ -1640,6 +1033,19 @@ msgstr "Locaties evenementen"
 msgid "Event Categories"
 msgstr "Categorieën evenementen"
 
+#: src/Environment/Plugins/TheEventsCalendar.php:116
+msgid "Events Calendar Settings"
+msgstr "Instellingen evenementenkalender"
+
+#: src/Environment/Plugins/TheEventsCalendar.php:124
+msgid "The Events Calendar"
+msgstr ""
+
+#: src/Environment/Plugins/TheEventsCalendar.php:129
+#: src/Environment/Plugins/TheEventsCalendar.php:131
+msgid "Family Constellations"
+msgstr "Familieopstellingen"
+
 #: src/Environment/Plugins/TheEventsCalendarPro.php:79
 msgid "Events Calendar Pro"
 msgstr ""
@@ -1648,13 +1054,32 @@ msgstr ""
 msgid "The Events Calendar Pro Settings"
 msgstr "Instellingen The Events Calendar Pro"
 
+#: src/Environment/Plugins/UpdraftPlus.php:63
+#: src/Environment/Plugins/UpdraftPlus.php:65
+#: src/Environment/Plugins/UpdraftPlus.php:70
+#: src/Environment/Plugins/UpdraftPlus.php:72
+msgid "Updraft Backups"
+msgstr "Updraft-back-ups"
+
+#: src/Environment/Plugins/Woocommerce.php:69
+msgid "Orders"
+msgstr "Bestellingen"
+
 #: src/Environment/Plugins/Woocommerce.php:71
 msgid "WooCommerce Orders"
 msgstr "WooCommerce-bestellingen"
 
+#: src/Environment/Plugins/Woocommerce.php:76
+msgid "Products"
+msgstr "Producten"
+
 #: src/Environment/Plugins/Woocommerce.php:78
 msgid "WooCommerce Products"
 msgstr "WooCommerce-producten"
+
+#: src/Environment/Plugins/Woocommerce.php:83
+msgid "Coupons"
+msgstr "Kortingsbonnen"
 
 #: src/Environment/Plugins/Woocommerce.php:85
 msgid "WooCommerce Coupons"
@@ -1664,9 +1089,21 @@ msgstr "WooCommerce-kortingsbonnen"
 msgid "WooCommerce Product Categories"
 msgstr "WooCommerce-productcategorieën"
 
+#: src/Environment/Plugins/Woocommerce.php:97
+msgid "Statistics"
+msgstr "Statistieken"
+
 #: src/Environment/Plugins/Woocommerce.php:99
 msgid "WooCommerce Sales Statistics"
 msgstr "WooCommerce-verkoopstatistieken"
+
+#: src/Environment/Plugins/Woocommerce.php:106
+msgid "WooCommerce Settings"
+msgstr "WooCommerce-instellingen"
+
+#: src/Environment/Plugins/Woocommerce.php:112
+msgid "Shop"
+msgstr "Winkel"
 
 #: src/Environment/Plugins/Woocommerce.php:113
 msgid "/shop"
@@ -1675,6 +1112,11 @@ msgstr ""
 #: src/Environment/Plugins/Woocommerce.php:114
 msgid "WooCommerce Shop"
 msgstr "WooCommerce-winkel"
+
+#: src/Environment/Plugins/Woocommerce.php:119
+#: src/Environment/Plugins/Woocommerce.php:121
+msgid "My Account"
+msgstr "Mijn account"
 
 #: src/Environment/Plugins/Woocommerce.php:120
 msgid "/myaccount"
@@ -1724,26 +1166,51 @@ msgstr ""
 msgid "WooCommerce Courses"
 msgstr "WooCommerce-cursussen"
 
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:59
+#: src/Modules/ActiveWoo/ActiveWoo.php:41
+msgid "ActiveWoo"
+msgstr ""
+
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:61
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:68
 msgid "WooCommerce ActiveWoo Settings"
 msgstr "WooCommerce: ActiveWoo-instellingen"
 
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:73
+msgid "Advanced Settings"
+msgstr "Geavanceerde instellingen"
+
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:75
 msgid "WooCommerce ActiveWoo Advanced Settings"
 msgstr "WooCommerce: geavanceerde ActiveWoo-instellingen"
+
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:80
+msgid "Recover Cart Settings"
+msgstr "Instellingen verlaten winkelwagens"
 
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:82
 msgid "WooCommerce ActiveWoo Recover Cart Settings"
 msgstr "WooCommerce: ActiveWoo-instellingen verlaten winkelwagens"
 
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:87
+msgid "Coupons Settings"
+msgstr "Instellingen kortingsbonnen"
+
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:89
 msgid "WooCommerce ActiveWoo Coupons Settings"
 msgstr "WooCommerce: ActiveWoo-instellingen kortingsbonnen"
 
+#: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:59
+msgid "Shop Order CSV Export"
+msgstr "CSV-export bestellingen"
+
 #: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:61
 msgid "WooCommerce Shop Order CSV Export"
 msgstr "WooCommerce: CSV-export bestellingen"
+
+#: src/Environment/Plugins/WoocommercePdfInvoices.php:60
+msgid "PDF-invoice"
+msgstr "PDF-factuur"
 
 #: src/Environment/Plugins/WoocommercePdfInvoices.php:62
 msgid "WooCommerce PDF-invoice Settings"
@@ -1758,6 +1225,15 @@ msgstr "Mijn account: voorbestellingen"
 msgid "/myaccount/pre-orders/"
 msgstr ""
 
+#: src/Environment/Plugins/WoocommerceProductAddons.php:59
+#: src/Environment/Plugins/WoocommerceProductAddons.php:61
+msgid "Product Add-ons"
+msgstr "Productopties"
+
+#: src/Environment/Plugins/WoocommerceProductAddons.php:61
+msgid "WooCommerce"
+msgstr ""
+
 #: src/Environment/Plugins/WoocommerceSmartCoupons.php:60
 #: src/Environment/Plugins/WoocommerceSmartCoupons.php:62
 msgid "My Account: Smart Coupons"
@@ -1766,6 +1242,10 @@ msgstr "Mijn account: Smart Coupons"
 #: src/Environment/Plugins/WoocommerceSmartCoupons.php:61
 msgid "/myaccount/wc-smart-coupons/"
 msgstr ""
+
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:65
+msgid "Subscriptions"
+msgstr "Abonnementen"
 
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:67
 msgid "WooCommerce Subscriptions"
@@ -1780,6 +1260,10 @@ msgstr "Mijn account: abonnementen"
 msgid "/myaccount/subscriptions/"
 msgstr ""
 
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:80
+msgid "Course Payment Plans"
+msgstr "Betaalplannen cursussen"
+
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:81
 msgid "course-payment-plans"
 msgstr ""
@@ -1788,6 +1272,10 @@ msgstr ""
 msgid "WooCommerce Course Payment Plans"
 msgstr "WooCommerce: betaalplannen cursussen"
 
+#: src/Environment/Plugins/WpForms.php:65
+msgid "WPForms"
+msgstr ""
+
 #: src/Environment/Plugins/YoastSeo.php:78
 msgid "Yoast SEO"
 msgstr ""
@@ -1795,6 +1283,16 @@ msgstr ""
 #: src/Environment/Plugins/YoastSeo.php:80
 msgid "Yoast SEO Dashboard"
 msgstr "Yoast SEO-dashboard"
+
+#: src/Environment/Themes/AnyBlockTheme.php:107
+#: src/Environment/Themes/AnyBlockTheme.php:109
+msgid "Site editor"
+msgstr "Site-editor"
+
+#: src/Environment/Themes/AnyGenesis.php:76
+#: src/Environment/Themes/AnyGenesis.php:78
+msgid "Genesis Framework"
+msgstr ""
 
 #: src/Environment/Themes/EssencePro.php:78
 msgid "⚡ Essence Pro"
@@ -1876,343 +1374,386 @@ msgstr "In de hoofdbalk houden (zichtbaar)"
 msgid "Save Toolbar Visibility Filter"
 msgstr "Zichtbaarheid toolbar opslaan"
 
-#: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:47
-msgid "Legacy Admin Toolbar Builder Feature"
-msgstr "Menubouwer admin-toolbar (oude versie)"
-
-#: src/Modules/AdminToolbar/Features/LegacyMenuBuilder/LegacyMenuBuilder.php:48
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:66
-msgid "The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar."
-msgstr "Bouwt een menu met snelkoppelingen in de admin-toolbar."
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:65
 msgid "Admin Toolbar Builder Feature"
 msgstr "Menubouwer admin-toolbar"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:112
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilder.php:67
+msgid "The Admin Toolbar Builder Feature builds a navigation shortcuts menu in the admin toolbar."
+msgstr "Bouwt een menu met snelkoppelingen in de admin-toolbar."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:113
 msgid "Admin Toolbar Menu Builder"
 msgstr "Menubouwer admin-toolbar"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:123
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:124
 msgid "Compose the shortcuts menu of the admin toolbar from the links of all known plugins and themes. Links of plugins that are not active are kept, but only shown once the plugin is active."
 msgstr "Stel het snelmenu van de admin-toolbar samen uit de links van alle bekende plugins en thema's. Links van plugins die niet actief zijn blijven bewaard, maar verschijnen pas als de plugin actief is."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:175
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:178
 msgid "Available shortcuts"
 msgstr "Beschikbare snelkoppelingen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:176
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:179
 msgid "Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu."
 msgstr "Snelkoppelingen van alle bekende plugins en thema's, per bron. Vink ze aan en voeg ze toe, of sleep ze naar het menu."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:177
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:180
 msgid "Toolbar menu (max. 3 levels)"
 msgstr "Toolbarmenu (max. 3 niveaus)"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:178
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:181
 msgid "Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too."
 msgstr "Sleep om de volgorde te wijzigen en gebruik de pijlen om in te springen. Admin, Beide en Site bepalen waar een onderdeel verschijnt; een onderdeel verschijnt alleen waar ook zijn ouders verschijnen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:241
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:306
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:223
+msgid "There is no default menu yet. \"Save as default\" makes this menu the starting point for other sites: it goes into the plugin and along with the next release."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:224
+msgid "There is no default menu yet. A default can be saved on a site where the plugin folder is writable, such as the development site."
+msgstr "Er is nog geen standaardmenu. Een standaard kan worden opgeslagen op een site waar de pluginmap schrijfbaar is, zoals de ontwikkelsite."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:230
+msgid "This menu is the default that comes with the plugin."
+msgstr "Dit menu is de standaard die met de plugin meekomt."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:231
+msgid "This menu differs from the default that comes with the plugin. \"Restore default\" takes the default again."
+msgstr ""
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:269
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:334
 msgid "Custom"
 msgstr "Eigen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:244
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:272
 msgid "Submenu or custom link"
 msgstr "Submenu of eigen link"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:245
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:273
 msgid "A parent for other nodes, or a link of your own"
 msgstr "Een kop voor andere onderdelen, of een eigen link"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:322
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:403
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:350
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:431
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:326
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:354
 msgid "No known plugin or theme offers this shortcut any more."
 msgstr "Geen bekende plugin of thema biedt deze snelkoppeling nog aan."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:387
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:415
 msgid "Toolbar menu"
 msgstr "Toolbarmenu"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:388
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:416
 msgid "Keyboard shortcuts"
 msgstr "Sneltoetsen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:389
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:417
 msgid "Keyboard shortcuts in the menu"
 msgstr "Sneltoetsen in het menu"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:390
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:418
 msgid "Click an item or Tab into the menu to start. When the focused item is selected, moving, indenting and removing act on the whole selection, each item with the items below it."
 msgstr "Klik op een onderdeel of ga met Tab naar het menu om te beginnen. Staat de focus op een geselecteerd onderdeel, dan werken verplaatsen, inspringen en verwijderen op de hele selectie, elk onderdeel met de onderdelen eronder."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:392
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:420
 msgid "Close"
 msgstr "Sluiten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:393
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:421
 msgid "Include items below"
 msgstr "Onderliggende meenemen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:394
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:422
 msgid "Also select the items below the selected items (Ctrl-click selects an item with the items below it)."
 msgstr "Selecteer ook de onderdelen onder de geselecteerde onderdelen (Ctrl-klik selecteert een onderdeel met de onderdelen eronder)."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:395
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:423
 msgid "Search shortcuts"
 msgstr "Snelkoppelingen zoeken"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:396
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:424
 msgid "Only active"
 msgstr "Alleen actieve"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:397
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:425
 msgid "Collapse"
 msgstr "Inklappen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:398
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:426
 msgid "Expand"
 msgstr "Uitklappen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:399
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:427
 msgid "Adds below the item selected in the menu (inside it when it is a submenu without a link), or at the end."
 msgstr "Voegt toe onder het onderdeel dat in het menu geselecteerd is (erin als het een submenu zonder link is), of onderaan."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:400
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:428
 msgid "Active"
 msgstr "Actief"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:401
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:429
 msgid "Inactive"
 msgstr "Inactief"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:402
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:430
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:404
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:432
 msgid "Admin"
 msgstr "Admin"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:405
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:433
 msgid "Front"
 msgstr "Site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:406
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:434
 msgid "Links to an admin page"
 msgstr "Linkt naar een adminpagina"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:407
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:435
 msgid "Links to a page on the site"
 msgstr "Linkt naar een pagina op de site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:408
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:436
 msgid "Only on admin pages"
 msgstr "Alleen op adminpagina's"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:409
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:437
 msgid "Only on the front end"
 msgstr "Alleen op de site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:410
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:438
 msgid "On admin pages and the front end"
 msgstr "Op adminpagina's en op de site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:411
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:439
 msgid "Both"
 msgstr "Beide"
 
 #. translators: %s: Admin or Front, the restriction of a parent node.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:413
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:441
 #, php-format
 msgid "parent: %s"
 msgstr "ouder: %s"
 
 #. translators: %s: Admin or Front, the node's own visibility.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:415
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:443
 #, php-format
 msgid "Its own setting (%s) conflicts with a parent, so this node is never shown."
 msgstr "De eigen instelling (%s) botst met een ouder, dus dit onderdeel verschijnt nooit."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:416
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:444
 msgid "Show"
 msgstr "Tonen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:417
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:445
 msgid "Add selected"
 msgstr "Selectie toevoegen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:418
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:446
 msgid "Select all visible"
 msgstr "Alle zichtbare selecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:419
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:447
 msgid "Select at least one shortcut first."
 msgstr "Selecteer eerst minstens één snelkoppeling."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:420
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:448
 msgid "The menu is empty. Add shortcuts from the list."
 msgstr "Het menu is leeg. Voeg snelkoppelingen toe uit de lijst."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:421
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:449
 msgid "Title"
 msgstr "Titel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:422
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:450
 msgid "Leave empty to use the title of the shortcut, which follows the translation."
 msgstr "Laat leeg om de titel van de snelkoppeling te gebruiken; die volgt de vertaling."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:423
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:540
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:451
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:596
 msgid "Submenu"
 msgstr "Submenu"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:424
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:452
 msgid "URL"
 msgstr "URL"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:425
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:453
 msgid "Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown."
 msgstr "Laat leeg voor een submenu zonder eigen link; het wordt verborgen als geen van de onderdelen zichtbaar is."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:426
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:454
 msgid "Copy"
 msgstr "Kopiëren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:427
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:455
 msgid "Copied"
 msgstr "Gekopieerd"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:428
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:456
 msgid "Move out (one level up)"
 msgstr "Naar buiten (een niveau hoger)"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:429
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:457
 msgid "Move in (one level down)"
 msgstr "Naar binnen (een niveau lager)"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:431
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:459
 msgid "Remove"
 msgstr "Verwijderen"
 
 #. translators: %d: number of items below the node.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:433
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:461
 #, php-format
 msgid "This node has %d items below it. Remove the node together with those items?"
 msgstr "Onder dit onderdeel staan %d onderdelen. Het onderdeel samen met die onderdelen verwijderen?"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:434
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:462
 msgid "Shown once this plugin or theme is active."
 msgstr "Verschijnt zodra deze plugin of dit thema actief is."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:435
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:463
 msgid "Select (Shift-click: a range, Ctrl-click: with the items below)"
 msgstr "Selecteren (Shift-klik: een reeks, Ctrl-klik: met de onderdelen eronder)"
 
 #. translators: %d: number of selected items.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:437
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:465
 #, php-format
 msgid "%d selected"
 msgstr "%d geselecteerd"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:438
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:466
 msgid "Reset titles"
 msgstr "Titels terugzetten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:439
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:467
 msgid "Use the shortcuts' own titles again, which follow the translation."
 msgstr "Weer de eigen titels van de snelkoppelingen gebruiken; die volgen de vertaling."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:440
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:468
 msgid "Clear selection"
 msgstr "Selectie wissen"
 
 #. translators: %d: number of items that will be removed.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:442
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:470
 #, php-format
 msgid "Remove %d items (the selected items and the items below them)?"
 msgstr "%d onderdelen verwijderen (de geselecteerde en de onderdelen eronder)?"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:453
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:471
+msgid "Replace this menu by the default that comes with the plugin? Changes made on this site are lost."
+msgstr "Dit menu vervangen door de standaard die met de plugin meekomt? Wijzigingen op deze site gaan verloren."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:482
 msgid "Space"
 msgstr "Spatie"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:456
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:485
 msgid "Move the focus to the previous or next item"
 msgstr "Focus naar het vorige of volgende onderdeel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:457
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:486
 msgid "Move the focus to the first or last item"
 msgstr "Focus naar het eerste of laatste onderdeel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:458
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:487
 msgid "Move the focus and select along"
 msgstr "Focus verplaatsen en meeselecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:459
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:488
 msgid "Select or deselect the item"
 msgstr "Onderdeel selecteren of deselecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:460
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:489
 msgid "Select from the last selected item to here"
 msgstr "Selecteren vanaf het laatst geselecteerde onderdeel tot hier"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:461
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:490
 msgid "Select or deselect the item with the items below it"
 msgstr "Onderdeel met de onderdelen eronder selecteren of deselecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:462
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:491
 msgid "Move up or down, past the neighbouring item"
 msgstr "Omhoog of omlaag verplaatsen, voorbij het buuronderdeel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:463
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:492
 msgid "Move out or in one level"
 msgstr "Een niveau uit- of inspringen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:464
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:493
 msgid "Collapse or expand; on an item without children, ← goes to its parent"
 msgstr "In- of uitklappen; op een onderdeel zonder kinderen gaat ← naar de ouder"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:465
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:494
 msgid "Open or close the settings of the item"
 msgstr "Instellingen van het onderdeel openen of sluiten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:466
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:495
 msgid "Remove, with the items below it"
 msgstr "Verwijderen, met de onderdelen eronder"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:467
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:496
 msgid "Clear the selection"
 msgstr "Selectie wissen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:468
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:497
 msgid "Show this overview"
 msgstr "Dit overzicht tonen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:494
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:523
 msgid "Critical Error: You do not have sufficient permissions to modify the Admin Menu Builder settings."
 msgstr "Kritieke fout: je hebt onvoldoende rechten om de menubouwer te wijzigen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:500
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:532
+msgid "The default menu has been restored."
+msgstr "Het standaardmenu is teruggezet."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:537
 msgid "Save Aborted: No changes detected or serialization data stream is empty."
 msgstr "Opslaan afgebroken: geen wijzigingen gevonden of de gegevens zijn leeg."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:506
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:543
 msgid "Save Failed: Transmitted layout configuration matrix map is corrupt."
 msgstr "Opslaan mislukt: de meegestuurde menustructuur is beschadigd."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:514
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:560
+msgid "The menu is saved, but not as the default: the settings folder of the plugin cannot be written on this site."
+msgstr "Het menu is opgeslagen, maar niet als standaard: de settingsmap van de plugin is op deze site niet schrijfbaar."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:567
+msgid "The menu has been saved as the default (settings/modules/admin-toolbar/menu-builder.php). Commit that file to take the menu along with the next release."
+msgstr "Het menu is opgeslagen als standaard (settings/modules/admin-toolbar/menu-builder.php). Commit dat bestand om het menu met de volgende release mee te nemen."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:570
 msgid "The toolbar menu has been saved."
 msgstr "Het toolbarmenu is opgeslagen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:576
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:635
 msgid "Save menu"
 msgstr "Menu opslaan"
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:644
+msgid "Save as default"
+msgstr "Opslaan als standaard"
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:645
+msgid "Saves the menu and writes it into the plugin as the default for other sites."
+msgstr "Slaat het menu op en schrijft het in de plugin als standaard voor andere sites."
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:653
+msgid "Restore default"
+msgstr "Standaard terugzetten"
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:654
+msgid "Replaces this menu by the default that comes with the plugin."
+msgstr "Vervangt dit menu door de standaard die met de plugin meekomt."
 
 #: src/Modules/AdminToolbar/Features/StylesFixer/StylesFixer.php:45
 msgid "Admin Toolbar Styles Fixer Feature"
@@ -2368,7 +1909,7 @@ msgstr "Kritieke fout: het registerbestand kon niet worden bijgewerkt: %1$s."
 msgid "Settings saved successfully. Remember to commit changes in Git! 🚀"
 msgstr "Instellingen opgeslagen. Vergeet niet de wijzigingen in Git te committen! 🚀"
 
-#: src/Services/FileSystem/FileService.php:322
+#: src/Services/FileSystem/FileService.php:260
 msgid "Path to the component registers could not be retrieved, fallback paths used. Please inform Support"
 msgstr "Het pad naar de componentregisters kon niet worden bepaald; de standaardpaden worden gebruikt. Laat het de ondersteuning weten."
 
@@ -2376,6 +1917,6 @@ msgstr "Het pad naar de componentregisters kon niet worden bepaald; de standaard
 msgid "Invalid method call: FinderService->find_modules_and_features() should only be executed from within the Core Functionality admin settings page context."
 msgstr "Ongeldige aanroep: FinderService->find_modules_and_features() mag alleen vanaf de instellingenpagina van Core Functionality worden uitgevoerd."
 
-#: src/Services/Settings.php:341
+#: src/Services/Settings.php:298
 msgid "Calling Settings->get_options() is only allowed, use Settings->get(), Settings->save() or Settings->delete() instead. For getting unmanaged options, you can use Settings->get_unmanaged()."
 msgstr "Settings->get_options() aanroepen is niet toegestaan. Gebruik Settings->get(), Settings->save() of Settings->delete(). Voor opties buiten de kluis kun je Settings->get_unmanaged() gebruiken."

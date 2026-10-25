@@ -68,7 +68,7 @@ core-functionality-oop/
 │   ├── Diagnostics/Logger.php
 │   ├── Api/                      CF facade and functions for other plugins
 │   └── Modules/
-│       ├── AdminToolbar/  MenuBuilder, LegacyMenuBuilder, Cleaner, StylesFixer, Visualizer
+│       ├── AdminToolbar/  MenuBuilder, Cleaner, StylesFixer, Visualizer
 │       ├── AdminMenu/     AdminMenuArchitect
 │       ├── ActiveWoo/     KeepLicenseAlive
 │       └── Cleaner/       TransientOptimizer
@@ -165,6 +165,12 @@ to move and indent, Space to select, Ctrl+Space or Ctrl-click for a node with it
 Esc); "Keyboard shortcuts" (or ?) shows the overview. When the columns fit side by side, the builder fills
 the visible part of the settings page, so only the lists scroll.
 
+The menu can travel with the plugin: "Save as default" (on a site where the settings folder is writable,
+in practice development) writes it to `settings/modules/admin-toolbar/menu-builder.php` and lets the site
+follow it; committed, it goes along with the release. A site without a menu of its own uses that default
+(`Settings::get_whole()`), and "Restore default" drops a site's own menu. A status line above the tree says
+which applies. Merging a default into a site's own menu is not offered (not needed so far).
+
 The settings page frame is fixed beside the admin menu (from 783px wide), so a long admin menu scrolls on
 its own and the footer with the buttons stays in view.
 
@@ -174,11 +180,21 @@ its own and the footer with the buttons stays in view.
   sit in `settings/` (`environment-index.php`, `push-notice-drivers.php`); each module has its own folder
   under `settings/modules/<module-folder>/`. `settings/setup/modules-settings-path.php` maps a module id to
   its folder, and `settings/setup/key-slugs-translation.php` maps a settings key to a file in that folder.
-  That is why `Settings::get( $key, $module_id )` takes the module id as second argument.
+  That is why `Settings::get( $key, $module_id )` takes the module id as second argument. A settings file
+  is read as part of `Settings`, so it can compose its value with `$this->get()`.
 - **Database overrides**: `Settings::get()` merges the file with the stored option
-  (`array_replace_recursive`); `$reset_to_defaults` returns the file only.
-- **Options vault** (`Options`): maps setting tokens to real option names, either standalone or grouped in
-  one option, and keeps unknown tokens in a quarantine pool until they are assigned.
+  (`array_replace_recursive`); `$reset_to_defaults` returns the file only. For lists and trees, where a
+  removed item must stay removed, `Settings::get_whole()` takes the stored value as a whole, or else the
+  file.
+- **Writable defaults**: `Settings::save_default()` writes a value into its settings file, where the folder
+  is writable (development); the file then goes along with git and the release. `can_save_default()`,
+  `get_default()` and `has_saved()` support a "save as default / restore default" flow (used by the menu
+  builder); restoring is `Settings::reset()`.
+- `Settings` is the holder of all settings, with two helpers: **`SettingsFiles`** for the files (mapping,
+  reading, writing) and the **Options vault** (`Options`) for the database: it maps setting tokens to real
+  option names, either standalone or grouped in one option, and keeps unknown tokens in a quarantine pool
+  until they are assigned. `PhpArrayFile` writes the PHP files for both the settings and the kernel
+  registers. All option access belongs behind `Settings`.
 
 ## Admin
 
@@ -250,7 +266,8 @@ Known issues:
   integrity check and all settings tabs. The two issues found there (the toolbar Cleaner reading
   `$node->id` from an array, and feature names ending in a period) are fixed. The plugin is active again
   on the local site.
-- `src/Modules/LegeModule/` (gitignored template) still uses the old style.
+- Direct option calls still to move behind `Settings`: `KeepLicenseAlive` writes ActiveWoo's own option
+  `aw_license` with `update_option()`, and `Logger` reads its settings with `get_option()`.
 - Menu builder (October 2026): titles saved before this version are stored as overrides, also where
   they equal the English title; "Reset titles" on a selection makes nodes follow the translation again.
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
@@ -273,9 +290,9 @@ Environment proofs (reviewed October 2026):
   Festinger Vault: which folder production uses, left for later. `sensei-paid-courses` may be an old
   name of Sensei Pro (confirm).
 - AutomateWoo replaced WooCommerce Follow-Up Emails; the guards for Follow-Up Emails, EU VAT Assistant
-  (legacy) and WP phpMyAdmin (not needed) were removed. The AdminToolbar settings files
-  (`settings/modules/admin-toolbar/`) are legacy, copied from the old plugin and no longer used; they are
-  removed or replaced once the toolbar feature works.
+  (legacy) and WP phpMyAdmin (not needed) were removed. The legacy AdminToolbar settings files from the
+  old plugin went with the LegacyMenuBuilder feature (October 2026); `settings/modules/admin-toolbar/`
+  now only holds the menu builder's default (`menu-builder.php`) once one is saved.
 - Site-specific URLs in guard code (`/evenementen/`, `/agenda/categorie/familieopstellingen/`,
   `/artikelen/`, the `course-payment-plans` product category) stay for now; they could also become custom
   links on the settings page.

@@ -153,7 +153,7 @@ WordPress Coding Standards with PSR-4 class files, `declare( strict_types=1 );` 
 Source strings are English, text domain `core-functionality`; `languages/` holds the `.pot` and the
 Dutch translation. After changing strings (in DDEV, from the site folder):
 
-    ddev wp i18n make-pot wp-content/plugins/core-functionality-oop wp-content/plugins/core-functionality-oop/languages/core-functionality.pot --domain=core-functionality --exclude=vendor,___,kernel,src/Modules/LegeModule,src/Modules/ActiveWoo/dev-notes
+    ddev wp i18n make-pot wp-content/plugins/core-functionality-oop wp-content/plugins/core-functionality-oop/languages/core-functionality.pot --domain=core-functionality --exclude=vendor,___,kernel,src/Modules/ActiveWoo/dev-notes
 
 Then update `languages/core-functionality-nl_NL.po` (Poedit or Loco Translate) and create the `.mo`:
 
