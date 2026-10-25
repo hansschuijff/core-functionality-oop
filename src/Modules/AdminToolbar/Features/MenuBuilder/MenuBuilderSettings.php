@@ -15,6 +15,7 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuild
 
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\Interfaces\SettingsSectionInterface;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
+use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\AdminToolbar;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
 use DeWittePrins\CoreFunctionality\Enums\ProviderStatus;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
@@ -158,7 +159,9 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function render( bool $defaults_only = false ): void {
-		$saved_tree = $this->plugin->settings->get( $this->menu_builder_tree_option_token, '', false, array() );
+		$saved_tree = $defaults_only
+			? $this->plugin->settings->get_default( $this->menu_builder_tree_option_token, AdminToolbar::get_id() )
+			: $this->plugin->settings->get_whole( $this->menu_builder_tree_option_token, AdminToolbar::get_id(), array() );
 		if ( ! is_array( $saved_tree ) ) {
 			$saved_tree = array();
 		}
@@ -176,6 +179,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		$pool_desc  = esc_html__( 'Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu.', 'core-functionality' );
 		$tree_title = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
 		$tree_desc  = esc_html__( 'Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
+		$status     = esc_html( $this->get_default_status_text() );
 		$json       = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
 		// The data is JSON in a script block; JSON_HEX_TAG keeps it from closing the block.
@@ -193,6 +197,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			<div class="dwp-mb-column dwp-mb-column--tree">
 				<h3>{$tree_title}</h3>
 				<p class="description">{$tree_desc}</p>
+				<p class="dwp-mb-status">{$status}</p>
 				<div class="dwp-mb-tree js-dwp-mb-tree"></div>
 				<input type="hidden" name="dwp_menu_serialized_tree" class="js-dwp-mb-serialized" value="" />
 			</div>
@@ -201,6 +206,29 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		</div>
 		HTML;
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Says whether the site uses the default menu that comes with the plugin.
+	 *
+	 * @since  1.0.0
+	 * @return string The status line above the tree.
+	 */
+	private function get_default_status_text(): string {
+		$settings = $this->plugin->settings;
+		$default  = $settings->get_default( $this->menu_builder_tree_option_token, AdminToolbar::get_id() );
+
+		if ( ! is_array( $default ) ) {
+			return $settings->can_save_default( $this->menu_builder_tree_option_token, AdminToolbar::get_id() )
+				? __( 'There is no default menu yet. "Save as default" makes this menu the starting point for other sites: it goes into the plugin and along with the next release.', 'core-functionality' )
+				: __( 'There is no default menu yet. A default can be saved on a site where the plugin folder is writable, such as the development site.', 'core-functionality' );
+		}
+
+		$saved = $settings->get_whole( $this->menu_builder_tree_option_token, AdminToolbar::get_id(), array() );
+
+		return $saved === $default
+			? __( 'This menu is the default that comes with the plugin.', 'core-functionality' )
+			: __( 'This menu differs from the default that comes with the plugin. "Restore default" takes the default again.', 'core-functionality' );
 	}
 
 	/**
@@ -440,6 +468,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'clearSelection'        => __( 'Clear selection', 'core-functionality' ),
 			/* translators: %d: number of items that will be removed. */
 			'removeSelectedConfirm' => __( 'Remove %d items (the selected items and the items below them)?', 'core-functionality' ),
+			'restoreConfirm'        => __( 'Replace this menu by the default that comes with the plugin? Changes made on this site are lost.', 'core-functionality' ),
 		);
 	}
 
@@ -495,6 +524,14 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			return false;
 		}
 
+		$action = sanitize_key( (string) ( $posted_data['dwp_mb_action'] ?? 'save' ) );
+
+		// Removing the saved menu makes the site follow the default again.
+		if ( 'restore-default' === $action ) {
+			$this->plugin->settings->reset( $this->menu_builder_tree_option_token );
+			return __( 'The default menu has been restored.', 'core-functionality' );
+		}
+
 		$json_payload = $posted_data['dwp_menu_serialized_tree'] ?? '';
 		if ( empty( $json_payload ) ) {
 			$this->plugin->notices->add( 'warning', __( 'Save Aborted: No changes detected or serialization data stream is empty.', 'core-functionality' ) );
@@ -510,6 +547,25 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		$sanitized_tree = $this->sanitize_recursive_tree_payload( $decoded_tree, $this->get_catalogue_index(), 0 );
 
 		$this->plugin->settings->save( $this->menu_builder_tree_option_token, $sanitized_tree );
+
+		if ( 'save-default' === $action ) {
+			$written = $this->plugin->settings->save_default(
+				$this->menu_builder_tree_option_token,
+				AdminToolbar::get_id(),
+				$sanitized_tree,
+				'Default menu of the admin toolbar menu builder, written by "Save as default" on its settings tab.'
+			);
+
+			if ( ! $written ) {
+				$this->plugin->notices->add( 'error', __( 'The menu is saved, but not as the default: the settings folder of the plugin cannot be written on this site.', 'core-functionality' ) );
+				return false;
+			}
+
+			// The site now follows the default, like every other site that gets it with a release.
+			$this->plugin->settings->reset( $this->menu_builder_tree_option_token );
+
+			return __( 'The menu has been saved as the default (settings/modules/admin-toolbar/menu-builder.php). Commit that file to take the menu along with the next release.', 'core-functionality' );
+		}
 
 		return __( 'The toolbar menu has been saved.', 'core-functionality' );
 	}
@@ -573,12 +629,35 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function get_action_buttons(): array {
+		$settings = $this->plugin->settings;
+		$token    = $this->menu_builder_tree_option_token;
+		$module   = AdminToolbar::get_id();
 		$btn_save = esc_html__( 'Save menu', 'core-functionality' );
 
-		return array(
+		$buttons = array(
 			'save_order' => <<<HTML
 				<button type="submit" name="dwp_vault_matrix_submit" value="1" class="button button-primary button-large">{$btn_save}</button>
 			HTML,
 		);
+
+		if ( $settings->can_save_default( $token, $module ) ) {
+			$label = esc_html__( 'Save as default', 'core-functionality' );
+			$tip   = esc_attr__( 'Saves the menu and writes it into the plugin as the default for other sites.', 'core-functionality' );
+
+			$buttons['save_default'] = <<<HTML
+				<button type="submit" name="dwp_mb_action" value="save-default" class="button button-large" title="{$tip}">{$label}</button>
+			HTML;
+		}
+
+		if ( null !== $settings->get_default( $token, $module ) && $settings->has_saved( $token ) ) {
+			$label = esc_html__( 'Restore default', 'core-functionality' );
+			$tip   = esc_attr__( 'Replaces this menu by the default that comes with the plugin.', 'core-functionality' );
+
+			$buttons['restore_default'] = <<<HTML
+				<button type="submit" name="dwp_mb_action" value="restore-default" class="button button-large js-dwp-mb-restore" title="{$tip}">{$label}</button>
+			HTML;
+		}
+
+		return $buttons;
 	}
 }

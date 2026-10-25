@@ -1179,7 +1179,14 @@
 		serialize();
 
 		if (form) {
-			form.addEventListener('submit', serialize);
+			form.addEventListener('submit', function (event) {
+				const restoring = event.submitter && 'restore-default' === event.submitter.value;
+				if (restoring && !window.confirm(t.restoreConfirm)) {
+					event.preventDefault();
+					return;
+				}
+				serialize();
+			});
 		}
 	});
 }());

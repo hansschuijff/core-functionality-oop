@@ -28,12 +28,17 @@ return array(
 	'activewoo-license-data'                           => 'license',
 
 	/**
-	 * Feature: AminToolbar->MenuBuilder
+	 * Feature: AdminToolbar->MenuBuilder. The default menu, written by "Save as default".
+	 */
+	'menu-builder-hierarchical-tree'                   => 'menu-builder',
+
+	/**
+	 * Feature: AdminToolbar->LegacyMenuBuilder (legacy settings from the old plugin).
 	 */
 	'toolbar-move'                                     => 'move',
 
 	/**
-	 * Feature: AminToolbar->Cleaner
+	 * Feature: AdminToolbar->LegacyMenuBuilder
 	 */
 	'toolbar-add'                                      => 'add',
 	// Admin Toolbar Plugin submenu items.

@@ -17,6 +17,7 @@ namespace DeWittePrins\CoreFunctionality\Modules\AdminToolbar\Features\MenuBuild
 
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use DeWittePrins\CoreFunctionality\Modules\AdminToolbar\AdminToolbar;
 use Override;
 use DeWittePrins\CoreFunctionality\Environment\Registers\AdminToolbarRegister;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
@@ -104,7 +105,7 @@ class MenuBuilder extends AbstractFeature {
 			return;
 		}
 
-		$saved_tree = $this->plugin->settings->get( $this->menu_builder_tree_key, '', false, array() );
+		$saved_tree = $this->plugin->settings->get_whole( $this->menu_builder_tree_key, AdminToolbar::get_id(), array() );
 		if ( empty( $saved_tree ) || ! is_array( $saved_tree ) ) {
 			return;
 		}

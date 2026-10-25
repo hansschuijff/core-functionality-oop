@@ -14,6 +14,9 @@
     <exclude-pattern>*/dev-notes/*</exclude-pattern>
     <exclude-pattern>*/LegeModule/*</exclude-pattern>
 
+    <!-- Settings defaults written by the plugin itself (var_export) -->
+    <exclude-pattern>settings/modules/admin-toolbar/menu-builder.php</exclude-pattern>
+
     <!-- Enforce the official WordPress Core standards -->
     <rule ref="WordPress-Core" />
     <rule ref="WordPress-Docs" />

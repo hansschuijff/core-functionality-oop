@@ -39,6 +39,14 @@
 	margin: 0 0 12px;
 }
 
+.dwp-mb-status {
+	margin: -4px 0 10px;
+	padding: 4px 8px;
+	background: #f6f7f7;
+	border-left: 3px solid var(--dwp-mb-accent);
+	font-size: 12px;
+}
+
 /* Pool: search, actions and the list grouped per source. */
 
 .dwp-mb-pool-tools {
