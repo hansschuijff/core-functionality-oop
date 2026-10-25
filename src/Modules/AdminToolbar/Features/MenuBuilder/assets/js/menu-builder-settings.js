@@ -1099,8 +1099,9 @@
 
 		/* ------------------------------------------------------------------ shortcuts overview */
 
-		// A plain element with the dialog role, shown and hidden by the script: the <dialog> element
-		// is not available in every browser (where it is not, it shows on load and cannot close).
+		// A plain element with the dialog role, shown and hidden by the script. A <dialog> element
+		// showed on load and could not be closed on this page in Firefox (cause not found); this
+		// does not depend on how a browser handles <dialog>.
 		// It hangs directly under <body>, so the fixed settings frame cannot clip or cover it.
 		const shortcutsDialog = el('div', 'dwp-mb-dialog');
 		const dialogInner     = el('div', 'dwp-mb-dialog-inner');
