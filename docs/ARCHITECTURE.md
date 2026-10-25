@@ -278,8 +278,9 @@ Known issues:
   integrity check and all settings tabs. The two issues found there (the toolbar Cleaner reading
   `$node->id` from an array, and feature names ending in a period) are fixed. The plugin is active again
   on the local site.
-- Direct option calls still to move behind `Settings`: `KeepLicenseAlive` writes ActiveWoo's own option
-  `aw_license` with `update_option()`, and `Logger` reads its settings with `get_option()`.
+- All option access goes through `Settings` (October 2026); options of WordPress or another plugin use
+  `get_unmanaged()` / `save_unmanaged()`. Transients (as in `KeepLicenseAlive`) still use the WordPress
+  functions directly.
 - Menu builder (October 2026): titles saved before this version are stored as overrides, also where
   they equal the English title; "Reset titles" on a selection makes nodes follow the translation again.
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
