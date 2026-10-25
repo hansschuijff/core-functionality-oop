@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-25T11:37:36+01:00\n"
+"POT-Creation-Date: 2026-10-25T12:24:52+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -36,21 +36,21 @@ msgstr ""
 msgid "https://dewitteprins.nl"
 msgstr ""
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:118
-#: src/Admin/Services/Settings/AdminSettingsPage.php:428
+#: src/Admin/Services/Settings/AdminSettingsPage.php:123
+#: src/Admin/Services/Settings/AdminSettingsPage.php:456
 msgid "Core Functionality Settings"
 msgstr "Instellingen Core Functionality"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:119
+#: src/Admin/Services/Settings/AdminSettingsPage.php:124
 #: src/Environment/Core/WordPress.php:224
 msgid "Core Functionality"
 msgstr "Core Functionality"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:310
+#: src/Admin/Services/Settings/AdminSettingsPage.php:338
 msgid "Type to search... (↑↓ to navigate, Enter)"
 msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:341
+#: src/Admin/Services/Settings/AdminSettingsPage.php:369
 #: src/Environment/Plugins/FestingerVault.php:105
 #: src/Environment/Plugins/FestingerVault.php:107
 #: src/Environment/Plugins/GitUpdater.php:70
@@ -58,51 +58,51 @@ msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 #: src/Environment/Plugins/TheEventsCalendar.php:114
 #: src/Environment/Plugins/Woocommerce.php:104
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:66
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:464
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:467
 msgid "Settings"
 msgstr "Instellingen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:411
+#: src/Admin/Services/Settings/AdminSettingsPage.php:439
 msgid "Search... (/)"
 msgstr "Zoeken… (/)"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:412
+#: src/Admin/Services/Settings/AdminSettingsPage.php:440
 msgid "Collapse menu"
 msgstr "Menu inklappen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:440
+#: src/Admin/Services/Settings/AdminSettingsPage.php:468
 msgid "Active Components"
 msgstr "Actieve onderdelen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:449
+#: src/Admin/Services/Settings/AdminSettingsPage.php:477
 msgid "No items found"
 msgstr "Geen items gevonden"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:536
+#: src/Admin/Services/Settings/AdminSettingsPage.php:564
 msgid "Save Settings"
 msgstr "Instellingen opslaan"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:593
+#: src/Admin/Services/Settings/AdminSettingsPage.php:621
 msgid "Reset to Factory Defaults"
 msgstr "Terug naar fabrieksinstellingen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:594
+#: src/Admin/Services/Settings/AdminSettingsPage.php:622
 msgid "🚨 CRITICAL WARNING:\\n\\nAre you sure you want to trigger a settings reset for this section?"
 msgstr "🚨 BELANGRIJKE WAARSCHUWING:\\n\\nWeet je zeker dat je de instellingen van dit onderdeel wilt terugzetten?"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:635
+#: src/Admin/Services/Settings/AdminSettingsPage.php:663
 msgid "Security check failed. Please try again."
 msgstr "Beveiligingscontrole mislukt. Probeer het opnieuw."
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:640
+#: src/Admin/Services/Settings/AdminSettingsPage.php:668
 msgid "You do not have sufficient permissions to update this settings."
 msgstr "Je hebt onvoldoende rechten om deze instellingen te wijzigen."
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:662
+#: src/Admin/Services/Settings/AdminSettingsPage.php:690
 msgid "Validation failed. Please double-check your entries."
 msgstr "Validatie mislukt. Controleer je invoer."
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:669
+#: src/Admin/Services/Settings/AdminSettingsPage.php:697
 msgid "Settings saved successfully."
 msgstr "Instellingen opgeslagen."
 
@@ -1406,372 +1406,378 @@ msgstr "Toolbarmenu (max. 3 niveaus)"
 msgid "Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too."
 msgstr "Sleep om de volgorde te wijzigen en gebruik de pijlen om in te springen. Admin, Beide en Site bepalen waar een onderdeel verschijnt; een onderdeel verschijnt alleen waar ook zijn ouders verschijnen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:229
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:231
 msgid "There is no default menu yet. \"Save as default\" makes this menu the starting point for other sites: it goes into the plugin and along with the next release."
 msgstr "Er is nog geen standaardmenu. \"Opslaan als standaard\" maakt dit menu het startpunt voor andere sites: het gaat de plugin in en met de volgende release mee."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:230
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:232
 msgid "There is no default menu yet. A default can be saved on a site where the plugin folder is writable, such as the development site."
 msgstr "Er is nog geen standaardmenu. Een standaard kan worden opgeslagen op een site waar de pluginmap schrijfbaar is, zoals de ontwikkelsite."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:236
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:238
 msgid "This menu is the default that comes with the plugin."
 msgstr "Dit menu is de standaard die met de plugin meekomt."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:237
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:239
 msgid "This menu differs from the default that comes with the plugin. \"Restore default\" takes the default again; \"Merge with default\" adds what this menu lacks."
 msgstr "Dit menu wijkt af van de standaard die met de plugin meekomt. \"Standaard terugzetten\" neemt de standaard weer over; \"Samenvoegen met standaard\" voegt toe wat dit menu mist."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:275
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:340
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:277
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:342
 msgid "Custom"
 msgstr "Eigen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:278
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:280
 msgid "Submenu or custom link"
 msgstr "Submenu of eigen link"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:279
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:281
 msgid "A parent for other nodes, or a link of your own"
 msgstr "Een kop voor andere onderdelen, of een eigen link"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:356
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:437
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:358
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:442
 msgid "Unknown"
 msgstr "Onbekend"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:360
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:362
 msgid "No known plugin or theme offers this shortcut any more."
 msgstr "Geen bekende plugin of thema biedt deze snelkoppeling nog aan."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:421
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:423
 msgid "Toolbar menu"
 msgstr "Toolbarmenu"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:422
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:424
 msgid "Keyboard shortcuts"
 msgstr "Sneltoetsen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:423
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:425
 msgid "Keyboard shortcuts in the menu"
 msgstr "Sneltoetsen in het menu"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:424
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:426
 msgid "Click an item or Tab into the menu to start. When the focused item is selected, moving, indenting and removing act on the whole selection, each item with the items below it."
 msgstr "Klik op een onderdeel of ga met Tab naar het menu om te beginnen. Staat de focus op een geselecteerd onderdeel, dan werken verplaatsen, inspringen en verwijderen op de hele selectie, elk onderdeel met de onderdelen eronder."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:426
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:428
 msgid "Close"
 msgstr "Sluiten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:427
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:429
 msgid "Include items below"
 msgstr "Onderliggende meenemen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:428
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:430
 msgid "Also select the items below the selected items (Ctrl-click selects an item with the items below it)."
 msgstr "Selecteer ook de onderdelen onder de geselecteerde onderdelen (Ctrl-klik selecteert een onderdeel met de onderdelen eronder)."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:429
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:431
 msgid "Search shortcuts"
 msgstr "Snelkoppelingen zoeken"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:430
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:432
 msgid "Only active"
 msgstr "Alleen actieve"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:431
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:433
 msgid "Collapse"
 msgstr "Inklappen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:432
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:434
 msgid "Expand"
 msgstr "Uitklappen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:433
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:435
+msgid "Collapse all"
+msgstr "Alles inklappen"
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:436
+msgid "Expand all"
+msgstr "Alles uitklappen"
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:437
+msgid "Explanation"
+msgstr "Uitleg"
+
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:438
 msgid "Adds below the item selected in the menu (inside it when it is a submenu without a link), or at the end."
 msgstr "Voegt toe onder het onderdeel dat in het menu geselecteerd is (erin als het een submenu zonder link is), of onderaan."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:434
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:439
 msgid "Active"
 msgstr "Actief"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:435
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:440
 msgid "Inactive"
 msgstr "Inactief"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:436
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:441
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:438
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:443
 msgid "Admin"
 msgstr "Admin"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:439
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:444
 msgid "Front"
 msgstr "Site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:440
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:445
 msgid "Links to an admin page"
 msgstr "Linkt naar een adminpagina"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:441
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:446
 msgid "Links to a page on the site"
 msgstr "Linkt naar een pagina op de site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:442
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:447
 msgid "Only on admin pages"
 msgstr "Alleen op adminpagina's"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:443
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:448
 msgid "Only on the front end"
 msgstr "Alleen op de site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:444
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:449
 msgid "On admin pages and the front end"
 msgstr "Op adminpagina's en op de site"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:445
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:450
 msgid "Both"
 msgstr "Beide"
 
-#. translators: %s: Admin or Front, the restriction of a parent node.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:447
-#, php-format
-msgid "parent: %s"
-msgstr "ouder: %s"
-
 #. translators: %s: Admin or Front, the node's own visibility.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:449
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:452
 #, php-format
 msgid "Its own setting (%s) conflicts with a parent, so this node is never shown."
 msgstr "De eigen instelling (%s) botst met een ouder, dus dit onderdeel verschijnt nooit."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:450
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:453
 msgid "Show"
 msgstr "Tonen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:451
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:454
 msgid "Add selected"
 msgstr "Selectie toevoegen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:452
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:455
 msgid "Select all visible"
 msgstr "Alle zichtbare selecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:453
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:456
 msgid "Select at least one shortcut first."
 msgstr "Selecteer eerst minstens één snelkoppeling."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:454
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:457
 msgid "The menu is empty. Add shortcuts from the list."
 msgstr "Het menu is leeg. Voeg snelkoppelingen toe uit de lijst."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:455
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:458
 msgid "Title"
 msgstr "Titel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:456
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:459
 msgid "Leave empty to use the title of the shortcut, which follows the translation."
 msgstr "Laat leeg om de titel van de snelkoppeling te gebruiken; die volgt de vertaling."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:457
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:759
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:460
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:762
 msgid "Submenu"
 msgstr "Submenu"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:458
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:461
 msgid "URL"
 msgstr "URL"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:459
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:462
 msgid "Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown."
 msgstr "Laat leeg voor een submenu zonder eigen link; het wordt verborgen als geen van de onderdelen zichtbaar is."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:460
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:463
 msgid "Copy"
 msgstr "Kopiëren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:461
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:464
 msgid "Copied"
 msgstr "Gekopieerd"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:462
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:465
 msgid "Move out (one level up)"
 msgstr "Naar buiten (een niveau hoger)"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:463
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:466
 msgid "Move in (one level down)"
 msgstr "Naar binnen (een niveau lager)"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:465
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:468
 msgid "Remove"
 msgstr "Verwijderen"
 
 #. translators: %d: number of items below the node.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:467
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:470
 #, php-format
 msgid "This node has %d items below it. Remove the node together with those items?"
 msgstr "Onder dit onderdeel staan %d onderdelen. Het onderdeel samen met die onderdelen verwijderen?"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:468
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:471
 msgid "Shown once this plugin or theme is active."
 msgstr "Verschijnt zodra deze plugin of dit thema actief is."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:469
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:472
 msgid "Select (Shift-click: a range, Ctrl-click: with the items below)"
 msgstr "Selecteren (Shift-klik: een reeks, Ctrl-klik: met de onderdelen eronder)"
 
 #. translators: %d: number of selected items.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:471
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:474
 #, php-format
 msgid "%d selected"
 msgstr "%d geselecteerd"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:472
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:475
 msgid "Reset titles"
 msgstr "Titels terugzetten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:473
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:476
 msgid "Use the shortcuts' own titles again, which follow the translation."
 msgstr "Weer de eigen titels van de snelkoppelingen gebruiken; die volgen de vertaling."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:474
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:477
 msgid "Clear selection"
 msgstr "Selectie wissen"
 
 #. translators: %d: number of items that will be removed.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:476
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:479
 #, php-format
 msgid "Remove %d items (the selected items and the items below them)?"
 msgstr "%d onderdelen verwijderen (de geselecteerde en de onderdelen eronder)?"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:477
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:480
 msgid "Replace this menu by the default that comes with the plugin? Changes made on this site are lost."
 msgstr "Dit menu vervangen door de standaard die met de plugin meekomt? Wijzigingen op deze site gaan verloren."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:478
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:481
 msgid "Add the items of the default that this menu lacks? Items of the default that you removed come back as well; your own items and arrangement stay."
 msgstr "De onderdelen van de standaard toevoegen die dit menu mist? Onderdelen van de standaard die je hebt verwijderd, komen ook terug; je eigen onderdelen en indeling blijven."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:489
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:492
 msgid "Space"
 msgstr "Spatie"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:492
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:495
 msgid "Move the focus to the previous or next item"
 msgstr "Focus naar het vorige of volgende onderdeel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:493
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:496
 msgid "Move the focus to the first or last item"
 msgstr "Focus naar het eerste of laatste onderdeel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:494
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:497
 msgid "Move the focus and select along"
 msgstr "Focus verplaatsen en meeselecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:495
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:498
 msgid "Select or deselect the item"
 msgstr "Onderdeel selecteren of deselecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:496
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:499
 msgid "Select from the last selected item to here"
 msgstr "Selecteren vanaf het laatst geselecteerde onderdeel tot hier"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:497
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:500
 msgid "Select or deselect the item with the items below it"
 msgstr "Onderdeel met de onderdelen eronder selecteren of deselecteren"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:498
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:501
 msgid "Move up or down, past the neighbouring item"
 msgstr "Omhoog of omlaag verplaatsen, voorbij het buuronderdeel"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:499
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:502
 msgid "Move out or in one level"
 msgstr "Een niveau uit- of inspringen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:500
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:503
 msgid "Collapse or expand; on an item without children, ← goes to its parent"
 msgstr "In- of uitklappen; op een onderdeel zonder kinderen gaat ← naar de ouder"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:501
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:504
 msgid "Open or close the settings of the item"
 msgstr "Instellingen van het onderdeel openen of sluiten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:502
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:505
 msgid "Remove, with the items below it"
 msgstr "Verwijderen, met de onderdelen eronder"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:503
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:506
 msgid "Clear the selection"
 msgstr "Selectie wissen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:504
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:507
 msgid "Show this overview"
 msgstr "Dit overzicht tonen"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:530
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:533
 msgid "Critical Error: You do not have sufficient permissions to modify the Admin Menu Builder settings."
 msgstr "Kritieke fout: je hebt onvoldoende rechten om de menubouwer te wijzigen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:539
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:542
 msgid "The default menu has been restored."
 msgstr "Het standaardmenu is teruggezet."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:544
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:547
 msgid "Save Aborted: No changes detected or serialization data stream is empty."
 msgstr "Opslaan afgebroken: geen wijzigingen gevonden of de gegevens zijn leeg."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:550
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:553
 msgid "Save Failed: Transmitted layout configuration matrix map is corrupt."
 msgstr "Opslaan mislukt: de meegestuurde menustructuur is beschadigd."
 
 #. translators: %d: number of menu items added from the default.
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:574
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:577
 #, php-format
 msgid "The menu has been merged with the default: %d item added."
 msgid_plural "The menu has been merged with the default: %d items added."
 msgstr[0] "Het menu is samengevoegd met de standaard: %d onderdeel toegevoegd."
 msgstr[1] "Het menu is samengevoegd met de standaard: %d onderdelen toegevoegd."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:588
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:591
 msgid "The menu is saved, but not as the default: the settings folder of the plugin cannot be written on this site."
 msgstr "Het menu is opgeslagen, maar niet als standaard: de settingsmap van de plugin is op deze site niet schrijfbaar."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:595
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:598
 msgid "The menu has been saved as the default (settings/modules/admin-toolbar/menu-builder.php). Commit that file to take the menu along with the next release."
 msgstr "Het menu is opgeslagen als standaard (settings/modules/admin-toolbar/menu-builder.php). Commit dat bestand om het menu met de volgende release mee te nemen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:598
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:601
 msgid "The toolbar menu has been saved."
 msgstr "Het toolbarmenu is opgeslagen."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:798
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:801
 msgid "Save menu"
 msgstr "Menu opslaan"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:807
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:810
 msgid "Save as default"
 msgstr "Opslaan als standaard"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:808
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:811
 msgid "Saves the menu and writes it into the plugin as the default for other sites."
 msgstr "Slaat het menu op en schrijft het in de plugin als standaard voor andere sites."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:816
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:819
 msgid "Restore default"
 msgstr "Standaard terugzetten"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:817
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:820
 msgid "Replaces this menu by the default that comes with the plugin."
 msgstr "Vervangt dit menu door de standaard die met de plugin meekomt."
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:823
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:826
 msgid "Merge with default"
 msgstr "Samenvoegen met standaard"
 
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:824
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:827
 msgid "Adds the items of the default that this menu lacks; your own items and arrangement stay."
 msgstr "Voegt de onderdelen van de standaard toe die dit menu mist; je eigen onderdelen en indeling blijven."
 
