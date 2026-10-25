@@ -172,12 +172,11 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		);
 		$this->flatten_saved_tree( $saved_tree, $this->get_catalogue_index(), 0, $data['tree'] );
 
-		$pool_title   = esc_html__( 'Available shortcuts', 'core-functionality' );
-		$pool_desc    = esc_html__( 'Shortcuts of all known plugins and themes. Check them and add them, or drag them into the menu.', 'core-functionality' );
-		$filter_label = esc_html__( 'Source', 'core-functionality' );
-		$tree_title   = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
-		$tree_desc    = esc_html__( 'Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
-		$json         = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
+		$pool_title = esc_html__( 'Available shortcuts', 'core-functionality' );
+		$pool_desc  = esc_html__( 'Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu.', 'core-functionality' );
+		$tree_title = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
+		$tree_desc  = esc_html__( 'Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
+		$json       = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
 		// The data is JSON in a script block; JSON_HEX_TAG keeps it from closing the block.
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -186,10 +185,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			<div class="dwp-mb-column">
 				<h3>{$pool_title}</h3>
 				<p class="description">{$pool_desc}</p>
-				<label class="dwp-mb-filter">
-					<span>{$filter_label}</span>
-					<select class="js-dwp-mb-filter"></select>
-				</label>
+				<div class="dwp-mb-pool-tools js-dwp-mb-pool-tools"></div>
 				<div class="dwp-mb-pool-actions js-dwp-mb-pool-actions"></div>
 				<div class="dwp-mb-pool js-dwp-mb-pool"></div>
 			</div>
@@ -386,7 +382,11 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	private function get_script_strings(): array {
 		return array(
-			'allSources'            => __( 'All sources', 'core-functionality' ),
+			'search'                => __( 'Search shortcuts', 'core-functionality' ),
+			'onlyActive'            => __( 'Only active', 'core-functionality' ),
+			'collapse'              => __( 'Collapse', 'core-functionality' ),
+			'expand'                => __( 'Expand', 'core-functionality' ),
+			'addSelectedTip'        => __( 'Adds below the item selected in the menu (inside it when it is a submenu without a link), or at the end.', 'core-functionality' ),
 			'statusActive'          => __( 'Active', 'core-functionality' ),
 			'statusInactive'        => __( 'Inactive', 'core-functionality' ),
 			'statusMissing'         => __( 'Not installed', 'core-functionality' ),

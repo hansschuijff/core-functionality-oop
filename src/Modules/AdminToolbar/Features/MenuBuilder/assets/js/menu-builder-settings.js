@@ -21,7 +21,7 @@
 		const maxDepth   = data.maxDepth;
 		const pool       = root.querySelector('.js-dwp-mb-pool');
 		const tree       = root.querySelector('.js-dwp-mb-tree');
-		const filter     = root.querySelector('.js-dwp-mb-filter');
+		const tools      = root.querySelector('.js-dwp-mb-pool-tools');
 		const actions    = root.querySelector('.js-dwp-mb-pool-actions');
 		const serialized = root.querySelector('.js-dwp-mb-serialized');
 		const form       = root.closest('form');
@@ -165,37 +165,117 @@
 			return item;
 		}
 
-		function buildFilter() {
-			filter.appendChild(new Option(t.allSources, 'all'));
+		// Remembered in the browser: which pool groups are open and which tree branches are collapsed.
+		function loadSet(key) {
+			try {
+				return new Set(JSON.parse(window.localStorage.getItem(key) || '[]'));
+			} catch (error) {
+				return new Set();
+			}
+		}
 
-			[ 'active', 'inactive', 'not-installed' ].forEach(function (status) {
-				const providers = data.providers.filter(function (provider) {
-					return provider.status === status;
-				});
-				if (!providers.length) {
+		function saveSet(key, set) {
+			try {
+				window.localStorage.setItem(key, JSON.stringify([ ...set ]));
+			} catch (error) {
+				// Storage unavailable: the state is simply not remembered.
+			}
+		}
+
+		const openGroups = loadSet('dwp-mb-open-groups');
+		const groups     = []; // { element: details, count: span }
+
+		// The pool: the custom submenu first, then one collapsible group per provider.
+		function buildPool() {
+			const providers = new Map(data.providers.map(function (provider) {
+				return [ provider.id, provider ];
+			}));
+			const lists = new Map();
+
+			data.pool.forEach(function (row) {
+				const item = createPoolItem(row);
+				if (!row.provider) {
+					pool.appendChild(item);
 					return;
 				}
 
-				const group = el('optgroup');
-				group.label = statusText(status);
-				providers.forEach(function (provider) {
-					group.appendChild(new Option(provider.name, provider.id));
-				});
-				filter.appendChild(group);
-			});
+				if (!lists.has(row.provider)) {
+					const provider = providers.get(row.provider) || { id: row.provider, name: row.providerName, status: row.status };
+					const group    = el('details', 'dwp-mb-group');
+					const summary  = el('summary', 'dwp-mb-group-summary');
+					const count    = el('span', 'dwp-mb-group-count');
 
-			filter.addEventListener('change', function () {
-				selectAll.checked = false;
-				pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
-					const visible = 'all' === filter.value || 'submenu' === item.dataset.type || item.dataset.provider === filter.value;
-					item.hidden = !visible;
-					item.querySelector('.js-dwp-mb-check').checked = false;
-				});
+					group.dataset.provider = provider.id;
+					group.open = openGroups.has(provider.id);
+					summary.append(el('span', 'dwp-mb-group-name', provider.name), count);
+					if ('active' !== provider.status) {
+						summary.appendChild(badge(provider.status, statusText(provider.status), t.inactiveHint));
+					}
+					group.appendChild(summary);
+					group.addEventListener('toggle', function () {
+						if (!searchInput.value.trim()) {
+							if (group.open) {
+								openGroups.add(provider.id);
+							} else {
+								openGroups.delete(provider.id);
+							}
+							saveSet('dwp-mb-open-groups', openGroups);
+						}
+					});
+
+					groups.push({ element: group, count: count });
+					lists.set(row.provider, group);
+					pool.appendChild(group);
+				}
+				lists.get(row.provider).appendChild(item);
 			});
 		}
 
+		// Search (title, source, description, id) and "only active"; while searching, groups with
+		// a match open, and the remembered state returns when the search is cleared.
+		function filterPool() {
+			const query      = searchInput.value.trim().toLowerCase();
+			const activeOnly = activeInput.checked;
+
+			pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
+				const row  = rows.get(item);
+				const text = [ row.defaultTitle, row.providerName, row.label, row.id ].join(' ').toLowerCase();
+				item.hidden = (activeOnly && 'active' !== row.status) || ('' !== query && !text.includes(query));
+			});
+
+			groups.forEach(function (group) {
+				const visible = group.element.querySelectorAll('.js-dwp-mb-pool-item:not([hidden])').length;
+				group.element.hidden = 0 === visible;
+				group.count.textContent = String(visible);
+				group.element.open = '' !== query ? visible > 0 : openGroups.has(group.element.dataset.provider);
+			});
+		}
+
+		// A pool item the user can see: not filtered out and not in a closed group.
+		function isShown(item) {
+			const group = item.closest('details');
+			return !item.hidden && (!group || (group.open && !group.hidden));
+		}
+
+		const searchInput = el('input', 'dwp-mb-search');
+		searchInput.type = 'search';
+		searchInput.placeholder = t.search;
+		searchInput.setAttribute('aria-label', t.search);
+		searchInput.addEventListener('input', filterPool);
+
+		const activeInput = el('input');
+		activeInput.type = 'checkbox';
+		activeInput.id = 'js-dwp-mb-active-only';
+		activeInput.addEventListener('change', filterPool);
+
+		const activeLabel = el('label', 'dwp-mb-active-only', t.onlyActive);
+		activeLabel.prepend(activeInput);
+
+		tools.append(searchInput, activeLabel);
+
 		const addButton = el('button', 'button button-secondary', t.addSelected);
 		addButton.type = 'button';
+		addButton.title = t.addSelectedTip;
 
 		const selectAll = el('input');
 		selectAll.type = 'checkbox';
@@ -207,10 +287,29 @@
 		actions.append(addButton, selectAll, selectAllLabel);
 
 		selectAll.addEventListener('change', function () {
-			pool.querySelectorAll('.js-dwp-mb-pool-item:not([hidden]) .js-dwp-mb-check').forEach(function (checkbox) {
-				checkbox.checked = selectAll.checked;
+			pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
+				item.querySelector('.js-dwp-mb-check').checked = selectAll.checked && isShown(item);
 			});
 		});
+
+		// With exactly one node selected in the menu, new nodes go below it: inside it when it is a
+		// submenu without a link of its own, otherwise after its branch. Without one, at the end.
+		function insertionPoint() {
+			if (1 !== selected.size) {
+				return { before: null, depth: insertionDepth(null) };
+			}
+
+			const target = [ ...selected ][ 0 ];
+			const branch = branchOf(target);
+			const state  = rows.get(target);
+			const before = branch[ branch.length - 1 ].nextElementSibling;
+			const inside = 'submenu' === state.type && '' === state.href && depthOf(target) < maxDepth;
+
+			if (inside) {
+				setCollapsed(target, false);
+			}
+			return { before: before, depth: depthOf(target) + (inside ? 1 : 0) };
+		}
 
 		addButton.addEventListener('click', function () {
 			const checked = [ ...pool.querySelectorAll('.js-dwp-mb-check:checked') ];
@@ -219,10 +318,11 @@
 				return;
 			}
 
+			const point = insertionPoint();
 			insertRows(checked.map(function (checkbox) {
 				checkbox.checked = false;
 				return rows.get(checkbox.closest('.js-dwp-mb-pool-item'));
-			}), null);
+			}), point.before, point.depth);
 			selectAll.checked = false;
 		});
 
@@ -344,6 +444,8 @@
 			rows.set(node, state);
 
 			const header = el('div', 'dwp-mb-node-header');
+			header.appendChild(iconButton('dashicons-arrow-down-alt2', t.collapse, 'dwp-mb-collapse js-dwp-mb-collapse'));
+
 			const select = el('input', 'dwp-mb-select js-dwp-mb-select');
 			select.type = 'checkbox';
 			select.setAttribute('aria-label', t.select);
@@ -392,17 +494,63 @@
 			return nodes.length ? depthOf(nodes[ nodes.length - 1 ]) : 0;
 		}
 
-		function insertRows(newRows, before) {
-			const depth = insertionDepth(before);
-			newRows.forEach(function (row) {
-				const node = createTreeNode(row, depth);
+		function insertRows(newRows, before, depth) {
+			const at    = undefined === depth ? insertionDepth(before) : depth;
+			const added = newRows.map(function (row) {
+				const node = createTreeNode(row, at);
 				tree.insertBefore(node, before);
 				if ('submenu' === row.type) {
 					node.querySelector('.dwp-mb-edit').hidden = false;
 				}
+				return node;
 			});
 			updateEmptyState();
 			serialize();
+			if (added.length) {
+				added[ 0 ].scrollIntoView({ block: 'nearest' });
+			}
+		}
+
+		/* ------------------------------------------------------------------ collapsing branches */
+
+		const collapsed = loadSet('dwp-mb-collapsed'); // Instance ids of collapsed nodes.
+
+		function setCollapsed(node, on) {
+			if (on) {
+				collapsed.add(node.dataset.instance);
+			} else {
+				collapsed.delete(node.dataset.instance);
+			}
+			saveSet('dwp-mb-collapsed', collapsed);
+			refreshTreeState();
+		}
+
+		// Marks the nodes that have children and hides the branches of collapsed nodes.
+		function refreshTreeState() {
+			const nodes = treeNodes();
+			let hiddenBelow = -1; // Nodes deeper than this depth lie in a collapsed branch.
+
+			nodes.forEach(function (node, index) {
+				const depth       = depthOf(node);
+				const next        = nodes[ index + 1 ];
+				const hasChildren = !!next && depthOf(next) > depth;
+				const isCollapsed = hasChildren && collapsed.has(node.dataset.instance);
+				const toggle      = node.querySelector('.js-dwp-mb-collapse');
+
+				if (hiddenBelow >= 0 && depth <= hiddenBelow) {
+					hiddenBelow = -1;
+				}
+				node.hidden = hiddenBelow >= 0;
+				node.classList.toggle('has-children', hasChildren);
+				node.classList.toggle('is-collapsed', isCollapsed);
+				toggle.title = isCollapsed ? t.expand : t.collapse;
+				toggle.setAttribute('aria-label', toggle.title);
+				toggle.setAttribute('aria-expanded', String(!isCollapsed));
+
+				if (isCollapsed && hiddenBelow < 0) {
+					hiddenBelow = depth;
+				}
+			});
 		}
 
 		// Moves a branch in or out by one level, if the result is still a valid tree. Moving out
@@ -486,7 +634,9 @@
 				const from = nodes.indexOf(anchor);
 				const to   = nodes.indexOf(node);
 				nodes.slice(Math.min(from, to), Math.max(from, to) + 1).forEach(function (item) {
-					setSelected(item, true);
+					if (!item.hidden) {
+						setSelected(item, true);
+					}
 				});
 			} else {
 				setSelected(node, !selected.has(node));
@@ -594,6 +744,8 @@
 			if (button.dataset.visibility) {
 				rows.get(node).visibility = button.dataset.visibility;
 				serialize();
+			} else if (button.classList.contains('js-dwp-mb-collapse')) {
+				setCollapsed(node, !collapsed.has(node.dataset.instance));
 			} else if (button.classList.contains('js-dwp-mb-out')) {
 				shiftBranch(node, -1);
 			} else if (button.classList.contains('js-dwp-mb-in')) {
@@ -765,14 +917,13 @@
 			});
 
 			serialized.value = JSON.stringify(result);
+			refreshTreeState();
 		}
 
 		/* ------------------------------------------------------------------ start */
 
-		data.pool.forEach(function (row) {
-			pool.appendChild(createPoolItem(row));
-		});
-		buildFilter();
+		buildPool();
+		filterPool();
 
 		data.tree.forEach(function (row) {
 			tree.appendChild(createTreeNode(row, row.depth));
