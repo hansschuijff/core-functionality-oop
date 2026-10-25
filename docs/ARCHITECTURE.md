@@ -150,7 +150,18 @@ out together with its children, and a submenu without a link of its own is left 
 children is shown. The settings tab renders the catalogue and the tree as JSON; `menu-builder-settings.js`
 builds the pool and the tree from it (one place for the markup). A new node takes the depth of the node it
 is inserted before (at the end: of the last node), so it never takes over a submenu; moving a node moves
-its branch. The admin menu feature has a similar, latent mechanism for menu items.
+its branch. With one node selected, "Add selected" inserts below it (inside it when it is a submenu
+without a link). The admin menu feature has a similar, latent mechanism for menu items.
+
+Visibility is shown as a one-click switch per node. A node is shown only where its parents are shown
+too (the runtime checks every node), but a child keeps its own setting under a restricted parent: its
+setting usually follows from where its link goes, and changing it automatically would lose that when the
+parent is changed back. The editor shows the parent's restriction and marks a conflicting child (never
+shown) without changing it. Nodes can be selected (shift-click for a range) and changed in bulk:
+visibility, reset titles, remove, and dragging or keyboard moves of the whole selection, each node with
+its branch. The pool is grouped per source with search and an "only active" filter; tree branches can be
+collapsed (remembered in the browser). The tree is an ARIA tree with keyboard control (arrows, Alt+arrows
+to move and indent, Space to select, Enter, Delete, Esc).
 
 ## Settings and options
 
@@ -236,9 +247,7 @@ Known issues:
   on the local site.
 - `src/Modules/LegeModule/` (gitignored template) still uses the old style.
 - Menu builder (October 2026): titles saved before this version are stored as overrides, also where
-  they equal the English title; clearing the title field makes a node follow the translation again.
-  Still to do: a better long-list experience (search, insert at a selected spot, keyboard, collapsing
-  branches).
+  they equal the English title; "Reset titles" on a selection makes nodes follow the translation again.
 - Local databases may still hold the old option `wp_cf_options_token_translations` (now `dwp_cf_…`).
 
 Environment proofs (reviewed October 2026):
