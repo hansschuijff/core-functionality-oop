@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
 use WP_Admin_Bar;
@@ -203,7 +204,7 @@ class Cleaner extends AbstractFeature {
 	private function is_cleaner_settings_page(): bool {
 		global $plugin_page;
 		return is_admin()
-			&& isset( $plugin_page ) && 'dwp-cf-settings' === $plugin_page
+			&& isset( $plugin_page ) && AdminSettingsPage::SLUG === $plugin_page
 			&& isset( $_GET['section'] ) && CleanerSettings::get_id() === $_GET['section'];
 	}
 

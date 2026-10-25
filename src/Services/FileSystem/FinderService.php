@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use DirectoryIterator;
+use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
 use DeWittePrins\CoreFunctionality\Plugin;
 use DeWittePrins\CoreFunctionality\ValueObjects\ModuleClassValidator;
 use DeWittePrins\CoreFunctionality\ValueObjects\EnvironmentValidator;
@@ -264,7 +265,7 @@ class FinderService {
 		}
 
 		// 1. Early-lifecycle checks: Validate incoming raw request payloads.
-		$is_settings_render = isset( $_GET['page'] ) && 'dwp-cf-settings' === sanitize_key( $_GET['page'] );
+		$is_settings_render = isset( $_GET['page'] ) && AdminSettingsPage::SLUG === sanitize_key( $_GET['page'] );
 		$is_settings_save   = isset( $_POST['action'] ) && 'dwp_cf_save_options' === sanitize_key( $_POST['action'] );
 
 		if ( $is_settings_render || $is_settings_save ) {
@@ -278,6 +279,6 @@ class FinderService {
 
 		$screen = get_current_screen();
 
-		return ( $screen && 'settings_page_dwp-cf-settings' === $screen->id );
+		return ( $screen && 'settings_page_' . AdminSettingsPage::SLUG === $screen->id );
 	}
 }

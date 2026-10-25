@@ -218,14 +218,8 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 		);
 
 		// CLUSTER 4: CORE SETTINGS & TOOLS SHORTCUTS [5].
+		// The link to this plugin's settings page comes from Core\CoreFunctionality.
 		$system_nodes = array(
-			new ToolbarShortcut(
-				id:      'cf-settings-core-functionality',
-				title:   __( 'Core Functionality', 'core-functionality' ),
-				href:    admin_url( 'options-general.php?page=core-functionality' ),
-				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Core functionality settings', 'core-functionality' ),
-				orientation: Orientation::ADMIN,
-			),
 			new ToolbarShortcut(
 				id:      'cf-view-site',
 				title:   __( 'Frontpage', 'core-functionality' ),

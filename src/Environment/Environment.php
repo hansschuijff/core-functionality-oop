@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use DeWittePrins\CoreFunctionality\Plugin;
 use DeWittePrins\CoreFunctionality\Enums\ProviderStatus;
+use DeWittePrins\CoreFunctionality\Environment\Core\CoreFunctionality;
 use DeWittePrins\CoreFunctionality\Environment\Core\WordPress;
 use DeWittePrins\CoreFunctionality\Environment\Interfaces\DependencyInterface;
 use DeWittePrins\CoreFunctionality\Environment\Plugins\Interfaces\PluginInterface;
@@ -269,18 +270,21 @@ class Environment {
 	}
 
 	/**
-	 * Fills the admin toolbar catalogue with the nodes of the core and every known plugin and theme.
+	 * Fills the admin toolbar catalogue with the nodes of the core, this plugin and every known
+	 * plugin and theme.
 	 *
 	 * Known means: a guard class exists in Environment/Plugins or Environment/Themes. Each provider
 	 * is registered with its status, so the settings page can offer all nodes and the toolbar shows
-	 * only those of active providers. Called by AdminToolbarRegister on first use.
+	 * only those of active providers. The core and this plugin are always active. Called by
+	 * AdminToolbarRegister on first use.
 	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
 	public function load_toolbar_catalogue(): void {
-		$core = $this->get_wordpress();
-		AdminToolbarRegister::register( $core->get_id(), $core->get_toolbar_nodes(), ProviderStatus::ACTIVE );
+		foreach ( array( $this->get_wordpress(), new CoreFunctionality() ) as $always_active ) {
+			AdminToolbarRegister::register( $always_active->get_id(), $always_active->get_toolbar_nodes(), ProviderStatus::ACTIVE );
+		}
 
 		foreach ( $this->get_known_guard_ids() as $dependency_id ) {
 			$guard = ClassParser::is_theme_id( $dependency_id )

@@ -78,6 +78,13 @@ use function sanitize_text_field;
 class AdminSettingsPage {
 
 	/**
+	 * The slug of the settings page (Settings → Core Functionality).
+	 *
+	 * @var string
+	 */
+	public const SLUG = 'dwp-cf-settings';
+
+	/**
 	 * Array of registered setting sections array<id, fqcn>.
 	 *
 	 * @var array<string, string>
@@ -123,7 +130,7 @@ class AdminSettingsPage {
 			__( 'Core Functionality Settings', 'core-functionality' ),
 			__( 'Core Functionality', 'core-functionality' ),
 			'manage_options',
-			'dwp-cf-settings',
+			self::SLUG,
 			array( $this, 'render_settings_page' )
 		);
 		add_action( 'admin_print_styles-' . $page_hook, array( $this, 'enqueue_section_assets' ) );
@@ -500,7 +507,7 @@ class AdminSettingsPage {
 	 */
 	private function render_settings_form_start( string $active_section_id ): void {
 		$active_section_id = esc_attr( $active_section_id );
-		$action_url        = esc_url( admin_url( 'options-general.php?page=dwp-cf-settings' ) );
+		$action_url        = esc_url( admin_url( 'options-general.php?page=' . self::SLUG ) );
 		$nonce_field       = wp_nonce_field( 'dwp_cf_save_settings', 'dwp_cf_nonce', true, false );
 
 		echo <<<HTML
@@ -579,7 +586,7 @@ class AdminSettingsPage {
 	 * @return void
 	 */
 	private function render_sidebar_link_html( string $id, string $section_fqcn, string $active_section_id ): void {
-		$section_url = add_query_arg( array( 'section' => $id ), menu_page_url( 'dwp-cf-settings', false ) );
+		$section_url = add_query_arg( array( 'section' => $id ), menu_page_url( self::SLUG, false ) );
 		$section_url = esc_url( $section_url );
 
 		$is_active_section = ( $active_section_id === $id );
@@ -768,7 +775,7 @@ class AdminSettingsPage {
 
 		$screen = get_current_screen();
 
-		return ( $screen && 'settings_page_dwp-cf-settings' === $screen->id );
+		return ( $screen && 'settings_page_' . self::SLUG === $screen->id );
 	}
 
 	/**
