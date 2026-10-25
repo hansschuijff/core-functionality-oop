@@ -25,6 +25,11 @@ use Override;
 
 // Import global PHP and WordPress core abstraction functions.
 use function __;
+use function _n;
+use function array_keys;
+use function array_search;
+use function array_slice;
+use function count;
 use function esc_attr__;
 use function esc_html__;
 use function esc_url_raw;
@@ -34,6 +39,7 @@ use function plugins_url;
 use function sanitize_key;
 use function sanitize_text_field;
 use function sanitize_title;
+use function sprintf;
 use function str_replace;
 use function ucwords;
 use function current_user_can;
@@ -228,7 +234,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 		return $saved === $default
 			? __( 'This menu is the default that comes with the plugin.', 'core-functionality' )
-			: __( 'This menu differs from the default that comes with the plugin. "Restore default" takes the default again.', 'core-functionality' );
+			: __( 'This menu differs from the default that comes with the plugin. "Restore default" takes the default again; "Merge with default" adds what this menu lacks.', 'core-functionality' );
 	}
 
 	/**
@@ -469,6 +475,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			/* translators: %d: number of items that will be removed. */
 			'removeSelectedConfirm' => __( 'Remove %d items (the selected items and the items below them)?', 'core-functionality' ),
 			'restoreConfirm'        => __( 'Replace this menu by the default that comes with the plugin? Changes made on this site are lost.', 'core-functionality' ),
+			'mergeConfirm'          => __( 'Add the items of the default that this menu lacks? Items of the default that you removed come back as well; your own items and arrangement stay.', 'core-functionality' ),
 		);
 	}
 
@@ -546,7 +553,28 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 		$sanitized_tree = $this->sanitize_recursive_tree_payload( $decoded_tree, $this->get_catalogue_index(), 0 );
 
+		$added = 0;
+		if ( 'merge-default' === $action ) {
+			$default = $this->plugin->settings->get_default( $this->menu_builder_tree_option_token, AdminToolbar::get_id() );
+			if ( is_array( $default ) ) {
+				// Sanitized once more, so the menu keeps its maximum depth.
+				$sanitized_tree = $this->sanitize_recursive_tree_payload(
+					$this->merge_default_tree( $sanitized_tree, $default, $added ),
+					$this->get_catalogue_index(),
+					0
+				);
+			}
+		}
+
 		$this->plugin->settings->save( $this->menu_builder_tree_option_token, $sanitized_tree );
+
+		if ( 'merge-default' === $action ) {
+			return sprintf(
+				/* translators: %d: number of menu items added from the default. */
+				_n( 'The menu has been merged with the default: %d item added.', 'The menu has been merged with the default: %d items added.', $added, 'core-functionality' ),
+				$added
+			);
+		}
 
 		if ( 'save-default' === $action ) {
 			$written = $this->plugin->settings->save_default(
@@ -568,6 +596,141 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		}
 
 		return __( 'The toolbar menu has been saved.', 'core-functionality' );
+	}
+
+	/**
+	 * Adds the items of the default menu that the site's menu lacks.
+	 *
+	 * Items are recognised by their instance id, so nothing is added twice. The site's own items,
+	 * titles, visibility and arrangement stay as they are. An added item goes after the item that
+	 * preceded it in the default, when the site has that item; otherwise as the first item under
+	 * its parent from the default; otherwise at the end of the top level. Items the site removed
+	 * from the default come back: that is what merging means.
+	 *
+	 * @since  1.0.0
+	 * @param  array $tree    The site's menu tree.
+	 * @param  array $default The default menu tree.
+	 * @param  int   $added   Set to the number of added items.
+	 * @return array          The merged tree.
+	 */
+	private function merge_default_tree( array $tree, array $default, int &$added ): array {
+		$rows = array();
+		$this->flatten_for_merge( $tree, '', $rows );
+
+		$defaults = array();
+		$this->flatten_for_merge( $default, '', $defaults );
+
+		$previous_sibling = array(); // Default instance id => the instance id before it under the same parent.
+		$last_by_parent   = array();
+		foreach ( $defaults as $instance => $row ) {
+			$previous_sibling[ $instance ]    = $last_by_parent[ $row['parent'] ] ?? '';
+			$last_by_parent[ $row['parent'] ] = $instance;
+		}
+
+		$added = 0;
+		foreach ( $defaults as $instance => $row ) {
+			if ( isset( $rows[ $instance ] ) ) {
+				continue;
+			}
+
+			$previous = $previous_sibling[ $instance ];
+			if ( '' !== $previous && isset( $rows[ $previous ] ) ) {
+				$parent = $rows[ $previous ]['parent'];
+				$after  = $this->last_in_branch( $rows, $previous );
+			} elseif ( '' !== $row['parent'] && isset( $rows[ $row['parent'] ] ) ) {
+				$parent = $row['parent'];
+				$after  = $row['parent'];
+			} else {
+				$parent = '';
+				$after  = '';
+			}
+
+			$new = array(
+				$instance => array(
+					'parent' => $parent,
+					'node'   => $row['node'],
+				),
+			);
+
+			$position = '' === $after ? count( $rows ) : array_search( $after, array_keys( $rows ), true ) + 1;
+			$rows     = array_slice( $rows, 0, $position, true ) + $new + array_slice( $rows, $position, null, true );
+			++$added;
+		}
+
+		return $this->build_from_rows( $rows, '' );
+	}
+
+	/**
+	 * Turns a menu tree into a flat list in display order: instance id => parent and node settings.
+	 *
+	 * @since  1.0.0
+	 * @param  array  $tree   One level of the tree.
+	 * @param  string $parent The instance id of the parent, empty for the top level.
+	 * @param  array  $rows   The list, filled by reference.
+	 * @return void
+	 */
+	private function flatten_for_merge( array $tree, string $parent, array &$rows ): void {
+		foreach ( $tree as $instance => $node ) {
+			if ( ! is_array( $node ) ) {
+				continue;
+			}
+
+			$children = is_array( $node['children'] ?? null ) ? $node['children'] : array();
+			unset( $node['children'] );
+
+			$rows[ (string) $instance ] = array(
+				'parent' => $parent,
+				'node'   => $node,
+			);
+			$this->flatten_for_merge( $children, (string) $instance, $rows );
+		}
+	}
+
+	/**
+	 * Returns the last item in the branch of an item (the item itself when it has no children).
+	 *
+	 * @since  1.0.0
+	 * @param  array  $rows     The flat list.
+	 * @param  string $instance The instance id of the item.
+	 * @return string           The instance id of the last item in its branch.
+	 */
+	private function last_in_branch( array $rows, string $instance ): string {
+		$in_branch = array( $instance => true );
+		$last      = $instance;
+		$started   = false;
+
+		foreach ( $rows as $id => $row ) {
+			if ( ! $started ) {
+				$started = ( (string) $id === $instance );
+				continue;
+			}
+			if ( ! isset( $in_branch[ $row['parent'] ] ) ) {
+				break;
+			}
+			$in_branch[ (string) $id ] = true;
+			$last                      = (string) $id;
+		}
+
+		return $last;
+	}
+
+	/**
+	 * Builds a menu tree from the flat list.
+	 *
+	 * @since  1.0.0
+	 * @param  array  $rows   The flat list.
+	 * @param  string $parent The instance id whose children to build, empty for the top level.
+	 * @return array          The tree level.
+	 */
+	private function build_from_rows( array $rows, string $parent ): array {
+		$level = array();
+		foreach ( $rows as $instance => $row ) {
+			if ( $row['parent'] === $parent ) {
+				$level[ $instance ] = $row['node'] + array( 'children' => $this->build_from_rows( $rows, (string) $instance ) );
+			}
+		}
+
+		return $level;
 	}
 
 	/**
@@ -655,6 +818,13 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 			$buttons['restore_default'] = <<<HTML
 				<button type="submit" name="dwp_mb_action" value="restore-default" class="button button-large js-dwp-mb-restore" title="{$tip}">{$label}</button>
+			HTML;
+
+			$label = esc_html__( 'Merge with default', 'core-functionality' );
+			$tip   = esc_attr__( 'Adds the items of the default that this menu lacks; your own items and arrangement stay.', 'core-functionality' );
+
+			$buttons['merge_default'] = <<<HTML
+				<button type="submit" name="dwp_mb_action" value="merge-default" class="button button-large" title="{$tip}">{$label}</button>
 			HTML;
 		}
 

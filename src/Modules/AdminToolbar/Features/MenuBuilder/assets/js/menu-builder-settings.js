@@ -1180,8 +1180,9 @@
 
 		if (form) {
 			form.addEventListener('submit', function (event) {
-				const restoring = event.submitter && 'restore-default' === event.submitter.value;
-				if (restoring && !window.confirm(t.restoreConfirm)) {
+				const action  = event.submitter ? event.submitter.value : '';
+				const question = { 'restore-default': t.restoreConfirm, 'merge-default': t.mergeConfirm }[ action ];
+				if (question && !window.confirm(question)) {
 					event.preventDefault();
 					return;
 				}
