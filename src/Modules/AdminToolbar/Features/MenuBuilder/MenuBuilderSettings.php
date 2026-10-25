@@ -181,6 +181,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		// The data is JSON in a script block; JSON_HEX_TAG keeps it from closing the block.
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo <<<HTML
+		<div class="dwp-mb-wrap">
 		<div class="dwp-menu-builder js-dwp-menu-builder">
 			<div class="dwp-mb-column">
 				<h3>{$pool_title}</h3>
@@ -196,6 +197,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 				<input type="hidden" name="dwp_menu_serialized_tree" class="js-dwp-mb-serialized" value="" />
 			</div>
 			<script type="application/json" class="js-dwp-mb-data">{$json}</script>
+		</div>
 		</div>
 		HTML;
 		// phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -383,7 +385,13 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	private function get_script_strings(): array {
 		return array(
 			'treeLabel'             => __( 'Toolbar menu', 'core-functionality' ),
-			'keyboardHelp'          => __( 'Keyboard: ↑/↓ moves the focus (Shift: selects along), Space selects, Alt+↑/↓ moves up or down, Alt+←/→ indents, ←/→ collapses or expands, Enter opens the settings, Delete removes, Esc clears the selection. With a selected item focused, the keys act on the whole selection.', 'core-functionality' ),
+			'shortcutsButton'       => __( 'Keyboard shortcuts', 'core-functionality' ),
+			'shortcutsTitle'        => __( 'Keyboard shortcuts in the menu', 'core-functionality' ),
+			'shortcutsNote'         => __( 'Click an item or Tab into the menu to start. When the focused item is selected, moving, indenting and removing act on the whole selection, each item with the items below it.', 'core-functionality' ),
+			'shortcuts'             => $this->get_shortcut_rows(),
+			'close'                 => __( 'Close', 'core-functionality' ),
+			'selectBelow'           => __( 'Include items below', 'core-functionality' ),
+			'selectBelowTip'        => __( 'Also select the items below the selected items (Ctrl-click selects an item with the items below it).', 'core-functionality' ),
 			'search'                => __( 'Search shortcuts', 'core-functionality' ),
 			'onlyActive'            => __( 'Only active', 'core-functionality' ),
 			'collapse'              => __( 'Collapse', 'core-functionality' ),
@@ -424,7 +432,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			/* translators: %d: number of items below the node. */
 			'removeConfirm'         => __( 'This node has %d items below it. Remove the node together with those items?', 'core-functionality' ),
 			'inactiveHint'          => __( 'Shown once this plugin or theme is active.', 'core-functionality' ),
-			'select'                => __( 'Select (shift-click for a range)', 'core-functionality' ),
+			'select'                => __( 'Select (Shift-click: a range, Ctrl-click: with the items below)', 'core-functionality' ),
 			/* translators: %d: number of selected items. */
 			'selectedCount'         => __( '%d selected', 'core-functionality' ),
 			'resetTitles'           => __( 'Reset titles', 'core-functionality' ),
@@ -432,6 +440,32 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'clearSelection'        => __( 'Clear selection', 'core-functionality' ),
 			/* translators: %d: number of items that will be removed. */
 			'removeSelectedConfirm' => __( 'Remove %d items (the selected items and the items below them)?', 'core-functionality' ),
+		);
+	}
+
+	/**
+	 * Returns the keyboard shortcuts of the menu tree for the overview dialog.
+	 *
+	 * @since  1.0.0
+	 * @return array<int, array{0: string, 1: string}> Keys => what they do.
+	 */
+	private function get_shortcut_rows(): array {
+		$space = __( 'Space', 'core-functionality' );
+
+		return array(
+			array( '↑ / ↓', __( 'Move the focus to the previous or next item', 'core-functionality' ) ),
+			array( 'Home / End', __( 'Move the focus to the first or last item', 'core-functionality' ) ),
+			array( 'Shift + ↑ / ↓', __( 'Move the focus and select along', 'core-functionality' ) ),
+			array( $space, __( 'Select or deselect the item', 'core-functionality' ) ),
+			array( 'Shift + ' . $space, __( 'Select from the last selected item to here', 'core-functionality' ) ),
+			array( 'Ctrl + ' . $space, __( 'Select or deselect the item with the items below it', 'core-functionality' ) ),
+			array( 'Alt + ↑ / ↓', __( 'Move up or down, past the neighbouring item', 'core-functionality' ) ),
+			array( 'Alt + ← / →', __( 'Move out or in one level', 'core-functionality' ) ),
+			array( '← / →', __( 'Collapse or expand; on an item without children, ← goes to its parent', 'core-functionality' ) ),
+			array( 'Enter', __( 'Open or close the settings of the item', 'core-functionality' ) ),
+			array( 'Delete', __( 'Remove, with the items below it', 'core-functionality' ) ),
+			array( 'Esc', __( 'Clear the selection', 'core-functionality' ) ),
+			array( '?', __( 'Show this overview', 'core-functionality' ) ),
 		);
 	}
 
@@ -477,7 +511,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 		$this->plugin->settings->save( $this->menu_builder_tree_option_token, $sanitized_tree );
 
-		return __( 'Admin toolbar multi-level menu hierarchy blueprint saved successfully.', 'core-functionality' );
+		return __( 'The toolbar menu has been saved.', 'core-functionality' );
 	}
 
 	/**
@@ -539,13 +573,11 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public function get_action_buttons(): array {
-		$btn_save = esc_attr__( 'Save Toolbar Menu Order Hierarchy', 'core-functionality' );
+		$btn_save = esc_html__( 'Save menu', 'core-functionality' );
 
 		return array(
 			'save_order' => <<<HTML
-				<button type="submit" name="dwp_vault_matrix_submit" value="1" class="button button-primary" style="height: 35px; background: #2271b1; border-color: #1d5c8f;">
-					{$btn_save}
-				</button>
+				<button type="submit" name="dwp_vault_matrix_submit" value="1" class="button button-primary button-large">{$btn_save}</button>
 			HTML,
 		);
 	}

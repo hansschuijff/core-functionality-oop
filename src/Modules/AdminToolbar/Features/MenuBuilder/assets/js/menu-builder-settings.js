@@ -447,19 +447,18 @@
 			setDepth(node, depth);
 			rows.set(node, state);
 
-			const header = el('div', 'dwp-mb-node-header');
-			header.appendChild(iconButton('dashicons-arrow-down-alt2', t.collapse, 'dwp-mb-collapse js-dwp-mb-collapse'));
+			// Two rows in a grid: toggle, checkbox, title and buttons; below them the source and
+			// badges, and the visibility switch under the buttons.
+			const header = el('div', 'dwp-mb-node-header dwp-mb-node-header--tree');
+			const toggle = iconButton('dashicons-arrow-down-alt2', t.collapse, 'dwp-mb-collapse js-dwp-mb-collapse');
+			toggle.tabIndex = -1; // The arrow keys collapse and expand.
 
+			// Out of the tab order: the node itself takes the focus and Space selects it.
 			const select = el('input', 'dwp-mb-select js-dwp-mb-select');
 			select.type = 'checkbox';
+			select.tabIndex = -1;
+			select.title = t.select;
 			select.setAttribute('aria-label', t.select);
-			header.appendChild(select);
-
-			const body   = el('span', 'dwp-mb-node-body');
-			const meta   = metaLine(row);
-			meta.appendChild(createVisibilityControl());
-			body.appendChild(el('strong', 'dwp-mb-title'));
-			body.appendChild(meta);
 
 			const controls = el('span', 'dwp-mb-controls');
 			controls.append(
@@ -470,7 +469,7 @@
 				el('span', 'dashicons dashicons-menu dwp-mb-handle')
 			);
 
-			header.append(body, controls);
+			header.append(toggle, select, el('strong', 'dwp-mb-title'), controls, metaLine(row), createVisibilityControl());
 			node.append(header, createEditPanel(node, state));
 			refreshHeader(node);
 			return node;
@@ -639,9 +638,24 @@
 			updateBulkBar();
 		}
 
-		// Plain click toggles a node; shift-click selects the range from the last clicked node.
-		function clickSelect(node, range) {
+		// Selects or deselects a node together with the nodes below it.
+		function toggleBranchSelection(node) {
+			const on = !selected.has(node);
+			branchOf(node).forEach(function (item) {
+				setSelected(item, on);
+			});
+			anchor = node;
+			updateBulkBar();
+		}
+
+		// Plain click toggles a node, Ctrl-click the node with its branch, and shift-click selects
+		// the range from the last clicked node.
+		function clickSelect(node, range, branch) {
 			const nodes = treeNodes();
+			if (branch) {
+				toggleBranchSelection(node);
+				return;
+			}
 			if (range && anchor && nodes.includes(anchor)) {
 				const from = nodes.indexOf(anchor);
 				const to   = nodes.indexOf(node);
@@ -698,6 +712,7 @@
 		bulkBar.append(
 			bulkCount,
 			bulkShow,
+			bulkButton(t.selectBelow, 'js-dwp-mb-bulk-below', t.selectBelowTip),
 			bulkButton(t.resetTitles, 'js-dwp-mb-bulk-reset', t.resetTitlesTip),
 			bulkButton(t.remove, 'js-dwp-mb-bulk-remove'),
 			bulkButton(t.clearSelection, 'js-dwp-mb-bulk-clear')
@@ -721,6 +736,11 @@
 					rows.get(node).visibility = button.dataset.visibility;
 				});
 				serialize();
+			} else if (button.classList.contains('js-dwp-mb-bulk-below')) {
+				branchesOf(selectedRoots()).forEach(function (node) {
+					setSelected(node, true);
+				});
+				updateBulkBar();
 			} else if (button.classList.contains('js-dwp-mb-bulk-reset')) {
 				selected.forEach(function (node) {
 					const state = rows.get(node);
@@ -744,7 +764,7 @@
 		tree.addEventListener('click', function (event) {
 			const node = event.target.closest('.js-dwp-mb-tree-node');
 			if (node && event.target.classList.contains('js-dwp-mb-select')) {
-				clickSelect(node, event.shiftKey);
+				clickSelect(node, event.shiftKey, event.ctrlKey || event.metaKey);
 				return;
 			}
 
@@ -989,9 +1009,15 @@
 		}
 
 		tree.addEventListener('keydown', function (event) {
-			const node = event.target;
-			if (!node.classList || !node.classList.contains('js-dwp-mb-tree-node')) {
-				return; // Keys in the fields and buttons of a node keep their own meaning.
+			// The keys work on a focused node, and on its checkbox after it was clicked with the
+			// mouse; in the fields and buttons of a node they keep their own meaning.
+			const onCheckbox = event.target.classList.contains('js-dwp-mb-select');
+			const node       = event.target.closest('.js-dwp-mb-tree-node');
+			if (!node || (event.target !== node && !onCheckbox)) {
+				return;
+			}
+			if (onCheckbox && ' ' === event.key && !event.shiftKey && !event.ctrlKey && !event.metaKey) {
+				return; // The checkbox toggles itself, which selects the node.
 			}
 
 			const nodes = visibleNodes();
@@ -1036,7 +1062,9 @@
 					}));
 				}
 			} else if (' ' === event.key) {
-				if (event.shiftKey && anchor) {
+				if (event.ctrlKey || event.metaKey) {
+					toggleBranchSelection(node);
+				} else if (event.shiftKey && anchor) {
 					selectRange(anchor, node);
 				} else {
 					setSelected(node, !selected.has(node));
@@ -1058,6 +1086,8 @@
 				}
 			} else if ('Escape' === event.key && selected.size) {
 				clearSelection();
+			} else if ('?' === event.key) {
+				shortcutsDialog.showModal();
 			} else {
 				handled = false;
 			}
@@ -1067,8 +1097,34 @@
 			}
 		});
 
-		const keyHelp = el('p', 'description dwp-mb-keys', t.keyboardHelp);
-		tree.after(keyHelp);
+		/* ------------------------------------------------------------------ shortcuts overview */
+
+		const shortcutsDialog = el('dialog', 'dwp-mb-dialog');
+		const dialogTitle     = el('h2', '', t.shortcutsTitle);
+		const shortcutsTable  = el('table', 'widefat striped');
+		const closeDialog     = el('button', 'button button-primary', t.close);
+
+		dialogTitle.id = 'dwp-mb-shortcuts-title';
+		shortcutsDialog.setAttribute('aria-labelledby', dialogTitle.id);
+		t.shortcuts.forEach(function (shortcut) {
+			const line = el('tr');
+			line.append(el('th', '', shortcut[ 0 ]), el('td', '', shortcut[ 1 ]));
+			shortcutsTable.appendChild(line);
+		});
+		closeDialog.type = 'button';
+		closeDialog.addEventListener('click', function () {
+			shortcutsDialog.close();
+		});
+		shortcutsDialog.append(dialogTitle, shortcutsTable, el('p', 'description', t.shortcutsNote), closeDialog);
+		root.appendChild(shortcutsDialog);
+
+		const helpButton = el('button', 'button button-small dwp-mb-help', t.shortcutsButton);
+		helpButton.type = 'button';
+		helpButton.prepend(el('span', 'dashicons dashicons-editor-help'));
+		helpButton.addEventListener('click', function () {
+			shortcutsDialog.showModal();
+		});
+		tree.closest('.dwp-mb-column').querySelector('h3').appendChild(helpButton);
 
 		/* ------------------------------------------------------------------ serialize */
 

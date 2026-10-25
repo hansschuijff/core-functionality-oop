@@ -217,9 +217,87 @@
 	outline-offset: 1px;
 }
 
-.dwp-mb-keys {
-	margin: 8px 0 0;
-	font-size: 12px;
+/* A tree node: toggle, checkbox, title and buttons on the first row; source, badges and the
+   visibility switch (under the buttons) on the second. */
+
+.dwp-mb-node--tree > .dwp-mb-node-header--tree {
+	display: grid;
+	grid-template-columns: 20px auto minmax(0, 1fr) auto;
+	grid-template-areas:
+		"toggle select title controls"
+		".      .      meta  visibility";
+	align-items: center;
+	gap: 2px 8px;
+	padding: 6px 10px;
+}
+
+.dwp-mb-node-header--tree > .dwp-mb-collapse {
+	grid-area: toggle;
+}
+
+.dwp-mb-node-header--tree > .dwp-mb-select {
+	grid-area: select;
+}
+
+.dwp-mb-node-header--tree > .dwp-mb-title {
+	grid-area: title;
+}
+
+.dwp-mb-node-header--tree > .dwp-mb-controls {
+	grid-area: controls;
+}
+
+.dwp-mb-node-header--tree > .dwp-mb-meta {
+	grid-area: meta;
+}
+
+.dwp-mb-node-header--tree > .dwp-mb-visibility {
+	grid-area: visibility;
+	justify-self: end;
+}
+
+/* Keyboard shortcuts: button and overview. */
+
+.dwp-mb-column h3 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.dwp-mb-help {
+	display: inline-flex !important;
+	align-items: center;
+	gap: 4px;
+	font-weight: 400;
+}
+
+.dwp-mb-help .dashicons {
+	width: 16px;
+	height: 16px;
+	font-size: 16px;
+}
+
+.dwp-mb-dialog {
+	max-width: 640px;
+	padding: 20px 24px;
+	border: 1px solid var(--dwp-mb-border);
+	border-radius: 4px;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dwp-mb-dialog::backdrop {
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.dwp-mb-dialog h2 {
+	margin-top: 0;
+}
+
+.dwp-mb-dialog th {
+	width: 9em;
+	font-family: monospace;
+	white-space: nowrap;
 }
 
 .dwp-mb-node.is-dragging {
@@ -251,9 +329,6 @@
 /* Bulk bar: shown above the tree while nodes are selected. */
 
 .dwp-mb-bulk {
-	position: sticky;
-	top: 32px;
-	z-index: 2;
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -497,6 +572,35 @@
 
 .dwp-mb-field--url label {
 	grid-column: 1 / -1;
+}
+
+/* When the columns fit side by side, the builder fills the visible part of the settings page: the
+   tab description scrolls away, after which both columns fit, with their headings and buttons in
+   view and only the lists scrolling (frame 100vh - 32px, minus header 80px, footer 75px and
+   paddings). */
+.dwp-mb-wrap {
+	container-type: inline-size;
+}
+
+@container (min-width: 760px) {
+	.dwp-menu-builder {
+		flex-wrap: nowrap;
+		height: calc(100vh - 32px - 80px - 75px - 55px);
+		min-height: 420px;
+	}
+
+	.dwp-mb-column {
+		display: flex;
+		flex-direction: column;
+		min-height: 0;
+	}
+
+	.dwp-mb-pool,
+	.dwp-mb-tree {
+		flex: 1 1 auto;
+		min-height: 0;
+		max-height: none;
+	}
 }
 
 @media (max-width: 782px) {
