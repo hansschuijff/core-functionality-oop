@@ -165,7 +165,10 @@ its branch. The pool is grouped per source with search and an "only active" filt
 collapsed (remembered in the browser). The tree is an ARIA tree with keyboard control (arrows, Alt+arrows
 to move and indent, Space to select, Ctrl+Space or Ctrl-click for a node with its branch, Enter, Delete,
 Esc); "Keyboard shortcuts" (or ?) shows the overview. When the columns fit side by side, the builder fills
-the visible part of the settings page, so only the lists scroll.
+the visible part of the settings page, so only the lists scroll. Branches and the explanation above the
+menu start collapsed. A collapsed branch that receives a node is opened, and depths at the end of the
+menu follow the last visible node, so nothing disappears into a closed branch. Every change can be undone
+and redone (Ctrl+Z / Ctrl+Y, up to 50 steps; serialize() records the state before each change).
 
 The menu can travel with the plugin: "Save as default" (on a site where the settings folder is writable,
 in practice development) writes it to `settings/modules/admin-toolbar/menu-builder.php` and lets the site
