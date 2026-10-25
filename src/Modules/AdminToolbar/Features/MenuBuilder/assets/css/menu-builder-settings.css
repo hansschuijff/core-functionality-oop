@@ -93,15 +93,12 @@
 	display: none;
 }
 
-/* The same arrow as the collapse toggle of the tree (dashicons arrow-right-alt2). */
 .dwp-mb-group-summary::before {
-	content: "\f345";
+	content: "\25B8";
 	display: inline-block;
-	width: 20px;
-	height: 20px;
-	font-family: dashicons;
+	width: 16px;
 	font-size: 18px;
-	line-height: 20px;
+	line-height: 1;
 	text-align: center;
 	color: #50575e;
 	transition: transform 0.15s ease;
