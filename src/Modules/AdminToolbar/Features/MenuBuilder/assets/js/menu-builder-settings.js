@@ -97,14 +97,45 @@
 			return line;
 		}
 
-		function visibilityBadge(visibility) {
-			if ('admin' === visibility) {
-				return badge('visibility', t.visibleAdmin);
-			}
-			if ('frontend' === visibility) {
-				return badge('visibility', t.visibleFrontend);
-			}
-			return null;
+		function visibilityLabel(visibility) {
+			return { 'admin': t.kindAdmin, 'frontend': t.kindFrontend }[visibility] || t.visibleBothShort;
+		}
+
+		// One-click choice where a node is shown. A node is shown only where both its parents and
+		// the node itself allow it, so under a restricted parent the node keeps its own choice (it
+		// usually follows from where its link goes); the parent's restriction is shown next to it,
+		// and a choice that conflicts with it (never shown) is marked, not changed.
+		function createVisibilityControl() {
+			const wrapper = el('span', 'dwp-mb-visibility');
+			const group   = el('span', 'dwp-mb-segmented');
+			group.setAttribute('role', 'group');
+			group.setAttribute('aria-label', t.visibility);
+
+			[ [ 'admin', t.visibleAdmin ], [ 'both', t.visibleBoth ], [ 'frontend', t.visibleFrontend ] ].forEach(function (option) {
+				const button = el('button', 'dwp-mb-segment', visibilityLabel(option[ 0 ]));
+				button.type = 'button';
+				button.title = option[ 1 ];
+				button.dataset.visibility = option[ 0 ];
+				group.appendChild(button);
+			});
+
+			wrapper.append(group, el('span', 'dwp-mb-inherited'));
+			return wrapper;
+		}
+
+		function refreshVisibility(node, restriction) {
+			const state     = rows.get(node);
+			const inherited = node.querySelector('.dwp-mb-inherited');
+			const conflict  = '' !== restriction && 'both' !== state.visibility && restriction !== state.visibility;
+
+			node.querySelectorAll('.dwp-mb-segment').forEach(function (button) {
+				button.setAttribute('aria-pressed', String(button.dataset.visibility === state.visibility));
+			});
+
+			node.classList.toggle('is-restricted', '' !== restriction);
+			node.classList.toggle('has-visibility-conflict', conflict);
+			inherited.textContent = '' !== restriction ? t.inheritedVisibility.replace('%s', visibilityLabel(restriction)) : '';
+			inherited.title = conflict ? t.visibilityConflict.replace('%s', visibilityLabel(state.visibility)) : '';
 		}
 
 		/* ------------------------------------------------------------------ pool */
@@ -231,15 +262,6 @@
 		function refreshHeader(node) {
 			const state = rows.get(node);
 			node.querySelector('.dwp-mb-title').textContent = displayTitle(state);
-
-			const old = node.querySelector('.dwp-mb-badge--visibility');
-			if (old) {
-				old.remove();
-			}
-			const visibility = visibilityBadge(state.visibility);
-			if (visibility) {
-				node.querySelector('.dwp-mb-meta').appendChild(visibility);
-			}
 		}
 
 		function field(labelText, input, hint) {
@@ -296,17 +318,6 @@
 				panel.appendChild(urlField);
 			}
 
-			const visibility = el('select');
-			[ [ 'both', t.visibleBoth ], [ 'admin', t.visibleAdmin ], [ 'frontend', t.visibleFrontend ] ].forEach(function (option) {
-				visibility.appendChild(new Option(option[ 1 ], option[ 0 ], false, option[ 0 ] === state.visibility));
-			});
-			visibility.addEventListener('change', function () {
-				state.visibility = visibility.value;
-				refreshHeader(node);
-				serialize();
-			});
-			panel.appendChild(field(t.visibility, visibility));
-
 			return panel;
 		}
 
@@ -334,8 +345,10 @@
 
 			const header = el('div', 'dwp-mb-node-header');
 			const body   = el('span', 'dwp-mb-node-body');
+			const meta   = metaLine(row);
+			meta.appendChild(createVisibilityControl());
 			body.appendChild(el('strong', 'dwp-mb-title'));
-			body.appendChild(metaLine(row));
+			body.appendChild(meta);
 
 			const controls = el('span', 'dwp-mb-controls');
 			controls.append(
@@ -440,7 +453,10 @@
 				return;
 			}
 
-			if (button.classList.contains('js-dwp-mb-out')) {
+			if (button.dataset.visibility) {
+				rows.get(node).visibility = button.dataset.visibility;
+				serialize();
+			} else if (button.classList.contains('js-dwp-mb-out')) {
 				shiftBranch(node, -1);
 			} else if (button.classList.contains('js-dwp-mb-in')) {
 				shiftBranch(node, 1);
@@ -571,10 +587,12 @@
 		/* ------------------------------------------------------------------ serialize */
 
 		// Writes the tree as nested JSON. A node can be at most one level deeper than the one before it.
+		// Also refreshes what each node inherits from its parents.
 		function serialize() {
-			const result = {};
-			const stack  = []; // stack[ depth ] = children object of the last node at that depth.
-			let previous = -1;
+			const result       = {};
+			const stack        = []; // stack[ depth ] = children object of the last node at that depth.
+			const restrictions = []; // restrictions[ depth ] = visibility restriction ('' for none) of that node.
+			let previous       = -1;
 
 			treeNodes().forEach(function (node) {
 				const state = rows.get(node);
@@ -582,6 +600,10 @@
 				if (depth !== depthOf(node)) {
 					setDepth(node, depth);
 				}
+
+				const inherited = 0 === depth ? '' : restrictions[ depth - 1 ];
+				refreshVisibility(node, inherited);
+				restrictions[ depth ] = inherited || ('both' === state.visibility ? '' : state.visibility);
 
 				const payload = {
 					id: state.id,

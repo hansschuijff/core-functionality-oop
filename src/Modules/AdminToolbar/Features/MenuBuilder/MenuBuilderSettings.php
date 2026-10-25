@@ -176,7 +176,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		$pool_desc    = esc_html__( 'Shortcuts of all known plugins and themes. Check them and add them, or drag them into the menu.', 'core-functionality' );
 		$filter_label = esc_html__( 'Source', 'core-functionality' );
 		$tree_title   = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
-		$tree_desc    = esc_html__( 'Drag to reorder and use the arrows to indent. Open a node to change its title or where it is shown.', 'core-functionality' );
+		$tree_desc    = esc_html__( 'Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
 		$json         = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
 		// The data is JSON in a script block; JSON_HEX_TAG keeps it from closing the block.
@@ -386,37 +386,42 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	private function get_script_strings(): array {
 		return array(
-			'allSources'      => __( 'All sources', 'core-functionality' ),
-			'statusActive'    => __( 'Active', 'core-functionality' ),
-			'statusInactive'  => __( 'Inactive', 'core-functionality' ),
-			'statusMissing'   => __( 'Not installed', 'core-functionality' ),
-			'statusUnknown'   => __( 'Unknown', 'core-functionality' ),
-			'kindAdmin'       => __( 'Admin', 'core-functionality' ),
-			'kindFrontend'    => __( 'Front', 'core-functionality' ),
-			'kindAdminTip'    => __( 'Links to an admin page', 'core-functionality' ),
-			'kindFrontendTip' => __( 'Links to a page on the site', 'core-functionality' ),
-			'visibleAdmin'    => __( 'Only on admin pages', 'core-functionality' ),
-			'visibleFrontend' => __( 'Only on the front end', 'core-functionality' ),
-			'visibleBoth'     => __( 'On admin pages and the front end', 'core-functionality' ),
-			'visibility'      => __( 'Show', 'core-functionality' ),
-			'addSelected'     => __( 'Add selected', 'core-functionality' ),
-			'selectAll'       => __( 'Select all visible', 'core-functionality' ),
-			'selectFirst'     => __( 'Select at least one shortcut first.', 'core-functionality' ),
-			'emptyTree'       => __( 'The menu is empty. Add shortcuts from the list.', 'core-functionality' ),
-			'title'           => __( 'Title', 'core-functionality' ),
-			'titleHint'       => __( 'Leave empty to use the title of the shortcut, which follows the translation.', 'core-functionality' ),
-			'submenuTitle'    => __( 'Submenu', 'core-functionality' ),
-			'url'             => __( 'URL', 'core-functionality' ),
-			'urlHint'         => __( 'Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown.', 'core-functionality' ),
-			'copy'            => __( 'Copy', 'core-functionality' ),
-			'copied'          => __( 'Copied', 'core-functionality' ),
-			'moveOut'         => __( 'Move out (one level up)', 'core-functionality' ),
-			'moveIn'          => __( 'Move in (one level down)', 'core-functionality' ),
-			'edit'            => __( 'Settings', 'core-functionality' ),
-			'remove'          => __( 'Remove', 'core-functionality' ),
+			'allSources'          => __( 'All sources', 'core-functionality' ),
+			'statusActive'        => __( 'Active', 'core-functionality' ),
+			'statusInactive'      => __( 'Inactive', 'core-functionality' ),
+			'statusMissing'       => __( 'Not installed', 'core-functionality' ),
+			'statusUnknown'       => __( 'Unknown', 'core-functionality' ),
+			'kindAdmin'           => __( 'Admin', 'core-functionality' ),
+			'kindFrontend'        => __( 'Front', 'core-functionality' ),
+			'kindAdminTip'        => __( 'Links to an admin page', 'core-functionality' ),
+			'kindFrontendTip'     => __( 'Links to a page on the site', 'core-functionality' ),
+			'visibleAdmin'        => __( 'Only on admin pages', 'core-functionality' ),
+			'visibleFrontend'     => __( 'Only on the front end', 'core-functionality' ),
+			'visibleBoth'         => __( 'On admin pages and the front end', 'core-functionality' ),
+			'visibleBothShort'    => __( 'Both', 'core-functionality' ),
+			/* translators: %s: Admin or Front, the restriction of a parent node. */
+			'inheritedVisibility' => __( 'parent: %s', 'core-functionality' ),
+			/* translators: %s: Admin or Front, the node's own visibility. */
+			'visibilityConflict'  => __( 'Its own setting (%s) conflicts with a parent, so this node is never shown.', 'core-functionality' ),
+			'visibility'          => __( 'Show', 'core-functionality' ),
+			'addSelected'         => __( 'Add selected', 'core-functionality' ),
+			'selectAll'           => __( 'Select all visible', 'core-functionality' ),
+			'selectFirst'         => __( 'Select at least one shortcut first.', 'core-functionality' ),
+			'emptyTree'           => __( 'The menu is empty. Add shortcuts from the list.', 'core-functionality' ),
+			'title'               => __( 'Title', 'core-functionality' ),
+			'titleHint'           => __( 'Leave empty to use the title of the shortcut, which follows the translation.', 'core-functionality' ),
+			'submenuTitle'        => __( 'Submenu', 'core-functionality' ),
+			'url'                 => __( 'URL', 'core-functionality' ),
+			'urlHint'             => __( 'Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown.', 'core-functionality' ),
+			'copy'                => __( 'Copy', 'core-functionality' ),
+			'copied'              => __( 'Copied', 'core-functionality' ),
+			'moveOut'             => __( 'Move out (one level up)', 'core-functionality' ),
+			'moveIn'              => __( 'Move in (one level down)', 'core-functionality' ),
+			'edit'                => __( 'Settings', 'core-functionality' ),
+			'remove'              => __( 'Remove', 'core-functionality' ),
 			/* translators: %d: number of items below the node. */
-			'removeConfirm'   => __( 'This node has %d items below it. Remove the node together with those items?', 'core-functionality' ),
-			'inactiveHint'    => __( 'Shown once this plugin or theme is active.', 'core-functionality' ),
+			'removeConfirm'       => __( 'This node has %d items below it. Remove the node together with those items?', 'core-functionality' ),
+			'inactiveHint'        => __( 'Shown once this plugin or theme is active.', 'core-functionality' ),
 		);
 	}
 
