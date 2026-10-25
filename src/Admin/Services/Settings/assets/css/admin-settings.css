@@ -32,6 +32,32 @@
     overflow: hidden; /* Voorkomt dat de complete WP-pagina scrollt */
 }
 
+/* Fixed to the window beside the admin menu: when the admin menu is taller than the window, the
+   window scrolls only that menu, while the frame (and its footer with the buttons) stays in view.
+   Left matches #wpcontent: 160px, 36px with a folded menu. */
+@media screen and (min-width: 783px) {
+    .dwp-gutenberg-frame {
+        position: fixed;
+        top: 32px;
+        right: 0;
+        bottom: 0;
+        left: 160px;
+        width: auto;
+        height: auto;
+        margin: 0;
+    }
+
+    .folded .dwp-gutenberg-frame {
+        left: 36px;
+    }
+}
+
+@media screen and (min-width: 783px) and (max-width: 960px) {
+    .auto-fold .dwp-gutenberg-frame {
+        left: 36px;
+    }
+}
+
 @media (max-width: 782px) {
     .dwp-gutenberg-frame {
         margin-top: 14px; /* Corrigeert voor de dikkere mobiele WP adminbar */
