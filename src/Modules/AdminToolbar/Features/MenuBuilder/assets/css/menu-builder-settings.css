@@ -118,14 +118,15 @@
 
 /* Collapsing branches in the tree. */
 
+/* Only nodes with children have the toggle; for the others the checkbox moves to the edge. */
 .dwp-mb-collapse {
-	visibility: hidden;
+	display: none !important;
 	width: 20px;
 	flex-shrink: 0;
 }
 
 .dwp-mb-node.has-children > .dwp-mb-node-header > .dwp-mb-collapse {
-	visibility: visible;
+	display: inline-flex !important;
 }
 
 .dwp-mb-node.is-collapsed > .dwp-mb-node-header > .dwp-mb-collapse .dashicons {
@@ -230,21 +231,23 @@
 
 .dwp-mb-node--tree > .dwp-mb-node-header--tree {
 	display: grid;
-	grid-template-columns: 20px auto minmax(0, 1fr) auto;
+	grid-template-columns: auto auto minmax(0, 1fr) auto;
 	grid-template-areas:
 		"toggle select title controls"
 		".      .      meta  visibility";
 	align-items: center;
-	gap: 2px 8px;
+	gap: 2px 0;
 	padding: 6px 10px;
 }
 
 .dwp-mb-node-header--tree > .dwp-mb-collapse {
 	grid-area: toggle;
+	margin-right: 4px;
 }
 
 .dwp-mb-node-header--tree > .dwp-mb-select {
 	grid-area: select;
+	margin-right: 8px !important;
 }
 
 .dwp-mb-node-header--tree > .dwp-mb-title {
@@ -253,6 +256,8 @@
 
 .dwp-mb-node-header--tree > .dwp-mb-controls {
 	grid-area: controls;
+	justify-self: end;
+	margin-left: 8px;
 }
 
 .dwp-mb-node-header--tree > .dwp-mb-meta {
@@ -264,26 +269,45 @@
 	justify-self: end;
 }
 
-/* Keyboard shortcuts: button and overview. */
+/* Tools above the menu (explanation, expand or collapse all, keyboard shortcuts). */
 
 .dwp-mb-column h3 {
 	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
 	justify-content: space-between;
-	gap: 10px;
+	gap: 6px 10px;
 }
 
-.dwp-mb-help {
+.dwp-mb-tools {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+
+.dwp-mb-tool {
 	display: inline-flex !important;
 	align-items: center;
 	gap: 4px;
 	font-weight: 400;
 }
 
-.dwp-mb-help .dashicons {
+.dwp-mb-tool[hidden] {
+	display: none !important;
+}
+
+.dwp-mb-tool.is-open {
+	background: #f0f6fc !important;
+}
+
+.dwp-mb-tool .dashicons {
 	width: 16px;
 	height: 16px;
 	font-size: 16px;
+}
+
+.dwp-mb-intro[hidden] {
+	display: none;
 }
 
 /* Centred in the window, never taller than it; the list scrolls inside, the close buttons stay. */
@@ -527,25 +551,16 @@
 	color: #fff;
 }
 
-.dwp-mb-inherited {
-	margin-left: 6px;
-	color: var(--dwp-mb-muted);
-	font-size: 11px;
-	font-style: italic;
-}
-
-.dwp-mb-inherited:empty {
-	display: none;
-}
-
-.dwp-mb-node.has-visibility-conflict .dwp-mb-inherited {
+/* Its own visibility conflicts with a parent: never shown. Explained in the tooltip. */
+.dwp-mb-conflict {
 	color: #a7262a;
+	font-size: 13px;
+	line-height: 16px;
 	cursor: help;
 }
 
-.dwp-mb-node.has-visibility-conflict .dwp-mb-inherited::after {
-	content: " \26A0";
-	font-style: normal;
+.dwp-mb-conflict[hidden] {
+	display: none;
 }
 
 /* Controls. */

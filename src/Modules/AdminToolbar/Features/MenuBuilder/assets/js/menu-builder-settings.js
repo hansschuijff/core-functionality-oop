@@ -103,8 +103,8 @@
 
 		// One-click choice where a node is shown. A node is shown only where both its parents and
 		// the node itself allow it, so under a restricted parent the node keeps its own choice (it
-		// usually follows from where its link goes); the parent's restriction is shown next to it,
-		// and a choice that conflicts with it (never shown) is marked, not changed.
+		// usually follows from where its link goes); a choice that conflicts with a parent (never
+		// shown) is marked with a warning next to the source, not changed.
 		function createVisibilityControl() {
 			const wrapper = el('span', 'dwp-mb-visibility');
 			const group   = el('span', 'dwp-mb-segmented');
@@ -119,23 +119,22 @@
 				group.appendChild(button);
 			});
 
-			wrapper.append(group, el('span', 'dwp-mb-inherited'));
+			wrapper.appendChild(group);
 			return wrapper;
 		}
 
 		function refreshVisibility(node, restriction) {
-			const state     = rows.get(node);
-			const inherited = node.querySelector('.dwp-mb-inherited');
-			const conflict  = '' !== restriction && 'both' !== state.visibility && restriction !== state.visibility;
+			const state    = rows.get(node);
+			const warning  = node.querySelector('.dwp-mb-conflict');
+			const conflict = '' !== restriction && 'both' !== state.visibility && restriction !== state.visibility;
 
 			node.querySelectorAll('.dwp-mb-segment').forEach(function (button) {
 				button.setAttribute('aria-pressed', String(button.dataset.visibility === state.visibility));
 			});
 
-			node.classList.toggle('is-restricted', '' !== restriction);
 			node.classList.toggle('has-visibility-conflict', conflict);
-			inherited.textContent = '' !== restriction ? t.inheritedVisibility.replace('%s', visibilityLabel(restriction)) : '';
-			inherited.title = conflict ? t.visibilityConflict.replace('%s', visibilityLabel(state.visibility)) : '';
+			warning.hidden = !conflict;
+			warning.title = conflict ? t.visibilityConflict.replace('%s', visibilityLabel(state.visibility)) : '';
 		}
 
 		/* ------------------------------------------------------------------ pool */
@@ -165,7 +164,7 @@
 			return item;
 		}
 
-		// Remembered in the browser: which pool groups are open and which tree branches are collapsed.
+		// Remembered in the browser: which pool groups and which tree branches are open.
 		function loadSet(key) {
 			try {
 				return new Set(JSON.parse(window.localStorage.getItem(key) || '[]'));
@@ -469,7 +468,12 @@
 				el('span', 'dashicons dashicons-menu dwp-mb-handle')
 			);
 
-			header.append(toggle, select, el('strong', 'dwp-mb-title'), controls, metaLine(row), createVisibilityControl());
+			const meta    = metaLine(row);
+			const warning = el('span', 'dwp-mb-conflict', '⚠');
+			warning.hidden = true;
+			meta.appendChild(warning);
+
+			header.append(toggle, select, el('strong', 'dwp-mb-title'), controls, meta, createVisibilityControl());
 			node.append(header, createEditPanel(node, state));
 			refreshHeader(node);
 			return node;
@@ -516,15 +520,36 @@
 
 		/* ------------------------------------------------------------------ collapsing branches */
 
-		const collapsed = loadSet('dwp-mb-collapsed'); // Instance ids of collapsed nodes.
+		// Branches start collapsed; the browser remembers which ones were opened.
+		const expanded = loadSet('dwp-mb-expanded'); // Instance ids of expanded nodes.
 
 		function setCollapsed(node, on) {
 			if (on) {
-				collapsed.add(node.dataset.instance);
+				expanded.delete(node.dataset.instance);
 			} else {
-				collapsed.delete(node.dataset.instance);
+				expanded.add(node.dataset.instance);
 			}
-			saveSet('dwp-mb-collapsed', collapsed);
+			saveSet('dwp-mb-expanded', expanded);
+			refreshTreeState();
+		}
+
+		// Expands every branch, or collapses them all when every branch is open already.
+		function toggleAllBranches() {
+			const parents = treeNodes().filter(function (node) {
+				return node.classList.contains('has-children');
+			});
+			const expand  = parents.some(function (node) {
+				return node.classList.contains('is-collapsed');
+			});
+
+			parents.forEach(function (node) {
+				if (expand) {
+					expanded.add(node.dataset.instance);
+				} else {
+					expanded.delete(node.dataset.instance);
+				}
+			});
+			saveSet('dwp-mb-expanded', expanded);
 			refreshTreeState();
 		}
 
@@ -537,7 +562,7 @@
 				const depth       = depthOf(node);
 				const next        = nodes[ index + 1 ];
 				const hasChildren = !!next && depthOf(next) > depth;
-				const isCollapsed = hasChildren && collapsed.has(node.dataset.instance);
+				const isCollapsed = hasChildren && !expanded.has(node.dataset.instance);
 				const toggle      = node.querySelector('.js-dwp-mb-collapse');
 
 				if (hiddenBelow >= 0 && depth <= hiddenBelow) {
@@ -561,6 +586,7 @@
 			});
 
 			ensureTabStop();
+			updateBranchesButton();
 		}
 
 		// Moves a branch in or out by one level, if the result is still a valid tree. Moving out
@@ -697,7 +723,6 @@
 		const bulkBar   = el('div', 'dwp-mb-bulk');
 		const bulkCount = el('span', 'dwp-mb-bulk-count');
 		const bulkShow  = createVisibilityControl();
-		bulkShow.querySelector('.dwp-mb-inherited').remove();
 		bulkShow.prepend(el('span', 'dwp-mb-bulk-label', t.visibility));
 
 		function bulkButton(text, className, tip) {
@@ -777,7 +802,7 @@
 				rows.get(node).visibility = button.dataset.visibility;
 				serialize();
 			} else if (button.classList.contains('js-dwp-mb-collapse')) {
-				setCollapsed(node, !collapsed.has(node.dataset.instance));
+				setCollapsed(node, !node.classList.contains('is-collapsed'));
 			} else if (button.classList.contains('js-dwp-mb-out')) {
 				shiftBranch(node, -1);
 			} else if (button.classList.contains('js-dwp-mb-in')) {
@@ -1166,11 +1191,58 @@
 		}, true);
 		document.body.append(dialogOverlay, shortcutsDialog);
 
-		const helpButton = el('button', 'button button-small dwp-mb-help', t.shortcutsButton);
-		helpButton.type = 'button';
-		helpButton.prepend(el('span', 'dashicons dashicons-editor-help'));
+		/* ------------------------------------------------------------------ tools above the menu */
+
+		function toolButton(icon, text) {
+			const button = el('button', 'button button-small dwp-mb-tool', text);
+			button.type = 'button';
+			button.prepend(el('span', 'dashicons ' + icon));
+			return button;
+		}
+
+		// The explanation above the menu is collapsed by default; the browser remembers when it is open.
+		const intro       = tree.closest('.dwp-mb-column').querySelector('.js-dwp-mb-intro');
+		const introButton = toolButton('dashicons-info-outline', t.explanation);
+		let introOpen     = false;
+		try {
+			introOpen = '1' === window.localStorage.getItem('dwp-mb-intro-open');
+		} catch (error) {
+			// Storage unavailable: the explanation starts collapsed.
+		}
+
+		function showIntro(open) {
+			intro.hidden = !open;
+			introButton.setAttribute('aria-expanded', String(open));
+			introButton.classList.toggle('is-open', open);
+			try {
+				window.localStorage.setItem('dwp-mb-intro-open', open ? '1' : '0');
+			} catch (error) {
+				// Storage unavailable: the state is simply not remembered.
+			}
+		}
+
+		introButton.addEventListener('click', function () {
+			showIntro(intro.hidden);
+		});
+		showIntro(introOpen);
+
+		const branchesButton = toolButton('dashicons-editor-expand', t.expandAll);
+		branchesButton.addEventListener('click', toggleAllBranches);
+
+		function updateBranchesButton() {
+			const parents = tree.querySelectorAll('.js-dwp-mb-tree-node.has-children');
+			const anyShut = tree.querySelector('.js-dwp-mb-tree-node.is-collapsed');
+			branchesButton.hidden = 0 === parents.length;
+			branchesButton.lastChild.textContent = anyShut ? t.expandAll : t.collapseAll;
+			branchesButton.firstChild.className = 'dashicons ' + (anyShut ? 'dashicons-editor-expand' : 'dashicons-editor-contract');
+		}
+
+		const helpButton = toolButton('dashicons-editor-help', t.shortcutsButton);
 		helpButton.addEventListener('click', openShortcuts);
-		tree.closest('.dwp-mb-column').querySelector('h3').appendChild(helpButton);
+
+		const treeTools = el('span', 'dwp-mb-tools');
+		treeTools.append(introButton, branchesButton, helpButton);
+		tree.closest('.dwp-mb-column').querySelector('h3').appendChild(treeTools);
 
 		/* ------------------------------------------------------------------ serialize */
 

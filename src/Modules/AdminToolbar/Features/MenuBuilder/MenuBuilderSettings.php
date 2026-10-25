@@ -202,8 +202,10 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			</div>
 			<div class="dwp-mb-column dwp-mb-column--tree">
 				<h3>{$tree_title}</h3>
-				<p class="description">{$tree_desc}</p>
-				<p class="dwp-mb-status">{$status}</p>
+				<div class="dwp-mb-intro js-dwp-mb-intro">
+					<p class="description">{$tree_desc}</p>
+					<p class="dwp-mb-status">{$status}</p>
+				</div>
 				<div class="dwp-mb-tree js-dwp-mb-tree"></div>
 				<input type="hidden" name="dwp_menu_serialized_tree" class="js-dwp-mb-serialized" value="" />
 			</div>
@@ -430,6 +432,9 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'onlyActive'            => __( 'Only active', 'core-functionality' ),
 			'collapse'              => __( 'Collapse', 'core-functionality' ),
 			'expand'                => __( 'Expand', 'core-functionality' ),
+			'collapseAll'           => __( 'Collapse all', 'core-functionality' ),
+			'expandAll'             => __( 'Expand all', 'core-functionality' ),
+			'explanation'           => __( 'Explanation', 'core-functionality' ),
 			'addSelectedTip'        => __( 'Adds below the item selected in the menu (inside it when it is a submenu without a link), or at the end.', 'core-functionality' ),
 			'statusActive'          => __( 'Active', 'core-functionality' ),
 			'statusInactive'        => __( 'Inactive', 'core-functionality' ),
@@ -443,8 +448,6 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'visibleFrontend'       => __( 'Only on the front end', 'core-functionality' ),
 			'visibleBoth'           => __( 'On admin pages and the front end', 'core-functionality' ),
 			'visibleBothShort'      => __( 'Both', 'core-functionality' ),
-			/* translators: %s: Admin or Front, the restriction of a parent node. */
-			'inheritedVisibility'   => __( 'parent: %s', 'core-functionality' ),
 			/* translators: %s: Admin or Front, the node's own visibility. */
 			'visibilityConflict'    => __( 'Its own setting (%s) conflicts with a parent, so this node is never shown.', 'core-functionality' ),
 			'visibility'            => __( 'Show', 'core-functionality' ),
