@@ -204,10 +204,23 @@
 					const group    = el('details', 'dwp-mb-group');
 					const summary  = el('summary', 'dwp-mb-group-summary');
 					const count    = el('span', 'dwp-mb-group-count');
+					const check    = el('input', 'dwp-mb-group-check js-dwp-mb-group-check');
+
+					// Checks or unchecks the group's items that the filter shows, open or closed;
+					// a checkbox in the heading does not open or close the group.
+					check.type = 'checkbox';
+					check.title = t.selectGroup.replace('%s', provider.name);
+					check.setAttribute('aria-label', check.title);
+					check.addEventListener('change', function () {
+						group.querySelectorAll('.js-dwp-mb-pool-item:not([hidden]) .js-dwp-mb-check').forEach(function (checkbox) {
+							checkbox.checked = check.checked;
+						});
+						updateGroupChecks();
+					});
 
 					group.dataset.provider = provider.id;
 					group.open = openGroups.has(provider.id);
-					summary.append(el('span', 'dwp-mb-group-name', provider.name), count);
+					summary.append(check, el('span', 'dwp-mb-group-name', provider.name), count);
 					if ('active' !== provider.status) {
 						summary.appendChild(badge(provider.status, statusText(provider.status), t.inactiveHint));
 					}
@@ -249,7 +262,28 @@
 				group.count.textContent = String(visible);
 				group.element.open = '' !== query ? visible > 0 : openGroups.has(group.element.dataset.provider);
 			});
+			updateGroupChecks();
 		}
+
+		// A group's checkbox is checked when all its shown items are, half when some are.
+		function updateGroupChecks() {
+			groups.forEach(function (group) {
+				const boxes   = [ ...group.element.querySelectorAll('.js-dwp-mb-pool-item:not([hidden]) .js-dwp-mb-check') ];
+				const checked = boxes.filter(function (box) {
+					return box.checked;
+				}).length;
+				const check   = group.element.querySelector('.js-dwp-mb-group-check');
+
+				check.checked       = boxes.length > 0 && checked === boxes.length;
+				check.indeterminate = checked > 0 && checked < boxes.length;
+			});
+		}
+
+		pool.addEventListener('change', function (event) {
+			if (event.target.classList.contains('js-dwp-mb-check')) {
+				updateGroupChecks();
+			}
+		});
 
 		// A pool item the user can see: not filtered out and not in a closed group.
 		function isShown(item) {
@@ -290,6 +324,7 @@
 			pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
 				item.querySelector('.js-dwp-mb-check').checked = selectAll.checked && isShown(item);
 			});
+			updateGroupChecks();
 		});
 
 		// With exactly one node selected in the menu, new nodes go below it: inside it when it is a
@@ -324,6 +359,7 @@
 				return rows.get(checkbox.closest('.js-dwp-mb-pool-item'));
 			}), point.before, point.depth);
 			selectAll.checked = false;
+			updateGroupChecks();
 		});
 
 		/* ------------------------------------------------------------------ tree */

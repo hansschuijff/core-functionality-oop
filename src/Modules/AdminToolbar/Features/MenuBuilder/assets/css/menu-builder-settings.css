@@ -103,6 +103,10 @@
 	transform: rotate(90deg);
 }
 
+.dwp-mb-group-check {
+	margin: 0 !important;
+}
+
 .dwp-mb-group-count {
 	color: var(--dwp-mb-muted);
 	font-weight: 400;

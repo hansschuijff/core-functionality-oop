@@ -435,6 +435,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'collapseAll'           => __( 'Collapse all', 'core-functionality' ),
 			'expandAll'             => __( 'Expand all', 'core-functionality' ),
 			'explanation'           => __( 'Explanation', 'core-functionality' ),
+			/* translators: %s: name of a plugin, theme or WordPress. */
+			'selectGroup'           => __( 'Select all shortcuts of %s', 'core-functionality' ),
 			'undo'                  => __( 'Undo (Ctrl+Z)', 'core-functionality' ),
 			'redo'                  => __( 'Redo (Ctrl+Y)', 'core-functionality' ),
 			'addSelectedTip'        => __( 'Adds below the item selected in the menu (inside it when it is a submenu without a link), or at the end.', 'core-functionality' ),
