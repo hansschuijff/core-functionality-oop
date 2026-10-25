@@ -21,6 +21,7 @@ use DeWittePrins\CoreFunctionality\Services\PluginIntegrityWatch;
 use DeWittePrins\CoreFunctionality\Notifiers\Notices;
 use DeWittePrins\CoreFunctionality\Services\InterDependenciesGuard;
 use DeWittePrins\CoreFunctionality\Services\FileSystem\FileService;
+use DeWittePrins\CoreFunctionality\Services\ComponentsRegisterFiles;
 use DeWittePrins\CoreFunctionality\Services\Settings;
 use DeWittePrins\CoreFunctionality\Diagnostics\Logger;
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
@@ -86,11 +87,18 @@ class Plugin {
 	public Settings $settings;
 
 	/**
-	 * FileService for Component Register Files.
+	 * The general reader and writer of the plugin's data files.
 	 *
 	 * @var FileService
 	 */
 	public FileService $file_service;
+
+	/**
+	 * Access to the files of the components registers in kernel/.
+	 *
+	 * @var ComponentsRegisterFiles
+	 */
+	public ComponentsRegisterFiles $components_register_files;
 
 	/**
 	 * Component Register Service.
@@ -161,7 +169,8 @@ class Plugin {
 			//
 			// if it crashes everythin after this statement will not be performed and processing
 			// will continue in the catch clause.
-			$this->settings = new Settings( $this->get_data( 'settings-dir' ) );
+			$this->file_service = new FileService();
+			$this->settings     = new Settings( $this->get_data( 'settings-dir' ), $this->file_service );
 
 		} catch ( Throwable $e ) {
 			// 🎯 SCENARIO B: EMERGENCY HALT
@@ -176,13 +185,13 @@ class Plugin {
 
 		// If settings thrown an error the method has stopped, so from here we're good.
 		// These services are ONLY born when Settings successfully passed its internal constraints!
-		$interdependency_checker   = new InterDependenciesGuard( new Logger() );
-		$lookup                    = new EnvironmentLookup( $this );
-		$this->current_deployment  = $lookup->get_current_deployment_env();
-		$environment               = new Environment( $this );
-		$this->file_service        = new FileService( $this );
-		$this->components_register = new ComponentsRegister( $this );
-		$this->kernel              = new Kernel( $this, $interdependency_checker, $environment, $this->components_register );
+		$interdependency_checker         = new InterDependenciesGuard( new Logger() );
+		$lookup                          = new EnvironmentLookup( $this );
+		$this->current_deployment        = $lookup->get_current_deployment_env();
+		$environment                     = new Environment( $this );
+		$this->components_register_files = new ComponentsRegisterFiles( $this );
+		$this->components_register       = new ComponentsRegister( $this );
+		$this->kernel                    = new Kernel( $this, $interdependency_checker, $environment, $this->components_register );
 
 		add_action( 'plugins_loaded', array( $this, 'setup' ) );
 	}

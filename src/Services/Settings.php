@@ -14,6 +14,7 @@ namespace DeWittePrins\CoreFunctionality\Services;
 
 use DeWittePrins\CoreFunctionality\Diagnostics\Logger;
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\Sections\OptionsManagementSettings;
+use DeWittePrins\CoreFunctionality\Services\FileSystem\FileService;
 use RuntimeException;
 
 use function __;
@@ -61,11 +62,12 @@ class Settings {
 	 * Settings Constructor.
 	 *
 	 * @since 1.0.0
-	 * @param string $base_settings_dir The absolute root directory context for settings files.
-	 * @throws RuntimeException          If critical framework configuration files are missing on disk.
+	 * @param string      $base_settings_dir The absolute root directory context for settings files.
+	 * @param FileService $file_service      The general reader and writer of data files.
+	 * @throws RuntimeException               If critical framework configuration files are missing on disk.
 	 */
-	public function __construct( string $base_settings_dir ) {
-		$this->files   = new SettingsFiles( $base_settings_dir, $this );
+	public function __construct( string $base_settings_dir, FileService $file_service ) {
+		$this->files   = new SettingsFiles( $base_settings_dir, $this, $file_service );
 		$this->options = new Options( $this );
 	}
 

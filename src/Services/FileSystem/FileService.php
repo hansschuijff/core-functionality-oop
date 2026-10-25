@@ -2,8 +2,7 @@
 /**
  * File Service.
  *
- * Provides read, save, and delete access to config-style architecture files, and
- * provides dynamic discovery mechanics based on the plugin's structure.
+ * Reads and writes the plugin's data files: PHP files that return an array, and JSON files.
  *
  * @package DeWittePrins\CoreFunctionality\Services\FileSystem
  * @author  Hans Schuijff <@hansschuijff>
@@ -15,11 +14,26 @@ declare( strict_types=1 );
 
 namespace DeWittePrins\CoreFunctionality\Services\FileSystem;
 
-use DeWittePrins\CoreFunctionality\Plugin;
-use DeWittePrins\CoreFunctionality\Enums\Register;     // Enum for the registers.
-use DeWittePrins\CoreFunctionality\Enums\RegisterFile; // Filenames of the registers.
 use DeWittePrins\CoreFunctionality\Enums\FileExtension;
-use file_chooser;
+
+use function clearstatcache;
+use function dirname;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function function_exists;
+use function is_array;
+use function is_dir;
+use function is_readable;
+use function json_decode;
+use function json_encode;
+use function opcache_invalidate;
+use function pathinfo;
+use function strtolower;
+use function unlink;
+use function var_export;
+use function wp_is_writable;
+use function wp_mkdir_p;
 
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -29,320 +43,163 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class FileService
  *
- * Handles reading, saving, and deleting of framework register array blueprints,
- * abstracting structural disk mutations safely into clean standalone routines.
+ * The general reader and writer of data files. It knows how to read, write and delete a file,
+ * not which file holds what: that is for the layers that use it, such as ComponentsRegisterFiles
+ * (the registers of the ComponentsRegister in kernel/) and SettingsFiles (the defaults in settings/).
+ *
+ * The format follows the extension: .php files return an array, .json files hold one.
  *
  * @since 1.0.0
  */
 class FileService {
 
 	/**
-	 * Full directory base path where the active register files reside.
-	 *
-	 * @since 1.0.0
-	 * @var string
-	 */
-	protected string $register_base_path;
-
-	/**
-	 * FileService constructor.
-	 *
-	 * @since 1.0.0
-	 * @param Plugin $plugin Central plugin core orchestrator instance used to retrieve configuration paths.
-	 */
-	public function __construct(
-		protected Plugin $plugin,
-	) {
-		$this->register_base_path = $this->get_components_registers_path();
-	}
-
-	/**
-	 * Returns the parsed array structure stored inside a targeted register file.
-	 *
-	 * @since 1.0.0
-	 * @param Register $register Enum instance indicating which targeted configuration matrix blueprint to retrieve.
-	 * @return array             The structural array data payload on success, or an empty fallback array.
-	 */
-	public function get_register( Register $register ): array {
-		$file = $this->get_register_full_path( $register );
-
-		if ( ! is_readable( $file ) ) {
-			return array();
-		}
-
-		$register_data = match ( $this->get_file_extension( $register ) ) {
-			FileExtension::PHP->value  => include $file,
-			FileExtension::JSON->value => json_decode( (string) file_get_contents( $file ), true ),
-			default                    => array(),
-		};
-
-		return is_array( $register_data ) ? $register_data : array();
-	}
-
-	/**
-	 * Destroys a targeted register configuration file from the physical storage drive.
-	 *
-	 * @since 1.0.0
-	 * @param Register $register Enum target file compilation configuration blueprint context.
-	 * @return bool              True if the file was unlinked successfully, false otherwise.
-	 */
-	public function delete_register( Register $register ): bool {
-		$path = $this->get_register_full_path( $register );
-
-		if ( ! file_exists( $path ) ) {
-			return false;
-		}
-
-		return unlink( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_unlink
-	}
-
-	/**
-	 * Serializes and commits a structured matrix array safely to a physical file target.
-	 *
-	 * Supports dynamic encoding paths for both executable PHP arrays and JSON documents.
+	 * Reads the array a data file holds.
 	 *
 	 * @since  1.0.0
-	 * @param  Register     $register      Enum configuration destination signature mapping index.
-	 * @param  array<mixed> $register_data The structured components registry context data payload tree.
-	 * @return string|bool                Translatable success message notification on success, false on write failure.
+	 * @param  string $path Full path of the file.
+	 * @return array|null   The array, or null when the file does not exist, cannot be read, or holds no array.
 	 */
-	public function save_register( Register $register, array $register_data ): string|bool {
-		if ( empty( $register_data ) ) {
+	public function read( string $path ): ?array {
+		if ( '' === $path || ! is_readable( $path ) ) {
+			return null;
+		}
+
+		$data = match ( $this->get_extension( $path ) ) {
+			FileExtension::PHP->value  => include $path,
+			FileExtension::JSON->value => json_decode( (string) file_get_contents( $path ), true ),
+			default                    => null,
+		};
+
+		return is_array( $data ) ? $data : null;
+	}
+
+	/**
+	 * Writes an array to a data file.
+	 *
+	 * @since  1.0.0
+	 * @param  string       $path        Full path of the file (.php or .json).
+	 * @param  array<mixed> $data        The array to write.
+	 * @param  string       $description First line of the doc comment of a PHP file.
+	 * @return bool                      True if the file was written, false if it is not writable or writing failed.
+	 */
+	public function write( string $path, array $data, string $description = 'Auto-generated configuration file.' ): bool {
+		if ( ! $this->is_writable( $path ) || ! wp_mkdir_p( dirname( $path ) ) ) {
 			return false;
 		}
 
-		// The file is a fallback for the database option, so a folder that may not be written
-		// (common on production) is no error: the option keeps the change.
-		if ( ! $this->is_writable_register( $register ) ) {
-			return false;
-		}
-
-		$written = match ( $this->get_file_extension( $register ) ) {
-			FileExtension::PHP->value  => $this->php_write_register( $register, $register_data ),
-			FileExtension::JSON->value => $this->json_write_register( $register, $register_data ),
+		$content = match ( $this->get_extension( $path ) ) {
+			FileExtension::PHP->value  => $this->build_php_content( $data, $description ),
+			FileExtension::JSON->value => json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ),
 			default                    => false,
 		};
-
-		if ( false === $written ) {
-			$this->plugin->notices->add(
-				'error',
-				sprintf(
-					/* translators: %1$s: path of the register file. */
-					__( 'Critical Error: Failed to write updates toward configuration file: %1$s.', 'core-functionality' ),
-					$this->get_register_full_path( $register )
-				)
-			);
+		if ( false === $content ) {
 			return false;
 		}
 
-		return __( 'Settings saved successfully. Remember to commit changes in Git! 🚀', 'core-functionality' );
-	}
-
-	/**
-	 * Checks whether a register file can be written (the file itself, or its folder if it does not exist yet).
-	 *
-	 * @since  1.0.0
-	 * @param  Register $register Enum configuration file destination indicator.
-	 * @return bool               True if the file can be written, false otherwise.
-	 */
-	private function is_writable_register( Register $register ): bool {
-		return PhpArrayFile::is_writable( $this->get_register_full_path( $register ) );
-	}
-
-	/**
-	 * Commits data payload maps into an executable PHP return array compilation blueprint file.
-	 *
-	 * @since  1.0.0
-	 * @param  Register     $register      Enum configuration file destination indicator.
-	 * @param  array<mixed> $register_data The structured components registry data context.
-	 * @return bool                       True if data operations succeed, false otherwise.
-	 */
-	private function php_write_register( Register $register, array $register_data ): bool {
-		if ( empty( $register_data ) ) {
-			return false;
-		}
-
-		return PhpArrayFile::write( $this->get_register_full_path( $register ), $register_data );
-	}
-
-	/**
-	 * Commits data payload maps into an indented, human-readable JSON string file configuration.
-	 *
-	 * @since  1.0.0
-	 * @param  Register     $register      Enum configuration file destination indicator.
-	 * @param  array<mixed> $register_data The structured components registry data context.
-	 * @return bool                       True if data operations succeed, false otherwise.
-	 */
-	private function json_write_register( Register $register, array $register_data ): bool {
-		$path = $this->get_register_full_path( $register );
-
-		$json_string = json_encode( $register_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
-		if ( false === $json_string ) {
-			return false;
-		}
-
-		$bytes = file_put_contents( $path, $json_string, LOCK_EX );
-
+		$bytes = file_put_contents( $path, $content, LOCK_EX );
 		if ( false !== $bytes ) {
-			PhpArrayFile::forget_cached( $path );
+			$this->forget_cached( $path );
 		}
 
 		return false !== $bytes;
 	}
 
 	/**
-	 * Resolves the absolute directory disk path mapping toward a specific target configuration file.
+	 * Deletes a data file.
 	 *
 	 * @since  1.0.0
-	 * @param  Register $register Enum key matching the active registration identifier destination.
-	 * @return string         The resolved cross-platform absolute filesystem target location.
+	 * @param  string $path Full path of the file.
+	 * @return bool         True if the file was deleted, false if it did not exist or could not be deleted.
 	 */
-	private function get_register_full_path( Register $register ): string {
-		$filename = $this->get_filename( $register );
-		return $this->trailingslashit( $this->register_base_path ) . $filename;
-	}
-
-	/**
-	 * Gets the registers filename.
-	 *
-	 * @param Register $register The register.
-	 * @return string
-	 */
-	private function get_filename( Register $register ): string {
-		return match ( $register ) {
-			Register::COMPONENTS => RegisterFile::COMPONENTS->value,
-			Register::ENABLED    => RegisterFile::ENABLED->value,
-			Register::DEPLOYMENT => RegisterFile::DEPLOYMENT->value,
-			Register::FRONTEND   => RegisterFile::FRONTEND->value,
-			Register::ADMIN      => RegisterFile::ADMIN->value,
-
-			// Failsafe: Prevent UnhandledMatchError crashes if an unmapped Enum case passes through.
-			default              => '',
-		};
-	}
-
-	/**
-	 * Enforces that a directory path string consistently terminates with a standard forward slash.
-	 *
-	 * @since  1.0.0
-	 * @param  string $path The targeted file directory path string.
-	 * @return string Normalized path ending with a clean forward slash.
-	 */
-	private function trailingslashit( string $path ): string {
-		return $this->untrailingslashit( $path ) . '/';
-	}
-
-	/**
-	 * Strips trailing cross-platform forward and backward slashes uniformly from a path string.
-	 *
-	 * @since  1.0.0
-	 * @param  string $path The raw file directory path string.
-	 * @return string Cleaned path string without trailing slash artifacts.
-	 */
-	private function untrailingslashit( string $path ): string {
-		return rtrim( $path, '/\\' );
-	}
-
-	/**
-	 * Dynamic fallback path configuration gate resolving the absolute destination parameters for registers.
-	 *
-	 * Incorporates native notice administration alerts if critical framework locations fail validation checks.
-	 *
-	 * @since  1.0.0
-	 * @return string Full path to the kernel settings dir.
-	 */
-	private function get_components_registers_path(): string {
-		$path = $this->plugin->get_data( 'kernel-settings-dir' );
-
-		if ( empty( $path ) || ! is_dir( $path ) ) {
-			$this->plugin->notices->add(
-				'error',
-				__( 'Path to the component registers could not be retrieved, fallback paths used. Please inform Support', 'core-functionality' )
-			);
-
-			$path = $this->plugin->get_data( 'settings-dir' );
-
-			if ( empty( $path ) || ! is_dir( $path ) ) {
-				$path = rtrim( __DIR__, '/\\' ) . '/registry';
-			}
+	public function delete( string $path ): bool {
+		if ( '' === $path || ! file_exists( $path ) ) {
+			return false;
 		}
 
-		return $path;
+		$deleted = unlink( $path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_unlink
+		if ( $deleted ) {
+			$this->forget_cached( $path );
+		}
+
+		return $deleted;
 	}
 
 	/**
-	 * Sanitize a file or path slug to prevent directory traversal.
-	 *
-	 * @since 1.0.0
-	 * @param string $slug The slug or relative path to sanitize.
-	 * @return string The sanitized slug.
-	 */
-	private function sanitize_slug( string $slug ): string {
-		$slug = str_replace( '\\', '/', $slug );
-
-		$segments = array_filter(
-			explode( '/', $slug ),
-			static function ( string $segment ): bool {
-				return '' !== $segment && '.' !== $segment && '..' !== $segment;
-			}
-		);
-
-		return implode( '/', array_map( 'sanitize_file_name', $segments ) );
-	}
-
-	/**
-	 * Validates if the string representation conforms to a singular slug segment structure.
+	 * Checks whether a file can be written: the file itself, or else the nearest existing folder
+	 * on its path (write() creates the folders that are missing).
 	 *
 	 * @since  1.0.0
-	 * @param  string $string Target raw string representation to investigate.
-	 * @return bool           True if slug parameters align, false if string contains path indicators.
+	 * @param  string $path Full path of the file.
+	 * @return bool         True if the file can be written, false otherwise.
 	 */
-	private function is_slug( string $string ): bool {
-		return false === strpbrk( $string, '/\\.' );
+	public function is_writable( string $path ): bool {
+		if ( '' === $path ) {
+			return false;
+		}
+		if ( file_exists( $path ) ) {
+			return wp_is_writable( $path );
+		}
+
+		$dir = dirname( $path );
+		while ( ! is_dir( $dir ) && dirname( $dir ) !== $dir ) {
+			$dir = dirname( $dir );
+		}
+
+		return wp_is_writable( $dir );
 	}
 
 	/**
-	 * Validates if the string representation contains file navigation path structures.
+	 * Makes sure the next read of a changed file sees the new content.
+	 *
+	 * OPcache can otherwise return the old version of the file; that depends on the server
+	 * configuration, which is one reason the files are only read when the option has no value.
 	 *
 	 * @since  1.0.0
-	 * @param  string $string Target raw string representation to investigate.
-	 * @return bool           True if string maps directory paths, false otherwise.
+	 * @param  string $path Path of the file that changed.
+	 * @return void
 	 */
-	private function is_file_path( string $string ): bool {
-		return ! $this->is_slug( $string );
+	public function forget_cached( string $path ): void {
+		clearstatcache( true, $path );
+
+		if ( function_exists( 'opcache_invalidate' ) ) {
+			opcache_invalidate( $path, true );
+		}
 	}
 
 	/**
-	 * Checks if the filename string ends with a standard JSON extension match.
+	 * Builds the content of a PHP file that returns the array.
 	 *
 	 * @since  1.0.0
-	 * @param  string $filename Raw filename configuration parameter context string.
-	 * @return bool             True if filename targets JSON structures, false otherwise.
+	 * @param  array<mixed> $data        The array.
+	 * @param  string       $description First line of the doc comment.
+	 * @return string                    The file content.
 	 */
-	private function is_json_file( string $filename ): bool {
-		return FileExtension::JSON->value === $this->get_file_extension( $filename );
+	private function build_php_content( array $data, string $description ): string {
+		$html  = '<?php' . PHP_EOL;
+		$html .= '/**' . PHP_EOL;
+		$html .= ' * ' . $description . PHP_EOL;
+		$html .= ' *' . PHP_EOL;
+		$html .= ' * @since 1.0.0' . PHP_EOL;
+		$html .= ' */' . PHP_EOL;
+		$html .= PHP_EOL;
+		$html .= "if ( ! defined( 'ABSPATH' ) ) {" . PHP_EOL;
+		$html .= "\texit;" . PHP_EOL;
+		$html .= '}' . PHP_EOL;
+		$html .= PHP_EOL;
+		$html .= 'return ' . var_export( $data, true ) . ';' . PHP_EOL; // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_var_export
+
+		return $html;
 	}
 
 	/**
-	 * Checks if the filename string ends with a standard PHP extension match.
+	 * Returns the lowercase extension of a file.
 	 *
 	 * @since  1.0.0
-	 * @param  string $filename Raw filename configuration parameter context string.
-	 * @return bool             True if filename targets PHP structures, false otherwise.
+	 * @param  string $path The path or file name.
+	 * @return string       The extension ('php', 'json'), or an empty string.
 	 */
-	private function is_php_file( string $filename ): bool {
-		return FileExtension::PHP->value === $this->get_file_extension( $filename );
-	}
-
-	/**
-	 * Retrieves the lowercase extension of a given filename or path.
-	 *
-	 * @since  1.0.0
-	 * @param  Register $register The register Enum.
-	 * @return string             The lowercase extension string (e.g., 'php', 'json'), or empty string if none.
-	 */
-	private function get_file_extension( Register $register ): string {
-		$filename = $this->get_filename( $register );
-		return strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
+	private function get_extension( string $path ): string {
+		return strtolower( pathinfo( $path, PATHINFO_EXTENSION ) );
 	}
 }

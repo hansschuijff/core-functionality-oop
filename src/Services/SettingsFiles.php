@@ -13,7 +13,7 @@ declare( strict_types=1 );
 namespace DeWittePrins\CoreFunctionality\Services;
 
 use Closure;
-use DeWittePrins\CoreFunctionality\Services\FileSystem\PhpArrayFile;
+use DeWittePrins\CoreFunctionality\Services\FileSystem\FileService;
 use RuntimeException;
 
 use function basename;
@@ -69,12 +69,17 @@ class SettingsFiles {
 	 * SettingsFiles Constructor.
 	 *
 	 * @since 1.0.0
-	 * @param string   $base_dir The absolute root directory of the settings files.
-	 * @param Settings $settings The settings service; a settings file is read as part of it, so it
-	 *                           can compose its value from other settings with $this->get().
+	 * @param string      $base_dir     The absolute root directory of the settings files.
+	 * @param Settings    $settings     The settings service; a settings file is read as part of it, so
+	 *                                  it can compose its value from other settings with $this->get().
+	 * @param FileService $file_service The general reader and writer of data files.
 	 * @throws RuntimeException If one of the setup files is missing.
 	 */
-	public function __construct( string $base_dir, private readonly Settings $settings ) {
+	public function __construct(
+		string $base_dir,
+		private readonly Settings $settings,
+		private readonly FileService $file_service
+	) {
 		$this->base_dir       = trailingslashit( $base_dir );
 		$this->module_folders = $this->require_setup_file( 'modules-settings-path.php' );
 		$this->key_slugs      = $this->require_setup_file( 'key-slugs-translation.php' );
@@ -95,6 +100,7 @@ class SettingsFiles {
 			return null;
 		}
 
+		// Not through FileService::read(): the file is included as part of Settings, for $this->get().
 		$include = function () use ( $file ) {
 			return include $file;
 		};
@@ -114,7 +120,7 @@ class SettingsFiles {
 	 * @return bool              True if the file can be written.
 	 */
 	public function is_writable( string $key, string $module_id = '' ): bool {
-		return PhpArrayFile::is_writable( $this->get_path( $key, $module_id ) );
+		return $this->file_service->is_writable( $this->get_path( $key, $module_id ) );
 	}
 
 	/**
@@ -128,7 +134,7 @@ class SettingsFiles {
 	 * @return bool                      True if the file was written.
 	 */
 	public function write( string $key, string $module_id, array $value, string $description ): bool {
-		return PhpArrayFile::write( $this->get_path( $key, $module_id ), $value, $description );
+		return $this->file_service->write( $this->get_path( $key, $module_id ), $value, $description );
 	}
 
 	/**

@@ -194,7 +194,7 @@ class ComponentsRegister {
 			return;
 		}
 
-		$file_values = $this->plugin->file_service->get_register( $register );
+		$file_values = $this->plugin->components_register_files->get_register( $register );
 		foreach ( $fqcns as $fqcn ) {
 			if ( array_key_exists( $fqcn, $file_values ) && ! array_key_exists( $fqcn, $site_values ) ) {
 				$site_values[ $fqcn ] = $file_values[ $fqcn ];
@@ -292,7 +292,7 @@ class ComponentsRegister {
 		}
 
 		// 2. Secondary Strategy: Fallback to reading declarative layout schemas from disk files.
-		$data = $this->plugin->file_service->get_register( $register );
+		$data = $this->plugin->components_register_files->get_register( $register );
 		if ( ! is_array( $data ) ) {
 			$data = array();
 		}
@@ -616,7 +616,7 @@ class ComponentsRegister {
 			|| $this->plugin->settings->get( $settings_key, default: null ) === $register_data;
 
 		// Commit directly toward the physical file blueprints (The Git Source of Truth).
-		$file_written = $this->plugin->file_service->save_register( $register, $register_data );
+		$file_written = $this->plugin->components_register_files->save_register( $register, $register_data );
 
 		// Flush and refresh internal runtime properties instantly to prevent lifecycle lag.
 		$this->cache_refresh( $register, $register_data );
