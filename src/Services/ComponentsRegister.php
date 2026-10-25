@@ -269,6 +269,10 @@ class ComponentsRegister {
 	 * Initializes and eager-loads a specific register from the database options vault,
 	 * falling back dynamically to filesystem declarative snapshot files.
 	 *
+	 * The components register is validated after reading: a module or feature that no longer
+	 * exists (removed from the code, the register not rescanned yet) is left out, so the kernel
+	 * and the settings page go on without it.
+	 *
 	 * @since  1.0.0
 	 * @param  Register $register Target architectural registration matrix key identifier.
 	 * @return array              The cached configuration array payload, or a clean fallback array.
@@ -284,13 +288,16 @@ class ComponentsRegister {
 		$data = $this->plugin->settings->get( $settings_key, default: null );
 
 		if ( null !== $data && is_array( $data ) ) {
-			return $data;
+			return Register::COMPONENTS === $register ? $this->validate( $data ) : $data;
 		}
 
 		// 2. Secondary Strategy: Fallback to reading declarative layout schemas from disk files.
 		$data = $this->plugin->file_service->get_register( $register );
 		if ( ! is_array( $data ) ) {
 			$data = array();
+		}
+		if ( Register::COMPONENTS === $register ) {
+			$data = $this->validate( $data );
 		}
 
 		// 3. Sync Strategy: Commit disk blueprints into the Option Vault cache for instant sub-millisecond execution next time.

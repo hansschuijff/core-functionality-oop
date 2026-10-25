@@ -28,7 +28,9 @@ use DeWittePrins\CoreFunctionality\Services\ClassParser;
 
 use function class_exists;
 use function is_subclass_of;
-use function esc_html;
+use function defined;
+use function error_log;
+use function sprintf;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -57,8 +59,8 @@ class FeatureClassValidator {
 	/**
 	 * Universal gatekeeper method for Feature classes.
 	 *
-	 * Validates the structure, logs architectural violations directly via WordPress core
-	 * developer tools, and returns a clean boolean to the calling linear flow.
+	 * Validates the structure, logs architectural violations to the debug log (with WP_DEBUG),
+	 * and returns a clean boolean to the calling linear flow.
 	 *
 	 * @since  1.0.0
 	 *
@@ -91,12 +93,11 @@ class FeatureClassValidator {
 			return true;
 
 		} catch ( InvalidArgumentException $e ) {
-			// Trigger a standard WordPress core developer notice in English.
-			_doing_it_wrong(
-				__CLASS__ . '::' . __FUNCTION__,
-				esc_html( $e->getMessage() ),
-				'1.0.0'
-			);
+			// Quietly, like ModuleClassValidator: a feature removed from the code stays in the
+			// register until the next scan, and the plugin goes on without it.
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( sprintf( 'CoreFunctionality Architecture Notice: %s', $e->getMessage() ) );
+			}
 
 			return false;
 		}
