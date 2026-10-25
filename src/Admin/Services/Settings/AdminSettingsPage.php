@@ -48,6 +48,11 @@ use function ob_start;
 use function ob_get_clean;
 use function get_current_screen;
 use function str_contains;
+use function str_starts_with;
+use function strlen;
+use function substr;
+use function is_readable;
+use function filemtime;
 use function array_key_first;
 use function array_key_exists;
 use function strtolower;
@@ -194,9 +199,32 @@ class AdminSettingsPage {
 				$handle,
 				esc_url( $url ),
 				array(),
-				$this->plugin->get_data( 'version' )
+				$this->get_asset_version( $url )
 			);
 		}
+	}
+
+	/**
+	 * Returns the version for an asset URL: the modification time of the file when it is part of
+	 * this plugin, so a changed file is never served from the browser cache; the plugin version
+	 * otherwise.
+	 *
+	 * @since  1.0.0
+	 * @param  string $url The asset URL.
+	 * @return string      The version.
+	 */
+	private function get_asset_version( string $url ): string {
+		$plugin_url = $this->plugin->get_data( 'plugin-url' );
+		$plugin_dir = $this->plugin->get_data( 'plugin-dir' );
+
+		if ( '' !== $plugin_url && str_starts_with( $url, $plugin_url ) ) {
+			$file = $plugin_dir . substr( $url, strlen( $plugin_url ) );
+			if ( is_readable( $file ) ) {
+				return (string) filemtime( $file );
+			}
+		}
+
+		return $this->plugin->get_data( 'version' );
 	}
 
 	/**
@@ -216,7 +244,7 @@ class AdminSettingsPage {
 				$handle,
 				esc_url( $url ),
 				array( 'jquery' ),
-				$this->plugin->get_data( 'version' ),
+				$this->get_asset_version( $url ),
 				true
 			);
 		}
