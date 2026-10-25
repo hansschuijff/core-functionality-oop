@@ -3,7 +3,7 @@
  * Core Functionality Toolbar Node Provider.
  *
  * @package    DeWittePrins\CoreFunctionality
- * @subpackage Environment\Core
+ * @subpackage Environment\Plugins
  * @author     Hans Schuijff <@hansschuijff>
  * @license    GPL-2.0
  * @since      1.0.0
@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace DeWittePrins\CoreFunctionality\Environment\Core;
+namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Enums\Orientation;
-use DeWittePrins\CoreFunctionality\Environment\Interfaces\ToolbarProviderInterface;
+use DeWittePrins\CoreFunctionality\Environment\Plugins\Interfaces\PluginInterface;
 use Override;
 
 use function __;
@@ -29,22 +29,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class CoreFunctionality
  *
- * Supplies the admin toolbar nodes of this plugin itself, such as the link to its settings page.
- * Unlike the guards it is no dependency and is not checked: the plugin is always active when it
- * runs, so the catalogue registers it as active, next to the WordPress core.
+ * The guard of this plugin itself, which supplies its admin toolbar nodes, such as the link to its
+ * settings page. The plugin is always active when it runs, so the guard is always ready and needs
+ * no entry in environment-index.php; it does not extend AbstractPlugin, which looks the plugin up
+ * there. Nothing depends on it, but if something ever names it as a dependency, it answers true.
  *
  * @since 1.0.0
  */
-class CoreFunctionality implements ToolbarProviderInterface {
+class CoreFunctionality implements PluginInterface {
 
 	/**
-	 * The provider id in the toolbar catalogue.
+	 * The guard id (the class name in kebab-case).
 	 *
 	 * @since  1.0.0
 	 * @return string The id.
 	 */
+	#[Override]
 	public function get_id(): string {
 		return 'core-functionality';
+	}
+
+	/**
+	 * Always ready: this plugin runs.
+	 *
+	 * @since  1.0.0
+	 * @return bool Always true.
+	 */
+	#[Override]
+	public function is_ready(): bool {
+		return true;
+	}
+
+	/**
+	 * Always alive: this plugin runs.
+	 *
+	 * @since  1.0.0
+	 * @return bool Always true.
+	 */
+	#[Override]
+	public function has_proof_of_life(): bool {
+		return true;
 	}
 
 	/**
