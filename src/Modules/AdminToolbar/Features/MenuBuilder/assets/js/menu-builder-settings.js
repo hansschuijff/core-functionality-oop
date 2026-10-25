@@ -339,6 +339,7 @@
 		function setDepth(node, depth) {
 			node.dataset.depth = String(depth);
 			node.style.setProperty('--depth', String(depth));
+			node.setAttribute('aria-level', String(depth + 1));
 		}
 
 		// The node and the nodes below it.
@@ -433,6 +434,9 @@
 
 			const node = el('div', 'dwp-mb-node dwp-mb-node--tree js-dwp-mb-tree-node');
 			node.draggable = true;
+			node.tabIndex = -1;
+			node.setAttribute('role', 'treeitem');
+			node.setAttribute('aria-selected', 'false');
 			node.dataset.instance = row.instance || newInstanceId();
 			if ('submenu' === row.type) {
 				node.classList.add('is-submenu');
@@ -546,11 +550,18 @@
 				toggle.title = isCollapsed ? t.expand : t.collapse;
 				toggle.setAttribute('aria-label', toggle.title);
 				toggle.setAttribute('aria-expanded', String(!isCollapsed));
+				if (hasChildren) {
+					node.setAttribute('aria-expanded', String(!isCollapsed));
+				} else {
+					node.removeAttribute('aria-expanded');
+				}
 
 				if (isCollapsed && hiddenBelow < 0) {
 					hiddenBelow = depth;
 				}
 			});
+
+			ensureTabStop();
 		}
 
 		// Moves a branch in or out by one level, if the result is still a valid tree. Moving out
@@ -617,6 +628,7 @@
 				selected.delete(node);
 			}
 			node.classList.toggle('is-selected', on);
+			node.setAttribute('aria-selected', String(on));
 			node.querySelector('.js-dwp-mb-select').checked = on;
 		}
 
@@ -878,6 +890,185 @@
 			});
 			return nodes.length ? depthOf(nodes[ nodes.length - 1 ]) : 0;
 		}
+
+		/* ------------------------------------------------------------------ keyboard */
+
+		// One tree node is in the tab order at a time; the arrow keys move between nodes.
+		tree.setAttribute('role', 'tree');
+		tree.setAttribute('aria-multiselectable', 'true');
+		tree.setAttribute('aria-label', t.treeLabel);
+
+		function visibleNodes() {
+			return treeNodes().filter(function (node) {
+				return !node.hidden;
+			});
+		}
+
+		function ensureTabStop() {
+			const nodes   = visibleNodes();
+			const current = nodes.find(function (node) {
+				return 0 === node.tabIndex;
+			});
+			treeNodes().forEach(function (node) {
+				node.tabIndex = node === current ? 0 : -1;
+			});
+			if (!current && nodes.length) {
+				nodes[ 0 ].tabIndex = 0;
+			}
+		}
+
+		function focusNode(node) {
+			if (!node) {
+				return;
+			}
+			treeNodes().forEach(function (item) {
+				item.tabIndex = item === node ? 0 : -1;
+			});
+			node.focus({ preventScroll: true });
+			node.scrollIntoView({ block: 'nearest' });
+		}
+
+		tree.addEventListener('focusin', function (event) {
+			if (event.target.classList.contains('js-dwp-mb-tree-node')) {
+				treeNodes().forEach(function (item) {
+					item.tabIndex = item === event.target ? 0 : -1;
+				});
+			}
+		});
+
+		// What a keyboard command acts on: the selection if the focused node is part of it,
+		// otherwise the focused node; always with their branches.
+		function keyTargets(node) {
+			return selected.has(node) ? selectedRoots() : [ node ];
+		}
+
+		// Moves a branch past its previous or next sibling (with that sibling's branch).
+		function moveBranch(node, direction) {
+			const nodes  = treeNodes();
+			const branch = branchOf(node);
+			const depth  = depthOf(node);
+			let before;
+
+			if (direction < 0) {
+				let sibling = null;
+				for (let i = nodes.indexOf(node) - 1; i >= 0 && depthOf(nodes[ i ]) >= depth; i--) {
+					if (depthOf(nodes[ i ]) === depth) {
+						sibling = nodes[ i ];
+						break;
+					}
+				}
+				if (!sibling) {
+					return;
+				}
+				before = sibling;
+			} else {
+				const next = branch[ branch.length - 1 ].nextElementSibling;
+				if (!next || !next.classList.contains('js-dwp-mb-tree-node') || depthOf(next) !== depth) {
+					return;
+				}
+				const siblingBranch = branchOf(next);
+				before = siblingBranch[ siblingBranch.length - 1 ].nextElementSibling;
+			}
+
+			branch.forEach(function (item) {
+				tree.insertBefore(item, before);
+			});
+		}
+
+		function selectRange(from, to) {
+			const nodes = visibleNodes();
+			const a     = nodes.indexOf(from);
+			const b     = nodes.indexOf(to);
+			if (a < 0 || b < 0) {
+				return;
+			}
+			nodes.slice(Math.min(a, b), Math.max(a, b) + 1).forEach(function (item) {
+				setSelected(item, true);
+			});
+			updateBulkBar();
+		}
+
+		tree.addEventListener('keydown', function (event) {
+			const node = event.target;
+			if (!node.classList || !node.classList.contains('js-dwp-mb-tree-node')) {
+				return; // Keys in the fields and buttons of a node keep their own meaning.
+			}
+
+			const nodes = visibleNodes();
+			const index = nodes.indexOf(node);
+			let handled = true;
+
+			if (event.altKey && ('ArrowUp' === event.key || 'ArrowDown' === event.key)) {
+				const roots = keyTargets(node);
+				('ArrowUp' === event.key ? roots : roots.slice().reverse()).forEach(function (root) {
+					moveBranch(root, 'ArrowUp' === event.key ? -1 : 1);
+				});
+				serialize();
+				focusNode(node);
+			} else if (event.altKey && ('ArrowLeft' === event.key || 'ArrowRight' === event.key)) {
+				const roots = keyTargets(node);
+				('ArrowRight' === event.key ? roots : roots.slice().reverse()).forEach(function (root) {
+					shiftBranch(root, 'ArrowRight' === event.key ? 1 : -1);
+				});
+				focusNode(node);
+			} else if ('ArrowUp' === event.key || 'ArrowDown' === event.key || 'Home' === event.key || 'End' === event.key) {
+				const target = {
+					'ArrowUp': nodes[ index - 1 ],
+					'ArrowDown': nodes[ index + 1 ],
+					'Home': nodes[ 0 ],
+					'End': nodes[ nodes.length - 1 ],
+				}[ event.key ];
+				if (target && event.shiftKey) {
+					anchor = anchor && nodes.includes(anchor) ? anchor : node;
+					selectRange(anchor, target);
+				}
+				focusNode(target);
+			} else if ('ArrowLeft' === event.key || 'ArrowRight' === event.key) {
+				// Collapse or expand; on a collapsed or childless node, Left goes to the parent.
+				const isOpen = node.classList.contains('has-children') && !node.classList.contains('is-collapsed');
+				if ('ArrowRight' === event.key && node.classList.contains('is-collapsed')) {
+					setCollapsed(node, false);
+				} else if ('ArrowLeft' === event.key && isOpen) {
+					setCollapsed(node, true);
+				} else if ('ArrowLeft' === event.key) {
+					focusNode(nodes.slice(0, index).reverse().find(function (item) {
+						return depthOf(item) < depthOf(node);
+					}));
+				}
+			} else if (' ' === event.key) {
+				if (event.shiftKey && anchor) {
+					selectRange(anchor, node);
+				} else {
+					setSelected(node, !selected.has(node));
+					anchor = node;
+					updateBulkBar();
+				}
+			} else if ('Enter' === event.key) {
+				node.querySelector('.js-dwp-mb-edit').click();
+			} else if ('Delete' === event.key) {
+				const removing = branchesOf(keyTargets(node));
+				const next     = nodes.slice(index + 1).find(function (item) {
+					return !removing.includes(item);
+				}) || nodes.slice(0, index).reverse().find(function (item) {
+					return !removing.includes(item);
+				});
+				if (1 === removing.length || window.confirm(t.removeSelectedConfirm.replace('%d', String(removing.length)))) {
+					removeNodes(removing);
+					focusNode(next);
+				}
+			} else if ('Escape' === event.key && selected.size) {
+				clearSelection();
+			} else {
+				handled = false;
+			}
+
+			if (handled) {
+				event.preventDefault();
+			}
+		});
+
+		const keyHelp = el('p', 'description dwp-mb-keys', t.keyboardHelp);
+		tree.after(keyHelp);
 
 		/* ------------------------------------------------------------------ serialize */
 

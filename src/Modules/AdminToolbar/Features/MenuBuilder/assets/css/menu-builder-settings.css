@@ -208,6 +208,20 @@
 	color: var(--dwp-mb-muted);
 }
 
+.dwp-mb-node--tree:focus {
+	outline: none;
+}
+
+.dwp-mb-node--tree:focus-visible {
+	outline: 2px solid var(--dwp-mb-accent);
+	outline-offset: 1px;
+}
+
+.dwp-mb-keys {
+	margin: 8px 0 0;
+	font-size: 12px;
+}
+
 .dwp-mb-node.is-dragging {
 	opacity: 0.4;
 }

@@ -382,6 +382,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 */
 	private function get_script_strings(): array {
 		return array(
+			'treeLabel'             => __( 'Toolbar menu', 'core-functionality' ),
+			'keyboardHelp'          => __( 'Keyboard: ↑/↓ moves the focus (Shift: selects along), Space selects, Alt+↑/↓ moves up or down, Alt+←/→ indents, ←/→ collapses or expands, Enter opens the settings, Delete removes, Esc clears the selection. With a selected item focused, the keys act on the whole selection.', 'core-functionality' ),
 			'search'                => __( 'Search shortcuts', 'core-functionality' ),
 			'onlyActive'            => __( 'Only active', 'core-functionality' ),
 			'collapse'              => __( 'Collapse', 'core-functionality' ),
