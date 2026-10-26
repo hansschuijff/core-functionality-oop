@@ -23,6 +23,8 @@ use Override;
 
 use function current;
 use function is_string;
+use function str_replace;
+use function ucwords;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -98,6 +100,20 @@ abstract class AbstractPlugin implements PluginInterface {
 	#[Override]
 	public function is_installed(): bool {
 		return PluginInspector::is_plugin_installed( $this->plugin_basename );
+	}
+
+	/**
+	 * Returns the plugin's own name from its header, or its id made readable when it is not
+	 * installed. A guard overrides this when the plugin is better known by a shorter name.
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	#[Override]
+	public function get_name(): string {
+		$name = PluginInspector::get_plugin_name( $this->plugin_basename );
+
+		return '' !== $name ? $name : ucwords( str_replace( '-', ' ', $this->get_id() ) );
 	}
 
 	/**

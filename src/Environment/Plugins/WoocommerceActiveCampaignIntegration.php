@@ -35,6 +35,17 @@ class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 	}
 
 	/**
+	 * Returns the name the plugin is marketed by (its header has a much longer one).
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	#[Override]
+	public function get_name(): string {
+		return 'ActiveWoo';
+	}
+
+	/**
 	 * Returns what must exist to prove the plugin has started.
 	 *
 	 * @since  1.0.0

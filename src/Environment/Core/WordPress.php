@@ -85,6 +85,17 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 	}
 
 	/**
+	 * Returns the name of the core as a source of menu items.
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	#[Override]
+	public function get_name(): string {
+		return 'WordPress';
+	}
+
+	/**
 	 * Compiles and returns the pool of native WordPress core toolbar shortcuts clustered by topic.
 	 *
 	 * @since  1.0.0

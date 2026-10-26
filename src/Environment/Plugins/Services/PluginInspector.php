@@ -22,11 +22,13 @@ use function doing_action;
 use function explode;
 use function file_exists;
 use function function_exists;
+use function get_plugin_data;
 use function is_array;
 use function is_plugin_active;
 use function is_string;
 use function method_exists;
 use function trim;
+use function wp_strip_all_tags;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -77,6 +79,28 @@ class PluginInspector {
 		}
 
 		return file_exists( WP_PLUGIN_DIR . '/' . $plugin_basename );
+	}
+
+	/**
+	 * Returns the name of an installed plugin, from its header.
+	 *
+	 * Reads the plugin's main file, so it is meant for admin pages, not for every request.
+	 *
+	 * @since 1.0.0
+	 * @param string $plugin_basename The plugin path relative to the plugins directory (e.g., 'slug/plugin.php').
+	 * @return string The name, or '' when the plugin is not installed or has none.
+	 */
+	public static function get_plugin_name( string $plugin_basename ): string {
+		if ( ! self::is_plugin_installed( $plugin_basename ) ) {
+			return '';
+		}
+
+		if ( ! function_exists( 'get_plugin_data' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$data = get_plugin_data( WP_PLUGIN_DIR . '/' . trim( $plugin_basename ), false, false );
+
+		return wp_strip_all_tags( (string) ( $data['Name'] ?? '' ) );
 	}
 
 	/**

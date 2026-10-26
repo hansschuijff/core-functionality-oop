@@ -281,7 +281,7 @@ class Environment {
 	 */
 	public function load_toolbar_catalogue(): void {
 		$core = $this->get_wordpress();
-		AdminToolbarRegister::register( $core->get_id(), $core->get_toolbar_nodes(), ProviderStatus::ACTIVE );
+		AdminToolbarRegister::register( $core->get_id(), $core->get_toolbar_nodes(), ProviderStatus::ACTIVE, $core->get_name() );
 
 		foreach ( $this->get_known_guard_ids() as $dependency_id ) {
 			$guard = ClassParser::is_theme_id( $dependency_id )
@@ -299,7 +299,8 @@ class Environment {
 				$status = ProviderStatus::INACTIVE;
 			}
 
-			AdminToolbarRegister::register( $guard->get_id(), $guard->get_toolbar_nodes(), $status );
+			// The name as a callable: a plugin's name comes from its header, read only when asked for.
+			AdminToolbarRegister::register( $guard->get_id(), $guard->get_toolbar_nodes(), $status, array( $guard, 'get_name' ) );
 		}
 	}
 

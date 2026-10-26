@@ -28,8 +28,6 @@ use function __;
 use function esc_attr__;
 use function esc_html__;
 use function esc_url_raw;
-use function function_exists;
-use function get_plugins;
 use function is_array;
 use function json_decode;
 use function plugins_url;
@@ -43,7 +41,6 @@ use function current_user_can;
 use function get_bloginfo;
 use function wp_json_encode;
 use function wp_specialchars_decode;
-use function wp_strip_all_tags;
 use function wp_unslash;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -77,13 +74,6 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	 * @var string
 	 */
 	private string $menu_builder_tree_option_token = 'menu-builder-hierarchical-tree';
-
-	/**
-	 * The names of the providers, by provider id; filled on first use.
-	 *
-	 * @var array<string, string>|null
-	 */
-	private ?array $provider_names = null;
 
 	/**
 	 * MenuBuilderSettings Constructor.
@@ -409,54 +399,17 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Returns a readable name for a provider id.
-	 *
-	 * The plugin's own name from its header when it is installed, the theme's name from the
-	 * environment index, else the id made readable.
+	 * Returns a readable name for a provider id: the name its guard gives (a plugin's own name,
+	 * or a shorter one it is known by), else the id made readable.
 	 *
 	 * @since  1.0.0
 	 * @param  string $provider_id The plugin, theme or core id.
 	 * @return string The name.
 	 */
 	private function get_provider_name( string $provider_id ): string {
-		if ( 'wordpress-core' === $provider_id ) {
-			return 'WordPress';
-		}
+		$name = AdminToolbarRegister::get_name( $provider_id );
 
-		$this->provider_names ??= $this->get_known_provider_names();
-
-		return $this->provider_names[ $provider_id ] ?? ucwords( str_replace( '-', ' ', $provider_id ) );
-	}
-
-	/**
-	 * Collects the names of the providers the environment index knows.
-	 *
-	 * @since  1.0.0
-	 * @return array<string, string> Provider id => name.
-	 */
-	private function get_known_provider_names(): array {
-		$index = $this->plugin->settings->get( 'environment-index' );
-		$names = array();
-
-		if ( ! function_exists( 'get_plugins' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-		$installed = get_plugins();
-
-		foreach ( (array) ( $index['plugins'] ?? array() ) as $plugin_id => $basename ) {
-			if ( ! empty( $installed[ $basename ]['Name'] ) ) {
-				$names[ $plugin_id ] = wp_strip_all_tags( $installed[ $basename ]['Name'] );
-			}
-		}
-
-		// Theme ids in the catalogue carry the suffix "-theme"; the index lists them without it.
-		foreach ( (array) ( $index['themes'] ?? array() ) as $theme_id => $theme ) {
-			if ( is_array( $theme ) && ! empty( $theme['name'] ) ) {
-				$names[ $theme_id . '-theme' ] = (string) $theme['name'];
-			}
-		}
-
-		return $names;
+		return '' !== $name ? $name : ucwords( str_replace( '-', ' ', $provider_id ) );
 	}
 
 	/**

@@ -42,6 +42,17 @@ class BeaverBuilder extends AbstractPlugin {
 	}
 
 	/**
+	 * Returns the name Beaver Builder is known by (its header says "Beaver Builder Plugin (Pro Version)").
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	#[Override]
+	public function get_name(): string {
+		return 'Beaver Builder';
+	}
+
+	/**
 	 * Returns what must exist to prove Beaver Builder has started.
 	 *
 	 * @since  1.0.0

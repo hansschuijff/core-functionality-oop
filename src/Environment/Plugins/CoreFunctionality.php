@@ -83,6 +83,17 @@ class CoreFunctionality implements PluginInterface {
 	}
 
 	/**
+	 * Returns the name of this plugin.
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	#[Override]
+	public function get_name(): string {
+		return 'Core Functionality';
+	}
+
+	/**
 	 * Returns the toolbar shortcuts of this plugin.
 	 *
 	 * @since  1.0.0

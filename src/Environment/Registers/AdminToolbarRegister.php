@@ -46,6 +46,14 @@ class AdminToolbarRegister {
 	private static array $statuses = array();
 
 	/**
+	 * The name per provider, or a callable that returns it: finding a plugin's name reads its
+	 * header, which only the settings page needs.
+	 *
+	 * @var array<string, string|callable>
+	 */
+	private static array $names = array();
+
+	/**
 	 * Fills the catalogue; called once, on first use.
 	 *
 	 * @var callable|null
@@ -77,10 +85,12 @@ class AdminToolbarRegister {
 	 * @param  string            $provider_id The get_id() of the plugin, theme or core guard.
 	 * @param  ToolbarShortcut[] $shortcuts   The shortcuts the provider offers.
 	 * @param  ProviderStatus    $status      Whether the provider is active, inactive or not installed.
+	 * @param  string|callable   $name        The provider's name, or a callable that returns it.
 	 * @return void
 	 */
-	public static function register( string $provider_id, array $shortcuts, ProviderStatus $status = ProviderStatus::ACTIVE ): void {
+	public static function register( string $provider_id, array $shortcuts, ProviderStatus $status = ProviderStatus::ACTIVE, string|callable $name = '' ): void {
 		self::$statuses[ $provider_id ] = $status;
+		self::$names[ $provider_id ]    = $name;
 		self::$nodes[ $provider_id ]  ??= array();
 
 		foreach ( $shortcuts as $shortcut ) {
@@ -132,6 +142,25 @@ class AdminToolbarRegister {
 		self::load();
 
 		return self::$statuses[ $provider_id ] ?? null;
+	}
+
+	/**
+	 * Returns the name of a provider (resolved once, the first time it is asked for).
+	 *
+	 * @since  1.0.0
+	 * @param  string $provider_id The get_id() of the plugin, theme or core guard.
+	 * @return string The name, or '' for an unknown provider or one without a name.
+	 */
+	public static function get_name( string $provider_id ): string {
+		self::load();
+
+		$name = self::$names[ $provider_id ] ?? '';
+		if ( is_callable( $name ) ) {
+			$name                        = (string) $name();
+			self::$names[ $provider_id ] = $name;
+		}
+
+		return $name;
 	}
 
 	/**

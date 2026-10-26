@@ -39,6 +39,16 @@ interface ToolbarProviderInterface {
 	public function get_toolbar_nodes(): array;
 
 	/**
+	 * Returns the name the menu builder shows for this provider (its source).
+	 *
+	 * May read plugin headers, so the catalogue only asks for it when the name is needed.
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	public function get_name(): string;
+
+	/**
 	 * Checks whether the plugin or theme is installed (active or not).
 	 *
 	 * @since  1.0.0

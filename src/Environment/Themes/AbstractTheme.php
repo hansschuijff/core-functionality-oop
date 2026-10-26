@@ -25,6 +25,8 @@ use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
 use DeWittePrins\CoreFunctionality\Services\ClassParser;
 
 use function is_array;
+use function str_replace;
+use function ucwords;
 
 /**
  * Class AbstractTheme
@@ -98,6 +100,20 @@ abstract class AbstractTheme implements ThemeInterface {
 		}
 
 		return ThemeInspector::is_theme_installed( $this->theme['name'], $this->theme['author'] ?? '' );
+	}
+
+	/**
+	 * Returns the theme's name from the environment index, or its id made readable.
+	 *
+	 * @since  1.0.0
+	 * @return string The name.
+	 */
+	public function get_name(): string {
+		if ( ! empty( $this->theme['name'] ) ) {
+			return $this->theme['name'];
+		}
+
+		return ucwords( str_replace( '-', ' ', ClassParser::get_clean_id( $this->get_id() ) ) );
 	}
 
 	/**
