@@ -78,7 +78,7 @@ class EventTickets extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'event-tickets-link',
+				id:      'cf-event-tickets',
 				title:   __( 'Event Tickets', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Tickets Settings', 'core-functionality' ),
@@ -86,7 +86,7 @@ class EventTickets extends AbstractPlugin {
 			),
 			// The Tickets menu of Event Tickets.
 			new ToolbarShortcut(
-				id:          'cf-tickets',
+				id:          'cf-event-tickets-tickets',
 				title:       __( 'Tickets', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-admin-tickets' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -94,7 +94,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-home',
+				id:          'cf-event-tickets-home',
 				title:       __( 'Home', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -102,7 +102,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-all',
+				id:          'cf-event-tickets-all-tickets',
 				title:       __( 'All Tickets', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-admin-tickets' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -110,7 +110,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-attendees',
+				id:          'cf-event-tickets-attendees',
 				title:       __( 'Attendees', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-attendees' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -118,7 +118,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-coupons-fees',
+				id:          'cf-event-tickets-coupons-fees',
 				title:       __( 'Coupons & Fees', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-order-modifiers' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -126,7 +126,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-orders',
+				id:          'cf-event-tickets-orders',
 				title:       __( 'Orders', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tec_tc_order' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -134,7 +134,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-help',
+				id:          'cf-event-tickets-help',
 				title:       __( 'Help', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-help-hub' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -142,7 +142,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-troubleshooting',
+				id:          'cf-event-tickets-troubleshooting',
 				title:       __( 'Troubleshooting', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-troubleshooting' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -150,7 +150,7 @@ class EventTickets extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-setup-guide',
+				id:          'cf-event-tickets-setup-guide',
 				title:       __( 'Setup Guide', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tickets-setup' ),
 				/* translators: %s: title of the page or settings tab. */

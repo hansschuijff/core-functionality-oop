@@ -56,7 +56,7 @@ class WoocommercePdfInvoices extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-settings-pdf-invoice',
+				id:      'cf-woocommerce-pdf-invoices-settings',
 				title:   __( 'PDF-invoice', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wpo_wcpdf_options_page' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce PDF-invoice Settings', 'core-functionality' ),

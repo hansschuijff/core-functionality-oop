@@ -72,7 +72,7 @@ class DebugToolkit extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'debug_toolkit_link',
+				id:      'cf-debug-toolkit',
 				title:   __( '🛠️ Debug Toolkit', 'core-functionality' ),
 				href:    admin_url( 'plugins.php?plugin_status=active' ),
 				label:   __( 'Debug Toolkit Diagnostics', 'core-functionality' ),

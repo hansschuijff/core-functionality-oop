@@ -203,6 +203,12 @@ The settings page frame is fixed beside the admin menu (from 783px wide), so a l
 its own and the buttons stay in view. The WordPress footer is hidden on this page: with the frame fixed,
 the window itself still scrolls, and the footer would slide over the buttons.
 
+Menu item ids read `cf-<source>-<page>`: `cf-woocommerce-orders`, `cf-events-calendar-settings-seo`; the
+source alone is its menu head (`cf-automatewoo`), and `view-` marks a page on the site
+(`cf-woocommerce-view-my-account`). Saved menus store these ids, so renaming one means converting the
+saved menus too (done once, in October 2026, while the plugin ran on the development site only). Each
+guard names its source (`get_name()`), shown in the pool.
+
 Cleanup point (minor): the catalogue holds some duplicate links (the same URL from two sources, such as
 Sensei Pro repeating Sensei LMS, a menu head equal to its first item, or two WooCommerce links with `#`).
 Harmless, at most a little inefficient.

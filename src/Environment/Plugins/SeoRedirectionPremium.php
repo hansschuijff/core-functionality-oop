@@ -59,14 +59,14 @@ class SeoRedirectionPremium extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-seo-redirects-all',
+				id:      'cf-seo-redirection-all',
 				title:   __( 'Redirects', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=seo-redirection-premium.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'SEO Redirects', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-seo-redirects-404',
+				id:      'cf-seo-redirection-404',
 				title:   __( 'Redirect 404s', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=seo-redirection-premium.php&SR_tab=404_manager' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Redirect 404s', 'core-functionality' ),

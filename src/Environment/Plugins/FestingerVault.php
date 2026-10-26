@@ -59,7 +59,7 @@ class FestingerVault extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:          'cf-festinger-vault-menu',
+				id:          'cf-festinger-vault',
 				title:       __( 'Festinger Vault', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=festingervault#/updates' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Festinger Vault', 'core-functionality' ) . ': ' . __( 'Plugin Updates', 'core-functionality' ),

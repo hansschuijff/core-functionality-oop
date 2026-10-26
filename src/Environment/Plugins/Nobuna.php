@@ -59,7 +59,7 @@ class Nobuna extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:          'cf-nobuna-plugins',
+				id:          'cf-nobuna',
 				title:       __( 'Nobuna', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=nobuna-plugins' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Nobuna Plugins', 'core-functionality' ),

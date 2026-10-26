@@ -76,42 +76,42 @@ class TheEventsCalendar extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-admin-events-menu',
+				id:      'cf-events-calendar',
 				title:   __( 'Events', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_events' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Events', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-admin-events-edit-events',
+				id:      'cf-events-calendar-edit-events',
 				title:   __( 'Edit', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_events' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Events', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-admin-events-organizers',
+				id:      'cf-events-calendar-organizers',
 				title:   __( 'Organizers', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_organizer' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Organizers', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-admin-events-venues',
+				id:      'cf-events-calendar-venues',
 				title:   __( 'Venues', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_venue' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Venues', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-admin-events-categories',
+				id:      'cf-events-calendar-categories',
 				title:   __( 'Categories', 'core-functionality' ),
 				href:    admin_url( 'edit-tags.php?taxonomy=tribe_events_cat&post_type=tribe_events' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Categories', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-admin-events-settings',
+				id:      'cf-events-calendar-settings',
 				title:   __( 'Settings', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_events&page=tec-events-settings' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Events Calendar Settings', 'core-functionality' ),
@@ -119,14 +119,14 @@ class TheEventsCalendar extends AbstractPlugin {
 			),
 			// voorkant.
 			new ToolbarShortcut(
-				id:      'cf-view-events',
+				id:      'cf-events-calendar-view-events',
 				title:   __( 'Events', 'core-functionality' ),
 				href:    home_url( '/evenementen/' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'The Events Calendar', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
 			new ToolbarShortcut(
-				id:      'cf-view-events-cat-family-constellations',
+				id:      'cf-events-calendar-view-cat-family-constellations',
 				title:   __( 'Family Constellations', 'core-functionality' ),
 				href:    home_url( '/agenda/categorie/familieopstellingen/' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Family Constellations', 'core-functionality' ),
@@ -134,7 +134,7 @@ class TheEventsCalendar extends AbstractPlugin {
 			),
 			// Pages of The Events Calendar, then its settings tabs (main tab before its sub-tabs).
 			new ToolbarShortcut(
-				id:          'cf-admin-events-add-new',
+				id:          'cf-events-calendar-add-new',
 				title:       __( 'Add Event', 'core-functionality' ),
 				href:        admin_url( 'post-new.php?post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -142,7 +142,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-tags',
+				id:          'cf-events-calendar-tags',
 				title:       __( 'Event Tags', 'core-functionality' ),
 				href:        admin_url( 'edit-tags.php?taxonomy=post_tag&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -150,7 +150,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-import',
+				id:          'cf-events-calendar-import',
 				title:       __( 'Import', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tribe_events&page=aggregator' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -158,7 +158,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-calendar-embeds',
+				id:          'cf-events-calendar-embeds',
 				title:       __( 'Calendar Embeds', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tec_calendar_embed' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -166,7 +166,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-help',
+				id:          'cf-events-calendar-help',
 				title:       __( 'Help', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tribe_events&page=tec-events-help-hub' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -174,7 +174,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-troubleshooting',
+				id:          'cf-events-calendar-troubleshooting',
 				title:       __( 'Troubleshooting', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tribe_events&page=tec-troubleshooting' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -182,7 +182,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-add-ons',
+				id:          'cf-events-calendar-add-ons',
 				title:       __( 'Event Add-Ons', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tribe_events&page=tribe-app-shop' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -190,7 +190,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-setup-guide',
+				id:          'cf-events-calendar-setup-guide',
 				title:       __( 'Setup Guide', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tribe_events&page=first-time-setup' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -198,7 +198,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-general',
+				id:          'cf-events-calendar-settings-general',
 				title:       __( 'General', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=general&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -206,7 +206,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-viewing',
+				id:          'cf-events-calendar-settings-viewing',
 				title:       __( 'Viewing', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=general-viewing-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -214,7 +214,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-editing',
+				id:          'cf-events-calendar-settings-editing',
 				title:       __( 'Editing', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=general-editing-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -222,7 +222,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-maintenance',
+				id:          'cf-events-calendar-settings-maintenance',
 				title:       __( 'Maintenance', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=general-maintenance-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -230,7 +230,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-debugging',
+				id:          'cf-events-calendar-settings-debugging',
 				title:       __( 'Debugging', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=general-debugging-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -238,7 +238,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-display',
+				id:          'cf-events-calendar-settings-display',
 				title:       __( 'Display', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -246,7 +246,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-calendar',
+				id:          'cf-events-calendar-settings-calendar',
 				title:       __( 'Calendar', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-calendar-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -254,7 +254,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-date-time',
+				id:          'cf-events-calendar-settings-date-time',
 				title:       __( 'Date & Time', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-date-time-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -262,7 +262,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-currency',
+				id:          'cf-events-calendar-settings-currency',
 				title:       __( 'Currency', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-currency-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -270,7 +270,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-maps',
+				id:          'cf-events-calendar-settings-maps',
 				title:       __( 'Maps', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-maps-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -278,7 +278,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-additional-content',
+				id:          'cf-events-calendar-settings-additional-content',
 				title:       __( 'Additional Content', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-additional-content-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -286,7 +286,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-category-colors',
+				id:          'cf-events-calendar-settings-category-colors',
 				title:       __( 'Category Colors', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-category-colors-settings&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -294,7 +294,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-seo',
+				id:          'cf-events-calendar-settings-seo',
 				title:       __( 'SEO & URLs', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-seo-settings&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -302,7 +302,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-licenses',
+				id:          'cf-events-calendar-settings-licenses',
 				title:       __( 'Licenses', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=licenses&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -310,7 +310,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-integrations',
+				id:          'cf-events-calendar-settings-integrations',
 				title:       __( 'Integrations', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=addons&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -318,7 +318,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-google-maps',
+				id:          'cf-events-calendar-settings-google-maps',
 				title:       'Google Maps',
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=google-maps&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -326,7 +326,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-import',
+				id:          'cf-events-calendar-settings-import',
 				title:       __( 'Import', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=integrations-import-tab&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -334,7 +334,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-admin-events-settings-imports',
+				id:          'cf-events-calendar-settings-imports',
 				title:       __( 'Imports', 'core-functionality' ),
 				href:        admin_url( 'edit.php?page=tec-events-settings&tab=imports&post_type=tribe_events' ),
 				/* translators: %s: title of the page or settings tab. */

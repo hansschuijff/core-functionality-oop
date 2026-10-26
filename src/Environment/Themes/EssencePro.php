@@ -74,7 +74,7 @@ class EssencePro extends AbstractTheme {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'essence_pro_link',
+				id:      'cf-essence-pro',
 				title:   __( '⚡ Essence Pro', 'core-functionality' ),
 				href:    admin_url( 'customize.php' ), // The customizer is where Essence Pro is set up.
 				label:   __( 'Essence Pro Theme Customizer', 'core-functionality' ),

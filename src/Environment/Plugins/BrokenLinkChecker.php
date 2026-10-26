@@ -59,7 +59,7 @@ class BrokenLinkChecker extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-view-broken-links',
+				id:      'cf-broken-link-checker',
 				title:   __( 'Broken Links Checker', 'core-functionality' ),
 				href:    admin_url( 'tools.php?page=view-broken-links' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Broken Links Checker', 'core-functionality' ),

@@ -61,7 +61,7 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-admin-woocommerce-subscriptions',
+				id:      'cf-woocommerce-subscriptions',
 				title:   __( 'Subscriptions', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=shop_subscription' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Subscriptions', 'core-functionality' ),
@@ -69,14 +69,14 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 			),
 			// Frontend Links - Safe lazy loading via PHP short closures!
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-front-my-account-subscriptions',
+				id:      'cf-woocommerce-subscriptions-view-my-account',
 				title:   __( 'My Account: Subscriptions', 'core-functionality' ),
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'subscriptions', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Subscriptions', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
 			new ToolbarShortcut(
-				id:      'cf-view-course-subscriptions',
+				id:      'cf-woocommerce-subscriptions-view-course-subscriptions',
 				title:   __( 'Course Payment Plans', 'core-functionality' ),
 				href:    fn() => $this->get_product_cat_url_by_slug( __( 'course-payment-plans', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Course Payment Plans', 'core-functionality' ),

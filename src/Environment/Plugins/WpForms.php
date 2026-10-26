@@ -59,7 +59,7 @@ class WpForms extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-wpforms',
+				id:      'cf-wp-forms',
 				title:   __( 'Forms', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wpforms-overview' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WPForms', 'core-functionality' ),

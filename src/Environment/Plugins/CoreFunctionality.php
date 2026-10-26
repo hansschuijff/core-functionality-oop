@@ -103,7 +103,7 @@ class CoreFunctionality implements PluginInterface {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:          'cf-settings-core-functionality',
+				id:          'cf-core-functionality-settings',
 				title:       __( 'Core Functionality', 'core-functionality' ),
 				href:        admin_url( 'options-general.php?page=' . AdminSettingsPage::SLUG ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Core functionality settings', 'core-functionality' ),

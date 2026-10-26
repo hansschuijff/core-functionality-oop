@@ -59,14 +59,14 @@ class UpdraftPlus extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-updraft-backups-menu',
+				id:      'cf-updraft-plus',
 				title:   __( 'Updraft Backups', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=updraftplus' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Updraft Backups', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-updraft-backups',
+				id:      'cf-updraft-plus-backups',
 				title:   __( 'Updraft Backups', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=updraftplus' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Updraft Backups', 'core-functionality' ),

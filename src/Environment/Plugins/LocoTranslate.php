@@ -67,7 +67,7 @@ class LocoTranslate extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-loco-translate-all',
+				id:      'cf-loco-translate-home',
 				title:   __( 'Translations', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Translations', 'core-functionality' ),

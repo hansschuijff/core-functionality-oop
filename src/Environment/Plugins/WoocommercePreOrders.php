@@ -56,7 +56,7 @@ class WoocommercePreOrders extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-my-account-pre-orders',
+				id:      'cf-woocommerce-pre-orders-view-my-account',
 				title:   __( 'My Account: Pre-orders', 'core-functionality' ),
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'pre-orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/pre-orders/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Pre-orders', 'core-functionality' ),

@@ -59,7 +59,7 @@ class GitUpdater extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-git-updater-menu',
+				id:      'cf-git-updater',
 				title:   __( 'Github', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=git-updater' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Updater', 'core-functionality' ),

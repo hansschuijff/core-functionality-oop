@@ -66,35 +66,35 @@ class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-settings-activewoo-menu',
+				id:      'cf-activewoo',
 				title:   __( 'ActiveWoo', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-settings-activewoo-base',
+				id:      'cf-activewoo-base',
 				title:   __( 'Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-settings-activewoo-advanced',
+				id:      'cf-activewoo-advanced',
 				title:   __( 'Advanced Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-advanced' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Advanced Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-settings-activewoo-rc',
+				id:      'cf-activewoo-rc',
 				title:   __( 'Recover Cart Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-advanced-rc' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Recover Cart Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-settings-activewoo-coupons',
+				id:      'cf-activewoo-coupons',
 				title:   __( 'Coupons Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-advanced-coupons' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Coupons Settings', 'core-functionality' ),

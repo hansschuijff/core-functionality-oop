@@ -103,7 +103,7 @@ class AnyBlockTheme extends AbstractTheme {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-site-editor',
+				id:      'cf-block-theme-site-editor',
 				title:   __( 'Site editor', 'core-functionality' ),
 				href:    admin_url( 'site-editor.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Site editor', 'core-functionality' ),

@@ -74,7 +74,7 @@ class YoastSeo extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'yoast_seo_link',
+				id:      'cf-yoast-seo',
 				title:   __( 'Yoast SEO', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wpseo_dashboard' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Yoast SEO Dashboard', 'core-functionality' ),

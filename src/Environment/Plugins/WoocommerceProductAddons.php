@@ -55,7 +55,7 @@ class WoocommerceProductAddons extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-woocommerce-product-add-ons',
+				id:      'cf-woocommerce-product-addons',
 				title:   __( 'Product Add-ons', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=product&page=addons' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce', 'core-functionality' ) . ' ' . __( 'Product Add-ons', 'core-functionality' ),

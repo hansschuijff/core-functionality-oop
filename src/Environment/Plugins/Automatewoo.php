@@ -70,14 +70,14 @@ class Automatewoo extends AbstractPlugin {
 		// AutomateWoo's own admin menu.
 		return array(
 			new ToolbarShortcut(
-				id:          'cf-automatewoo-dashboard',
+				id:          'cf-automatewoo',
 				title:       __( 'AutomateWoo', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=aw_workflow' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Workflows', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-automatewoo-dashboard-page',
+				id:          'cf-automatewoo-dashboard',
 				title:       __( 'Dashboard', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=automatewoo-dashboard' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Dashboard', 'core-functionality' ),

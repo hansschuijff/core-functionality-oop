@@ -76,7 +76,7 @@ class EventTicketsPlus extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'event-tickets-plus-link',
+				id:      'cf-event-tickets-plus',
 				title:   __( 'Event Tickets Plus', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
 				label:   __( 'Event Tickets Settings', 'core-functionality' ),
@@ -84,7 +84,7 @@ class EventTicketsPlus extends AbstractPlugin {
 			),
 			// Pages Event Tickets Plus adds to the Tickets menu.
 			new ToolbarShortcut(
-				id:          'cf-tickets-plus-purchase-rules',
+				id:          'cf-event-tickets-plus-purchase-rules',
 				title:       __( 'Purchase Rules', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-plus-admin-purchase-rules' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -92,7 +92,7 @@ class EventTicketsPlus extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-plus-waitlist',
+				id:          'cf-event-tickets-plus-waitlist',
 				title:       __( 'Waitlist Subscribers', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-plus-admin-waitlist-subscribers' ),
 				/* translators: %s: title of the page or settings tab. */
@@ -100,7 +100,7 @@ class EventTicketsPlus extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:          'cf-tickets-plus-fieldsets',
+				id:          'cf-event-tickets-plus-fieldsets',
 				title:       __( 'Ticket Fieldsets', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=ticket-meta-fieldset' ),
 				/* translators: %s: title of the page or settings tab. */

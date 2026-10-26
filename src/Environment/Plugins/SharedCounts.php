@@ -59,7 +59,7 @@ class SharedCounts extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-settings-social-share',
+				id:      'cf-shared-counts-settings',
 				title:   __( 'Shared Counts', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=shared_counts_options' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Shared Counts', 'core-functionality' ),

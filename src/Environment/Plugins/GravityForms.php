@@ -59,7 +59,7 @@ class GravityForms extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-gravityforms',
+				id:      'cf-gravity-forms',
 				title:   __( 'Forms', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=gf_edit_forms' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Gravity Forms', 'core-functionality' ),

@@ -59,7 +59,7 @@ class FluentSmtp extends AbstractPlugin {
 	public function get_toolbar_nodes(): array {
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-fluentsmtp',
+				id:      'cf-fluent-smtp',
 				title:   __( 'Emails Send', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=fluent-mail#/logs?per_page=10&page=1&status=&search=' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'FluentSMTP', 'core-functionality' ),
