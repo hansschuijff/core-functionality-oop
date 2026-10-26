@@ -57,12 +57,27 @@ class LocoTranslate extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_toolbar_nodes(): array {
+		// The menu head first, then Loco's own admin menu (the older items keep their ids and titles).
 		return array(
+			new ToolbarShortcut(
+				id:      'cf-loco-translate',
+				title:   'Loco Translate',
+				href:    admin_url( 'admin.php?page=loco' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Translations', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-all',
 				title:   __( 'Translations', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Translations', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-loco-translate-themes',
+				title:   __( 'Theme Translations', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=loco-theme' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Theme Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
@@ -73,10 +88,24 @@ class LocoTranslate extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
-				id:      'cf-loco-translate-themes',
-				title:   __( 'Theme Translations', 'core-functionality' ),
-				href:    admin_url( 'admin.php?page=loco-theme' ),
-				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Theme Translations', 'core-functionality' ),
+				id:      'cf-loco-translate-core',
+				title:   __( 'WordPress Translations', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=loco-core' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WordPress Translations', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-loco-translate-languages',
+				title:   __( 'Languages', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=loco-lang' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Loco Translate Languages', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-loco-translate-settings',
+				title:   __( 'Settings', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=loco-config' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Loco Translate Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T16:01:53+01:00\n"
+"POT-Creation-Date: 2026-10-26T16:04:55+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -55,6 +55,7 @@ msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 #: src/Environment/Plugins/FestingerVault.php:105
 #: src/Environment/Plugins/FestingerVault.php:107
 #: src/Environment/Plugins/GitUpdater.php:70
+#: src/Environment/Plugins/LocoTranslate.php:106
 #: src/Environment/Plugins/SenseiLms.php:141
 #: src/Environment/Plugins/SpectraBlocks.php:102
 #: src/Environment/Plugins/SpectraLegacy.php:102
@@ -473,9 +474,13 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/GitUpdater.php:86
 #: src/Environment/Plugins/GitUpdater.php:93
 #: src/Environment/Plugins/GravityForms.php:65
-#: src/Environment/Plugins/LocoTranslate.php:65
-#: src/Environment/Plugins/LocoTranslate.php:72
-#: src/Environment/Plugins/LocoTranslate.php:79
+#: src/Environment/Plugins/LocoTranslate.php:66
+#: src/Environment/Plugins/LocoTranslate.php:73
+#: src/Environment/Plugins/LocoTranslate.php:80
+#: src/Environment/Plugins/LocoTranslate.php:87
+#: src/Environment/Plugins/LocoTranslate.php:94
+#: src/Environment/Plugins/LocoTranslate.php:101
+#: src/Environment/Plugins/LocoTranslate.php:108
 #: src/Environment/Plugins/Nobuna.php:65
 #: src/Environment/Plugins/RedisCache.php:66
 #: src/Environment/Plugins/SenseiLms.php:66
@@ -1009,20 +1014,38 @@ msgstr "Formulieren"
 msgid "Gravity Forms"
 msgstr ""
 
-#: src/Environment/Plugins/LocoTranslate.php:63
-#: src/Environment/Plugins/LocoTranslate.php:65
+#: src/Environment/Plugins/LocoTranslate.php:66
+#: src/Environment/Plugins/LocoTranslate.php:71
+#: src/Environment/Plugins/LocoTranslate.php:73
 msgid "Translations"
 msgstr "Vertalingen"
 
-#: src/Environment/Plugins/LocoTranslate.php:70
-#: src/Environment/Plugins/LocoTranslate.php:72
+#: src/Environment/Plugins/LocoTranslate.php:78
+#: src/Environment/Plugins/LocoTranslate.php:80
+msgid "Theme Translations"
+msgstr "Themavertalingen"
+
+#: src/Environment/Plugins/LocoTranslate.php:85
+#: src/Environment/Plugins/LocoTranslate.php:87
 msgid "Plugin Translations"
 msgstr "Pluginvertalingen"
 
-#: src/Environment/Plugins/LocoTranslate.php:77
-#: src/Environment/Plugins/LocoTranslate.php:79
-msgid "Theme Translations"
-msgstr "Themavertalingen"
+#: src/Environment/Plugins/LocoTranslate.php:92
+#: src/Environment/Plugins/LocoTranslate.php:94
+msgid "WordPress Translations"
+msgstr "WordPress-vertalingen"
+
+#: src/Environment/Plugins/LocoTranslate.php:99
+msgid "Languages"
+msgstr "Talen"
+
+#: src/Environment/Plugins/LocoTranslate.php:101
+msgid "Loco Translate Languages"
+msgstr "Talen in Loco Translate"
+
+#: src/Environment/Plugins/LocoTranslate.php:108
+msgid "Loco Translate Settings"
+msgstr "Instellingen van Loco Translate"
 
 #: src/Environment/Plugins/Nobuna.php:63
 msgid "Nobuna"
