@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T15:21:42+01:00\n"
+"POT-Creation-Date: 2026-10-26T15:26:10+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -445,6 +445,13 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/Automatewoo.php:209
 #: src/Environment/Plugins/Automatewoo.php:216
 #: src/Environment/Plugins/Automatewoo.php:223
+#: src/Environment/Plugins/BeaverBuilder.php:70
+#: src/Environment/Plugins/BeaverBuilder.php:77
+#: src/Environment/Plugins/BeaverBuilder.php:84
+#: src/Environment/Plugins/BeaverBuilder.php:91
+#: src/Environment/Plugins/BeaverBuilder.php:98
+#: src/Environment/Plugins/BeaverBuilder.php:105
+#: src/Environment/Plugins/BeaverBuilder.php:112
 #: src/Environment/Plugins/BrokenLinkChecker.php:65
 #: src/Environment/Plugins/CoreFunctionality.php:98
 #: src/Environment/Plugins/EventTickets.php:83
@@ -601,6 +608,7 @@ msgstr "Nieuw bericht"
 
 #: src/Environment/Core/WordPress.php:178
 #: src/Environment/Core/WordPress.php:180
+#: src/Environment/Plugins/BeaverBuilder.php:103
 #: src/Environment/Plugins/SenseiLms.php:99
 #: src/Environment/Plugins/TheEventsCalendar.php:107
 #: src/Environment/Plugins/Woocommerce.php:90
@@ -803,6 +811,54 @@ msgstr "Uitvoerprogramma voor handmatige workflow"
 #: src/Environment/Plugins/Automatewoo.php:223
 msgid "AutomateWoo Manual Workflow Runner"
 msgstr "AutomateWoo-uitvoerprogramma voor handmatige workflow"
+
+#: src/Environment/Plugins/BeaverBuilder.php:70
+msgid "Beaver Builder Templates"
+msgstr "Beaver Builder-sjablonen"
+
+#: src/Environment/Plugins/BeaverBuilder.php:75
+msgid "Page Templates"
+msgstr "Paginasjablonen"
+
+#: src/Environment/Plugins/BeaverBuilder.php:77
+msgid "Beaver Builder Page Templates"
+msgstr "Beaver Builder-paginasjablonen"
+
+#: src/Environment/Plugins/BeaverBuilder.php:82
+msgid "Saved Rows"
+msgstr "Opgeslagen rijen"
+
+#: src/Environment/Plugins/BeaverBuilder.php:84
+msgid "Beaver Builder Saved Rows"
+msgstr "Opgeslagen rijen van Beaver Builder"
+
+#: src/Environment/Plugins/BeaverBuilder.php:89
+msgid "Saved Columns"
+msgstr "Opgeslagen kolommen"
+
+#: src/Environment/Plugins/BeaverBuilder.php:91
+msgid "Beaver Builder Saved Columns"
+msgstr "Opgeslagen kolommen van Beaver Builder"
+
+#: src/Environment/Plugins/BeaverBuilder.php:96
+msgid "Saved Modules"
+msgstr "Opgeslagen modules"
+
+#: src/Environment/Plugins/BeaverBuilder.php:98
+msgid "Beaver Builder Saved Modules"
+msgstr "Opgeslagen modules van Beaver Builder"
+
+#: src/Environment/Plugins/BeaverBuilder.php:105
+msgid "Beaver Builder Template Categories"
+msgstr "Sjablooncategorieën van Beaver Builder"
+
+#: src/Environment/Plugins/BeaverBuilder.php:110
+msgid "Add New"
+msgstr "Nieuw toevoegen"
+
+#: src/Environment/Plugins/BeaverBuilder.php:112
+msgid "Beaver Builder: Add New Template"
+msgstr "Beaver Builder: nieuw sjabloon toevoegen"
 
 #: src/Environment/Plugins/BrokenLinkChecker.php:63
 #: src/Environment/Plugins/BrokenLinkChecker.php:65
