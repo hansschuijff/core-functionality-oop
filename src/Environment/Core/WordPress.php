@@ -202,6 +202,27 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
+				id:      'cf-new-page',
+				title:   __( 'New Page', 'core-functionality' ),
+				href:    admin_url( 'post-new.php?post_type=page' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'New Page', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-media',
+				title:   __( 'Media', 'core-functionality' ),
+				href:    admin_url( 'upload.php' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Media Library', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-media-new',
+				title:   __( 'Add Media File', 'core-functionality' ),
+				href:    admin_url( 'media-new.php' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Add Media File', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
 				id:      'cf-comments',
 				title:   __( 'Comments', 'core-functionality' ),
 				href:    admin_url( 'edit-comments.php' ),
