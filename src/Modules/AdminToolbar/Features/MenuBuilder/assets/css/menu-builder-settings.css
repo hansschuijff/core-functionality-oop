@@ -197,12 +197,31 @@
 }
 
 .dwp-mb-tree {
+	position: relative;
 	min-height: 300px;
 	border-style: dashed;
 }
 
-.dwp-mb-tree.is-drop-end {
-	box-shadow: inset 0 -3px 0 var(--dwp-mb-accent);
+/* Where a dragged node lands, indented to the depth it gets. */
+.dwp-mb-drop-line {
+	position: absolute;
+	right: 8px;
+	height: 3px;
+	background: var(--dwp-mb-accent);
+	border-radius: 2px;
+	pointer-events: none;
+	transition: left 0.1s ease;
+}
+
+.dwp-mb-drop-line::before {
+	content: "";
+	position: absolute;
+	top: -3px;
+	left: -4px;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	background: var(--dwp-mb-accent);
 }
 
 .dwp-mb-empty {
@@ -544,10 +563,6 @@
 
 .dwp-mb-node.is-dragging {
 	opacity: 0.4;
-}
-
-.dwp-mb-node.is-drop-before {
-	box-shadow: 0 -3px 0 var(--dwp-mb-accent);
 }
 
 .dwp-mb-node-header {

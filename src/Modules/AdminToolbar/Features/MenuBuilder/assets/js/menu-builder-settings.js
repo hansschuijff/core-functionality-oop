@@ -896,11 +896,49 @@
 
 		/* ------------------------------------------------------------------ drag and drop */
 
-		function clearDropMarker() {
-			root.querySelectorAll('.is-drop-before').forEach(function (node) {
-				node.classList.remove('is-drop-before');
+		// Where a drop lands: before which node, and at what depth. The depth follows the pointer
+		// sideways: one indent to the right of where the drag started (or entered the tree) is one
+		// level deeper. It stays between the depth of the node below (so that node's place in the
+		// menu does not change) and one deeper than the node above.
+		const dropLine = el('div', 'dwp-mb-drop-line');
+		let dropTarget = null; // { before: Element|null, depth: number }
+		let dragStartX = null;
+
+		function indentWidth() {
+			return parseFloat(getComputedStyle(tree).getPropertyValue('--dwp-mb-indent')) || 28;
+		}
+
+		function nodeAbove(before) {
+			const nodes = visibleNodes().filter(function (node) {
+				return !dragged.nodes.includes(node);
 			});
-			tree.classList.remove('is-drop-end');
+			const index = before ? nodes.indexOf(before) : nodes.length;
+			return index > 0 ? nodes[ index - 1 ] : null;
+		}
+
+		function updateDropTarget(event) {
+			const before = nodeAfterPointer(event.clientY);
+			const above  = nodeAbove(before);
+			const min    = before ? depthOf(before) : 0;
+			const max    = above ? Math.min(maxDepth, depthOf(above) + 1) : 0;
+			const shift  = Math.round((event.clientX - dragStartX) / indentWidth());
+			const depth  = Math.max(min, Math.min(max, insertionDepth(before, dragged.nodes) + shift));
+
+			dropTarget = { before: before, depth: depth };
+
+			const style = getComputedStyle(tree);
+			const top   = before
+				? before.offsetTop - 4
+				: (above ? above.offsetTop + above.offsetHeight + 2 : parseFloat(style.paddingTop));
+			dropLine.style.top = top + 'px';
+			dropLine.style.left = (parseFloat(style.paddingLeft) + depth * indentWidth()) + 'px';
+			if (!dropLine.isConnected) {
+				tree.appendChild(dropLine);
+			}
+		}
+
+		function clearDropMarker() {
+			dropLine.remove();
 		}
 
 		// The first node (outside the dragged branch) whose middle is below the pointer.
@@ -932,6 +970,8 @@
 				return;
 			}
 
+			// From the pool, the sideways count starts where the pointer enters the tree.
+			dragStartX = 'tree' === dragged.origin ? event.clientX : null;
 			event.dataTransfer.effectAllowed = 'tree' === dragged.origin ? 'move' : 'copy';
 			event.dataTransfer.setData('text/plain', '');
 			dragged.nodes.forEach(function (node) {
@@ -963,13 +1003,10 @@
 				tree.scrollTop += 12;
 			}
 
-			clearDropMarker();
-			const after = nodeAfterPointer(event.clientY);
-			if (after) {
-				after.classList.add('is-drop-before');
-			} else {
-				tree.classList.add('is-drop-end');
+			if (null === dragStartX) {
+				dragStartX = event.clientX;
 			}
+			updateDropTarget(event);
 		});
 
 		tree.addEventListener('dragleave', function (event) {
@@ -983,25 +1020,26 @@
 				return;
 			}
 			event.preventDefault();
-			const after = nodeAfterPointer(event.clientY);
+			updateDropTarget(event);
 			clearDropMarker();
+			const after = dropTarget.before;
+			const depth = dropTarget.depth;
 
 			if ('pool' === dragged.origin) {
-				insertRows([ rows.get(dragged.nodes[ 0 ]) ], after);
+				insertRows([ rows.get(dragged.nodes[ 0 ]) ], after, depth);
 				return;
 			}
 
-			// Dropped where it already was (one branch, landing before its own next node): no change.
+			// Dropped where it already was (one branch, before its own next node, same depth): no change.
 			const last = dragged.nodes[ dragged.nodes.length - 1 ];
 			const next = last.nextElementSibling && last.nextElementSibling.classList.contains('js-dwp-mb-tree-node')
 				? last.nextElementSibling
 				: null;
-			if (1 === dragged.roots.length && after === next) {
+			if (1 === dragged.roots.length && after === next && depth === depthOf(dragged.roots[ 0 ])) {
 				return;
 			}
 
-			// Move each branch; its top node takes the depth of the node it lands before, like a new node.
-			const depth = insertionDepth(after, dragged.nodes);
+			// Move each branch; its top node takes the depth shown by the drop line.
 			dragged.roots.forEach(function (root) {
 				const delta = depth - depthOf(root);
 				branchOf(root).forEach(function (node) {
