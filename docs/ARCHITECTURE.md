@@ -173,19 +173,36 @@ menu start collapsed. A collapsed branch that receives a node is opened, and dep
 menu follow the last visible node, so nothing disappears into a closed branch. Every change can be undone
 and redone (Ctrl+Z / Ctrl+Y, up to 50 steps; serialize() records the state before each change).
 
+Dragging: the drop depth follows the pointer sideways (one indent from where the drag started, or entered
+the tree, is one level), between the depth of the node below and one deeper than the node above; an
+indented line shows where it lands, so a node dragged sideways in place is indented or outdented.
+Dragging a checked pool item takes all checked items along; dragging a source's heading drops a submenu
+named after the source with its shortcuts (at the deepest level only the shortcuts). The pool shows each
+shortcut's URL and the search covers it. "Preview" shows the menu as the toolbar would, for admin pages or
+the site, with only the plugins active here or all of them.
+
 The menu can travel with the plugin: "Save as default" (on a site where the settings folder is writable,
-in practice development) writes it to `settings/modules/admin-toolbar/menu-builder.php` and lets the site
-follow it; committed, it goes along with the release. A site without a menu of its own uses that default
-(`Settings::get_whole()`), and "Restore default" drops a site's own menu. A status line above the tree says
-which applies. "Merge with default" (after a confirmation) adds the items of the default that the site's
-menu lacks, recognised by instance id so nothing is added twice: an item goes after its predecessor from
-the default if the site has it, else first under its parent from the default, else at the end of the top
-level. The site's own items, titles, visibility and arrangement stay; default items the site removed come
-back, which is what merging means (quicker to remove again than to rebuild a structure). This is a
-deliberate action, unlike `Settings::get()`'s merge on every read, which would make removals impossible.
+in practice development; deliberately a separate button, in case a production site can write there too)
+writes it to `settings/modules/admin-toolbar/menu-builder.php` and lets the site follow it; committed, it
+goes along with the release. A site without a menu of its own uses that default (`Settings::get_whole()`);
+saving a menu equal to the default drops the site's own copy, so it follows the default again. A status
+line above the tree says which applies. "Import / export" opens a dialog: export downloads the menu in the
+editor as JSON; import takes the default or a JSON file into the editor (undoable, saved with "Save
+menu"), replacing the menu or merging. Merging adds the items the menu lacks, recognised by instance id so
+nothing is added twice: an item goes after its predecessor from the source if the menu has it, else first
+under its parent, else at the end of the top level. The menu's own items, titles, visibility and
+arrangement stay; removed items come back, which is what merging means (quicker to remove again than to
+rebuild a structure). This is a deliberate action, unlike `Settings::get()`'s merge on every read, which
+would make removals impossible. Instance ids differ per site, so merging a file from another site adds
+all of its items.
 
 The settings page frame is fixed beside the admin menu (from 783px wide), so a long admin menu scrolls on
-its own and the footer with the buttons stays in view.
+its own and the buttons stay in view. The WordPress footer is hidden on this page: with the frame fixed,
+the window itself still scrolls, and the footer would slide over the buttons.
+
+Cleanup point (minor): the catalogue holds some duplicate links (the same URL from two sources, such as
+Sensei Pro repeating Sensei LMS, a menu head equal to its first item, or two WooCommerce links with `#`).
+Harmless, at most a little inefficient.
 
 ## Settings and options
 
@@ -201,8 +218,8 @@ its own and the footer with the buttons stays in view.
   file.
 - **Writable defaults**: `Settings::save_default()` writes a value into its settings file, where the folder
   is writable (development); the file then goes along with git and the release. `can_save_default()`,
-  `get_default()` and `has_saved()` support a "save as default / restore default" flow (used by the menu
-  builder); restoring is `Settings::reset()`.
+  `get_default()` and `has_saved()` support a "save as default / follow the default" flow (used by the menu
+  builder); following the default again is `Settings::reset()`.
 - `Settings` is the holder of all settings, with two helpers: **`SettingsFiles`** for the files (mapping,
   reading, writing) and the **Options vault** (`Options`) for the database: it maps setting tokens to real
   option names, either standalone or grouped in one option, and keeps unknown tokens in a quarantine pool
