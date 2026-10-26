@@ -44,6 +44,7 @@ return array(
 		'beaver-builder'                          => 'bb-plugin/fl-builder.php', // The Pro version; the lite version is beaver-builder-lite-version/fl-builder.php.
 		'spectra-legacy'                          => 'ultimate-addons-for-gutenberg/ultimate-addons-for-gutenberg.php',
 		'spectra-blocks'                          => 'spectra-blocks/spectra-blocks.php',
+		'wp-server-stats'                         => 'wp-server-stats/wp-server-stats.php',
 
 		// Updates and licences.
 		'git-updater'                             => 'git-updater/git-updater.php',
