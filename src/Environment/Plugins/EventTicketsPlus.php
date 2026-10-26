@@ -81,6 +81,7 @@ class EventTicketsPlus extends AbstractPlugin {
 				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
 				label:   __( 'Event Tickets Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			// Pages Event Tickets Plus adds to the Tickets menu.
 			new ToolbarShortcut(
@@ -90,6 +91,7 @@ class EventTicketsPlus extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets Plus: %s', 'core-functionality' ), __( 'Purchase Rules', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-plus-waitlist',
@@ -98,6 +100,7 @@ class EventTicketsPlus extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets Plus: %s', 'core-functionality' ), __( 'Waitlist Subscribers', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-plus-fieldsets',
@@ -106,6 +109,7 @@ class EventTicketsPlus extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets Plus: %s', 'core-functionality' ), __( 'Ticket Fieldsets', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 		);
 	}

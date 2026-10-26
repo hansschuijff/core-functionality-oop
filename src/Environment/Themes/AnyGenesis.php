@@ -95,10 +95,11 @@ class AnyGenesis extends AbstractTheme {
 			),
 			new ToolbarShortcut(
 				id:      'cf-genesis-import-export',
-				title:   __( 'Import/Export', 'core-functionality' ),
+				title:   __( 'Genesis Import/Export', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=genesis-import-export' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Import/Export', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Import/Export', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-genesis-plugins',

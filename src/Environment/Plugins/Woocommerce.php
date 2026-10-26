@@ -66,10 +66,11 @@ class Woocommerce extends AbstractPlugin {
 			// Admin Area Links - Safe to call directly because admin_url is purely string manipulation.
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-orders',
-				title:   __( 'Orders', 'core-functionality' ),
+				title:   __( 'Shop Orders', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=shop_order' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Orders', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Orders', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-products',
@@ -80,31 +81,35 @@ class Woocommerce extends AbstractPlugin {
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-coupons',
-				title:   __( 'Coupons', 'core-functionality' ),
+				title:   __( 'Shop Coupons', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=shop_coupon' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Coupons', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Coupons', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-product-cats',
-				title:   __( 'Categories', 'core-functionality' ),
+				title:   __( 'Product Categories', 'core-functionality' ),
 				href:    admin_url( 'edit-tags.php?taxonomy=product_cat&post_type=product' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Product Categories', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Categories', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-analytics',
-				title:   __( 'Statistics', 'core-functionality' ),
+				title:   __( 'Shop Statistics', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-admin&path=/analytics/revenue' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Sales Statistics', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Statistics', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-settings',
-				title:   __( 'Settings', 'core-functionality' ),
+				title:   __( 'WooCommerce Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Settings', 'core-functionality' ),
 			),
 			// Frontend Links - Safe lazy loading via PHP short closures!
 			new ToolbarShortcut(
@@ -120,6 +125,7 @@ class Woocommerce extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : home_url( __( '/myaccount', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				group:       'my-account',
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-view-my-account-orders',
@@ -127,6 +133,8 @@ class Woocommerce extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/orders/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Orders', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'Orders', 'core-functionality' ),
+				group:       'my-account',
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-view-my-account-downloads',
@@ -134,6 +142,8 @@ class Woocommerce extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'downloads', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/downloads/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Downloads', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'Downloads', 'core-functionality' ),
+				group:       'my-account',
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-view-my-account-edit-address',
@@ -141,6 +151,8 @@ class Woocommerce extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'edit-address', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/edit-address/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Addresses', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'Addresses', 'core-functionality' ),
+				group:       'my-account',
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-view-my-account-edit-account',
@@ -148,6 +160,8 @@ class Woocommerce extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'edit-account', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/edit-account/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Account details', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'Account details', 'core-functionality' ),
+				group:       'my-account',
 			),
 			new ToolbarShortcut(
 				title:   __( 'Courses', 'core-functionality' ),

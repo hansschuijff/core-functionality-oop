@@ -83,6 +83,8 @@ class EventTickets extends AbstractPlugin {
 				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Event Tickets Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Settings', 'core-functionality' ),
+				group:       'tickets',
 			),
 			// The Tickets menu of Event Tickets.
 			new ToolbarShortcut(
@@ -92,14 +94,17 @@ class EventTickets extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Tickets', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-home',
-				title:       __( 'Home', 'core-functionality' ),
+				title:       __( 'Tickets Home', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets' ),
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Home', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Home', 'core-functionality' ),
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-all-tickets',
@@ -108,6 +113,7 @@ class EventTickets extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'All Tickets', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-attendees',
@@ -116,6 +122,7 @@ class EventTickets extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Attendees', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-coupons-fees',
@@ -124,38 +131,47 @@ class EventTickets extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Coupons & Fees', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-orders',
-				title:       __( 'Orders', 'core-functionality' ),
+				title:       __( 'Ticket Orders', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=tec_tc_order' ),
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Orders', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Orders', 'core-functionality' ),
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-help',
-				title:       __( 'Help', 'core-functionality' ),
+				title:       __( 'Tickets Help', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-help-hub' ),
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Help', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Help', 'core-functionality' ),
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-troubleshooting',
-				title:       __( 'Troubleshooting', 'core-functionality' ),
+				title:       __( 'Tickets Troubleshooting', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tec-tickets-troubleshooting' ),
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Troubleshooting', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Troubleshooting', 'core-functionality' ),
+				group:       'tickets',
 			),
 			new ToolbarShortcut(
 				id:          'cf-event-tickets-setup-guide',
-				title:       __( 'Setup Guide', 'core-functionality' ),
+				title:       __( 'Tickets Setup Guide', 'core-functionality' ),
 				href:        admin_url( 'admin.php?page=tickets-setup' ),
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'Setup Guide', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Setup Guide', 'core-functionality' ),
+				group:       'tickets',
 			),
 		);
 	}

@@ -67,10 +67,11 @@ class GitUpdater extends AbstractPlugin {
 			),
 			new ToolbarShortcut(
 				id:      'cf-git-updater-settings',
-				title:   __( 'Settings', 'core-functionality' ),
+				title:   __( 'Git Updater Settings', 'core-functionality' ),
 				href:    admin_url( 'options-general.php?page=git-updater&tab=git_updater_settings&subtab=github' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Git Updater: Github settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Settings', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-git-updater-plugin-install',

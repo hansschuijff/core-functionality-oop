@@ -112,6 +112,8 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'plugins.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Installed Plugins', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Installed', 'core-functionality' ),
+				group:       'plugins',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-updates',
@@ -119,6 +121,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'update-core.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Plugins & Themes Updates', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				group:       'plugins',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-plugins-new',
@@ -126,6 +129,17 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'plugin-install.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Add Plugin', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'New', 'core-functionality' ),
+				group:       'plugins',
+			),
+			new ToolbarShortcut(
+				id:      'cf-wordpress-plugins-active',
+				title:   __( 'Active Plugins', 'core-functionality' ),
+				href:    admin_url( 'plugins.php?plugin_status=active' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Active Plugins', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Active', 'core-functionality' ),
+				group:       'plugins',
 			),
 		);
 
@@ -137,6 +151,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'customize.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Customizer', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				group:       'appearance',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-widgets',
@@ -144,6 +159,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'widgets.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Widgets', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				group:       'appearance',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-menus',
@@ -151,6 +167,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'nav-menus.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Menus', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				group:       'appearance',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-themes',
@@ -158,6 +175,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'themes.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Themes', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				group:       'appearance',
 			),
 		);
 
@@ -169,13 +187,17 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    home_url( '/artikelen/' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'View Posts', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'View', 'core-functionality' ),
+				group:       'posts',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-edit-posts',
-				title:   __( 'Edit Posts', 'core-functionality' ),
+				title:   __( 'Posts', 'core-functionality' ),
 				href:    admin_url( 'edit.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Edit Posts', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'All Posts', 'core-functionality' ),
+				group:       'posts',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-new-post',
@@ -183,20 +205,26 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'post-new.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'New Post', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'New', 'core-functionality' ),
+				group:       'posts',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-posts-categories',
-				title:   __( 'Categories', 'core-functionality' ),
+				title:   __( 'Post Categories', 'core-functionality' ),
 				href:    admin_url( 'edit-tags.php?taxonomy=category' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Categories', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Categories', 'core-functionality' ),
+				group:       'posts',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-posts-tags',
-				title:   __( 'Tags', 'core-functionality' ),
+				title:   __( 'Post Tags', 'core-functionality' ),
 				href:    admin_url( 'edit-tags.php?taxonomy=post_tag' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Tags', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Tags', 'core-functionality' ),
+				group:       'posts',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-reusable-blocks',
@@ -211,6 +239,8 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'edit.php?post_type=page' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Pages', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'All Pages', 'core-functionality' ),
+				group:       'pages',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-new-page',
@@ -218,13 +248,17 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'post-new.php?post_type=page' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'New Page', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'New', 'core-functionality' ),
+				group:       'pages',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-media',
-				title:   __( 'Media', 'core-functionality' ),
+				title:   __( 'Media Library', 'core-functionality' ),
 				href:    admin_url( 'upload.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Media Library', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Library', 'core-functionality' ),
+				group:       'media',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-media-new',
@@ -232,6 +266,8 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'media-new.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Add Media File', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'New', 'core-functionality' ),
+				group:       'media',
 			),
 			new ToolbarShortcut(
 				id:      'cf-wordpress-comments',

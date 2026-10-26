@@ -74,6 +74,8 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'subscriptions', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/subscriptions/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Subscriptions', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'Subscriptions', 'core-functionality' ),
+				group:       'my-account',
 			),
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-subscriptions-view-course-subscriptions',

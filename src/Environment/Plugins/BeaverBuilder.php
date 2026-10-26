@@ -111,17 +111,19 @@ class BeaverBuilder extends AbstractPlugin {
 			),
 			new ToolbarShortcut(
 				id:          'cf-beaver-builder-categories',
-				title:       __( 'Categories', 'core-functionality' ),
+				title:       __( 'Template Categories', 'core-functionality' ),
 				href:        admin_url( 'edit-tags.php?taxonomy=fl-builder-template-category&post_type=fl-builder-template' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Beaver Builder Template Categories', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Categories', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:          'cf-beaver-builder-add-new',
-				title:       __( 'Add New', 'core-functionality' ),
+				title:       __( 'Add Template', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=fl-builder-template&page=fl-builder-add-new' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Beaver Builder: Add New Template', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Add New', 'core-functionality' ),
 			),
 		);
 	}

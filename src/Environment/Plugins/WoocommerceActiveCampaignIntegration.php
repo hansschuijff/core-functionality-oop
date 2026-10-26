@@ -74,10 +74,11 @@ class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 			),
 			new ToolbarShortcut(
 				id:      'cf-activewoo-base',
-				title:   __( 'Settings', 'core-functionality' ),
+				title:   __( 'ActiveWoo Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Settings', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-activewoo-advanced',

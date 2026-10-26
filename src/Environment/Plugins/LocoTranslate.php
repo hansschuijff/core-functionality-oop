@@ -79,6 +79,7 @@ class LocoTranslate extends AbstractPlugin {
 				href:    admin_url( 'admin.php?page=loco-theme' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Theme Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Themes', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-plugins',
@@ -86,6 +87,7 @@ class LocoTranslate extends AbstractPlugin {
 				href:    admin_url( 'admin.php?page=loco-plugin' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Plugin Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Plugins', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-core',
@@ -93,20 +95,23 @@ class LocoTranslate extends AbstractPlugin {
 				href:    admin_url( 'admin.php?page=loco-core' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WordPress Translations', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'WordPress', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-languages',
-				title:   __( 'Languages', 'core-functionality' ),
+				title:   __( 'Translation Languages', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco-lang' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Loco Translate Languages', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Languages', 'core-functionality' ),
 			),
 			new ToolbarShortcut(
 				id:      'cf-loco-translate-settings',
-				title:   __( 'Settings', 'core-functionality' ),
+				title:   __( 'Loco Translate Settings', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=loco-config' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Loco Translate Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Settings', 'core-functionality' ),
 			),
 		);
 	}

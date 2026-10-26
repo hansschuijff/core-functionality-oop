@@ -61,6 +61,8 @@ class WoocommercePreOrders extends AbstractPlugin {
 				href:    fn() => function_exists( 'wc_get_page_permalink' ) ? wc_get_endpoint_url( 'pre-orders', '', wc_get_page_permalink( 'myaccount' ) ) : home_url( __( '/myaccount/pre-orders/', 'core-functionality' ) ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'My Account: Pre-orders', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
+				short_title: __( 'Pre-orders', 'core-functionality' ),
+				group:       'my-account',
 			),
 		);
 	}
