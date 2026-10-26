@@ -180,9 +180,9 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		$this->flatten_saved_tree( $saved_tree, $this->get_catalogue_index(), 0, $data['tree'] );
 
 		$pool_title = esc_html__( 'Available shortcuts', 'core-functionality' );
-		$pool_desc  = esc_html__( 'Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu.', 'core-functionality' );
+		$pool_desc  = esc_html__( 'Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu: dragging a checked one takes all checked ones along, dragging a source\'s heading makes a submenu of its shortcuts.', 'core-functionality' );
 		$tree_title = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
-		$tree_desc  = esc_html__( 'Drag to reorder and use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
+		$tree_desc  = esc_html__( 'Drag to reorder; while dragging, move sideways to set the depth, or use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
 		$status     = esc_html( $this->get_default_status_text() );
 		$json       = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
@@ -435,6 +435,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'explanation'           => __( 'Explanation', 'core-functionality' ),
 			/* translators: %s: name of a plugin, theme or WordPress. */
 			'selectGroup'           => __( 'Select all shortcuts of %s', 'core-functionality' ),
+			/* translators: %s: name of a plugin or theme */
+			'dragGroup'             => __( 'Drag into the menu for a submenu with the shortcuts of %s', 'core-functionality' ),
 			'preview'               => __( 'Preview', 'core-functionality' ),
 			'previewTitle'          => __( 'Preview of the toolbar menu', 'core-functionality' ),
 			'previewAdmin'          => __( 'On admin pages', 'core-functionality' ),

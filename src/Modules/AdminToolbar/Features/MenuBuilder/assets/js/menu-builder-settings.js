@@ -229,6 +229,8 @@
 
 					group.dataset.provider = provider.id;
 					group.open = openGroups.has(provider.id);
+					summary.draggable = true;
+					summary.title = t.dragGroup.replace('%s', provider.name);
 					summary.append(check, el('span', 'dwp-mb-group-name', provider.name), count);
 					if ('active' !== provider.status) {
 						summary.appendChild(badge(provider.status, statusText(provider.status), t.inactiveHint));
@@ -577,10 +579,11 @@
 			}
 		}
 
+		// A row may carry "offset": how many levels below the first row it goes (a submenu's items).
 		function insertRows(newRows, before, depth) {
 			const at    = undefined === depth ? insertionDepth(before) : depth;
 			const added = newRows.map(function (row) {
-				const node = createTreeNode(row, at);
+				const node = createTreeNode(row, Math.min(maxDepth, at + (row.offset || 0)));
 				tree.insertBefore(node, before);
 				if ('submenu' === row.type) {
 					node.querySelector('.dwp-mb-edit').hidden = false;
@@ -593,6 +596,7 @@
 				reveal(added[ 0 ]);
 				added[ 0 ].scrollIntoView({ block: 'nearest' });
 			}
+			return added;
 		}
 
 		/* ------------------------------------------------------------------ collapsing branches */
@@ -959,13 +963,32 @@
 
 			const treeNode = event.target.closest('.js-dwp-mb-tree-node');
 			const poolItem = event.target.closest('.js-dwp-mb-pool-item');
+			const heading  = event.target.closest('.dwp-mb-group-summary');
 
 			if (treeNode) {
 				// Dragging a selected node drags the whole selection, each with its branch.
 				const roots = selected.has(treeNode) ? selectedRoots() : [ treeNode ];
 				dragged = { origin: 'tree', roots: roots, nodes: branchesOf(roots) };
 			} else if (poolItem) {
-				dragged = { origin: 'pool', nodes: [ poolItem ] };
+				// Dragging a checked item takes all checked items along (that the filter shows).
+				const check = poolItem.querySelector('.js-dwp-mb-check');
+				const items = check && check.checked
+					? [ ...pool.querySelectorAll('.js-dwp-mb-pool-item:not([hidden])') ].filter(function (item) {
+						return item.querySelector('.js-dwp-mb-check').checked;
+					})
+					: [ poolItem ];
+				dragged = { origin: 'pool', nodes: items, rows: items.map(function (item) {
+					return rows.get(item);
+				}) };
+			} else if (heading) {
+				// A source's heading becomes a submenu named after it, with its shortcuts (that the
+				// filter shows) below it; at the deepest level only the shortcuts.
+				const group = heading.closest('.dwp-mb-group');
+				const items = [ ...group.querySelectorAll('.js-dwp-mb-pool-item:not([hidden])') ].map(function (item) {
+					return Object.assign({}, rows.get(item), { offset: 1 });
+				});
+				const name  = heading.querySelector('.dwp-mb-group-name').textContent;
+				dragged = { origin: 'pool', nodes: [ heading ], rows: items, submenu: Object.assign({}, customRow, { title: name }) };
 			} else {
 				return;
 			}
@@ -1026,7 +1049,25 @@
 			const depth = dropTarget.depth;
 
 			if ('pool' === dragged.origin) {
-				insertRows([ rows.get(dragged.nodes[ 0 ]) ], after, depth);
+				let newRows = dragged.rows;
+				if (dragged.submenu) {
+					newRows = depth < maxDepth
+						? [ dragged.submenu ].concat(newRows)
+						: newRows.map(function (row) {
+							return Object.assign({}, row, { offset: 0 });
+						});
+				} else {
+					// Like "Add selection": what was added is no longer checked.
+					dragged.nodes.forEach(function (item) {
+						item.querySelector('.js-dwp-mb-check').checked = false;
+					});
+					selectAll.checked = false;
+					updateGroupChecks();
+				}
+				const added = insertRows(newRows, after, depth);
+				if (dragged.submenu && depth < maxDepth && added.length) {
+					setCollapsed(added[ 0 ], false); // Show the shortcuts the new submenu holds.
+				}
 				return;
 			}
 
