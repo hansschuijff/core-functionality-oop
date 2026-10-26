@@ -58,6 +58,15 @@
     }
 }
 
+/* WordPress's footer ("Thank you for creating with WordPress", version) is positioned at the bottom
+   of the window on a short page, where it lay over the frame's footer and its buttons. The fixed
+   frame covers that spot anyway, so the footer goes. */
+@media screen and (min-width: 783px) {
+    .settings_page_dwp-cf-settings #wpfooter {
+        display: none;
+    }
+}
+
 @media (max-width: 782px) {
     .dwp-gutenberg-frame {
         margin-top: 14px; /* Corrigeert voor de dikkere mobiele WP adminbar */
