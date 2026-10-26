@@ -326,8 +326,8 @@ class Environment {
 				$status = ProviderStatus::INACTIVE;
 			}
 
-			// The name as a callable: a plugin's name comes from its header, read only when asked for.
-			AdminToolbarRegister::register( $guard->get_id(), $guard->get_toolbar_nodes(), $status, array( $guard, 'get_name' ) );
+			// The name as a closure: a plugin's name comes from its header, read only when asked for.
+			AdminToolbarRegister::register( $guard->get_id(), $guard->get_toolbar_nodes(), $status, $guard->get_name( ... ) );
 		}
 	}
 

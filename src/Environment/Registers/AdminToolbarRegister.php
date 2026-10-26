@@ -11,6 +11,7 @@ namespace DeWittePrins\CoreFunctionality\Environment\Registers;
 
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Enums\ProviderStatus;
+use Closure;
 
 use function did_action;
 use function is_callable;
@@ -46,10 +47,11 @@ class AdminToolbarRegister {
 	private static array $statuses = array();
 
 	/**
-	 * The name per provider, or a callable that returns it: finding a plugin's name reads its
-	 * header, which only the settings page needs.
+	 * The name per provider, or a closure that returns it: finding a plugin's name reads its
+	 * header, which only the settings page needs. A closure, not any callable: a name is a string,
+	 * and a string can be callable too ("Genesis" calls genesis(), which renders a whole page).
 	 *
-	 * @var array<string, string|callable>
+	 * @var array<string, string|Closure>
 	 */
 	private static array $names = array();
 
@@ -85,10 +87,10 @@ class AdminToolbarRegister {
 	 * @param  string            $provider_id The get_id() of the plugin, theme or core guard.
 	 * @param  ToolbarShortcut[] $shortcuts   The shortcuts the provider offers.
 	 * @param  ProviderStatus    $status      Whether the provider is active, inactive or not installed.
-	 * @param  string|callable   $name        The provider's name, or a callable that returns it.
+	 * @param  string|Closure    $name        The provider's name, or a closure that returns it.
 	 * @return void
 	 */
-	public static function register( string $provider_id, array $shortcuts, ProviderStatus $status = ProviderStatus::ACTIVE, string|callable $name = '' ): void {
+	public static function register( string $provider_id, array $shortcuts, ProviderStatus $status = ProviderStatus::ACTIVE, string|Closure $name = '' ): void {
 		self::$statuses[ $provider_id ] = $status;
 		self::$names[ $provider_id ]    = $name;
 		self::$nodes[ $provider_id ]  ??= array();
@@ -155,7 +157,7 @@ class AdminToolbarRegister {
 		self::load();
 
 		$name = self::$names[ $provider_id ] ?? '';
-		if ( is_callable( $name ) ) {
+		if ( $name instanceof Closure ) {
 			$name                        = (string) $name();
 			self::$names[ $provider_id ] = $name;
 		}
