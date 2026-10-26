@@ -45,6 +45,7 @@ return array(
 		'spectra-legacy'                          => 'ultimate-addons-for-gutenberg/ultimate-addons-for-gutenberg.php',
 		'spectra-blocks'                          => 'spectra-blocks/spectra-blocks.php',
 		'wp-server-stats'                         => 'wp-server-stats/wp-server-stats.php',
+		'reader-experience'                       => 'reader-experience/reader-experience.php',
 
 		// Updates and licences.
 		'git-updater'                             => 'git-updater/git-updater.php',

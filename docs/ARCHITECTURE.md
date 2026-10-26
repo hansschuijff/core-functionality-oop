@@ -219,6 +219,19 @@ Cleanup point (minor): the catalogue holds some duplicate links (the same URL fr
 Sensei Pro repeating Sensei LMS, a menu head equal to its first item, or two WooCommerce links with `#`).
 Harmless, at most a little inefficient.
 
+### Reader Experience
+
+Hans's Reader Experience plugin has no options; it is steered by filters only. The module
+`ReaderExperience` (dependency: the `reader-experience` guard) has one feature, `Configuration`, with a
+settings tab: heading anchors (on/off, post types, button position and texts, containers, extra reserved
+ids, CSS/JS), reading time (words per minute) and feedback (mail the admin, spam check). The choices are
+saved as a whole (`get_whole()`, so an unchecked post type stays unchecked), with defaults in
+`settings/modules/reader-experience/`. The feature answers the plugin's filters at the default priority;
+it launches on init 0, before the plugin builds its modules (init 10) and reads the filters, so a theme or
+mu-plugin on a later priority still has the last word. Left out: the module list and share channels
+(objects and callables) and the heading id filter (a function, not a setting). It replaces the stopgap
+mu-plugin `dwp-reader-experience-setup.php`.
+
 ## Settings and options
 
 - **Settings files** (`settings/`) hold defaults and site data as PHP files returning arrays. General files

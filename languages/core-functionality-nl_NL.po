@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T18:25:41+01:00\n"
+"POT-Creation-Date: 2026-10-26T18:51:17+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -497,6 +497,7 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/LocoTranslate.php:104
 #: src/Environment/Plugins/LocoTranslate.php:112
 #: src/Environment/Plugins/Nobuna.php:65
+#: src/Environment/Plugins/ReaderExperience.php:68
 #: src/Environment/Plugins/RedisCache.php:66
 #: src/Environment/Plugins/SenseiLms.php:66
 #: src/Environment/Plugins/SenseiLms.php:73
@@ -1376,6 +1377,15 @@ msgstr ""
 #: src/Environment/Plugins/Nobuna.php:65
 msgid "Nobuna Plugins"
 msgstr "Nobuna-plugins"
+
+#: src/Environment/Plugins/ReaderExperience.php:66
+#: src/Environment/Plugins/ReaderExperience.php:68
+msgid "Reader Feedback"
+msgstr "Feedback van lezers"
+
+#: src/Environment/Plugins/ReaderExperience.php:70
+msgid "Feedback"
+msgstr "Feedback"
 
 #: src/Environment/Plugins/RedisCache.php:64
 msgid "Redis Cache"
@@ -3110,6 +3120,133 @@ msgstr "Opgeschoond! %d verlopen rijen zijn uit de optietabel verwijderd."
 #: src/Modules/Cleaner/Features/TransientOptimizer/TransientOptimizerSettings.php:270
 msgid "Optimize Transient Cache Now"
 msgstr "Transients nu opschonen"
+
+#: src/Modules/ReaderExperience/Features/Configuration/Configuration.php:52
+msgid "Reader Experience Settings"
+msgstr "Instellingen Reader Experience"
+
+#: src/Modules/ReaderExperience/Features/Configuration/Configuration.php:53
+msgid "A settings tab for the Reader Experience plugin, which itself is steered by filters only."
+msgstr "Een instellingentabblad voor de plugin Reader Experience, die zelf alleen via filters wordt bestuurd."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:130
+#: src/Modules/ReaderExperience/ReaderExperience.php:43
+msgid "Reader Experience"
+msgstr "Reader Experience"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:141
+msgid "Settings of the Reader Experience plugin on this site. Code on a later filter priority (a theme or mu-plugin) can still override them, for example per post."
+msgstr "Instellingen van de plugin Reader Experience op deze site. Code op een latere filterprioriteit (een thema of mu-plugin) kan ze nog overschrijven, bijvoorbeeld per bericht."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:277
+msgid "Heading anchors"
+msgstr "Ankerlinks bij koppen"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:278
+msgid "Gives headings an id and a button that copies a link to that section."
+msgstr "Geeft koppen een id en een knop die een link naar dat onderdeel kopieert."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:280
+msgid "Add heading anchors"
+msgstr "Ankerlinks toevoegen"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:281
+msgid "Post types"
+msgstr "Berichttypes"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:283
+msgid "Button"
+msgstr "Knop"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:285
+msgid "Before the heading text"
+msgstr "Vóór de tekst van de kop"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:286
+msgid "After the heading text"
+msgstr "Na de tekst van de kop"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:289
+msgid "Button text"
+msgstr "Tekst van de knop"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:290
+msgid "Text after copying"
+msgstr "Tekst na kopiëren"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:292
+msgid "Containers"
+msgstr "Containers"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:294
+msgid "CSS selectors of the element that holds the headings, one per line, tried in order. Empty: the plugin's own list."
+msgstr "CSS-selectors van het element met de koppen, één per regel, in deze volgorde geprobeerd. Leeg: de eigen lijst van de plugin."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:297
+msgid "Reserved ids"
+msgstr "Gereserveerde id's"
+
+#. translators: %s: the ids the plugin always reserves, separated by commas.
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:301
+#, php-format
+msgid "Ids a heading may not get because the theme or a plugin already uses them on the page, one per line. They come on top of the ids the plugin always reserves: %s."
+msgstr "Id's die een kop niet mag krijgen omdat het thema of een plugin ze al op de pagina gebruikt, één per regel. Ze komen bij de id's die de plugin altijd reserveert: %s."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:306
+msgid "Assets"
+msgstr "Bestanden"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:308
+msgid "Load the plugin's CSS"
+msgstr "De CSS van de plugin laden"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:309
+msgid "Load the plugin's JavaScript"
+msgstr "Het JavaScript van de plugin laden"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:311
+msgid "Switch one off when the theme brings its own styling or script."
+msgstr "Zet er een uit als het thema zelf de opmaak of het script levert."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:346
+msgid "Reading time"
+msgstr "Leestijd"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:350
+msgid "Words per minute"
+msgstr "Woorden per minuut"
+
+#. translators: %d: the plugin's default number of words per minute.
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:353
+#, php-format
+msgid "The plugin assumes %d."
+msgstr "De plugin gaat uit van %d."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:368
+msgid "Ratings and feedback"
+msgstr "Beoordelingen en feedback"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:371
+msgid "Email the site administrator about new feedback"
+msgstr "De beheerder van de site mailen bij nieuwe feedback"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:374
+msgid "Check for many ratings in a short time (spam)"
+msgstr "Controleren op veel beoordelingen in korte tijd (spam)"
+
+#. translators: 1: lowest allowed value, 2: highest allowed value.
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:484
+#, php-format
+msgid "Words per minute must be a number from %1$d to %2$d."
+msgstr "Woorden per minuut moet een getal van %1$d tot %2$d zijn."
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:517
+msgid "Save"
+msgstr "Opslaan"
+
+#: src/Modules/ReaderExperience/ReaderExperience.php:44
+msgid "Settings for the Reader Experience plugin: heading anchors, reading time and feedback."
+msgstr "Instellingen voor de plugin Reader Experience: ankerlinks bij koppen, leestijd en feedback."
 
 #: src/Notifiers/Drivers/Pushover.php:86
 msgid "Pushover (app notifications)"

@@ -15,6 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 return array(
-	'admin_toolbar' => 'admin-toolbar/',
-	'active-woo'    => 'active-woo/',
+	'admin_toolbar'     => 'admin-toolbar/',
+	'active-woo'        => 'active-woo/',
+	'reader-experience' => 'reader-experience/',
 );

@@ -1,0 +1,48 @@
+/* Reader Experience settings tab: one card per group of settings. */
+
+.dwp-rx-settings {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-width: 900px;
+}
+
+.dwp-rx-group {
+	margin: 0;
+	padding: 4px 20px 8px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 3px;
+}
+
+.dwp-rx-group legend {
+	padding: 0 6px;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.dwp-rx-group > .description {
+	margin: 4px 0 0;
+}
+
+.dwp-rx-group .form-table th {
+	width: 180px;
+	padding: 14px 10px 14px 0;
+}
+
+.dwp-rx-group .form-table td {
+	padding: 10px 0;
+}
+
+/* Choices below each other: longer, but calmer to read. */
+.dwp-rx-choices {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+}
+
+.dwp-rx-choice {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}

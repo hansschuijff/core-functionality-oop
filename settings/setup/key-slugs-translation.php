@@ -33,6 +33,11 @@ return array(
 	'menu-builder-hierarchical-tree' => 'menu-builder',
 
 	/**
+	 * Feature: ReaderExperience->Configuration. The defaults of its settings tab.
+	 */
+	'reader-experience-settings'     => 'reader-experience-settings',
+
+	/**
 	 * Feature: module->feature
 	 */
 
