@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T15:26:10+01:00\n"
+"POT-Creation-Date: 2026-10-26T16:01:53+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -56,6 +56,8 @@ msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 #: src/Environment/Plugins/FestingerVault.php:107
 #: src/Environment/Plugins/GitUpdater.php:70
 #: src/Environment/Plugins/SenseiLms.php:141
+#: src/Environment/Plugins/SpectraBlocks.php:102
+#: src/Environment/Plugins/SpectraLegacy.php:102
 #: src/Environment/Plugins/TheEventsCalendar.php:114
 #: src/Environment/Plugins/Woocommerce.php:104
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:66
@@ -507,6 +509,20 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/SeoRedirectionPremium.php:65
 #: src/Environment/Plugins/SeoRedirectionPremium.php:72
 #: src/Environment/Plugins/SharedCounts.php:65
+#: src/Environment/Plugins/SpectraBlocks.php:69
+#: src/Environment/Plugins/SpectraBlocks.php:76
+#: src/Environment/Plugins/SpectraBlocks.php:83
+#: src/Environment/Plugins/SpectraBlocks.php:90
+#: src/Environment/Plugins/SpectraBlocks.php:97
+#: src/Environment/Plugins/SpectraBlocks.php:104
+#: src/Environment/Plugins/SpectraBlocks.php:111
+#: src/Environment/Plugins/SpectraLegacy.php:69
+#: src/Environment/Plugins/SpectraLegacy.php:76
+#: src/Environment/Plugins/SpectraLegacy.php:83
+#: src/Environment/Plugins/SpectraLegacy.php:90
+#: src/Environment/Plugins/SpectraLegacy.php:97
+#: src/Environment/Plugins/SpectraLegacy.php:104
+#: src/Environment/Plugins/SpectraLegacy.php:111
 #: src/Environment/Plugins/TheEventsCalendar.php:81
 #: src/Environment/Plugins/TheEventsCalendar.php:88
 #: src/Environment/Plugins/TheEventsCalendar.php:95
@@ -678,6 +694,8 @@ msgid "AutomateWoo Dashboard"
 msgstr "AutomateWoo-dashboard"
 
 #: src/Environment/Plugins/Automatewoo.php:80
+#: src/Environment/Plugins/SpectraBlocks.php:74
+#: src/Environment/Plugins/SpectraLegacy.php:74
 msgid "Dashboard"
 msgstr "Dashboard"
 
@@ -1232,6 +1250,79 @@ msgstr "404's doorverwijzen"
 #: src/Environment/Plugins/SharedCounts.php:65
 msgid "Shared Counts"
 msgstr ""
+
+#: src/Environment/Plugins/SpectraBlocks.php:69
+#: src/Environment/Plugins/SpectraBlocks.php:76
+msgid "Spectra Blocks Dashboard"
+msgstr "Spectra Blocks-dashboard"
+
+#: src/Environment/Plugins/SpectraBlocks.php:81
+#: src/Environment/Plugins/SpectraLegacy.php:95
+msgid "AI Features"
+msgstr "AI-functies"
+
+#: src/Environment/Plugins/SpectraBlocks.php:83
+msgid "Spectra Blocks AI Features"
+msgstr "AI-functies van Spectra Blocks"
+
+#: src/Environment/Plugins/SpectraBlocks.php:88
+#: src/Environment/Plugins/SpectraLegacy.php:88
+msgid "Popup Builder"
+msgstr "Pop-up bouwer"
+
+#: src/Environment/Plugins/SpectraBlocks.php:90
+msgid "Spectra Blocks Popup Builder"
+msgstr "Pop-up bouwer van Spectra Blocks"
+
+#: src/Environment/Plugins/SpectraBlocks.php:95
+#: src/Environment/Plugins/SpectraLegacy.php:109
+msgid "Learn"
+msgstr "Leren"
+
+#: src/Environment/Plugins/SpectraBlocks.php:97
+msgid "Spectra Blocks Learn"
+msgstr "Leren over Spectra Blocks"
+
+#: src/Environment/Plugins/SpectraBlocks.php:104
+msgid "Spectra Blocks Settings"
+msgstr "Spectra Blocks-instellingen"
+
+#: src/Environment/Plugins/SpectraBlocks.php:109
+msgid "Free vs Pro"
+msgstr "Gratis vs Pro"
+
+#: src/Environment/Plugins/SpectraBlocks.php:111
+msgid "Spectra Blocks Free vs Pro"
+msgstr "Spectra Blocks: gratis vs Pro"
+
+#: src/Environment/Plugins/SpectraLegacy.php:69
+#: src/Environment/Plugins/SpectraLegacy.php:76
+msgid "Spectra Legacy Dashboard"
+msgstr "Spectra Legacy-dashboard"
+
+#: src/Environment/Plugins/SpectraLegacy.php:81
+msgid "Blocks"
+msgstr "Blokken"
+
+#: src/Environment/Plugins/SpectraLegacy.php:83
+msgid "Spectra Legacy Blocks"
+msgstr "Spectra Legacy-blokken"
+
+#: src/Environment/Plugins/SpectraLegacy.php:90
+msgid "Spectra Legacy Popup Builder"
+msgstr "Pop-up bouwer van Spectra Legacy"
+
+#: src/Environment/Plugins/SpectraLegacy.php:97
+msgid "Spectra Legacy AI Features"
+msgstr "AI-functies van Spectra Legacy"
+
+#: src/Environment/Plugins/SpectraLegacy.php:104
+msgid "Spectra Legacy Settings"
+msgstr "Spectra Legacy-instellingen"
+
+#: src/Environment/Plugins/SpectraLegacy.php:111
+msgid "Spectra Legacy Learn"
+msgstr "Leren over Spectra Legacy"
 
 #: src/Environment/Plugins/TheEventsCalendar.php:79
 #: src/Environment/Plugins/TheEventsCalendar.php:81
