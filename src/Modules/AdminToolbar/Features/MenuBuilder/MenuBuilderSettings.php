@@ -193,9 +193,10 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		<div class="dwp-menu-builder js-dwp-menu-builder">
 			<div class="dwp-mb-column">
 				<h3>{$pool_title}</h3>
-				<p class="description">{$pool_desc}</p>
+				<div class="dwp-mb-intro js-dwp-mb-intro">
+					<p class="description">{$pool_desc}</p>
+				</div>
 				<div class="dwp-mb-pool-tools js-dwp-mb-pool-tools"></div>
-				<div class="dwp-mb-pool-actions js-dwp-mb-pool-actions"></div>
 				<div class="dwp-mb-pool js-dwp-mb-pool"></div>
 			</div>
 			<div class="dwp-mb-column dwp-mb-column--tree">
@@ -427,7 +428,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'selectBelow'           => __( 'Include items below', 'core-functionality' ),
 			'selectBelowTip'        => __( 'Also select the items below the selected items (Ctrl-click selects an item with the items below it).', 'core-functionality' ),
 			'search'                => __( 'Search shortcuts', 'core-functionality' ),
-			'onlyActive'            => __( 'Only active', 'core-functionality' ),
+			'onlyActive'            => __( 'Only shortcuts of active plugins and themes', 'core-functionality' ),
 			'collapse'              => __( 'Collapse', 'core-functionality' ),
 			'expand'                => __( 'Expand', 'core-functionality' ),
 			'collapseAll'           => __( 'Collapse all', 'core-functionality' ),
@@ -463,8 +464,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			/* translators: %s: Admin or Front, the node's own visibility. */
 			'visibilityConflict'    => __( 'Its own setting (%s) conflicts with a parent, so this node is never shown.', 'core-functionality' ),
 			'visibility'            => __( 'Show', 'core-functionality' ),
-			'addSelected'           => __( 'Add selected', 'core-functionality' ),
-			'selectAll'             => __( 'Select all visible', 'core-functionality' ),
+			'addSelected'           => __( 'Add', 'core-functionality' ),
 			'selectFirst'           => __( 'Select at least one shortcut first.', 'core-functionality' ),
 			'emptyTree'             => __( 'The menu is empty. Add shortcuts from the list.', 'core-functionality' ),
 			'title'                 => __( 'Title', 'core-functionality' ),

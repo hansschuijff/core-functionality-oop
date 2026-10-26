@@ -155,7 +155,7 @@ out together with its children, and a submenu without a link of its own is left 
 children is shown. The settings tab renders the catalogue and the tree as JSON; `menu-builder-settings.js`
 builds the pool and the tree from it (one place for the markup). A new node takes the depth of the node it
 is inserted before (at the end: of the last node), so it never takes over a submenu; moving a node moves
-its branch. With one node selected, "Add selected" inserts below it (inside it when it is a submenu
+its branch. With one node selected, "Add" (the checked pool items) inserts below it (inside it when it is a submenu
 without a link). The admin menu feature has a similar, latent mechanism for menu items.
 
 Visibility is shown as a one-click switch per node. A node is shown only where its parents are shown
@@ -168,8 +168,10 @@ its branch. The pool is grouped per source with search and an "only active" filt
 collapsed (remembered in the browser). The tree is an ARIA tree with keyboard control (arrows, Alt+arrows
 to move and indent, Space to select, Ctrl+Space or Ctrl-click for a node with its branch, Enter, Delete,
 Esc); "Keyboard shortcuts" (or ?) shows the overview. When the columns fit side by side, the builder fills
-the visible part of the settings page, so only the lists scroll. Branches and the explanation above the
-menu start collapsed. A collapsed branch that receives a node is opened, and depths at the end of the
+the visible part of the settings page, so only the lists scroll. Branches and the explanations above the
+pool and the menu start collapsed (one "Explanation" button above either column opens both). The pool's
+controls are one row: search, a filter switch for "only active" and Add; selecting a whole source goes
+with the checkbox in its heading. A collapsed branch that receives a node is opened, and depths at the end of the
 menu follow the last visible node, so nothing disappears into a closed branch. Every change can be undone
 and redone (Ctrl+Z / Ctrl+Y, up to 50 steps; serialize() records the state before each change).
 

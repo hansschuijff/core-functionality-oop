@@ -22,7 +22,6 @@
 		const pool       = root.querySelector('.js-dwp-mb-pool');
 		const tree       = root.querySelector('.js-dwp-mb-tree');
 		const tools      = root.querySelector('.js-dwp-mb-pool-tools');
-		const actions    = root.querySelector('.js-dwp-mb-pool-actions');
 		const serialized = root.querySelector('.js-dwp-mb-serialized');
 		const form       = root.closest('form');
 
@@ -259,7 +258,7 @@
 		// a match open, and the remembered state returns when the search is cleared.
 		function filterPool() {
 			const query      = searchInput.value.trim().toLowerCase();
-			const activeOnly = activeInput.checked;
+			const activeOnly = isActiveOnly();
 
 			pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
 				const row  = rows.get(item);
@@ -296,47 +295,33 @@
 			}
 		});
 
-		// A pool item the user can see: not filtered out and not in a closed group.
-		function isShown(item) {
-			const group = item.closest('details');
-			return !item.hidden && (!group || (group.open && !group.hidden));
-		}
-
 		const searchInput = el('input', 'dwp-mb-search');
 		searchInput.type = 'search';
 		searchInput.placeholder = t.search;
 		searchInput.setAttribute('aria-label', t.search);
 		searchInput.addEventListener('input', filterPool);
 
-		const activeInput = el('input');
-		activeInput.type = 'checkbox';
-		activeInput.id = 'js-dwp-mb-active-only';
-		activeInput.addEventListener('change', filterPool);
+		// One row: search, a filter switch for "only active" and Add (for what is checked).
+		const activeButton = el('button', 'button dwp-mb-filter');
+		activeButton.type = 'button';
+		activeButton.title = t.onlyActive;
+		activeButton.setAttribute('aria-label', t.onlyActive);
+		activeButton.setAttribute('aria-pressed', 'false');
+		activeButton.appendChild(el('span', 'dashicons dashicons-filter'));
+		activeButton.addEventListener('click', function () {
+			activeButton.setAttribute('aria-pressed', String(!isActiveOnly()));
+			filterPool();
+		});
 
-		const activeLabel = el('label', 'dwp-mb-active-only', t.onlyActive);
-		activeLabel.prepend(activeInput);
-
-		tools.append(searchInput, activeLabel);
+		function isActiveOnly() {
+			return 'true' === activeButton.getAttribute('aria-pressed');
+		}
 
 		const addButton = el('button', 'button button-secondary', t.addSelected);
 		addButton.type = 'button';
 		addButton.title = t.addSelectedTip;
 
-		const selectAll = el('input');
-		selectAll.type = 'checkbox';
-		selectAll.id = 'js-dwp-mb-select-all';
-
-		const selectAllLabel = el('label', '', t.selectAll);
-		selectAllLabel.htmlFor = selectAll.id;
-
-		actions.append(addButton, selectAll, selectAllLabel);
-
-		selectAll.addEventListener('change', function () {
-			pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
-				item.querySelector('.js-dwp-mb-check').checked = selectAll.checked && isShown(item);
-			});
-			updateGroupChecks();
-		});
+		tools.append(searchInput, activeButton, addButton);
 
 		// With exactly one node selected in the menu, new nodes go below it: inside it when it is a
 		// submenu without a link of its own, otherwise after its branch. Without one, at the end.
@@ -369,7 +354,6 @@
 				checkbox.checked = false;
 				return rows.get(checkbox.closest('.js-dwp-mb-pool-item'));
 			}), point.before, point.depth);
-			selectAll.checked = false;
 			updateGroupChecks();
 		});
 
@@ -1061,7 +1045,6 @@
 					dragged.nodes.forEach(function (item) {
 						item.querySelector('.js-dwp-mb-check').checked = false;
 					});
-					selectAll.checked = false;
 					updateGroupChecks();
 				}
 				const added = insertRows(newRows, after, depth);
@@ -1822,10 +1805,12 @@
 			return button;
 		}
 
-		// The explanation above the menu is collapsed by default; the browser remembers when it is open.
-		const intro       = tree.closest('.dwp-mb-column').querySelector('.js-dwp-mb-intro');
-		const introButton = toolButton('dashicons-info-outline', t.explanation);
-		let introOpen     = false;
+		// The explanations above the pool and the menu are collapsed by default and open together,
+		// with the button above either column; the browser remembers when they are open.
+		const intros       = root.querySelectorAll('.js-dwp-mb-intro');
+		const introButton  = toolButton('dashicons-info-outline', t.explanation);
+		const introButtons = [ introButton, toolButton('dashicons-info-outline', t.explanation) ];
+		let introOpen      = false;
 		try {
 			introOpen = '1' === window.localStorage.getItem('dwp-mb-intro-open');
 		} catch (error) {
@@ -1833,9 +1818,14 @@
 		}
 
 		function showIntro(open) {
-			intro.hidden = !open;
-			introButton.setAttribute('aria-expanded', String(open));
-			introButton.classList.toggle('is-open', open);
+			introOpen = open;
+			intros.forEach(function (intro) {
+				intro.hidden = !open;
+			});
+			introButtons.forEach(function (button) {
+				button.setAttribute('aria-expanded', String(open));
+				button.classList.toggle('is-open', open);
+			});
 			try {
 				window.localStorage.setItem('dwp-mb-intro-open', open ? '1' : '0');
 			} catch (error) {
@@ -1843,10 +1833,16 @@
 			}
 		}
 
-		introButton.addEventListener('click', function () {
-			showIntro(intro.hidden);
+		introButtons.forEach(function (button) {
+			button.addEventListener('click', function () {
+				showIntro(!introOpen);
+			});
 		});
 		showIntro(introOpen);
+
+		const poolTools = el('span', 'dwp-mb-tools');
+		poolTools.appendChild(introButtons[ 1 ]);
+		pool.closest('.dwp-mb-column').querySelector('h3').appendChild(poolTools);
 
 		const branchesButton = toolButton('dashicons-editor-expand', t.expandAll);
 		branchesButton.addEventListener('click', toggleAllBranches);
