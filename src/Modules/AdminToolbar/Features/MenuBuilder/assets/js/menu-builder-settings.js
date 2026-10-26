@@ -1416,6 +1416,7 @@
 				renderPreview();
 			}
 		});
+		previewBox.element.classList.add('dwp-mb-dialog--fixed'); // Opening a submenu does not resize it.
 		previewActive.type = 'checkbox';
 		previewActive.addEventListener('change', renderPreview);
 		previewLabel.prepend(previewActive);

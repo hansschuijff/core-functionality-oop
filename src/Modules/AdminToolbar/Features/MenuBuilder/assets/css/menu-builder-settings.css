@@ -418,6 +418,15 @@
 	max-height: calc(100vh - 64px);
 }
 
+/* A dialog whose content grows and shrinks (the preview) keeps one size; its body scrolls. */
+.dwp-mb-dialog--fixed {
+	height: min(720px, calc(100vh - 64px));
+}
+
+.dwp-mb-dialog--fixed .dwp-mb-dialog-inner {
+	height: 100%;
+}
+
 .dwp-mb-dialog-footer {
 	flex-shrink: 0;
 	padding: 12px 24px;
