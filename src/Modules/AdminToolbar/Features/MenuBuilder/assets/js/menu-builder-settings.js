@@ -157,8 +157,17 @@
 			checkbox.setAttribute('aria-label', row.defaultTitle);
 
 			const body = el('span', 'dwp-mb-node-body');
+			const meta = metaLine(row);
 			body.appendChild(el('strong', 'dwp-mb-title', row.defaultTitle));
-			body.appendChild(metaLine(row));
+			body.appendChild(meta);
+
+			// Where the shortcut links to, on hover: titles alone are not always enough.
+			if (row.href) {
+				const link = el('span', 'dashicons dashicons-admin-links dwp-mb-url');
+				link.title = row.href;
+				link.setAttribute('aria-label', row.href);
+				meta.appendChild(link);
+			}
 
 			item.append(checkbox, body);
 			rows.set(item, row);
@@ -244,7 +253,7 @@
 			});
 		}
 
-		// Search (title, source, description, id) and "only active"; while searching, groups with
+		// Search (title, source, description, id, URL) and "only active"; while searching, groups with
 		// a match open, and the remembered state returns when the search is cleared.
 		function filterPool() {
 			const query      = searchInput.value.trim().toLowerCase();
@@ -252,7 +261,7 @@
 
 			pool.querySelectorAll('.js-dwp-mb-pool-item').forEach(function (item) {
 				const row  = rows.get(item);
-				const text = [ row.defaultTitle, row.providerName, row.label, row.id ].join(' ').toLowerCase();
+				const text = [ row.defaultTitle, row.providerName, row.label, row.id, row.href ].join(' ').toLowerCase();
 				item.hidden = (activeOnly && 'active' !== row.status) || ('' !== query && !text.includes(query));
 			});
 

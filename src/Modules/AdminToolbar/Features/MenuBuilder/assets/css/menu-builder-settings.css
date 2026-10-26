@@ -108,6 +108,15 @@
 	transform: rotate(90deg);
 }
 
+.dwp-mb-url {
+	width: 16px;
+	height: 16px;
+	margin-left: 2px;
+	font-size: 16px;
+	color: #50575e;
+	cursor: help;
+}
+
 .dwp-mb-group-check {
 	margin: 0 !important;
 }
