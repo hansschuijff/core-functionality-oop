@@ -310,6 +310,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'status'       => ( AdminToolbarRegister::get_status( $provider_id ) ?? ProviderStatus::NOT_INSTALLED )->value,
 			'kind'         => $shortcut->orientation->value,
 			'defaultTitle' => $shortcut->title,
+			'shortTitle'   => $shortcut->short_title,
+			'group'        => '' !== $shortcut->group ? $shortcut->group : $provider_id,
 			'label'        => $shortcut->label,
 			'href'         => $shortcut->get_href(),
 		);

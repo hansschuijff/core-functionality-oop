@@ -203,6 +203,12 @@ The settings page frame is fixed beside the admin menu (from 783px wide), so a l
 its own and the buttons stay in view. The WordPress footer is hidden on this page: with the frame fixed,
 the window itself still scrolls, and the footer would slide over the buttons.
 
+Titles: a menu item has a full title (clear on its own: "Venue Categories", "Add Plugin") and may have a
+short one ("Categories", "New") with a group (what it is about: plugins, posts, venues; default its source).
+Without a title of its own, a menu item under a parent of the same group shows the short title, elsewhere
+the full one; a custom submenu counts as the group all its menu items share. The pool shows full titles.
+The toolbar (MenuBuilder.php) and the editor (serialize()) apply the same rule, so nothing is stored.
+
 Menu item ids read `cf-<source>-<page>`: `cf-woocommerce-orders`, `cf-events-calendar-settings-seo`; the
 source alone is its menu head (`cf-automatewoo`), and `view-` marks a page on the site
 (`cf-woocommerce-view-my-account`). Saved menus store these ids, so renaming one means converting the

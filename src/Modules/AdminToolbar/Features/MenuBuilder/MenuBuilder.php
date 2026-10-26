@@ -32,6 +32,8 @@ use function is_array;
 use function esc_html;
 use function esc_url;
 use function add_action;
+use function array_key_first;
+use function count;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -111,16 +113,20 @@ class MenuBuilder extends AbstractFeature {
 		}
 
 		// Only the nodes of active plugins and themes; the saved tree may also hold those of inactive ones.
+		// With each shortcut its group (its provider unless it names one), which picks its short or full title.
 		$pool = array();
-		foreach ( AdminToolbarRegister::get_active() as $shortcuts ) {
+		foreach ( AdminToolbarRegister::get_active() as $provider_id => $shortcuts ) {
 			foreach ( $shortcuts as $shortcut ) {
-				$pool[ $shortcut->id ] = $shortcut;
+				$pool[ $shortcut->id ] = array(
+					'shortcut' => $shortcut,
+					'group'    => '' !== $shortcut->group ? $shortcut->group : $provider_id,
+				);
 			}
 		}
 
 		$side = is_admin() ? Orientation::ADMIN : Orientation::FRONTEND;
 
-		$this->render_tree_nodes_recursively( $wp_admin_bar, $saved_tree, $pool, 'site-name', $side );
+		$this->render_tree_nodes_recursively( $wp_admin_bar, $saved_tree, $pool, 'site-name', $side, '' );
 	}
 
 	/**
@@ -132,12 +138,13 @@ class MenuBuilder extends AbstractFeature {
 	 * @since  1.0.0
 	 * @param  WP_Admin_Bar $wp_admin_bar The WordPress admin bar.
 	 * @param  array        $tree_level   One level of the saved tree: instance id => node settings.
-	 * @param  array        $pool         The shortcuts of the active providers, by node id.
+	 * @param  array        $pool         The shortcuts of the active providers with their group, by node id.
 	 * @param  string       $parent_id    The toolbar id of the parent node.
 	 * @param  Orientation  $side         Whether this is an admin page or the front end.
+	 * @param  string       $parent_group The group of the parent node ('' at the top or under a custom submenu).
 	 * @return int The number of nodes added on this level.
 	 */
-	private function render_tree_nodes_recursively( WP_Admin_Bar $wp_admin_bar, array $tree_level, array $pool, string $parent_id, Orientation $side ): int {
+	private function render_tree_nodes_recursively( WP_Admin_Bar $wp_admin_bar, array $tree_level, array $pool, string $parent_id, Orientation $side, string $parent_group ): int {
 		$added = 0;
 
 		foreach ( $tree_level as $instance_id => $node_meta ) {
@@ -149,20 +156,24 @@ class MenuBuilder extends AbstractFeature {
 			$node_id = $node_meta['id'] ?? $instance_id;
 			$title   = (string) ( $node_meta['title'] ?? '' );
 
+			$group = '';
 			if ( 'shortcut' === $type ) {
-				$shortcut = $pool[ $node_id ] ?? null;
+				$shortcut = $pool[ $node_id ]['shortcut'] ?? null;
 				if ( ! $shortcut instanceof ToolbarShortcut ) {
 					continue;
 				}
+				$group = $pool[ $node_id ]['group'];
 
-				// An empty title follows the (translated) title of the shortcut; the URL always comes from the shortcut.
-				$title = '' !== $title ? $title : $shortcut->title;
+				// An empty title follows the (translated) title of the shortcut, short under a parent of
+				// the same group; the URL always comes from the shortcut.
+				$title = '' !== $title ? $title : $shortcut->get_title_in( $group, $parent_group );
 				$href  = $shortcut->get_href();
 				$label = $shortcut->label;
 			} else {
 				$href  = (string) ( $node_meta['href'] ?? '' );
 				$href  = '#' === $href ? '' : $href;
 				$label = $title;
+				$group = $this->get_common_group( (array) ( $node_meta['children'] ?? array() ), $pool );
 			}
 
 			$toolbar_node_id = 'dwp-' . $node_id . '-' . $instance_id;
@@ -180,7 +191,7 @@ class MenuBuilder extends AbstractFeature {
 			);
 
 			$children = ( ! empty( $node_meta['children'] ) && is_array( $node_meta['children'] ) )
-				? $this->render_tree_nodes_recursively( $wp_admin_bar, $node_meta['children'], $pool, $toolbar_node_id, $side )
+				? $this->render_tree_nodes_recursively( $wp_admin_bar, $node_meta['children'], $pool, $toolbar_node_id, $side, $group )
 				: 0;
 
 			if ( 'shortcut' !== $type && '' === $href && 0 === $children ) {
@@ -192,6 +203,27 @@ class MenuBuilder extends AbstractFeature {
 		}
 
 		return $added;
+	}
+
+	/**
+	 * Returns the group a custom submenu stands for: the group all its shortcuts share, so that
+	 * they get their short titles under it, as under a parent of their own. Mixed: no group.
+	 *
+	 * @since  1.0.0
+	 * @param  array $children The submenu's children in the saved tree.
+	 * @param  array $pool     The shortcuts of the active providers with their group, by node id.
+	 * @return string The common group, or '' when the shortcuts differ or there are none.
+	 */
+	private function get_common_group( array $children, array $pool ): string {
+		$groups = array();
+		foreach ( $children as $child ) {
+			$id = is_array( $child ) && 'submenu' !== ( $child['type'] ?? '' ) ? (string) ( $child['id'] ?? '' ) : '';
+			if ( isset( $pool[ $id ] ) ) {
+				$groups[ $pool[ $id ]['group'] ] = true;
+			}
+		}
+
+		return 1 === count( $groups ) ? (string) array_key_first( $groups ) : '';
 	}
 
 	/**

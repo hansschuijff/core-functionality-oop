@@ -384,16 +384,25 @@
 			return branch;
 		}
 
-		function displayTitle(state) {
-			if (state.title) {
-				return state.title;
+		// The title the node gets without one of its own: the short title under a parent of the same
+		// group ("New" under Plugins), else the full title. serialize() keeps parentGroup current.
+		function ownDefaultTitle(state) {
+			if ('submenu' === state.type) {
+				return t.submenuTitle;
 			}
-			return 'submenu' === state.type ? t.submenuTitle : state.defaultTitle;
+			return state.shortTitle && state.parentGroup && state.group === state.parentGroup
+				? state.shortTitle
+				: state.defaultTitle;
+		}
+
+		function displayTitle(state) {
+			return state.title || ownDefaultTitle(state);
 		}
 
 		function refreshHeader(node) {
 			const state = rows.get(node);
 			node.querySelector('.dwp-mb-title').textContent = displayTitle(state);
+			node.querySelector('.dwp-mb-edit .regular-text').placeholder = ownDefaultTitle(state);
 		}
 
 		function field(labelText, input, hint) {
@@ -415,7 +424,7 @@
 			const title = el('input', 'regular-text');
 			title.type = 'text';
 			title.value = state.title;
-			title.placeholder = 'submenu' === state.type ? t.submenuTitle : state.defaultTitle;
+			title.placeholder = ownDefaultTitle(state);
 			title.addEventListener('input', function () {
 				state.title = title.value.trim();
 				refreshHeader(node);
@@ -460,6 +469,9 @@
 				id: row.id,
 				type: row.type,
 				defaultTitle: row.defaultTitle,
+				shortTitle: row.shortTitle || '',
+				group: 'shortcut' === row.type ? (row.group || row.provider || '') : '',
+				parentGroup: '',
 				title: row.title || '',
 				href: row.href || '',
 				visibility: row.visibility || 'both',
@@ -1867,15 +1879,39 @@
 
 		/* ------------------------------------------------------------------ serialize */
 
+		// The group a custom submenu stands for: the group all its shortcuts share (as in MenuBuilder.php),
+		// so they get their short titles under it. Mixed or none: no group.
+		function submenuGroups(nodes) {
+			const result = new Map();
+			nodes.forEach(function (node, index) {
+				if ('submenu' !== rows.get(node).type) {
+					return;
+				}
+				const depth  = depthOf(node);
+				const groups = new Set();
+				for (let i = index + 1; i < nodes.length && depthOf(nodes[ i ]) > depth; i++) {
+					const child = rows.get(nodes[ i ]);
+					if (depthOf(nodes[ i ]) === depth + 1 && 'shortcut' === child.type && child.group) {
+						groups.add(child.group);
+					}
+				}
+				result.set(node, 1 === groups.size ? [ ...groups ][ 0 ] : '');
+			});
+			return result;
+		}
+
 		// Writes the tree as nested JSON. A node can be at most one level deeper than the one before it.
 		// Also refreshes what each node inherits from its parents.
 		function serialize() {
 			const result       = {};
 			const stack        = []; // stack[ depth ] = children object of the last node at that depth.
 			const restrictions = []; // restrictions[ depth ] = visibility restriction ('' for none) of that node.
+			const groups       = []; // groups[ depth ] = group of that node (a custom submenu: that of its shortcuts).
+			const nodes        = treeNodes();
+			const submenus     = submenuGroups(nodes);
 			let previous       = -1;
 
-			treeNodes().forEach(function (node) {
+			nodes.forEach(function (node) {
 				const state = rows.get(node);
 				const depth = Math.min(depthOf(node), previous + 1, maxDepth);
 				if (depth !== depthOf(node)) {
@@ -1885,6 +1921,14 @@
 				const inherited = 0 === depth ? '' : restrictions[ depth - 1 ];
 				refreshVisibility(node, inherited);
 				restrictions[ depth ] = inherited || ('both' === state.visibility ? '' : state.visibility);
+
+				// A move can change the parent, and with it the short or full title.
+				const parentGroup = 0 === depth ? '' : (groups[ depth - 1 ] || '');
+				groups[ depth ]   = submenus.has(node) ? submenus.get(node) : state.group;
+				if (parentGroup !== state.parentGroup) {
+					state.parentGroup = parentGroup;
+					refreshHeader(node);
+				}
 
 				const payload = {
 					id: state.id,
