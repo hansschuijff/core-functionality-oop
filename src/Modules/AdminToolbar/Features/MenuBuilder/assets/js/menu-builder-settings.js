@@ -1389,19 +1389,22 @@
 		/* ------------------------------------------------------------------ preview */
 
 		// The menu as the toolbar would show it, built from the editor (also before saving): on
-		// admin pages or on the site, with only the plugins active here or with all of them.
-		const previewBox   = createDialog('dwp-mb-preview-title', t.previewTitle);
-		const previewTools = el('div', 'dwp-mb-preview-tools');
-		const previewSide  = el('span', 'dwp-mb-segmented');
-		const previewAll   = el('input');
-		const previewLabel = el('label', 'dwp-mb-preview-all', t.previewAll);
-		const previewCount = el('p', 'description dwp-mb-preview-count');
-		const previewMenu  = el('div', 'dwp-mb-preview');
-		let side           = 'admin';
+		// admin pages or on the site, with all plugins or only those active here. Submenus open
+		// and close with a click and start closed, like entering the toolbar menu.
+		const previewBox    = createDialog('dwp-mb-preview-title', t.previewTitle);
+		const previewTools  = el('div', 'dwp-mb-preview-tools');
+		const previewSide   = el('span', 'dwp-mb-segmented');
+		const previewActive = el('input');
+		const previewLabel  = el('label', 'dwp-mb-preview-all', t.previewActive);
+		const previewCount  = el('p', 'description dwp-mb-preview-count');
+		const previewMenu   = el('div', 'dwp-mb-preview');
+		const previewOpen   = new Set(); // Instance ids of the opened submenus.
+		let side            = 'admin';
 
 		[ [ 'admin', t.previewAdmin ], [ 'frontend', t.previewSite ] ].forEach(function (option) {
-			const button = el('button', 'dwp-mb-segment', option[ 1 ]);
+			const button = el('button', 'dwp-mb-segment', visibilityLabel(option[ 0 ]));
 			button.type = 'button';
+			button.title = option[ 1 ];
 			button.dataset.side = option[ 0 ];
 			previewSide.appendChild(button);
 		});
@@ -1413,15 +1416,34 @@
 				renderPreview();
 			}
 		});
-		previewAll.type = 'checkbox';
-		previewAll.addEventListener('change', renderPreview);
-		previewLabel.prepend(previewAll);
+		previewActive.type = 'checkbox';
+		previewActive.addEventListener('change', renderPreview);
+		previewLabel.prepend(previewActive);
 		previewTools.append(previewSide, previewLabel);
 		previewBox.body.append(previewTools, previewCount, previewMenu);
 
+		function togglePreviewItem(event) {
+			const line = event.target.closest('.dwp-mb-preview-item.has-children');
+			if (!line || ('keydown' === event.type && 'Enter' !== event.key && ' ' !== event.key)) {
+				return;
+			}
+			event.preventDefault();
+
+			const instance = line.dataset.instance;
+			if (previewOpen.has(instance)) {
+				previewOpen.delete(instance);
+			} else {
+				previewOpen.add(instance);
+			}
+			renderPreview();
+			previewMenu.querySelector('[data-instance="' + instance + '"]').focus();
+		}
+		previewMenu.addEventListener('click', togglePreviewItem);
+		previewMenu.addEventListener('keydown', togglePreviewItem);
+
 		// The rules of the toolbar: a node shows where its visibility allows, under a shown parent;
-		// a shortcut only when its plugin is active (or, on request, installed or not); a submenu
-		// without a link of its own only when something shows under it.
+		// a shortcut of a plugin that is not active only when all are asked for (never one that no
+		// plugin offers); a submenu without a link of its own only when something shows under it.
 		function previewItems() {
 			const roots = [];
 			const stack = [];
@@ -1443,7 +1465,7 @@
 					return false;
 				}
 				if ('shortcut' === item.state.type) {
-					return 'active' === item.source.status || (previewAll.checked && 'unknown' !== item.source.status);
+					return 'active' === item.source.status || (!previewActive.checked && 'unknown' !== item.source.status);
 				}
 				return true;
 			}
@@ -1461,7 +1483,14 @@
 
 		function renderPreview() {
 			const items = previewItems();
-			let count   = 0;
+
+			// Everything that shows, also inside closed submenus.
+			function countItems(levelItems) {
+				return levelItems.reduce(function (sum, item) {
+					return sum + 1 + countItems(item.children);
+				}, 0);
+			}
+			const count = countItems(items);
 
 			previewSide.querySelectorAll('button').forEach(function (button) {
 				button.setAttribute('aria-pressed', String(button.dataset.side === side));
@@ -1474,22 +1503,26 @@
 					const line  = el('span', 'dwp-mb-preview-item');
 					const href  = 'shortcut' === item.state.type ? (item.source.href || '') : item.state.href;
 					const label = el('span', 'dwp-mb-preview-label', displayTitle(item.state));
+					const open  = previewOpen.has(item.node.dataset.instance);
 
-					count++;
 					line.title = href;
 					line.appendChild(label);
 					if (item.children.length) {
-						line.appendChild(el('span', 'dwp-mb-preview-more', '▸'));
+						line.classList.add('has-children');
+						line.dataset.instance = item.node.dataset.instance;
+						line.setAttribute('aria-expanded', String(open));
+						line.setAttribute('role', 'button');
+						line.tabIndex = 0;
+						line.appendChild(el('span', 'dwp-mb-preview-more', open ? '▾' : '▸'));
 					}
 					if ('shortcut' === item.state.type && 'active' !== item.source.status) {
 						li.classList.add('is-inactive');
-						line.appendChild(el('span', 'dwp-mb-preview-note', statusText(item.source.status)));
 					}
 					if (href) {
 						line.appendChild(el('span', 'dwp-mb-preview-url', href.replace(window.location.origin, '')));
 					}
 					li.appendChild(line);
-					if (item.children.length) {
+					if (item.children.length && open) {
 						li.appendChild(list(item.children));
 					}
 					ul.appendChild(li);
@@ -1505,6 +1538,7 @@
 		}
 
 		function openPreview() {
+			previewOpen.clear();
 			renderPreview();
 			openDialog(previewBox);
 		}
@@ -1684,16 +1718,39 @@
 			return set;
 		}
 
-		transferBox.body.append(
-			el('h3', '', t.exportHeading),
-			el('p', 'description', t.exportText),
-			exportButton,
-			el('h3', '', t.importHeading),
+		// Export and import each on their own tab: only what applies is shown.
+		const exportPanel = el('div', 'dwp-mb-transfer-panel');
+		const importPanel = el('div', 'dwp-mb-transfer-panel');
+		const transferTabs = el('span', 'dwp-mb-segmented dwp-mb-transfer-tabs');
+
+		exportPanel.append(el('p', '', t.exportText), exportButton);
+		importPanel.append(
 			fieldset(t.importSource, [ sourceDef, sourceFile, fileInput ]),
 			fieldset(t.importMode, [ modeReplace, modeMerge ]),
 			importError,
 			importButton
 		);
+
+		function showTransferTab(panel) {
+			exportPanel.hidden = panel !== exportPanel;
+			importPanel.hidden = panel !== importPanel;
+			transferTabs.querySelectorAll('button').forEach(function (button, index) {
+				button.setAttribute('aria-pressed', String(panel === [ exportPanel, importPanel ][ index ]));
+			});
+		}
+
+		[ [ t.exportHeading, exportPanel ], [ t.importHeading, importPanel ] ].forEach(function (tab) {
+			const button = el('button', 'dwp-mb-segment', tab[ 0 ]);
+			button.type = 'button';
+			button.addEventListener('click', function () {
+				showTransferTab(tab[ 1 ]);
+			});
+			transferTabs.appendChild(button);
+		});
+		transferTabs.setAttribute('role', 'group');
+		showTransferTab(exportPanel);
+
+		transferBox.body.append(transferTabs, exportPanel, importPanel);
 
 		function failImport(text) {
 			importError.textContent = text;

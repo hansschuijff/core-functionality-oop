@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T10:55:33+01:00\n"
+"POT-Creation-Date: 2026-10-26T11:48:08+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -1529,14 +1529,14 @@ msgid "On the site"
 msgstr "Op de site"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:444
-msgid "Also shortcuts of plugins that are not active here"
-msgstr "Ook snelkoppelingen van plugins die hier niet actief zijn"
+msgid "Only active items"
+msgstr "Alleen actieve items"
 
 #. translators: %d: number of menu items shown.
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:446
 #, php-format
-msgid "%d items shown, from the menu as it is in the editor (also before saving). Hover an item for its URL."
-msgstr "%d onderdelen getoond, uit het menu zoals het in de editor staat (ook voor het opslaan). Wijs een onderdeel aan voor de URL."
+msgid "The menu currently holds %d items. Hold the pointer over an item to see its full URL."
+msgstr "Het menu bevat momenteel %d onderdelen. Houd de muisaanwijzer boven een onderdeel om de volledige URL te zien."
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:447
 msgid "Nothing of the menu is shown here."
@@ -1712,8 +1712,8 @@ msgid "Export"
 msgstr "Exporteren"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:494
-msgid "Download the menu as it is in the editor as a JSON file, for example to take it to a site where the default cannot be saved."
-msgstr "Download het menu zoals het in de editor staat als JSON-bestand, bijvoorbeeld om het mee te nemen naar een site waar de standaard niet kan worden opgeslagen."
+msgid "Download the current admin toolbar menu (including changes not saved yet) as a JSON file, for a later import on this or another website."
+msgstr "Download het huidige admin-toolbarmenu (inclusief nog niet opgeslagen wijzigingen) naar een JSON-bestand, voor een latere import op deze of een andere website."
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:495
 msgid "Download JSON"
@@ -1725,32 +1725,32 @@ msgid "Import"
 msgstr "Importeren"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:497
-msgid "From"
-msgstr "Uit"
+msgid "Source"
+msgstr "Bron"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:498
-msgid "The default that comes with the plugin"
-msgstr "De standaard die bij de plugin hoort"
+msgid "Restore the default menu"
+msgstr "Herstel naar het standaardmenu"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:499
 msgid "There is no default yet."
 msgstr "Er is nog geen standaard."
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:500
-msgid "A JSON file"
-msgstr "Een JSON-bestand"
+msgid "Import a JSON file"
+msgstr "Importeer een JSON-bestand"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:501
-msgid "How"
-msgstr "Hoe"
+msgid "Processing"
+msgstr "Verwerking"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:502
-msgid "Replace the menu in the editor"
-msgstr "Het menu in de editor vervangen"
+msgid "Renew the whole menu"
+msgstr "Vernieuw het hele menu"
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:503
-msgid "Merge: add the items the menu lacks (also items you removed earlier); your own items and arrangement stay"
-msgstr "Samenvoegen: voeg toe wat het menu mist (ook wat je eerder hebt verwijderd); je eigen onderdelen en indeling blijven"
+msgid "Keep the current menu and add to it from the import"
+msgstr "Laat het huidige menu staan en vul het aan met de import"
 
 #. translators: %d: number of menu items.
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:506
