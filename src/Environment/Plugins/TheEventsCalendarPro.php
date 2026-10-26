@@ -21,6 +21,7 @@ use Override;
 
 use function __;
 use function admin_url;
+use function sprintf;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -79,6 +80,95 @@ class TheEventsCalendarPro extends AbstractPlugin {
 				title:   __( 'Events Calendar Pro', 'core-functionality' ),
 				href:    admin_url( 'edit.php?post_type=tribe_events&page=tec-events-settings' ),
 				label:   __( 'The Events Calendar Pro Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			// Pages Events Calendar Pro adds, then its settings tabs.
+			new ToolbarShortcut(
+				id:          'cf-events-pro-series',
+				title:       __( 'Series', 'core-functionality' ),
+				href:        admin_url( 'edit.php?post_type=tribe_event_series' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Series', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-venue-categories',
+				title:       __( 'Venue Categories', 'core-functionality' ),
+				href:        admin_url( 'edit-tags.php?taxonomy=tec_venue_category&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Venue Categories', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-organizer-categories',
+				title:       __( 'Organizer Categories', 'core-functionality' ),
+				href:        admin_url( 'edit-tags.php?taxonomy=tec_organizer_category&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Organizer Categories', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-organizers',
+				title:       __( 'Organizers', 'core-functionality' ),
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=display-organizers-tab&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Organizers', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-defaults',
+				title:       __( 'Default Content', 'core-functionality' ),
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=defaults&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Default Content', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-default-venue',
+				title:       __( 'Default Venue', 'core-functionality' ),
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=defaults-venue-tab&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Default Venue', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-default-organizer',
+				title:       __( 'Default Organizer', 'core-functionality' ),
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=defaults-organizer-tab&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Default Organizer', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-additional-fields',
+				title:       __( 'Additional Fields', 'core-functionality' ),
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=additional-fields&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Additional Fields', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-meetings',
+				title:       __( 'Meetings', 'core-functionality' ),
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=meetings&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), __( 'Meetings', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-power-automate',
+				title:       'Power Automate',
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=power-automate&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), 'Power Automate' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-events-pro-settings-zapier',
+				title:       'Zapier',
+				href:        admin_url( 'edit.php?page=tec-events-settings&tab=zapier&post_type=tribe_events' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Events Calendar Pro: %s', 'core-functionality' ), 'Zapier' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

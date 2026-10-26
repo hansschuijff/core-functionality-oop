@@ -21,6 +21,7 @@ use Override;
 
 use function __;
 use function admin_url;
+use function sprintf;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -79,6 +80,31 @@ class EventTicketsPlus extends AbstractPlugin {
 				title:   __( 'Event Tickets Plus', 'core-functionality' ),
 				href:    admin_url( 'admin.php?page=tec-tickets-settings' ),
 				label:   __( 'Event Tickets Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			// Pages Event Tickets Plus adds to the Tickets menu.
+			new ToolbarShortcut(
+				id:          'cf-tickets-plus-purchase-rules',
+				title:       __( 'Purchase Rules', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=tec-tickets-plus-admin-purchase-rules' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets Plus: %s', 'core-functionality' ), __( 'Purchase Rules', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-tickets-plus-waitlist',
+				title:       __( 'Waitlist Subscribers', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=tec-tickets-plus-admin-waitlist-subscribers' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets Plus: %s', 'core-functionality' ), __( 'Waitlist Subscribers', 'core-functionality' ) ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-tickets-plus-fieldsets',
+				title:       __( 'Ticket Fieldsets', 'core-functionality' ),
+				href:        admin_url( 'edit.php?post_type=ticket-meta-fieldset' ),
+				/* translators: %s: title of the page or settings tab. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets Plus: %s', 'core-functionality' ), __( 'Ticket Fieldsets', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
 			),
 		);
