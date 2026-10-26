@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T18:01:25+01:00\n"
+"POT-Creation-Date: 2026-10-26T18:25:41+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -58,7 +58,7 @@ msgstr ""
 #: src/Environment/Plugins/SenseiLms.php:148
 #: src/Environment/Plugins/SpectraBlocks.php:110
 #: src/Environment/Plugins/SpectraLegacy.php:110
-#: src/Environment/Plugins/TheEventsCalendar.php:125
+#: src/Environment/Plugins/TheEventsCalendar.php:126
 #: src/Environment/Plugins/Woocommerce.php:112
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:81
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:482
@@ -462,12 +462,12 @@ msgstr ""
 #: src/Environment/Plugins/EventTickets.php:95
 #: src/Environment/Plugins/EventTickets.php:104
 #: src/Environment/Plugins/EventTickets.php:114
-#: src/Environment/Plugins/EventTickets.php:123
-#: src/Environment/Plugins/EventTickets.php:132
-#: src/Environment/Plugins/EventTickets.php:141
-#: src/Environment/Plugins/EventTickets.php:151
-#: src/Environment/Plugins/EventTickets.php:161
-#: src/Environment/Plugins/EventTickets.php:171
+#: src/Environment/Plugins/EventTickets.php:124
+#: src/Environment/Plugins/EventTickets.php:133
+#: src/Environment/Plugins/EventTickets.php:142
+#: src/Environment/Plugins/EventTickets.php:152
+#: src/Environment/Plugins/EventTickets.php:162
+#: src/Environment/Plugins/EventTickets.php:172
 #: src/Environment/Plugins/EventTicketsPlus.php:92
 #: src/Environment/Plugins/EventTicketsPlus.php:101
 #: src/Environment/Plugins/EventTicketsPlus.php:110
@@ -542,39 +542,39 @@ msgstr ""
 #: src/Environment/Plugins/SpectraLegacy.php:108
 #: src/Environment/Plugins/SpectraLegacy.php:116
 #: src/Environment/Plugins/TheEventsCalendar.php:82
-#: src/Environment/Plugins/TheEventsCalendar.php:90
-#: src/Environment/Plugins/TheEventsCalendar.php:98
-#: src/Environment/Plugins/TheEventsCalendar.php:106
-#: src/Environment/Plugins/TheEventsCalendar.php:114
-#: src/Environment/Plugins/TheEventsCalendar.php:123
-#: src/Environment/Plugins/TheEventsCalendar.php:133
-#: src/Environment/Plugins/TheEventsCalendar.php:140
-#: src/Environment/Plugins/TheEventsCalendar.php:149
-#: src/Environment/Plugins/TheEventsCalendar.php:159
-#: src/Environment/Plugins/TheEventsCalendar.php:169
-#: src/Environment/Plugins/TheEventsCalendar.php:179
-#: src/Environment/Plugins/TheEventsCalendar.php:188
-#: src/Environment/Plugins/TheEventsCalendar.php:198
-#: src/Environment/Plugins/TheEventsCalendar.php:208
-#: src/Environment/Plugins/TheEventsCalendar.php:217
-#: src/Environment/Plugins/TheEventsCalendar.php:227
-#: src/Environment/Plugins/TheEventsCalendar.php:237
-#: src/Environment/Plugins/TheEventsCalendar.php:247
-#: src/Environment/Plugins/TheEventsCalendar.php:257
-#: src/Environment/Plugins/TheEventsCalendar.php:267
-#: src/Environment/Plugins/TheEventsCalendar.php:277
-#: src/Environment/Plugins/TheEventsCalendar.php:287
-#: src/Environment/Plugins/TheEventsCalendar.php:297
-#: src/Environment/Plugins/TheEventsCalendar.php:307
-#: src/Environment/Plugins/TheEventsCalendar.php:317
-#: src/Environment/Plugins/TheEventsCalendar.php:327
-#: src/Environment/Plugins/TheEventsCalendar.php:337
-#: src/Environment/Plugins/TheEventsCalendar.php:347
-#: src/Environment/Plugins/TheEventsCalendar.php:357
-#: src/Environment/Plugins/TheEventsCalendar.php:367
-#: src/Environment/Plugins/TheEventsCalendar.php:377
-#: src/Environment/Plugins/TheEventsCalendar.php:387
-#: src/Environment/Plugins/TheEventsCalendar.php:397
+#: src/Environment/Plugins/TheEventsCalendar.php:91
+#: src/Environment/Plugins/TheEventsCalendar.php:99
+#: src/Environment/Plugins/TheEventsCalendar.php:107
+#: src/Environment/Plugins/TheEventsCalendar.php:115
+#: src/Environment/Plugins/TheEventsCalendar.php:124
+#: src/Environment/Plugins/TheEventsCalendar.php:134
+#: src/Environment/Plugins/TheEventsCalendar.php:141
+#: src/Environment/Plugins/TheEventsCalendar.php:150
+#: src/Environment/Plugins/TheEventsCalendar.php:160
+#: src/Environment/Plugins/TheEventsCalendar.php:170
+#: src/Environment/Plugins/TheEventsCalendar.php:180
+#: src/Environment/Plugins/TheEventsCalendar.php:189
+#: src/Environment/Plugins/TheEventsCalendar.php:199
+#: src/Environment/Plugins/TheEventsCalendar.php:209
+#: src/Environment/Plugins/TheEventsCalendar.php:218
+#: src/Environment/Plugins/TheEventsCalendar.php:228
+#: src/Environment/Plugins/TheEventsCalendar.php:238
+#: src/Environment/Plugins/TheEventsCalendar.php:248
+#: src/Environment/Plugins/TheEventsCalendar.php:258
+#: src/Environment/Plugins/TheEventsCalendar.php:268
+#: src/Environment/Plugins/TheEventsCalendar.php:278
+#: src/Environment/Plugins/TheEventsCalendar.php:288
+#: src/Environment/Plugins/TheEventsCalendar.php:298
+#: src/Environment/Plugins/TheEventsCalendar.php:308
+#: src/Environment/Plugins/TheEventsCalendar.php:318
+#: src/Environment/Plugins/TheEventsCalendar.php:328
+#: src/Environment/Plugins/TheEventsCalendar.php:338
+#: src/Environment/Plugins/TheEventsCalendar.php:348
+#: src/Environment/Plugins/TheEventsCalendar.php:358
+#: src/Environment/Plugins/TheEventsCalendar.php:368
+#: src/Environment/Plugins/TheEventsCalendar.php:378
+#: src/Environment/Plugins/TheEventsCalendar.php:388
+#: src/Environment/Plugins/TheEventsCalendar.php:398
 #: src/Environment/Plugins/TheEventsCalendarPro.php:92
 #: src/Environment/Plugins/TheEventsCalendarPro.php:101
 #: src/Environment/Plugins/TheEventsCalendarPro.php:111
@@ -707,7 +707,9 @@ msgid "Edit Posts"
 msgstr ""
 
 #: src/Environment/Core/WordPress.php:199
-msgid "All Posts"
+#: src/Environment/Core/WordPress.php:242
+#: src/Environment/Plugins/TheEventsCalendar.php:84
+msgid "Edit"
 msgstr ""
 
 #: src/Environment/Core/WordPress.php:204
@@ -723,7 +725,7 @@ msgstr ""
 #: src/Environment/Core/WordPress.php:217
 #: src/Environment/Plugins/BeaverBuilder.php:118
 #: src/Environment/Plugins/SenseiLms.php:103
-#: src/Environment/Plugins/TheEventsCalendar.php:116
+#: src/Environment/Plugins/TheEventsCalendar.php:117
 #: src/Environment/Plugins/TheEventsCalendarPro.php:103
 #: src/Environment/Plugins/TheEventsCalendarPro.php:113
 #: src/Environment/Plugins/Woocommerce.php:96
@@ -736,7 +738,7 @@ msgstr ""
 
 #: src/Environment/Core/WordPress.php:224
 #: src/Environment/Core/WordPress.php:226
-#: src/Environment/Plugins/TheEventsCalendar.php:161
+#: src/Environment/Plugins/TheEventsCalendar.php:162
 msgid "Tags"
 msgstr ""
 
@@ -748,10 +750,6 @@ msgstr ""
 #: src/Environment/Core/WordPress.php:238
 #: src/Environment/Core/WordPress.php:240
 msgid "Pages"
-msgstr ""
-
-#: src/Environment/Core/WordPress.php:242
-msgid "All Pages"
 msgstr ""
 
 #: src/Environment/Core/WordPress.php:247
@@ -893,8 +891,8 @@ msgstr ""
 
 #. translators: %s: title of the page or settings tab.
 #: src/Environment/Plugins/Automatewoo.php:165
-#: src/Environment/Plugins/TheEventsCalendar.php:227
-#: src/Environment/Plugins/TheEventsCalendar.php:229
+#: src/Environment/Plugins/TheEventsCalendar.php:228
+#: src/Environment/Plugins/TheEventsCalendar.php:230
 msgid "General"
 msgstr ""
 
@@ -1037,7 +1035,7 @@ msgid "Beaver Builder: Add New Template"
 msgstr ""
 
 #: src/Environment/Plugins/BeaverBuilder.php:126
-#: src/Environment/Plugins/TheEventsCalendar.php:151
+#: src/Environment/Plugins/TheEventsCalendar.php:152
 msgid "Add New"
 msgstr ""
 
@@ -1077,12 +1075,12 @@ msgstr ""
 #: src/Environment/Plugins/EventTickets.php:95
 #: src/Environment/Plugins/EventTickets.php:104
 #: src/Environment/Plugins/EventTickets.php:114
-#: src/Environment/Plugins/EventTickets.php:123
-#: src/Environment/Plugins/EventTickets.php:132
-#: src/Environment/Plugins/EventTickets.php:141
-#: src/Environment/Plugins/EventTickets.php:151
-#: src/Environment/Plugins/EventTickets.php:161
-#: src/Environment/Plugins/EventTickets.php:171
+#: src/Environment/Plugins/EventTickets.php:124
+#: src/Environment/Plugins/EventTickets.php:133
+#: src/Environment/Plugins/EventTickets.php:142
+#: src/Environment/Plugins/EventTickets.php:152
+#: src/Environment/Plugins/EventTickets.php:162
+#: src/Environment/Plugins/EventTickets.php:172
 #, php-format
 msgid "Event Tickets: %s"
 msgstr ""
@@ -1103,63 +1101,67 @@ msgstr ""
 msgid "All Tickets"
 msgstr ""
 
+#: src/Environment/Plugins/EventTickets.php:116
+msgid "Overview"
+msgstr ""
+
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/EventTickets.php:120
-#: src/Environment/Plugins/EventTickets.php:123
+#: src/Environment/Plugins/EventTickets.php:121
+#: src/Environment/Plugins/EventTickets.php:124
 msgid "Attendees"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/EventTickets.php:129
-#: src/Environment/Plugins/EventTickets.php:132
+#: src/Environment/Plugins/EventTickets.php:130
+#: src/Environment/Plugins/EventTickets.php:133
 msgid "Coupons & Fees"
 msgstr ""
 
-#: src/Environment/Plugins/EventTickets.php:138
+#: src/Environment/Plugins/EventTickets.php:139
 msgid "Ticket Orders"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/EventTickets.php:141
-#: src/Environment/Plugins/EventTickets.php:143
+#: src/Environment/Plugins/EventTickets.php:142
+#: src/Environment/Plugins/EventTickets.php:144
 #: src/Environment/Plugins/Woocommerce.php:73
 #: src/Environment/Plugins/Woocommerce.php:136
 msgid "Orders"
 msgstr ""
 
-#: src/Environment/Plugins/EventTickets.php:148
+#: src/Environment/Plugins/EventTickets.php:149
 msgid "Tickets Help"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/EventTickets.php:151
-#: src/Environment/Plugins/EventTickets.php:153
-#: src/Environment/Plugins/TheEventsCalendar.php:188
-#: src/Environment/Plugins/TheEventsCalendar.php:190
+#: src/Environment/Plugins/EventTickets.php:152
+#: src/Environment/Plugins/EventTickets.php:154
+#: src/Environment/Plugins/TheEventsCalendar.php:189
+#: src/Environment/Plugins/TheEventsCalendar.php:191
 msgid "Help"
 msgstr ""
 
-#: src/Environment/Plugins/EventTickets.php:158
+#: src/Environment/Plugins/EventTickets.php:159
 msgid "Tickets Troubleshooting"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/EventTickets.php:161
-#: src/Environment/Plugins/EventTickets.php:163
-#: src/Environment/Plugins/TheEventsCalendar.php:198
-#: src/Environment/Plugins/TheEventsCalendar.php:200
+#: src/Environment/Plugins/EventTickets.php:162
+#: src/Environment/Plugins/EventTickets.php:164
+#: src/Environment/Plugins/TheEventsCalendar.php:199
+#: src/Environment/Plugins/TheEventsCalendar.php:201
 msgid "Troubleshooting"
 msgstr ""
 
-#: src/Environment/Plugins/EventTickets.php:168
+#: src/Environment/Plugins/EventTickets.php:169
 msgid "Tickets Setup Guide"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/EventTickets.php:171
-#: src/Environment/Plugins/EventTickets.php:173
-#: src/Environment/Plugins/TheEventsCalendar.php:217
-#: src/Environment/Plugins/TheEventsCalendar.php:219
+#: src/Environment/Plugins/EventTickets.php:172
+#: src/Environment/Plugins/EventTickets.php:174
+#: src/Environment/Plugins/TheEventsCalendar.php:218
+#: src/Environment/Plugins/TheEventsCalendar.php:220
 msgid "Setup Guide"
 msgstr ""
 
@@ -1704,300 +1706,300 @@ msgstr ""
 
 #: src/Environment/Plugins/TheEventsCalendar.php:80
 #: src/Environment/Plugins/TheEventsCalendar.php:82
-#: src/Environment/Plugins/TheEventsCalendar.php:90
-#: src/Environment/Plugins/TheEventsCalendar.php:131
+#: src/Environment/Plugins/TheEventsCalendar.php:91
+#: src/Environment/Plugins/TheEventsCalendar.php:132
 msgid "Events"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:88
+#: src/Environment/Plugins/TheEventsCalendar.php:89
 msgid "All Events"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:96
+#: src/Environment/Plugins/TheEventsCalendar.php:97
 #: src/Environment/Plugins/TheEventsCalendarPro.php:121
 #: src/Environment/Plugins/TheEventsCalendarPro.php:123
 msgid "Organizers"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:98
+#: src/Environment/Plugins/TheEventsCalendar.php:99
 msgid "Event Organizers"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:104
+#: src/Environment/Plugins/TheEventsCalendar.php:105
 msgid "Venues"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:106
+#: src/Environment/Plugins/TheEventsCalendar.php:107
 msgid "Event Venues"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:112
-#: src/Environment/Plugins/TheEventsCalendar.php:114
+#: src/Environment/Plugins/TheEventsCalendar.php:113
+#: src/Environment/Plugins/TheEventsCalendar.php:115
 msgid "Event Categories"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:121
+#: src/Environment/Plugins/TheEventsCalendar.php:122
 msgid "Event Settings"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:123
+#: src/Environment/Plugins/TheEventsCalendar.php:124
 msgid "Events Calendar Settings"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:133
+#: src/Environment/Plugins/TheEventsCalendar.php:134
 msgid "The Events Calendar"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:138
-#: src/Environment/Plugins/TheEventsCalendar.php:140
+#: src/Environment/Plugins/TheEventsCalendar.php:139
+#: src/Environment/Plugins/TheEventsCalendar.php:141
 msgid "Family Constellations"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:146
-#: src/Environment/Plugins/TheEventsCalendar.php:149
+#: src/Environment/Plugins/TheEventsCalendar.php:147
+#: src/Environment/Plugins/TheEventsCalendar.php:150
 msgid "Add Event"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:149
-#: src/Environment/Plugins/TheEventsCalendar.php:159
-#: src/Environment/Plugins/TheEventsCalendar.php:169
-#: src/Environment/Plugins/TheEventsCalendar.php:179
-#: src/Environment/Plugins/TheEventsCalendar.php:188
-#: src/Environment/Plugins/TheEventsCalendar.php:198
-#: src/Environment/Plugins/TheEventsCalendar.php:208
-#: src/Environment/Plugins/TheEventsCalendar.php:217
-#: src/Environment/Plugins/TheEventsCalendar.php:227
-#: src/Environment/Plugins/TheEventsCalendar.php:237
-#: src/Environment/Plugins/TheEventsCalendar.php:247
-#: src/Environment/Plugins/TheEventsCalendar.php:257
-#: src/Environment/Plugins/TheEventsCalendar.php:267
-#: src/Environment/Plugins/TheEventsCalendar.php:277
-#: src/Environment/Plugins/TheEventsCalendar.php:287
-#: src/Environment/Plugins/TheEventsCalendar.php:297
-#: src/Environment/Plugins/TheEventsCalendar.php:307
-#: src/Environment/Plugins/TheEventsCalendar.php:317
-#: src/Environment/Plugins/TheEventsCalendar.php:327
-#: src/Environment/Plugins/TheEventsCalendar.php:337
-#: src/Environment/Plugins/TheEventsCalendar.php:347
-#: src/Environment/Plugins/TheEventsCalendar.php:357
-#: src/Environment/Plugins/TheEventsCalendar.php:367
-#: src/Environment/Plugins/TheEventsCalendar.php:377
-#: src/Environment/Plugins/TheEventsCalendar.php:387
-#: src/Environment/Plugins/TheEventsCalendar.php:397
+#: src/Environment/Plugins/TheEventsCalendar.php:150
+#: src/Environment/Plugins/TheEventsCalendar.php:160
+#: src/Environment/Plugins/TheEventsCalendar.php:170
+#: src/Environment/Plugins/TheEventsCalendar.php:180
+#: src/Environment/Plugins/TheEventsCalendar.php:189
+#: src/Environment/Plugins/TheEventsCalendar.php:199
+#: src/Environment/Plugins/TheEventsCalendar.php:209
+#: src/Environment/Plugins/TheEventsCalendar.php:218
+#: src/Environment/Plugins/TheEventsCalendar.php:228
+#: src/Environment/Plugins/TheEventsCalendar.php:238
+#: src/Environment/Plugins/TheEventsCalendar.php:248
+#: src/Environment/Plugins/TheEventsCalendar.php:258
+#: src/Environment/Plugins/TheEventsCalendar.php:268
+#: src/Environment/Plugins/TheEventsCalendar.php:278
+#: src/Environment/Plugins/TheEventsCalendar.php:288
+#: src/Environment/Plugins/TheEventsCalendar.php:298
+#: src/Environment/Plugins/TheEventsCalendar.php:308
+#: src/Environment/Plugins/TheEventsCalendar.php:318
+#: src/Environment/Plugins/TheEventsCalendar.php:328
+#: src/Environment/Plugins/TheEventsCalendar.php:338
+#: src/Environment/Plugins/TheEventsCalendar.php:348
+#: src/Environment/Plugins/TheEventsCalendar.php:358
+#: src/Environment/Plugins/TheEventsCalendar.php:368
+#: src/Environment/Plugins/TheEventsCalendar.php:378
+#: src/Environment/Plugins/TheEventsCalendar.php:388
+#: src/Environment/Plugins/TheEventsCalendar.php:398
 #, php-format
 msgid "The Events Calendar: %s"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:156
-#: src/Environment/Plugins/TheEventsCalendar.php:159
+#: src/Environment/Plugins/TheEventsCalendar.php:157
+#: src/Environment/Plugins/TheEventsCalendar.php:160
 msgid "Event Tags"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:166
+#: src/Environment/Plugins/TheEventsCalendar.php:167
 msgid "Event Import"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:169
-#: src/Environment/Plugins/TheEventsCalendar.php:171
-#: src/Environment/Plugins/TheEventsCalendar.php:387
-#: src/Environment/Plugins/TheEventsCalendar.php:389
+#: src/Environment/Plugins/TheEventsCalendar.php:170
+#: src/Environment/Plugins/TheEventsCalendar.php:172
+#: src/Environment/Plugins/TheEventsCalendar.php:388
+#: src/Environment/Plugins/TheEventsCalendar.php:390
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:499
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:507
 msgid "Import"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:176
-#: src/Environment/Plugins/TheEventsCalendar.php:179
+#: src/Environment/Plugins/TheEventsCalendar.php:177
+#: src/Environment/Plugins/TheEventsCalendar.php:180
 msgid "Calendar Embeds"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:185
+#: src/Environment/Plugins/TheEventsCalendar.php:186
 msgid "Events Help"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:195
+#: src/Environment/Plugins/TheEventsCalendar.php:196
 msgid "Events Troubleshooting"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:205
-#: src/Environment/Plugins/TheEventsCalendar.php:208
+#: src/Environment/Plugins/TheEventsCalendar.php:206
+#: src/Environment/Plugins/TheEventsCalendar.php:209
 msgid "Event Add-Ons"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:214
+#: src/Environment/Plugins/TheEventsCalendar.php:215
 msgid "Events Setup Guide"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:224
+#: src/Environment/Plugins/TheEventsCalendar.php:225
 msgid "Event Settings: General"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:234
+#: src/Environment/Plugins/TheEventsCalendar.php:235
 msgid "Event Settings: Viewing"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:237
-#: src/Environment/Plugins/TheEventsCalendar.php:239
+#: src/Environment/Plugins/TheEventsCalendar.php:238
+#: src/Environment/Plugins/TheEventsCalendar.php:240
 msgid "Viewing"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:244
+#: src/Environment/Plugins/TheEventsCalendar.php:245
 msgid "Event Settings: Editing"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:247
-#: src/Environment/Plugins/TheEventsCalendar.php:249
+#: src/Environment/Plugins/TheEventsCalendar.php:248
+#: src/Environment/Plugins/TheEventsCalendar.php:250
 msgid "Editing"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:254
+#: src/Environment/Plugins/TheEventsCalendar.php:255
 msgid "Event Settings: Maintenance"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:257
-#: src/Environment/Plugins/TheEventsCalendar.php:259
+#: src/Environment/Plugins/TheEventsCalendar.php:258
+#: src/Environment/Plugins/TheEventsCalendar.php:260
 msgid "Maintenance"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:264
+#: src/Environment/Plugins/TheEventsCalendar.php:265
 msgid "Event Settings: Debugging"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:267
-#: src/Environment/Plugins/TheEventsCalendar.php:269
+#: src/Environment/Plugins/TheEventsCalendar.php:268
+#: src/Environment/Plugins/TheEventsCalendar.php:270
 msgid "Debugging"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:274
+#: src/Environment/Plugins/TheEventsCalendar.php:275
 msgid "Event Settings: Display"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:277
-#: src/Environment/Plugins/TheEventsCalendar.php:279
+#: src/Environment/Plugins/TheEventsCalendar.php:278
+#: src/Environment/Plugins/TheEventsCalendar.php:280
 msgid "Display"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:284
+#: src/Environment/Plugins/TheEventsCalendar.php:285
 msgid "Event Settings: Calendar"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:287
-#: src/Environment/Plugins/TheEventsCalendar.php:289
+#: src/Environment/Plugins/TheEventsCalendar.php:288
+#: src/Environment/Plugins/TheEventsCalendar.php:290
 msgid "Calendar"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:294
+#: src/Environment/Plugins/TheEventsCalendar.php:295
 msgid "Event Settings: Date & Time"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:297
-#: src/Environment/Plugins/TheEventsCalendar.php:299
+#: src/Environment/Plugins/TheEventsCalendar.php:298
+#: src/Environment/Plugins/TheEventsCalendar.php:300
 msgid "Date & Time"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:304
+#: src/Environment/Plugins/TheEventsCalendar.php:305
 msgid "Event Settings: Currency"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:307
-#: src/Environment/Plugins/TheEventsCalendar.php:309
+#: src/Environment/Plugins/TheEventsCalendar.php:308
+#: src/Environment/Plugins/TheEventsCalendar.php:310
 msgid "Currency"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:314
+#: src/Environment/Plugins/TheEventsCalendar.php:315
 msgid "Event Settings: Maps"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:317
-#: src/Environment/Plugins/TheEventsCalendar.php:319
+#: src/Environment/Plugins/TheEventsCalendar.php:318
+#: src/Environment/Plugins/TheEventsCalendar.php:320
 msgid "Maps"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:324
+#: src/Environment/Plugins/TheEventsCalendar.php:325
 msgid "Event Settings: Additional Content"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:327
-#: src/Environment/Plugins/TheEventsCalendar.php:329
+#: src/Environment/Plugins/TheEventsCalendar.php:328
+#: src/Environment/Plugins/TheEventsCalendar.php:330
 msgid "Additional Content"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:334
+#: src/Environment/Plugins/TheEventsCalendar.php:335
 msgid "Event Settings: Category Colors"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:337
-#: src/Environment/Plugins/TheEventsCalendar.php:339
+#: src/Environment/Plugins/TheEventsCalendar.php:338
+#: src/Environment/Plugins/TheEventsCalendar.php:340
 msgid "Category Colors"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:344
+#: src/Environment/Plugins/TheEventsCalendar.php:345
 msgid "Event Settings: SEO & URLs"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:347
-#: src/Environment/Plugins/TheEventsCalendar.php:349
+#: src/Environment/Plugins/TheEventsCalendar.php:348
+#: src/Environment/Plugins/TheEventsCalendar.php:350
 msgid "SEO & URLs"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:354
+#: src/Environment/Plugins/TheEventsCalendar.php:355
 msgid "Event Settings: Licenses"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:357
-#: src/Environment/Plugins/TheEventsCalendar.php:359
+#: src/Environment/Plugins/TheEventsCalendar.php:358
+#: src/Environment/Plugins/TheEventsCalendar.php:360
 msgid "Licenses"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:364
+#: src/Environment/Plugins/TheEventsCalendar.php:365
 msgid "Event Settings: Integrations"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:367
-#: src/Environment/Plugins/TheEventsCalendar.php:369
+#: src/Environment/Plugins/TheEventsCalendar.php:368
+#: src/Environment/Plugins/TheEventsCalendar.php:370
 msgid "Integrations"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:374
+#: src/Environment/Plugins/TheEventsCalendar.php:375
 msgid "Event Settings: Google Maps"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:379
+#: src/Environment/Plugins/TheEventsCalendar.php:380
 msgid "Google Maps"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:384
+#: src/Environment/Plugins/TheEventsCalendar.php:385
 msgid "Event Settings: Import"
 msgstr ""
 
-#: src/Environment/Plugins/TheEventsCalendar.php:394
+#: src/Environment/Plugins/TheEventsCalendar.php:395
 msgid "Event Settings: Imports"
 msgstr ""
 
 #. translators: %s: title of the page or settings tab.
-#: src/Environment/Plugins/TheEventsCalendar.php:397
-#: src/Environment/Plugins/TheEventsCalendar.php:399
+#: src/Environment/Plugins/TheEventsCalendar.php:398
+#: src/Environment/Plugins/TheEventsCalendar.php:400
 msgid "Imports"
 msgstr ""
 

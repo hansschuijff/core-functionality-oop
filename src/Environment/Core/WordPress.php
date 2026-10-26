@@ -196,7 +196,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'edit.php' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Edit Posts', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
-				short_title: __( 'All Posts', 'core-functionality' ),
+				short_title: __( 'Edit', 'core-functionality' ),
 				group:       'posts',
 			),
 			new ToolbarShortcut(
@@ -239,7 +239,7 @@ class WordPress implements EnvironmentInterface, ToolbarProviderInterface {
 				href:    admin_url( 'edit.php?post_type=page' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Pages', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
-				short_title: __( 'All Pages', 'core-functionality' ),
+				short_title: __( 'Edit', 'core-functionality' ),
 				group:       'pages',
 			),
 			new ToolbarShortcut(

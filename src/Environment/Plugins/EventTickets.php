@@ -113,6 +113,7 @@ class EventTickets extends AbstractPlugin {
 				/* translators: %s: title of the page or settings tab. */
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Event Tickets: %s', 'core-functionality' ), __( 'All Tickets', 'core-functionality' ) ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Overview', 'core-functionality' ),
 				group:       'tickets',
 			),
 			new ToolbarShortcut(

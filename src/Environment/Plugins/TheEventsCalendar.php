@@ -81,6 +81,7 @@ class TheEventsCalendar extends AbstractPlugin {
 				href:    admin_url( 'edit.php?post_type=tribe_events' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Events', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
+				short_title: __( 'Edit', 'core-functionality' ),
 				group:       'events',
 			),
 			new ToolbarShortcut(
