@@ -1430,6 +1430,249 @@
 			openDialog(previewBox);
 		}
 
+		/* ------------------------------------------------------------------ import and export */
+
+		// A saved tree (nested, as stored) to rows for the editor, with the catalogue data of each
+		// shortcut. Used for the default and for imported JSON files.
+		const poolById  = new Map();
+		const customRow = data.pool.find(function (row) {
+			return 'submenu' === row.type;
+		});
+		data.pool.forEach(function (row) {
+			if ('shortcut' === row.type && !poolById.has(row.id)) {
+				poolById.set(row.id, row);
+			}
+		});
+
+		function treeToRows(level, depth, out) {
+			Object.keys(level || {}).forEach(function (instance) {
+				const meta = level[ instance ];
+				if (!meta || 'object' !== typeof meta) {
+					return;
+				}
+
+				let row;
+				if ('submenu' === meta.type) {
+					row = Object.assign({}, customRow, { id: String(meta.id || 'submenu'), defaultTitle: '', label: '', href: '#' === meta.href ? '' : String(meta.href || '') });
+				} else if (poolById.has(meta.id)) {
+					row = Object.assign({}, poolById.get(meta.id));
+				} else {
+					row = { id: String(meta.id || ''), type: 'shortcut', provider: '', providerName: t.statusUnknown, status: 'unknown', kind: 'both', defaultTitle: String(meta.title || meta.id || ''), label: '', href: '' };
+				}
+
+				const title = String(meta.title || '');
+				out.push(Object.assign(row, {
+					instance: String(instance),
+					title: 'shortcut' === row.type && title === row.defaultTitle ? '' : title,
+					visibility: [ 'admin', 'frontend' ].includes(meta.visibility) ? meta.visibility : 'both',
+					depth: depth,
+				}));
+
+				if (meta.children && 'object' === typeof meta.children && depth < maxDepth) {
+					treeToRows(meta.children, depth + 1, out);
+				}
+			});
+			return out;
+		}
+
+		function replaceWith(newRows) {
+			clearSelection();
+			treeNodes().forEach(function (node) {
+				node.remove();
+			});
+			newRows.forEach(function (row) {
+				tree.appendChild(createTreeNode(row, row.depth));
+			});
+			updateEmptyState();
+			serialize();
+		}
+
+		// Adds the rows the menu lacks (by instance id, so nothing twice): after their predecessor
+		// from the source if the menu has it, else first under their parent, else at the end.
+		function mergeRows(newRows) {
+			const present  = new Map(treeNodes().map(function (node) {
+				return [ node.dataset.instance, node ];
+			}));
+			const parents  = [];
+			const previous = {};
+			const lastAt   = {};
+			let added      = 0;
+
+			newRows.forEach(function (row) {
+				parents.length = row.depth;
+				const parent   = 0 === row.depth ? '' : (parents[ row.depth - 1 ] || '');
+				previous[ row.instance ] = lastAt[ parent ] || '';
+				lastAt[ parent ] = row.instance;
+				parents[ row.depth ] = row.instance;
+				row.parent = parent;
+			});
+
+			newRows.forEach(function (row) {
+				if (present.has(row.instance)) {
+					return;
+				}
+
+				const before = present.get(previous[ row.instance ]);
+				const parent = present.get(row.parent);
+				let after    = null;
+				let depth    = 0;
+
+				if (before) {
+					const branch = branchOf(before);
+					after = branch[ branch.length - 1 ];
+					depth = depthOf(before);
+				} else if (parent) {
+					after = parent;
+					depth = depthOf(parent) + 1;
+				}
+
+				const node = createTreeNode(row, Math.min(depth, maxDepth));
+				tree.insertBefore(node, after ? after.nextElementSibling : null);
+				present.set(row.instance, node);
+				added++;
+			});
+
+			updateEmptyState();
+			serialize();
+			return added;
+		}
+
+		const message = el('p', 'dwp-mb-message');
+		message.hidden = true;
+		tree.before(message);
+
+		function showMessage(text) {
+			message.textContent = text;
+			message.hidden = false;
+		}
+
+		const transferBox = createDialog('dwp-mb-transfer-title', t.transferTitle);
+
+		function radio(name, value, text, checked) {
+			const label = el('label', 'dwp-mb-choice');
+			const input = el('input');
+			input.type = 'radio';
+			input.name = name;
+			input.value = value;
+			input.checked = checked;
+			label.append(input, el('span', '', text));
+			return label;
+		}
+
+		const exportButton = el('button', 'button', t.exportButton);
+		exportButton.type = 'button';
+		exportButton.addEventListener('click', function () {
+			const payload = { format: 'core-functionality/toolbar-menu', version: 1, tree: JSON.parse(serialized.value || '{}') };
+			const url     = URL.createObjectURL(new Blob([ JSON.stringify(payload, null, 2) ], { type: 'application/json' }));
+			const link    = el('a');
+			link.href = url;
+			link.download = 'toolbar-menu.json';
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+			window.setTimeout(function () {
+				URL.revokeObjectURL(url);
+			}, 1000);
+		});
+
+		const hasDefault   = !!data.default && 'object' === typeof data.default;
+		const sourceDef    = radio('dwp-mb-import-source', 'default', t.importDefault, hasDefault);
+		const sourceFile   = radio('dwp-mb-import-source', 'file', t.importFile, !hasDefault);
+		const fileInput    = el('input', 'dwp-mb-import-file');
+		const modeReplace  = radio('dwp-mb-import-mode', 'replace', t.importReplace, true);
+		const modeMerge    = radio('dwp-mb-import-mode', 'merge', t.importMerge, false);
+		const importButton = el('button', 'button button-primary', t.importButton);
+		const importError  = el('p', 'dwp-mb-import-error');
+
+		fileInput.type = 'file';
+		fileInput.accept = '.json,application/json';
+		fileInput.addEventListener('change', function () {
+			sourceFile.querySelector('input').checked = true;
+		});
+		if (!hasDefault) {
+			sourceDef.querySelector('input').disabled = true;
+			sourceDef.appendChild(el('span', 'description', ' ' + t.importNoDefault));
+		}
+		importButton.type = 'button';
+		importError.hidden = true;
+
+		function fieldset(legendText, children) {
+			const set = el('fieldset', 'dwp-mb-fieldset');
+			set.appendChild(el('legend', '', legendText));
+			children.forEach(function (child) {
+				set.appendChild(child);
+			});
+			return set;
+		}
+
+		transferBox.body.append(
+			el('h3', '', t.exportHeading),
+			el('p', 'description', t.exportText),
+			exportButton,
+			el('h3', '', t.importHeading),
+			fieldset(t.importSource, [ sourceDef, sourceFile, fileInput ]),
+			fieldset(t.importMode, [ modeReplace, modeMerge ]),
+			importError,
+			importButton
+		);
+
+		function failImport(text) {
+			importError.textContent = text;
+			importError.hidden = false;
+		}
+
+		function applyImport(nested) {
+			if (!nested || 'object' !== typeof nested || Array.isArray(nested)) {
+				failImport(t.importInvalid);
+				return;
+			}
+
+			const newRows = treeToRows(nested, 0, []);
+			const merge   = modeMerge.querySelector('input').checked;
+
+			if (merge) {
+				showMessage(t.importMerged.replace('%d', String(mergeRows(newRows))));
+			} else {
+				replaceWith(newRows);
+				showMessage(t.importReplaced.replace('%d', String(newRows.length)));
+			}
+			closeDialog();
+		}
+
+		importButton.addEventListener('click', function () {
+			importError.hidden = true;
+
+			if (sourceDef.querySelector('input').checked) {
+				applyImport(data.default);
+				return;
+			}
+
+			const file = fileInput.files && fileInput.files[ 0 ];
+			if (!file) {
+				failImport(t.importNoFile);
+				return;
+			}
+
+			file.text().then(function (text) {
+				let parsed = null;
+				try {
+					parsed = JSON.parse(text);
+				} catch (error) {
+					failImport(t.importInvalid);
+					return;
+				}
+				applyImport(parsed && parsed.tree ? parsed.tree : parsed);
+			});
+		});
+
+		const transferButton = document.querySelector('.js-dwp-mb-transfer');
+		if (transferButton) {
+			transferButton.addEventListener('click', function () {
+				importError.hidden = true;
+				openDialog(transferBox);
+			});
+		}
+
 		/* ------------------------------------------------------------------ tools above the menu */
 
 		function toolButton(icon, text) {
@@ -1643,15 +1886,7 @@
 		serialize();
 
 		if (form) {
-			form.addEventListener('submit', function (event) {
-				const action  = event.submitter ? event.submitter.value : '';
-				const question = { 'restore-default': t.restoreConfirm, 'merge-default': t.mergeConfirm }[ action ];
-				if (question && !window.confirm(question)) {
-					event.preventDefault();
-					return;
-				}
-				serialize();
-			});
+			form.addEventListener('submit', serialize);
 		}
 	});
 }());

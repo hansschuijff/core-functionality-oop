@@ -845,3 +845,42 @@
 		padding: 12px;
 	}
 }
+
+/* Import and export. */
+
+.dwp-mb-message {
+	margin: 0 0 8px;
+	padding: 6px 10px;
+	border-left: 4px solid #00a32a;
+	background: #f0f6fc;
+}
+
+.dwp-mb-dialog h3 {
+	margin: 1em 0 0.4em;
+}
+
+.dwp-mb-dialog h3:first-child {
+	margin-top: 0.4em;
+}
+
+.dwp-mb-fieldset {
+	margin: 0 0 12px;
+}
+
+.dwp-mb-fieldset legend {
+	margin-bottom: 4px;
+	font-weight: 600;
+}
+
+.dwp-mb-choice {
+	display: block;
+	margin: 2px 0;
+}
+
+.dwp-mb-import-file {
+	margin: 4px 0 0 24px;
+}
+
+.dwp-mb-import-error {
+	color: #d63638;
+}
