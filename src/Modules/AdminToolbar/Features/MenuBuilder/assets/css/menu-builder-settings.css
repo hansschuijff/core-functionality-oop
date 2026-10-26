@@ -427,6 +427,23 @@
 	height: 100%;
 }
 
+/* The preview fills the rest of the dialog and scrolls itself, so the dark area keeps one size too. */
+.dwp-mb-dialog--fixed .dwp-mb-dialog-body {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.dwp-mb-dialog--fixed .dwp-mb-dialog-body > * {
+	flex-shrink: 0;
+}
+
+.dwp-mb-dialog--fixed .dwp-mb-preview {
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+}
+
 .dwp-mb-dialog-footer {
 	flex-shrink: 0;
 	padding: 12px 24px;
