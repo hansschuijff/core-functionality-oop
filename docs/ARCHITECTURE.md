@@ -179,7 +179,8 @@ indented line shows where it lands, so a node dragged sideways in place is inden
 Dragging a checked pool item takes all checked items along; dragging a source's heading drops a submenu
 named after the source with its shortcuts (at the deepest level only the shortcuts). The pool shows each
 shortcut's URL and the search covers it. "Preview" shows the menu as the toolbar would, for admin pages or
-the site, with only the plugins active here or all of them.
+the site, with all plugins or only those active here; submenus start closed and open with a click.
+(Hans had a toolbar-like flyout on hover in mind; the list is fine for now.)
 
 The menu can travel with the plugin: "Save as default" (on a site where the settings folder is writable,
 in practice development; deliberately a separate button, in case a production site can write there too)
