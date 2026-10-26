@@ -65,14 +65,15 @@ class Automatewoo extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_toolbar_nodes(): array {
-		// The first node is the menu head; its id is in saved menus, so it keeps it. The others
-		// follow AutomateWoo's own admin menu.
+		// The first node is the menu head and goes to the workflows, like AutomateWoo's own menu
+		// head; its id is in saved menus, so it keeps the old name. The others follow
+		// AutomateWoo's own admin menu.
 		return array(
 			new ToolbarShortcut(
 				id:          'cf-automatewoo-dashboard',
 				title:       __( 'AutomateWoo', 'core-functionality' ),
-				href:        admin_url( 'admin.php?page=automatewoo-dashboard' ),
-				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Dashboard', 'core-functionality' ),
+				href:        admin_url( 'edit.php?post_type=aw_workflow' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Workflows', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
