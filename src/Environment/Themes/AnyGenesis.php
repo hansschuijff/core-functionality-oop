@@ -70,12 +70,48 @@ class AnyGenesis extends AbstractTheme {
 	 */
 	#[Override]
 	public function get_toolbar_nodes(): array {
+		// The menu head first, then Genesis's own admin menu.
 		return array(
 			new ToolbarShortcut(
-				id:      'cf-genesis-theme-settings',
-				title:   __( 'Genesis Framework', 'core-functionality' ),
+				id:      'cf-genesis',
+				title:   'Genesis',
 				href:    admin_url( 'admin.php?page=genesis' ),
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Framework', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-genesis-theme-settings',
+				title:   __( 'Theme Settings', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=genesis' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Theme Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-genesis-seo-settings',
+				title:   __( 'SEO Settings', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=seo-settings' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis SEO Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-genesis-import-export',
+				title:   __( 'Import/Export', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=genesis-import-export' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Import/Export', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-genesis-plugins',
+				title:   __( 'Genesis Plugins', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=genesis-plugins' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Plugins', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:      'cf-genesis-getting-started',
+				title:   __( 'Child Theme Setup', 'core-functionality' ),
+				href:    admin_url( 'admin.php?page=genesis-getting-started' ),
+				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'Genesis Child Theme Setup', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);
