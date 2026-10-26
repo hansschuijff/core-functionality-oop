@@ -901,8 +901,18 @@
 	line-height: 20px;
 }
 
+/* Both tabs in one grid cell: the hidden one still takes its room, so switching does not resize. */
+.dwp-mb-transfer-panels {
+	display: grid;
+}
+
 .dwp-mb-transfer-panel {
-	min-height: 150px;
+	grid-area: 1 / 1;
+}
+
+.dwp-mb-transfer-panel[hidden] {
+	display: block;
+	visibility: hidden;
 }
 
 .dwp-mb-fieldset {

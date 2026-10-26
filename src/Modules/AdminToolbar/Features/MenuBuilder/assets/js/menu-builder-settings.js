@@ -1751,7 +1751,10 @@
 		transferTabs.setAttribute('role', 'group');
 		showTransferTab(exportPanel);
 
-		transferBox.body.append(transferTabs, exportPanel, importPanel);
+		// Both panels share one place, so the dialog takes the size of the larger and keeps it.
+		const transferPanels = el('div', 'dwp-mb-transfer-panels');
+		transferPanels.append(exportPanel, importPanel);
+		transferBox.body.append(transferTabs, transferPanels);
 
 		function failImport(text) {
 			importError.textContent = text;
