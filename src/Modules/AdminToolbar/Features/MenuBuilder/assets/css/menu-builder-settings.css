@@ -4,12 +4,16 @@
  * @since 1.0.0
  */
 
-.dwp-menu-builder {
+/* Also on the dialogs, which hang directly under <body>, outside the builder. */
+.dwp-menu-builder,
+.dwp-mb-dialog {
 	--dwp-mb-border: #c3c4c7;
 	--dwp-mb-muted: #646970;
 	--dwp-mb-accent: #2271b1;
 	--dwp-mb-indent: 28px;
+}
 
+.dwp-menu-builder {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
@@ -400,6 +404,112 @@
 	padding: 12px 24px;
 	border-top: 1px solid #dcdcde;
 	text-align: right;
+}
+
+/* Preview: the menu as the toolbar shows it, in the toolbar's colours. */
+
+.dwp-mb-preview-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	margin-bottom: 8px;
+}
+
+.dwp-mb-preview-tools .dwp-mb-segment {
+	padding: 2px 10px;
+	font-size: 12px;
+	line-height: 20px;
+}
+
+.dwp-mb-preview-all {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.dwp-mb-preview-count {
+	margin: 0 0 8px !important;
+}
+
+.dwp-mb-preview {
+	padding: 6px 0;
+	background: #1d2327;
+	border-radius: 3px;
+	color: #f0f0f1;
+	font-size: 13px;
+}
+
+.dwp-mb-preview-root {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 12px 6px;
+	border-bottom: 1px solid #3c434a;
+	font-weight: 600;
+}
+
+.dwp-mb-preview ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.dwp-mb-preview ul ul {
+	margin-left: 18px;
+	border-left: 1px solid #3c434a;
+}
+
+.dwp-mb-preview li {
+	margin: 0;
+}
+
+.dwp-mb-preview-item {
+	display: flex;
+	align-items: baseline;
+	gap: 8px;
+	padding: 4px 12px;
+	cursor: default;
+}
+
+.dwp-mb-preview-item:hover {
+	background: #2c3338;
+	color: #72aee6;
+}
+
+.dwp-mb-preview-more {
+	color: #a7aaad;
+}
+
+.dwp-mb-preview-note {
+	padding: 0 4px;
+	border-radius: 2px;
+	background: #50575e;
+	color: #f0f0f1;
+	font-size: 10px;
+	text-transform: uppercase;
+}
+
+.dwp-mb-preview .is-inactive > .dwp-mb-preview-item .dwp-mb-preview-label {
+	color: #a7aaad;
+	font-style: italic;
+}
+
+.dwp-mb-preview-url {
+	overflow: hidden;
+	margin-left: auto;
+	color: #8c8f94;
+	font-family: monospace;
+	font-size: 11px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	max-width: 50%;
+}
+
+.dwp-mb-preview-empty {
+	margin: 8px 12px;
+	color: #a7aaad;
+	font-style: italic;
 }
 
 .dwp-mb-dialog-header {

@@ -43,7 +43,9 @@ use function sprintf;
 use function str_replace;
 use function ucwords;
 use function current_user_can;
+use function get_bloginfo;
 use function wp_json_encode;
+use function wp_specialchars_decode;
 use function wp_unslash;
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -174,6 +176,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 		$data = array(
 			'maxDepth'  => self::MAX_DEPTH,
+			'siteName'  => wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ),
 			'i18n'      => $this->get_script_strings(),
 			'providers' => $this->get_provider_rows(),
 			'pool'      => $this->get_pool_rows(),
@@ -437,6 +440,14 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'explanation'           => __( 'Explanation', 'core-functionality' ),
 			/* translators: %s: name of a plugin, theme or WordPress. */
 			'selectGroup'           => __( 'Select all shortcuts of %s', 'core-functionality' ),
+			'preview'               => __( 'Preview', 'core-functionality' ),
+			'previewTitle'          => __( 'Preview of the toolbar menu', 'core-functionality' ),
+			'previewAdmin'          => __( 'On admin pages', 'core-functionality' ),
+			'previewSite'           => __( 'On the site', 'core-functionality' ),
+			'previewAll'            => __( 'Also shortcuts of plugins that are not active here', 'core-functionality' ),
+			/* translators: %d: number of menu items shown. */
+			'previewCount'          => __( '%d items shown, from the menu as it is in the editor (also before saving). Hover an item for its URL.', 'core-functionality' ),
+			'previewEmpty'          => __( 'Nothing of the menu is shown here.', 'core-functionality' ),
 			'undo'                  => __( 'Undo (Ctrl+Z)', 'core-functionality' ),
 			'redo'                  => __( 'Redo (Ctrl+Y)', 'core-functionality' ),
 			'addSelectedTip'        => __( 'Adds below the item selected in the menu (inside it when it is a submenu without a link), or at the end.', 'core-functionality' ),

@@ -1218,74 +1218,217 @@
 			}
 		});
 
+		/* ------------------------------------------------------------------ dialogs */
+
+		// Plain elements with the dialog role, shown and hidden by the script. A <dialog> element
+		// showed on load and could not be closed on this page in Firefox (cause not found); this
+		// does not depend on how a browser handles <dialog>. They hang directly under <body>, so
+		// the fixed settings frame cannot clip or cover them. One overlay dims the page for all.
+		const dialogOverlay = el('div', 'dwp-mb-overlay');
+		let openBox         = null;
+		let focusBeforeBox  = null;
+
+		dialogOverlay.hidden = true;
+		document.body.appendChild(dialogOverlay);
+
+		function createDialog(id, titleText) {
+			const dialog  = el('div', 'dwp-mb-dialog');
+			const inner   = el('div', 'dwp-mb-dialog-inner');
+			const header  = el('div', 'dwp-mb-dialog-header');
+			const title   = el('h2', '', titleText);
+			const body    = el('div', 'dwp-mb-dialog-body');
+			const footer  = el('div', 'dwp-mb-dialog-footer');
+			const closeX  = iconButton('dashicons-no-alt', t.close, 'js-dwp-mb-dialog-close');
+			const closeOk = el('button', 'button button-primary js-dwp-mb-dialog-close', t.close);
+
+			title.id = id;
+			dialog.hidden = true;
+			dialog.setAttribute('role', 'dialog');
+			dialog.setAttribute('aria-modal', 'true');
+			dialog.setAttribute('aria-labelledby', id);
+			closeOk.type = 'button';
+			header.append(title, closeX);
+			footer.appendChild(closeOk);
+			inner.append(header, body, footer);
+			dialog.appendChild(inner);
+			dialog.addEventListener('click', function (event) {
+				if (event.target.closest('.js-dwp-mb-dialog-close')) {
+					closeDialog();
+				}
+			});
+			document.body.appendChild(dialog);
+
+			return { element: dialog, body: body, footer: footer, closeX: closeX };
+		}
+
+		// Opening moves the focus to the close button (so Enter closes it too); closing returns it.
+		function openDialog(box) {
+			focusBeforeBox = document.activeElement;
+			dialogOverlay.hidden = false;
+			box.element.hidden = false;
+			openBox = box;
+			box.closeX.focus();
+		}
+
+		function closeDialog() {
+			if (!openBox) {
+				return;
+			}
+			dialogOverlay.hidden = true;
+			openBox.element.hidden = true;
+			openBox = null;
+			if (focusBeforeBox && document.contains(focusBeforeBox)) {
+				focusBeforeBox.focus();
+			}
+		}
+
+		// Close with either button, a click on the dimmed page around it, or Esc.
+		dialogOverlay.addEventListener('click', closeDialog);
+		document.addEventListener('keydown', function (event) {
+			if ('Escape' === event.key && openBox) {
+				event.preventDefault();
+				event.stopPropagation();
+				closeDialog();
+			}
+		}, true);
+
 		/* ------------------------------------------------------------------ shortcuts overview */
 
-		// A plain element with the dialog role, shown and hidden by the script. A <dialog> element
-		// showed on load and could not be closed on this page in Firefox (cause not found); this
-		// does not depend on how a browser handles <dialog>.
-		// It hangs directly under <body>, so the fixed settings frame cannot clip or cover it.
-		const shortcutsDialog = el('div', 'dwp-mb-dialog');
-		const dialogInner     = el('div', 'dwp-mb-dialog-inner');
-		const dialogFooter    = el('div', 'dwp-mb-dialog-footer');
-		const dialogOverlay   = el('div', 'dwp-mb-overlay');
-		const dialogHeader    = el('div', 'dwp-mb-dialog-header');
-		const dialogTitle     = el('h2', '', t.shortcutsTitle);
-		const dialogBody      = el('div', 'dwp-mb-dialog-body');
-		const shortcutsTable  = el('table', 'widefat striped');
-		const closeIcon       = iconButton('dashicons-no-alt', t.close, 'js-dwp-mb-dialog-close');
-		const closeDialog     = el('button', 'button button-primary js-dwp-mb-dialog-close', t.close);
-
-		dialogTitle.id = 'dwp-mb-shortcuts-title';
-		shortcutsDialog.hidden = true;
-		shortcutsDialog.setAttribute('role', 'dialog');
-		shortcutsDialog.setAttribute('aria-modal', 'true');
-		shortcutsDialog.setAttribute('aria-labelledby', dialogTitle.id);
+		const shortcutsBox   = createDialog('dwp-mb-shortcuts-title', t.shortcutsTitle);
+		const shortcutsTable = el('table', 'widefat striped');
 		t.shortcuts.forEach(function (shortcut) {
 			const line = el('tr');
 			line.append(el('th', '', shortcut[ 0 ]), el('td', '', shortcut[ 1 ]));
 			shortcutsTable.appendChild(line);
 		});
-		closeDialog.type = 'button';
-		dialogHeader.append(dialogTitle, closeIcon);
-		dialogBody.append(shortcutsTable, el('p', 'description', t.shortcutsNote));
-		dialogFooter.appendChild(closeDialog);
-		dialogInner.append(dialogHeader, dialogBody, dialogFooter);
-		shortcutsDialog.appendChild(dialogInner);
+		shortcutsBox.body.append(shortcutsTable, el('p', 'description', t.shortcutsNote));
 
-		let focusBeforeDialog = null;
-
-		// Opening moves the focus to the close button (so Enter closes it too); closing returns it.
 		function openShortcuts() {
-			focusBeforeDialog = document.activeElement;
-			dialogOverlay.hidden = false;
-			shortcutsDialog.hidden = false;
-			closeIcon.focus();
+			openDialog(shortcutsBox);
 		}
 
-		function closeShortcuts() {
-			dialogOverlay.hidden = true;
-			shortcutsDialog.hidden = true;
-			if (focusBeforeDialog && document.contains(focusBeforeDialog)) {
-				focusBeforeDialog.focus();
-			}
-		}
+		/* ------------------------------------------------------------------ preview */
 
-		// Close with either button, a click on the dimmed page around it, or Esc.
-		dialogOverlay.hidden = true;
-		dialogOverlay.addEventListener('click', closeShortcuts);
-		shortcutsDialog.addEventListener('click', function (event) {
-			if (event.target.closest('.js-dwp-mb-dialog-close')) {
-				closeShortcuts();
+		// The menu as the toolbar would show it, built from the editor (also before saving): on
+		// admin pages or on the site, with only the plugins active here or with all of them.
+		const previewBox   = createDialog('dwp-mb-preview-title', t.previewTitle);
+		const previewTools = el('div', 'dwp-mb-preview-tools');
+		const previewSide  = el('span', 'dwp-mb-segmented');
+		const previewAll   = el('input');
+		const previewLabel = el('label', 'dwp-mb-preview-all', t.previewAll);
+		const previewCount = el('p', 'description dwp-mb-preview-count');
+		const previewMenu  = el('div', 'dwp-mb-preview');
+		let side           = 'admin';
+
+		[ [ 'admin', t.previewAdmin ], [ 'frontend', t.previewSite ] ].forEach(function (option) {
+			const button = el('button', 'dwp-mb-segment', option[ 1 ]);
+			button.type = 'button';
+			button.dataset.side = option[ 0 ];
+			previewSide.appendChild(button);
+		});
+		previewSide.setAttribute('role', 'group');
+		previewSide.addEventListener('click', function (event) {
+			const button = event.target.closest('button');
+			if (button) {
+				side = button.dataset.side;
+				renderPreview();
 			}
 		});
-		document.addEventListener('keydown', function (event) {
-			if ('Escape' === event.key && !shortcutsDialog.hidden) {
-				event.preventDefault();
-				event.stopPropagation();
-				closeShortcuts();
+		previewAll.type = 'checkbox';
+		previewAll.addEventListener('change', renderPreview);
+		previewLabel.prepend(previewAll);
+		previewTools.append(previewSide, previewLabel);
+		previewBox.body.append(previewTools, previewCount, previewMenu);
+
+		// The rules of the toolbar: a node shows where its visibility allows, under a shown parent;
+		// a shortcut only when its plugin is active (or, on request, installed or not); a submenu
+		// without a link of its own only when something shows under it.
+		function previewItems() {
+			const roots = [];
+			const stack = [];
+
+			treeNodes().forEach(function (node) {
+				const state  = rows.get(node);
+				const source = sources.get(node) || {};
+				const depth  = depthOf(node);
+				const item   = { node: node, state: state, source: source, children: [] };
+
+				stack.length = depth;
+				(0 === depth ? roots : (stack[ depth - 1 ] || { children: roots }).children).push(item);
+				stack[ depth ] = item;
+			});
+
+			function shown(item) {
+				const visibility = item.state.visibility;
+				if ('both' !== visibility && side !== visibility) {
+					return false;
+				}
+				if ('shortcut' === item.state.type) {
+					return 'active' === item.source.status || (previewAll.checked && 'unknown' !== item.source.status);
+				}
+				return true;
 			}
-		}, true);
-		document.body.append(dialogOverlay, shortcutsDialog);
+
+			function prune(items) {
+				return items.filter(shown).map(function (item) {
+					return Object.assign({}, item, { children: prune(item.children) });
+				}).filter(function (item) {
+					return 'shortcut' === item.state.type || '' !== item.state.href || item.children.length > 0;
+				});
+			}
+
+			return prune(roots);
+		}
+
+		function renderPreview() {
+			const items = previewItems();
+			let count   = 0;
+
+			previewSide.querySelectorAll('button').forEach(function (button) {
+				button.setAttribute('aria-pressed', String(button.dataset.side === side));
+			});
+
+			function list(levelItems) {
+				const ul = el('ul');
+				levelItems.forEach(function (item) {
+					const li    = el('li');
+					const line  = el('span', 'dwp-mb-preview-item');
+					const href  = 'shortcut' === item.state.type ? (item.source.href || '') : item.state.href;
+					const label = el('span', 'dwp-mb-preview-label', displayTitle(item.state));
+
+					count++;
+					line.title = href;
+					line.appendChild(label);
+					if (item.children.length) {
+						line.appendChild(el('span', 'dwp-mb-preview-more', '▸'));
+					}
+					if ('shortcut' === item.state.type && 'active' !== item.source.status) {
+						li.classList.add('is-inactive');
+						line.appendChild(el('span', 'dwp-mb-preview-note', statusText(item.source.status)));
+					}
+					if (href) {
+						line.appendChild(el('span', 'dwp-mb-preview-url', href.replace(window.location.origin, '')));
+					}
+					li.appendChild(line);
+					if (item.children.length) {
+						li.appendChild(list(item.children));
+					}
+					ul.appendChild(li);
+				});
+				return ul;
+			}
+
+			const root  = el('div', 'dwp-mb-preview-root');
+			root.prepend(el('span', 'dashicons dashicons-admin-home'));
+			root.appendChild(el('span', '', data.siteName));
+			previewMenu.replaceChildren(root, items.length ? list(items) : el('p', 'dwp-mb-preview-empty', t.previewEmpty));
+			previewCount.textContent = t.previewCount.replace('%d', String(count));
+		}
+
+		function openPreview() {
+			renderPreview();
+			openDialog(previewBox);
+		}
 
 		/* ------------------------------------------------------------------ tools above the menu */
 
@@ -1333,11 +1476,14 @@
 			branchesButton.firstChild.className = 'dashicons ' + (anyShut ? 'dashicons-editor-expand' : 'dashicons-editor-contract');
 		}
 
+		const previewButton = toolButton('dashicons-visibility', t.preview);
+		previewButton.addEventListener('click', openPreview);
+
 		const helpButton = toolButton('dashicons-editor-help', t.shortcutsButton);
 		helpButton.addEventListener('click', openShortcuts);
 
 		const treeTools = el('span', 'dwp-mb-tools');
-		treeTools.append(introButton, branchesButton, helpButton);
+		treeTools.append(introButton, branchesButton, previewButton, helpButton);
 		tree.closest('.dwp-mb-column').querySelector('h3').appendChild(treeTools);
 
 		/* ------------------------------------------------------------------ serialize */
