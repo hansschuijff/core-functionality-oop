@@ -34,6 +34,7 @@ use function plugins_url;
 use function sanitize_key;
 use function sanitize_text_field;
 use function sanitize_title;
+use function sprintf;
 use function str_replace;
 use function ucwords;
 use function current_user_can;
@@ -61,11 +62,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class MenuBuilderSettings implements SettingsSectionInterface {
 
 	/**
-	 * The maximum depth of the menu (0-based), so three levels.
+	 * The maximum depth of the menu (0-based), so four levels.
 	 *
 	 * @var int
 	 */
-	private const MAX_DEPTH = 2;
+	private const MAX_DEPTH = 3;
 
 	/**
 	 * Configuration settings keys inside the options vault.
@@ -181,7 +182,8 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 
 		$pool_title = esc_html__( 'Available menu items', 'core-functionality' );
 		$pool_desc  = esc_html__( 'Menu items of all known plugins and themes, per source. Check them and add them, or drag them into the menu: dragging a checked one takes all checked ones along, dragging a source\'s heading makes a submenu of its menu items.', 'core-functionality' );
-		$tree_title = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
+		/* translators: %d: the maximum number of menu levels. */
+		$tree_title = esc_html( sprintf( __( 'Toolbar menu (max. %d levels)', 'core-functionality' ), self::MAX_DEPTH + 1 ) );
 		$tree_desc  = esc_html__( 'Drag to reorder; while dragging, move sideways to set the depth, or use the arrows to indent. Admin, Both and Site set where a menu item is shown; a menu item is only shown where its parents are shown too.', 'core-functionality' );
 		$status     = esc_html( $this->get_default_status_text() );
 		$json       = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );

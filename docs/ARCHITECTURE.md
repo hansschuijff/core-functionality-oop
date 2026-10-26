@@ -150,7 +150,7 @@ the menu builder. Where a node is shown is not decided by the guard but per node
 **Menu builder.** The saved tree (settings key `menu-builder-hierarchical-tree`) holds per node: `id`,
 `type` (`shortcut` or `submenu`), `title` (empty: the shortcut's own, translated title), `href` (submenus
 only; a shortcut's URL always comes from the guard), `visibility` (`admin`, `frontend` or `both`, the
-default) and `children`, at most three levels. At runtime a shortcut whose provider is not active is left
+default) and `children`, at most four levels (`MenuBuilderSettings::MAX_DEPTH`; the runtime has no limit of its own). At runtime a shortcut whose provider is not active is left
 out together with its children, and a submenu without a link of its own is left out when none of its
 children is shown. The settings tab renders the catalogue and the tree as JSON; `menu-builder-settings.js`
 builds the pool and the tree from it (one place for the markup). A new node takes the depth of the node it
