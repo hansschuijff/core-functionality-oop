@@ -65,6 +65,8 @@ class Automatewoo extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_toolbar_nodes(): array {
+		// The first node is the menu head; its id is in saved menus, so it keeps it. The others
+		// follow AutomateWoo's own admin menu.
 		return array(
 			new ToolbarShortcut(
 				id:          'cf-automatewoo-dashboard',
@@ -74,10 +76,94 @@ class Automatewoo extends AbstractPlugin {
 				orientation: Orientation::ADMIN,
 			),
 			new ToolbarShortcut(
+				id:          'cf-automatewoo-dashboard-page',
+				title:       __( 'Dashboard', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-dashboard' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Dashboard', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
 				id:          'cf-automatewoo-workflows',
 				title:       __( 'Workflows', 'core-functionality' ),
 				href:        admin_url( 'edit.php?post_type=aw_workflow' ),
 				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Workflows', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-logs',
+				title:       __( 'Logs', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-logs' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Logs', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-queue',
+				title:       __( 'Queue', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-queue' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Queue', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-carts',
+				title:       __( 'Carts', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-carts' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Carts', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-guests',
+				title:       __( 'Guests', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-guests' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Guests', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-opt-ins',
+				title:       __( 'Opt-ins', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-opt-ins' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Opt-ins', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-reports',
+				title:       __( 'Reports', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-reports' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Reports', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-tools',
+				title:       __( 'Tools', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-tools' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Tools', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-settings',
+				title:       __( 'Settings', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-settings' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-preview',
+				title:       __( 'Preview', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-preview' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Preview', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-data-upgrade',
+				title:       __( 'AutomateWoo Data Update', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=automatewoo-data-upgrade' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Data Update', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-automatewoo-manual-workflow-runner',
+				title:       __( 'Manual Workflow Runner', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-admin&path=/automatewoo/manual-workflow-runner' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'AutomateWoo Manual Workflow Runner', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
 		);

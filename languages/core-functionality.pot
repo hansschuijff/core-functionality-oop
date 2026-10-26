@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T13:45:04+01:00\n"
+"POT-Creation-Date: 2026-10-26T14:32:54+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -49,6 +49,7 @@ msgid "Type to search... (↑↓ to navigate, Enter)"
 msgstr ""
 
 #: src/Admin/Services/Settings/AdminSettingsPage.php:376
+#: src/Environment/Plugins/Automatewoo.php:143
 #: src/Environment/Plugins/FestingerVault.php:105
 #: src/Environment/Plugins/FestingerVault.php:107
 #: src/Environment/Plugins/GitUpdater.php:70
@@ -417,8 +418,20 @@ msgstr ""
 #: src/Environment/Core/WordPress.php:215
 #: src/Environment/Core/WordPress.php:227
 #: src/Environment/Core/WordPress.php:234
-#: src/Environment/Plugins/Automatewoo.php:73
-#: src/Environment/Plugins/Automatewoo.php:80
+#: src/Environment/Plugins/Automatewoo.php:75
+#: src/Environment/Plugins/Automatewoo.php:82
+#: src/Environment/Plugins/Automatewoo.php:89
+#: src/Environment/Plugins/Automatewoo.php:96
+#: src/Environment/Plugins/Automatewoo.php:103
+#: src/Environment/Plugins/Automatewoo.php:110
+#: src/Environment/Plugins/Automatewoo.php:117
+#: src/Environment/Plugins/Automatewoo.php:124
+#: src/Environment/Plugins/Automatewoo.php:131
+#: src/Environment/Plugins/Automatewoo.php:138
+#: src/Environment/Plugins/Automatewoo.php:145
+#: src/Environment/Plugins/Automatewoo.php:152
+#: src/Environment/Plugins/Automatewoo.php:159
+#: src/Environment/Plugins/Automatewoo.php:166
 #: src/Environment/Plugins/BrokenLinkChecker.php:65
 #: src/Environment/Plugins/CoreFunctionality.php:98
 #: src/Environment/Plugins/EventTickets.php:83
@@ -611,20 +624,107 @@ msgstr ""
 msgid "Testimonials"
 msgstr ""
 
-#: src/Environment/Plugins/Automatewoo.php:71
+#: src/Environment/Plugins/Automatewoo.php:73
 msgid "AutomateWoo"
 msgstr ""
 
-#: src/Environment/Plugins/Automatewoo.php:73
+#: src/Environment/Plugins/Automatewoo.php:75
+#: src/Environment/Plugins/Automatewoo.php:82
 msgid "AutomateWoo Dashboard"
 msgstr ""
 
-#: src/Environment/Plugins/Automatewoo.php:78
+#: src/Environment/Plugins/Automatewoo.php:80
+msgid "Dashboard"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:87
 msgid "Workflows"
 msgstr ""
 
-#: src/Environment/Plugins/Automatewoo.php:80
+#: src/Environment/Plugins/Automatewoo.php:89
 msgid "AutomateWoo Workflows"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:94
+msgid "Logs"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:96
+msgid "AutomateWoo Logs"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:101
+msgid "Queue"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:103
+msgid "AutomateWoo Queue"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:108
+msgid "Carts"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:110
+msgid "AutomateWoo Carts"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:115
+msgid "Guests"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:117
+msgid "AutomateWoo Guests"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:122
+msgid "Opt-ins"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:124
+msgid "AutomateWoo Opt-ins"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:129
+msgid "Reports"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:131
+msgid "AutomateWoo Reports"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:136
+msgid "Tools"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:138
+msgid "AutomateWoo Tools"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:145
+msgid "AutomateWoo Settings"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:150
+#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:443
+msgid "Preview"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:152
+msgid "AutomateWoo Preview"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:157
+#: src/Environment/Plugins/Automatewoo.php:159
+msgid "AutomateWoo Data Update"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:164
+msgid "Manual Workflow Runner"
+msgstr ""
+
+#: src/Environment/Plugins/Automatewoo.php:166
+msgid "AutomateWoo Manual Workflow Runner"
 msgstr ""
 
 #: src/Environment/Plugins/BrokenLinkChecker.php:63
@@ -1510,10 +1610,6 @@ msgstr ""
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:442
 #, php-format
 msgid "Drag into the menu for a submenu with the menu items of %s"
-msgstr ""
-
-#: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:443
-msgid "Preview"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:444
