@@ -28,6 +28,7 @@ use DeWittePrins\CoreFunctionality\Environment\Services\PreflightRestructurer;
 use DeWittePrins\CoreFunctionality\Environment\Themes\Interfaces\ThemeInterface;
 use DeWittePrins\CoreFunctionality\Services\ClassParser;
 use InvalidArgumentException;
+use ReflectionClass;
 use Throwable;
 
 // Import global PHP and WordPress functions.
@@ -37,6 +38,7 @@ use function glob;
 use function is_array;
 use function str_starts_with;
 use function is_string;
+use function ltrim;
 use function sprintf;
 use function esc_html;
 use function error_log;
@@ -91,6 +93,13 @@ class Environment {
 	 * @var WordPress|null
 	 */
 	private ?WordPress $wordpress = null;
+
+	/**
+	 * Unknown dependency ids already written to the log in this request.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $reported_unknown = array();
 
 	/**
 	 * Environment Class Constructor.
@@ -201,6 +210,7 @@ class Environment {
 		$guard = $this->get_guard( $dependency_id );
 
 		if ( null === $guard ) {
+			$this->report_unknown_dependency( $dependency_id );
 			_doing_it_wrong(
 				__METHOD__,
 				sprintf( 'Environment Contract Violation: no guard class implementing DependencyInterface for "%s".', esc_html( $dependency_id ) ),
@@ -241,7 +251,7 @@ class Environment {
 		if ( ! array_key_exists( $plugin_id, $this->plugins ) ) {
 			$class = $this->get_dependency_class_name( $plugin_id );
 
-			$this->plugins[ $plugin_id ] = ClassParser::is_implementation_of( $class, PluginInterface::class )
+			$this->plugins[ $plugin_id ] = $this->is_guard_class( $class, PluginInterface::class )
 				? new $class( $this->lookup )
 				: null;
 		}
@@ -260,12 +270,29 @@ class Environment {
 		if ( ! array_key_exists( $theme_id, $this->themes ) ) {
 			$class = $this->get_dependency_class_name( $theme_id );
 
-			$this->themes[ $theme_id ] = ClassParser::is_implementation_of( $class, ThemeInterface::class )
+			$this->themes[ $theme_id ] = $this->is_guard_class( $class, ThemeInterface::class )
 				? new $class( $this->lookup )
 				: null;
 		}
 
 		return $this->themes[ $theme_id ];
+	}
+
+	/**
+	 * Checks that a guard class exists under exactly this name and implements the interface.
+	 *
+	 * PHP class names ignore case, so "woo-commerce" would find an already loaded Woocommerce
+	 * guard, but not one the autoloader still has to find (it looks for WooCommerce.php). Only
+	 * the exact name counts, so an id works on every request or on none.
+	 *
+	 * @since  1.0.0
+	 * @param  string $class     The fully qualified class name made from the id.
+	 * @param  string $interface The interface the guard must implement.
+	 * @return bool True if the class is a guard under exactly this name.
+	 */
+	private function is_guard_class( string $class, string $interface ): bool {
+		return ClassParser::is_implementation_of( $class, $interface )
+			&& ( new ReflectionClass( $class ) )->getName() === ltrim( $class, '\\' );
 	}
 
 	/**
@@ -381,6 +408,30 @@ class Environment {
 			return $namespace_base . 'Themes';
 		}
 		return $namespace_base . 'Plugins';
+	}
+
+	/**
+	 * Writes an unknown dependency id to the PHP error log, also without WP_DEBUG, once per request.
+	 *
+	 * A typo in a component's dependencies (say "woo-commerce" for "woocommerce") would otherwise
+	 * only keep that component from loading, without a trace.
+	 *
+	 * @since  1.0.0
+	 * @param  string $dependency_id The id no guard class exists for.
+	 * @return void
+	 */
+	private function report_unknown_dependency( string $dependency_id ): void {
+		if ( isset( $this->reported_unknown[ $dependency_id ] ) ) {
+			return;
+		}
+		$this->reported_unknown[ $dependency_id ] = true;
+
+		error_log( // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			sprintf(
+				'[CoreFunctionality Environment] Unknown dependency "%s": no guard class in Environment/Plugins or Environment/Themes. The component that needs it does not load; check the id for a typo.',
+				$dependency_id
+			)
+		);
 	}
 
 	/**
