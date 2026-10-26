@@ -25,13 +25,16 @@
 	margin: 4px 0 0;
 }
 
+/* The same vertical padding on label and field, so they line up. */
 .dwp-rx-group .form-table th {
 	width: 180px;
-	padding: 14px 10px 14px 0;
+	padding: 12px 10px 12px 0;
+	vertical-align: top;
 }
 
 .dwp-rx-group .form-table td {
-	padding: 10px 0;
+	padding: 12px 0;
+	vertical-align: top;
 }
 
 /* Choices below each other: longer, but calmer to read. */

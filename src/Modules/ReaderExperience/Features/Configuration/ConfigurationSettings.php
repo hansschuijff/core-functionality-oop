@@ -277,7 +277,7 @@ class ConfigurationSettings implements SettingsSectionInterface {
 			__( 'Heading anchors', 'core-functionality' ),
 			__( 'Gives headings an id and a button that copies a link to that section.', 'core-functionality' ),
 			array(
-				$this->row( '', $this->checkbox( 'anchors_enabled', __( 'Add heading anchors', 'core-functionality' ), $values['anchors_enabled'] ) ),
+				$this->row( __( 'Anchor links', 'core-functionality' ), $this->checkbox( 'anchors_enabled', __( 'Add heading anchors', 'core-functionality' ), $values['anchors_enabled'] ) ),
 				$this->row( __( 'Post types', 'core-functionality' ), '<div class="dwp-rx-choices">' . implode( '', $post_types ) . '</div>' ),
 				$this->row(
 					__( 'Button', 'core-functionality' ),
@@ -368,9 +368,9 @@ class ConfigurationSettings implements SettingsSectionInterface {
 			__( 'Ratings and feedback', 'core-functionality' ),
 			'',
 			array(
-				$this->row( '', $this->checkbox( 'feedback_notify', __( 'Email the site administrator about new feedback', 'core-functionality' ), $values['feedback_notify'] ) ),
+				$this->row( __( 'Notification', 'core-functionality' ), $this->checkbox( 'feedback_notify', __( 'Email the site administrator about new feedback', 'core-functionality' ), $values['feedback_notify'] ) ),
 				$this->row(
-					'',
+					__( 'Spam', 'core-functionality' ),
 					$this->checkbox( 'feedback_spam_check', __( 'Check for many ratings in a short time (spam)', 'core-functionality' ), $values['feedback_spam_check'] )
 				),
 			)

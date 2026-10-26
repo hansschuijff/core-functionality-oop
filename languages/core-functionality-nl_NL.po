@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T18:51:17+01:00\n"
+"POT-Creation-Date: 2026-10-26T18:56:48+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -3147,6 +3147,10 @@ msgid "Gives headings an id and a button that copies a link to that section."
 msgstr "Geeft koppen een id en een knop die een link naar dat onderdeel kopieert."
 
 #: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:280
+msgid "Anchor links"
+msgstr "Ankerlinks"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:280
 msgid "Add heading anchors"
 msgstr "Ankerlinks toevoegen"
 
@@ -3227,8 +3231,16 @@ msgid "Ratings and feedback"
 msgstr "Beoordelingen en feedback"
 
 #: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:371
+msgid "Notification"
+msgstr "Melding"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:371
 msgid "Email the site administrator about new feedback"
 msgstr "De beheerder van de site mailen bij nieuwe feedback"
+
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:373
+msgid "Spam"
+msgstr "Spam"
 
 #: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:374
 msgid "Check for many ratings in a short time (spam)"
