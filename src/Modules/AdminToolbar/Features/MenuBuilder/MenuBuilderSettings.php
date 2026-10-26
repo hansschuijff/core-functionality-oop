@@ -179,10 +179,10 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 		);
 		$this->flatten_saved_tree( $saved_tree, $this->get_catalogue_index(), 0, $data['tree'] );
 
-		$pool_title = esc_html__( 'Available shortcuts', 'core-functionality' );
-		$pool_desc  = esc_html__( 'Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu: dragging a checked one takes all checked ones along, dragging a source\'s heading makes a submenu of its shortcuts.', 'core-functionality' );
+		$pool_title = esc_html__( 'Available menu items', 'core-functionality' );
+		$pool_desc  = esc_html__( 'Menu items of all known plugins and themes, per source. Check them and add them, or drag them into the menu: dragging a checked one takes all checked ones along, dragging a source\'s heading makes a submenu of its menu items.', 'core-functionality' );
 		$tree_title = esc_html__( 'Toolbar menu (max. 3 levels)', 'core-functionality' );
-		$tree_desc  = esc_html__( 'Drag to reorder; while dragging, move sideways to set the depth, or use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too.', 'core-functionality' );
+		$tree_desc  = esc_html__( 'Drag to reorder; while dragging, move sideways to set the depth, or use the arrows to indent. Admin, Both and Site set where a menu item is shown; a menu item is only shown where its parents are shown too.', 'core-functionality' );
 		$status     = esc_html( $this->get_default_status_text() );
 		$json       = wp_json_encode( $data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE );
 
@@ -277,7 +277,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 				'status'       => ProviderStatus::ACTIVE->value,
 				'kind'         => Orientation::BOTH->value,
 				'defaultTitle' => __( 'Submenu or custom link', 'core-functionality' ),
-				'label'        => __( 'A parent for other nodes, or a link of your own', 'core-functionality' ),
+				'label'        => __( 'A parent for other menu items, or a link of your own', 'core-functionality' ),
 				'href'         => '',
 			),
 		);
@@ -358,7 +358,7 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 					'status'       => 'unknown',
 					'kind'         => Orientation::BOTH->value,
 					'defaultTitle' => '' !== $title ? $title : $id,
-					'label'        => __( 'No known plugin or theme offers this shortcut any more.', 'core-functionality' ),
+					'label'        => __( 'No known plugin or theme offers this menu item any more.', 'core-functionality' ),
 					'href'         => '',
 				);
 			}
@@ -427,17 +427,17 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'close'                 => __( 'Close', 'core-functionality' ),
 			'selectBelow'           => __( 'Include items below', 'core-functionality' ),
 			'selectBelowTip'        => __( 'Also select the items below the selected items (Ctrl-click selects an item with the items below it).', 'core-functionality' ),
-			'search'                => __( 'Search shortcuts', 'core-functionality' ),
-			'onlyActive'            => __( 'Only shortcuts of active plugins and themes', 'core-functionality' ),
+			'search'                => __( 'Search', 'core-functionality' ),
+			'onlyActive'            => __( 'Only menu items of active plugins and themes', 'core-functionality' ),
 			'collapse'              => __( 'Collapse', 'core-functionality' ),
 			'expand'                => __( 'Expand', 'core-functionality' ),
 			'collapseAll'           => __( 'Collapse all', 'core-functionality' ),
 			'expandAll'             => __( 'Expand all', 'core-functionality' ),
 			'explanation'           => __( 'Explanation', 'core-functionality' ),
 			/* translators: %s: name of a plugin, theme or WordPress. */
-			'selectGroup'           => __( 'Select all shortcuts of %s', 'core-functionality' ),
+			'selectGroup'           => __( 'Select all menu items of %s', 'core-functionality' ),
 			/* translators: %s: name of a plugin or theme */
-			'dragGroup'             => __( 'Drag into the menu for a submenu with the shortcuts of %s', 'core-functionality' ),
+			'dragGroup'             => __( 'Drag into the menu for a submenu with the menu items of %s', 'core-functionality' ),
 			'preview'               => __( 'Preview', 'core-functionality' ),
 			'previewTitle'          => __( 'Preview of the toolbar menu', 'core-functionality' ),
 			'previewAdmin'          => __( 'On admin pages', 'core-functionality' ),
@@ -462,13 +462,13 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'visibleBoth'           => __( 'On admin pages and the front end', 'core-functionality' ),
 			'visibleBothShort'      => __( 'Both', 'core-functionality' ),
 			/* translators: %s: Admin or Front, the node's own visibility. */
-			'visibilityConflict'    => __( 'Its own setting (%s) conflicts with a parent, so this node is never shown.', 'core-functionality' ),
+			'visibilityConflict'    => __( 'Its own setting (%s) conflicts with a parent, so this menu item is never shown.', 'core-functionality' ),
 			'visibility'            => __( 'Show', 'core-functionality' ),
 			'addSelected'           => __( 'Add', 'core-functionality' ),
-			'selectFirst'           => __( 'Select at least one shortcut first.', 'core-functionality' ),
-			'emptyTree'             => __( 'The menu is empty. Add shortcuts from the list.', 'core-functionality' ),
+			'selectFirst'           => __( 'Select at least one menu item first.', 'core-functionality' ),
+			'emptyTree'             => __( 'The menu is empty. Add menu items from the list.', 'core-functionality' ),
 			'title'                 => __( 'Title', 'core-functionality' ),
-			'titleHint'             => __( 'Leave empty to use the title of the shortcut, which follows the translation.', 'core-functionality' ),
+			'titleHint'             => __( 'Leave empty to use the menu item\'s own title, which follows the translation.', 'core-functionality' ),
 			'submenuTitle'          => __( 'Submenu', 'core-functionality' ),
 			'url'                   => __( 'URL', 'core-functionality' ),
 			'urlHint'               => __( 'Leave empty for a submenu without a link of its own; it is hidden when none of its items is shown.', 'core-functionality' ),
@@ -479,13 +479,13 @@ class MenuBuilderSettings implements SettingsSectionInterface {
 			'edit'                  => __( 'Settings', 'core-functionality' ),
 			'remove'                => __( 'Remove', 'core-functionality' ),
 			/* translators: %d: number of items below the node. */
-			'removeConfirm'         => __( 'This node has %d items below it. Remove the node together with those items?', 'core-functionality' ),
+			'removeConfirm'         => __( 'This menu item has %d items below it. Remove it together with those items?', 'core-functionality' ),
 			'inactiveHint'          => __( 'Shown once this plugin or theme is active.', 'core-functionality' ),
 			'select'                => __( 'Select (Shift-click: a range, Ctrl-click: with the items below)', 'core-functionality' ),
 			/* translators: %d: number of selected items. */
 			'selectedCount'         => __( '%d selected', 'core-functionality' ),
 			'resetTitles'           => __( 'Reset titles', 'core-functionality' ),
-			'resetTitlesTip'        => __( 'Use the shortcuts\' own titles again, which follow the translation.', 'core-functionality' ),
+			'resetTitlesTip'        => __( 'Use the menu items\' own titles again, which follow the translation.', 'core-functionality' ),
 			'clearSelection'        => __( 'Clear selection', 'core-functionality' ),
 			/* translators: %d: number of items that will be removed. */
 			'removeSelectedConfirm' => __( 'Remove %d items (the selected items and the items below them)?', 'core-functionality' ),

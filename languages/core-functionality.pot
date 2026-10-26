@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T12:20:51+01:00\n"
+"POT-Creation-Date: 2026-10-26T12:37:00+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -1389,11 +1389,11 @@ msgid "Compose the shortcuts menu of the admin toolbar from the links of all kno
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:182
-msgid "Available shortcuts"
+msgid "Available menu items"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:183
-msgid "Shortcuts of all known plugins and themes, per source. Check them and add them, or drag them into the menu: dragging a checked one takes all checked ones along, dragging a source's heading makes a submenu of its shortcuts."
+msgid "Menu items of all known plugins and themes, per source. Check them and add them, or drag them into the menu: dragging a checked one takes all checked ones along, dragging a source's heading makes a submenu of its menu items."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:184
@@ -1401,7 +1401,7 @@ msgid "Toolbar menu (max. 3 levels)"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:185
-msgid "Drag to reorder; while dragging, move sideways to set the depth, or use the arrows to indent. Admin, Both and Site set where a node is shown; a node is only shown where its parents are shown too."
+msgid "Drag to reorder; while dragging, move sideways to set the depth, or use the arrows to indent. Admin, Both and Site set where a menu item is shown; a menu item is only shown where its parents are shown too."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:230
@@ -1430,7 +1430,7 @@ msgid "Submenu or custom link"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:280
-msgid "A parent for other nodes, or a link of your own"
+msgid "A parent for other menu items, or a link of your own"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:357
@@ -1439,7 +1439,7 @@ msgid "Unknown"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:361
-msgid "No known plugin or theme offers this shortcut any more."
+msgid "No known plugin or theme offers this menu item any more."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:422
@@ -1471,11 +1471,11 @@ msgid "Also select the items below the selected items (Ctrl-click selects an ite
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:430
-msgid "Search shortcuts"
+msgid "Search"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:431
-msgid "Only shortcuts of active plugins and themes"
+msgid "Only menu items of active plugins and themes"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:432
@@ -1501,13 +1501,13 @@ msgstr ""
 #. translators: %s: name of a plugin, theme or WordPress.
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:438
 #, php-format
-msgid "Select all shortcuts of %s"
+msgid "Select all menu items of %s"
 msgstr ""
 
 #. translators: %s: name of a plugin or theme
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:440
 #, php-format
-msgid "Drag into the menu for a submenu with the shortcuts of %s"
+msgid "Drag into the menu for a submenu with the menu items of %s"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:441
@@ -1599,7 +1599,7 @@ msgstr ""
 #. translators: %s: Admin or Front, the node's own visibility.
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:465
 #, php-format
-msgid "Its own setting (%s) conflicts with a parent, so this node is never shown."
+msgid "Its own setting (%s) conflicts with a parent, so this menu item is never shown."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:466
@@ -1611,11 +1611,11 @@ msgid "Add"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:468
-msgid "Select at least one shortcut first."
+msgid "Select at least one menu item first."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:469
-msgid "The menu is empty. Add shortcuts from the list."
+msgid "The menu is empty. Add menu items from the list."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:470
@@ -1623,7 +1623,7 @@ msgid "Title"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:471
-msgid "Leave empty to use the title of the shortcut, which follows the translation."
+msgid "Leave empty to use the menu item's own title, which follows the translation."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:472
@@ -1662,7 +1662,7 @@ msgstr ""
 #. translators: %d: number of items below the node.
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:482
 #, php-format
-msgid "This node has %d items below it. Remove the node together with those items?"
+msgid "This menu item has %d items below it. Remove it together with those items?"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:483
@@ -1684,7 +1684,7 @@ msgid "Reset titles"
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:488
-msgid "Use the shortcuts' own titles again, which follow the translation."
+msgid "Use the menu items' own titles again, which follow the translation."
 msgstr ""
 
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:489
