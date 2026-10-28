@@ -511,7 +511,7 @@ class AdminSettingsPage {
 		$nonce_field       = wp_nonce_field( 'dwp_cf_save_settings', 'dwp_cf_nonce', true, false );
 
 		echo <<<HTML
-			<form method="post" action="{$action_url}" class="dwp-gutenberg-section-form">
+			<form method="post" action="{$action_url}" class="dwp-gutenberg-section-form" enctype="multipart/form-data">
 				{$nonce_field}
 				<input type="hidden" name="action" value="dwp_cf_save_options" />
 				<input type="hidden" name="current_section" value="{$active_section_id}" />
