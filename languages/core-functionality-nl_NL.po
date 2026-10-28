@@ -2906,11 +2906,11 @@ msgstr "Genesis-plugins"
 
 #: src/Environment/Themes/AnyGenesis.php:113
 msgid "Child Theme Setup"
-msgstr "Child-thema instellen"
+msgstr "Subthema instellen"
 
 #: src/Environment/Themes/AnyGenesis.php:115
 msgid "Genesis Child Theme Setup"
-msgstr "Genesis child-thema instellen"
+msgstr "Genesis-subthema instellen"
 
 #: src/Environment/Themes/EssencePro.php:78
 msgid "⚡ Essence Pro"
@@ -3580,7 +3580,7 @@ msgstr "Evenementtemplates"
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:170
 msgid "Here you can load custom templates that replace built-in templates of The Events Calendar and Event Tickets. It gives you a place to make changes independent of the theme. A template stored here is only loaded when the active theme does not have it built in. Make theme-specific changes the usual way in a parent or child theme; they take precedence."
-msgstr "Hier kun je aangepaste templates laden die ingebouwde templates van The Events Calendar en Event Tickets vervangen. Het geeft je een plek om aanpassingen thema-onafhankelijk te maken. Een hier opgeslagen template wordt alleen geladen als het actieve thema hem niet zelf heeft. Thema-specifieke aanpassingen breng je op de gebruikelijke manier aan in een parent- of child-thema; die krijgen voorrang."
+msgstr "Hier kun je aangepaste templates laden die ingebouwde templates van The Events Calendar en Event Tickets vervangen. Het geeft je een plek om aanpassingen thema-onafhankelijk te maken. Een hier opgeslagen template wordt alleen geladen als het actieve thema hem niet zelf heeft. Thema-specifieke aanpassingen breng je op de gebruikelijke manier aan in een hoofd- of subthema; die krijgen voorrang."
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:249
 msgid "File changes are turned off on this site (DISALLOW_FILE_MODS)."
@@ -3619,11 +3619,11 @@ msgstr "In gebruik"
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:315
 msgid "The child theme overrides it"
-msgstr "Het child-thema vervangt hem"
+msgstr "Het subthema vervangt hem"
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:316
 msgid "The parent theme overrides it"
-msgstr "Het parent-thema vervangt hem"
+msgstr "Het hoofdthema vervangt hem"
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:317
 msgid "Not used: the plugin is not active"
@@ -3768,15 +3768,15 @@ msgstr "Opnieuw scannen"
 
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:340
 msgid "child theme"
-msgstr "child-thema"
+msgstr "het subthema"
 
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:341
 msgid "parent theme"
-msgstr "parent-thema"
+msgstr "het hoofdthema"
 
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:342
 msgid "site template"
-msgstr "sitetemplate"
+msgstr "de sitetemplate"
 
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:345
 msgid "These templates are out of date:"
@@ -3792,11 +3792,11 @@ msgstr "Deze sitetemplates zijn verouderd. Nu gebruikt een thema een eigen versi
 
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:348
 msgid "These templates in the child theme are the same as the site templates and can be removed:"
-msgstr "Deze templates in het child-thema zijn gelijk aan de sitetemplates en kunnen weg:"
+msgstr "Deze templates in het subthema zijn gelijk aan de sitetemplates en kunnen weg:"
 
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:349
 msgid "These templates in the parent theme are the same as the site templates and can be removed:"
-msgstr "Deze templates in het parent-thema zijn gelijk aan de sitetemplates en kunnen weg:"
+msgstr "Deze templates in het hoofdthema zijn gelijk aan de sitetemplates en kunnen weg:"
 
 #. translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template), 3: its version, 4: the plugin's version.
 #: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:360
