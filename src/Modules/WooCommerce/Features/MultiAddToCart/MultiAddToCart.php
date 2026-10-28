@@ -24,11 +24,16 @@ use function _n;
 use function absint;
 use function add_action;
 use function apply_filters;
+use function array_map;
 use function array_pad;
 use function class_exists;
+use function count;
 use function explode;
 use function function_exists;
+use function get_option;
+use function implode;
 use function is_string;
+use function max;
 use function remove_action;
 use function remove_query_arg;
 use function sanitize_text_field;
@@ -94,9 +99,12 @@ class MultiAddToCart extends AbstractFeature {
 	}
 
 	/**
-	 * Adds the products of an add-to-cart request with a comma or a colon, then sends the customer
-	 * to the cart. When none could be added, the customer goes back to the same page without the
-	 * request (a reload does not try again), where the notices say why.
+	 * Adds the products of an add-to-cart request with a comma or a colon.
+	 *
+	 * Afterwards the customer goes where WooCommerce would send them: to the cart (or wherever the
+	 * woocommerce_add_to_cart_redirect filter points, such as the checkout) when the shop is set to
+	 * go there after adding, otherwise back to the same page. Always without the request in the
+	 * address, so a reload does not add the products again.
 	 *
 	 * @since  1.0.0
 	 * @return void
@@ -117,19 +125,21 @@ class MultiAddToCart extends AbstractFeature {
 		remove_action( 'wp_loaded', array( 'WC_Form_Handler', 'add_to_cart_action' ), 20 );
 
 		$added   = array();
-		$skipped = 0; // Items WooCommerce would pass over without a word: no such product, no quantity.
+		$unknown = array(); // The numbers of products that do not exist, as written in the link.
 		foreach ( explode( ',', $request ) as $item ) {
 			if ( '' === trim( $item ) ) {
 				continue;
 			}
-			list( $id, $quantity ) = array_pad( explode( ':', trim( $item ), 2 ), 2, '1' );
+			list( $id, $quantity ) = array_pad( explode( ':', trim( $item ), 2 ), 2, '' );
 
 			$product_id = absint( apply_filters( 'woocommerce_add_to_cart_product_id', absint( $id ) ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook.
-			$quantity   = '' === trim( $quantity ) ? 1 : absint( $quantity );
-			if ( 0 === $product_id || 0 === $quantity || ! wc_get_product( $product_id ) ) {
-				++$skipped;
+			if ( 0 === $product_id || ! wc_get_product( $product_id ) ) {
+				$unknown[] = trim( $id );
 				continue;
 			}
+
+			// A missing or invalid quantity counts as one; the customer can change it in the cart.
+			$quantity = max( 1, absint( $quantity ) );
 
 			// The same check WooCommerce runs before adding (stock, purchase limits, required add-ons).
 			if ( ! apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity ) ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook.
@@ -141,26 +151,32 @@ class MultiAddToCart extends AbstractFeature {
 			}
 		}
 
-		// WooCommerce gives its own notices for products it refused (stock, validation); these ones say nothing.
-		if ( $skipped > 0 ) {
+		// WooCommerce gives its own notices for products it refused (stock, validation). For unknown
+		// numbers it says nothing; a visitor gets a plain notice they can take back to whoever gave
+		// them the link.
+		if ( array() !== $unknown ) {
+			$numbers = implode( ', ', array_map( 'esc_html', $unknown ) );
 			wc_add_notice(
-				sprintf(
-					/* translators: %d: number of items in the add-to-cart link that were skipped. */
-					_n( '%d item in the link could not be added: the product does not exist or the quantity is not valid.', '%d items in the link could not be added: the products do not exist or the quantities are not valid.', $skipped, 'core-functionality' ),
-					$skipped
+				__( 'Not all products could be put in the cart.', 'core-functionality' ) . ' '
+				. sprintf(
+					/* translators: %s: the product number(s) from the link, separated by commas. */
+					_n( 'The product with number %s is not known.', 'The products with numbers %s are not known.', count( $unknown ), 'core-functionality' ),
+					$numbers
 				),
 				'error'
 			);
 		}
 
+		$redirect = remove_query_arg( 'add-to-cart' );
 		if ( array() !== $added ) {
 			wc_add_to_cart_message( $added, true );
-			wp_safe_redirect( wc_get_cart_url() );
-			exit;
+
+			if ( 'yes' === get_option( 'woocommerce_cart_redirect_after_add' ) ) {
+				$redirect = apply_filters( 'woocommerce_add_to_cart_redirect', wc_get_cart_url(), null ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook.
+			}
 		}
 
-		// Nothing added: the same page without the request, where the notices are shown.
-		wp_safe_redirect( remove_query_arg( 'add-to-cart' ) );
+		wp_safe_redirect( $redirect );
 		exit;
 	}
 }
