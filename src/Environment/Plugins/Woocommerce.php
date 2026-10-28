@@ -14,11 +14,18 @@ use DeWittePrins\CoreFunctionality\DTO\AdminMenuBlock;
 use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
 use Override;
+use WC_Tax;
 
 use function __;
 use function admin_url;
+use function array_merge;
+use function class_exists;
 use function function_exists;
 use function home_url;
+use function method_exists;
+use function rawurlencode;
+use function sanitize_key;
+use function sprintf;
 use function wc_get_page_permalink;
 use function get_term_by;
 use function get_term_link;
@@ -62,7 +69,7 @@ class Woocommerce extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_toolbar_nodes(): array {
-		return array(
+		$nodes = array(
 			// Admin Area Links - Safe to call directly because admin_url is purely string manipulation.
 			new ToolbarShortcut(
 				id:      'cf-woocommerce-orders',
@@ -170,7 +177,309 @@ class Woocommerce extends AbstractPlugin {
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Courses', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
+			// The WooCommerce menu, its settings tabs and their sections (tax classes: see get_tax_class_nodes()).
+			new ToolbarShortcut(
+				id:          'cf-woocommerce',
+				title:       'WooCommerce',
+				href:        admin_url( 'edit.php?post_type=shop_order' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . 'WooCommerce',
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-home',
+				title:       __( 'WooCommerce Home', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-admin' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Home', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Home', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-customers',
+				title:       __( 'Customers', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-admin&path=/customers' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Customers', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-reports',
+				title:       __( 'Shop Reports', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-reports' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Shop Reports', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Reports', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-status',
+				title:       __( 'WooCommerce Status', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-status' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Status', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Status', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-extensions',
+				title:       __( 'WooCommerce Extensions', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-admin&path=/extensions' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Extensions', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Extensions', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-general',
+				title:       __( 'WooCommerce Settings: General', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=general' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: General', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'General', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-products',
+				title:       __( 'WooCommerce Settings: Products', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Products', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Products', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-products-general',
+				title:       __( 'Product Settings: General', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products&section=' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Product Settings: General', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'General', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-products-inventory',
+				title:       __( 'Product Settings: Inventory', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products&section=inventory' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Product Settings: Inventory', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Inventory', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-products-downloadable',
+				title:       __( 'Product Settings: Downloadable Products', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products&section=downloadable' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Product Settings: Downloadable Products', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Downloadable Products', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-products-download-urls',
+				title:       __( 'Product Settings: Approved Download Directories', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products&section=download_urls' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Product Settings: Approved Download Directories', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Approved Download Directories', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-products-advanced',
+				title:       __( 'Product Settings: Advanced', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products&section=advanced' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Product Settings: Advanced', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Advanced', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-tax',
+				title:       __( 'WooCommerce Settings: Tax', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=tax' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Tax', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Tax', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-tax-options',
+				title:       __( 'Tax Settings: Options', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=tax&section=' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Tax Settings: Options', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Tax Options', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-tax-standard',
+				title:       __( 'Tax Settings: Standard Rates', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=tax&section=standard' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Tax Settings: Standard Rates', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Standard Rates', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-shipping',
+				title:       __( 'WooCommerce Settings: Shipping', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=shipping' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Shipping', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Shipping', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-shipping-zones',
+				title:       __( 'Shipping Settings: Zones', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=shipping&section=' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Shipping Settings: Zones', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Shipping Zones', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-shipping-options',
+				title:       __( 'Shipping Settings: Options', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=shipping&section=options' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Shipping Settings: Options', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Shipping Options', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-shipping-classes',
+				title:       __( 'Shipping Settings: Classes', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=shipping&section=classes' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Shipping Settings: Classes', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Classes', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-payments',
+				title:       __( 'WooCommerce Settings: Payments', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=checkout' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Payments', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Payments', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-accounts',
+				title:       __( 'WooCommerce Settings: Accounts & Privacy', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=account' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Accounts & Privacy', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Accounts & Privacy', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-emails',
+				title:       __( 'WooCommerce Settings: Emails', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=email' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Emails', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Emails', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-integration',
+				title:       __( 'WooCommerce Settings: Integration', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=integration' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Integration', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Integration', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-integration-maxmind',
+				title:       __( 'MaxMind Geolocation', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=integration&section=maxmind_geolocation' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'MaxMind Geolocation', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-site-visibility',
+				title:       __( 'WooCommerce Settings: Site Visibility', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=site-visibility' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Site Visibility', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Site Visibility', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-point-of-sale',
+				title:       __( 'WooCommerce Settings: Point of Sale', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=point-of-sale' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Point of Sale', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Point of Sale', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced',
+				title:       __( 'WooCommerce Settings: Advanced', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Settings: Advanced', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Advanced', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced-page-setup',
+				title:       __( 'WooCommerce Advanced: Page Setup', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced&section=' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Advanced: Page Setup', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Page Setup', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced-rest-api',
+				title:       __( 'WooCommerce Advanced: REST API', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced&section=keys' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Advanced: REST API', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'REST API', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced-webhooks',
+				title:       __( 'WooCommerce Advanced: Webhooks', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced&section=webhooks' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Advanced: Webhooks', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Webhooks', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced-woocommerce-com',
+				title:       __( 'WooCommerce Advanced: WooCommerce.com', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced&section=woocommerce_com' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Advanced: WooCommerce.com', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'WooCommerce.com', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced-blueprint',
+				title:       __( 'WooCommerce Advanced: Blueprint', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced&section=blueprint' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Advanced: Blueprint', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Blueprint', 'core-functionality' ),
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-advanced-features',
+				title:       __( 'WooCommerce Advanced: Features', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=advanced&section=features' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Advanced: Features', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Features', 'core-functionality' ),
+			),
 		);
+
+		return array_merge( $nodes, $this->get_tax_class_nodes() );
+	}
+
+	/**
+	 * Returns a menu item per tax class of this site, besides the standard rates ("Reduced rate",
+	 * "Zero rate", or classes of the site's own). Read from WooCommerce, so only when it is loaded.
+	 *
+	 * @since  1.0.0
+	 * @return ToolbarShortcut[] The menu items.
+	 */
+	private function get_tax_class_nodes(): array {
+		if ( ! class_exists( 'WC_Tax' ) || ! method_exists( 'WC_Tax', 'get_tax_rate_classes' ) ) {
+			return array();
+		}
+
+		$nodes = array();
+		foreach ( WC_Tax::get_tax_rate_classes() as $tax_class ) {
+			$nodes[] = new ToolbarShortcut(
+				id:          'cf-woocommerce-settings-tax-' . sanitize_key( $tax_class->slug ),
+				/* translators: %s: name of a tax class. */
+				title:       sprintf( __( 'Tax Settings: %s Rates', 'core-functionality' ), $tax_class->name ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=tax&section=' . rawurlencode( $tax_class->slug ) ),
+				/* translators: %s: name of a tax class. */
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . sprintf( __( 'Tax Settings: %s Rates', 'core-functionality' ), $tax_class->name ),
+				orientation: Orientation::ADMIN,
+				/* translators: %s: name of a tax class. */
+				short_title: sprintf( __( '%s Rates', 'core-functionality' ), $tax_class->name ),
+			);
+		}
+
+		return $nodes;
 	}
 
 	/**

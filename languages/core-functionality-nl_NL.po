@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-26T18:56:48+01:00\n"
+"POT-Creation-Date: 2026-10-28T14:21:16+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -61,7 +61,7 @@ msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 #: src/Environment/Plugins/SpectraBlocks.php:110
 #: src/Environment/Plugins/SpectraLegacy.php:110
 #: src/Environment/Plugins/TheEventsCalendar.php:126
-#: src/Environment/Plugins/Woocommerce.php:112
+#: src/Environment/Plugins/Woocommerce.php:119
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:81
 #: src/Modules/AdminToolbar/Features/MenuBuilder/MenuBuilderSettings.php:482
 msgid "Settings"
@@ -407,6 +407,7 @@ msgid "Installed Plugins"
 msgstr "Geïnstalleerde plugins"
 
 #. translators: %s: title of the page or settings tab.
+#. translators: %s: name of a tax class.
 #: src/Environment/Core/WordPress.php:113
 #: src/Environment/Core/WordPress.php:122
 #: src/Environment/Core/WordPress.php:130
@@ -429,6 +430,9 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Core/WordPress.php:283
 #: src/Environment/Core/WordPress.php:295
 #: src/Environment/Core/WordPress.php:302
+#: src/Environment/Plugins/AeliaEuVatAssistant.php:79
+#: src/Environment/Plugins/AeliaFoundationClasses.php:79
+#: src/Environment/Plugins/AutocompleteWoocommerceOrders.php:78
 #: src/Environment/Plugins/Automatewoo.php:76
 #: src/Environment/Plugins/Automatewoo.php:83
 #: src/Environment/Plugins/Automatewoo.php:91
@@ -460,6 +464,7 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/BeaverBuilder.php:124
 #: src/Environment/Plugins/BrokenLinkChecker.php:65
 #: src/Environment/Plugins/CoreFunctionality.php:109
+#: src/Environment/Plugins/EuVatCompliance.php:79
 #: src/Environment/Plugins/EventTickets.php:84
 #: src/Environment/Plugins/EventTickets.php:95
 #: src/Environment/Plugins/EventTickets.php:104
@@ -482,6 +487,7 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/FestingerVault.php:111
 #: src/Environment/Plugins/FestingerVault.php:119
 #: src/Environment/Plugins/FluentSmtp.php:65
+#: src/Environment/Plugins/GenesisConnectWoocommerce.php:78
 #: src/Environment/Plugins/GitRemoteUpdater.php:66
 #: src/Environment/Plugins/GitUpdater.php:65
 #: src/Environment/Plugins/GitUpdater.php:72
@@ -496,6 +502,10 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/LocoTranslate.php:96
 #: src/Environment/Plugins/LocoTranslate.php:104
 #: src/Environment/Plugins/LocoTranslate.php:112
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:69
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:78
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:87
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:96
 #: src/Environment/Plugins/Nobuna.php:65
 #: src/Environment/Plugins/ReaderExperience.php:68
 #: src/Environment/Plugins/RedisCache.php:66
@@ -591,33 +601,75 @@ msgstr "Geïnstalleerde plugins"
 #: src/Environment/Plugins/TheEventsCalendarPro.php:191
 #: src/Environment/Plugins/UpdraftPlus.php:65
 #: src/Environment/Plugins/UpdraftPlus.php:72
-#: src/Environment/Plugins/Woocommerce.php:71
-#: src/Environment/Plugins/Woocommerce.php:79
+#: src/Environment/Plugins/Woocommerce.php:78
 #: src/Environment/Plugins/Woocommerce.php:86
-#: src/Environment/Plugins/Woocommerce.php:94
-#: src/Environment/Plugins/Woocommerce.php:102
-#: src/Environment/Plugins/Woocommerce.php:110
-#: src/Environment/Plugins/Woocommerce.php:119
+#: src/Environment/Plugins/Woocommerce.php:93
+#: src/Environment/Plugins/Woocommerce.php:101
+#: src/Environment/Plugins/Woocommerce.php:109
+#: src/Environment/Plugins/Woocommerce.php:117
 #: src/Environment/Plugins/Woocommerce.php:126
-#: src/Environment/Plugins/Woocommerce.php:134
-#: src/Environment/Plugins/Woocommerce.php:143
-#: src/Environment/Plugins/Woocommerce.php:152
-#: src/Environment/Plugins/Woocommerce.php:161
-#: src/Environment/Plugins/Woocommerce.php:170
+#: src/Environment/Plugins/Woocommerce.php:133
+#: src/Environment/Plugins/Woocommerce.php:141
+#: src/Environment/Plugins/Woocommerce.php:150
+#: src/Environment/Plugins/Woocommerce.php:159
+#: src/Environment/Plugins/Woocommerce.php:168
+#: src/Environment/Plugins/Woocommerce.php:177
+#: src/Environment/Plugins/Woocommerce.php:185
+#: src/Environment/Plugins/Woocommerce.php:192
+#: src/Environment/Plugins/Woocommerce.php:200
+#: src/Environment/Plugins/Woocommerce.php:207
+#: src/Environment/Plugins/Woocommerce.php:215
+#: src/Environment/Plugins/Woocommerce.php:223
+#: src/Environment/Plugins/Woocommerce.php:231
+#: src/Environment/Plugins/Woocommerce.php:239
+#: src/Environment/Plugins/Woocommerce.php:247
+#: src/Environment/Plugins/Woocommerce.php:255
+#: src/Environment/Plugins/Woocommerce.php:263
+#: src/Environment/Plugins/Woocommerce.php:271
+#: src/Environment/Plugins/Woocommerce.php:279
+#: src/Environment/Plugins/Woocommerce.php:287
+#: src/Environment/Plugins/Woocommerce.php:295
+#: src/Environment/Plugins/Woocommerce.php:303
+#: src/Environment/Plugins/Woocommerce.php:311
+#: src/Environment/Plugins/Woocommerce.php:319
+#: src/Environment/Plugins/Woocommerce.php:327
+#: src/Environment/Plugins/Woocommerce.php:335
+#: src/Environment/Plugins/Woocommerce.php:343
+#: src/Environment/Plugins/Woocommerce.php:351
+#: src/Environment/Plugins/Woocommerce.php:359
+#: src/Environment/Plugins/Woocommerce.php:367
+#: src/Environment/Plugins/Woocommerce.php:375
+#: src/Environment/Plugins/Woocommerce.php:382
+#: src/Environment/Plugins/Woocommerce.php:390
+#: src/Environment/Plugins/Woocommerce.php:398
+#: src/Environment/Plugins/Woocommerce.php:406
+#: src/Environment/Plugins/Woocommerce.php:414
+#: src/Environment/Plugins/Woocommerce.php:422
+#: src/Environment/Plugins/Woocommerce.php:430
+#: src/Environment/Plugins/Woocommerce.php:438
+#: src/Environment/Plugins/Woocommerce.php:446
+#: src/Environment/Plugins/Woocommerce.php:475
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:72
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:79
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:87
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:94
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:101
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:109
+#: src/Environment/Plugins/WoocommerceChainedProducts.php:78
 #: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:61
 #: src/Environment/Plugins/WoocommercePdfInvoices.php:62
 #: src/Environment/Plugins/WoocommercePreOrders.php:62
+#: src/Environment/Plugins/WoocommercePreOrders.php:72
+#: src/Environment/Plugins/WoocommercePreOrders.php:80
 #: src/Environment/Plugins/WoocommerceProductAddons.php:61
+#: src/Environment/Plugins/WoocommerceProductAddons.php:69
 #: src/Environment/Plugins/WoocommerceSmartCoupons.php:62
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:67
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:75
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:84
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:92
 #: src/Environment/Plugins/WpForms.php:65
+#: src/Environment/Plugins/WpMenuCart.php:79
 #: src/Environment/Plugins/WpServerStats.php:69
 #: src/Environment/Plugins/WpServerStats.php:76
 #: src/Environment/Plugins/WpServerStats.php:83
@@ -731,7 +783,7 @@ msgstr "Berichtcategorieën"
 #: src/Environment/Plugins/TheEventsCalendar.php:117
 #: src/Environment/Plugins/TheEventsCalendarPro.php:103
 #: src/Environment/Plugins/TheEventsCalendarPro.php:113
-#: src/Environment/Plugins/Woocommerce.php:96
+#: src/Environment/Plugins/Woocommerce.php:103
 msgid "Categories"
 msgstr "Categorieën"
 
@@ -793,6 +845,29 @@ msgstr "Voorpagina"
 #: src/Environment/Core/WordPress.php:302
 msgid "Testimonials"
 msgstr "Ervaringen"
+
+#: src/Environment/Plugins/AeliaEuVatAssistant.php:77
+#: src/Environment/Plugins/AeliaEuVatAssistant.php:79
+msgid "EU VAT Assistant"
+msgstr "EU BTW-assistent"
+
+#: src/Environment/Plugins/AeliaFoundationClasses.php:77
+#: src/Environment/Plugins/AeliaFoundationClasses.php:79
+msgid "Aelia Settings"
+msgstr "Aelia-instellingen"
+
+#: src/Environment/Plugins/AeliaFoundationClasses.php:81
+msgid "Aelia"
+msgstr "Aelia"
+
+#: src/Environment/Plugins/AutocompleteWoocommerceOrders.php:76
+#: src/Environment/Plugins/AutocompleteWoocommerceOrders.php:78
+msgid "Autocomplete Orders Settings"
+msgstr "Instellingen Autocomplete Orders"
+
+#: src/Environment/Plugins/AutocompleteWoocommerceOrders.php:80
+msgid "Autocomplete Orders"
+msgstr "Autocomplete Orders"
 
 #: src/Environment/Plugins/Automatewoo.php:74
 msgid "AutomateWoo"
@@ -870,6 +945,7 @@ msgid "AutomateWoo Reports"
 msgstr "AutomateWoo-rapporten"
 
 #: src/Environment/Plugins/Automatewoo.php:140
+#: src/Environment/Plugins/Woocommerce.php:209
 msgid "Reports"
 msgstr "Rapporten"
 
@@ -896,6 +972,8 @@ msgstr "AutomateWoo-instellingen: Algemeen"
 #: src/Environment/Plugins/Automatewoo.php:165
 #: src/Environment/Plugins/TheEventsCalendar.php:228
 #: src/Environment/Plugins/TheEventsCalendar.php:230
+#: src/Environment/Plugins/Woocommerce.php:233
+#: src/Environment/Plugins/Woocommerce.php:249
 msgid "General"
 msgstr "Algemeen"
 
@@ -955,6 +1033,7 @@ msgid "AutomateWoo Settings: Status"
 msgstr "AutomateWoo-instellingen: Status"
 
 #: src/Environment/Plugins/Automatewoo.php:221
+#: src/Environment/Plugins/Woocommerce.php:217
 msgid "Status"
 msgstr "Status"
 
@@ -1059,6 +1138,11 @@ msgstr ""
 msgid "Debug Toolkit Diagnostics"
 msgstr "Diagnose Debug Toolkit"
 
+#: src/Environment/Plugins/EuVatCompliance.php:77
+#: src/Environment/Plugins/EuVatCompliance.php:79
+msgid "VAT Compliance"
+msgstr "BTW-naleving"
+
 #: src/Environment/Plugins/EventTickets.php:82
 msgid "Event Tickets"
 msgstr ""
@@ -1095,6 +1179,7 @@ msgstr "Tickets-home"
 #. translators: %s: title of the page or settings tab.
 #: src/Environment/Plugins/EventTickets.php:104
 #: src/Environment/Plugins/EventTickets.php:106
+#: src/Environment/Plugins/Woocommerce.php:194
 msgid "Home"
 msgstr "Home"
 
@@ -1127,8 +1212,8 @@ msgstr "Ticketbestellingen"
 #. translators: %s: title of the page or settings tab.
 #: src/Environment/Plugins/EventTickets.php:142
 #: src/Environment/Plugins/EventTickets.php:144
-#: src/Environment/Plugins/Woocommerce.php:73
-#: src/Environment/Plugins/Woocommerce.php:136
+#: src/Environment/Plugins/Woocommerce.php:80
+#: src/Environment/Plugins/Woocommerce.php:143
 msgid "Orders"
 msgstr "Bestellingen"
 
@@ -1271,6 +1356,11 @@ msgstr "Verzonden e-mails"
 msgid "FluentSMTP"
 msgstr ""
 
+#: src/Environment/Plugins/GenesisConnectWoocommerce.php:76
+#: src/Environment/Plugins/GenesisConnectWoocommerce.php:78
+msgid "Genesis Connect Add-ons"
+msgstr "Genesis Connect-uitbreidingen"
+
 #: src/Environment/Plugins/GitRemoteUpdater.php:64
 msgid "Remote Updater"
 msgstr "Remote Updater"
@@ -1370,6 +1460,43 @@ msgstr "Talen"
 msgid "Loco Translate Settings"
 msgstr "Instellingen van Loco Translate"
 
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:67
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:69
+msgid "Mollie Settings"
+msgstr "Mollie-instellingen"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:71
+msgid "Mollie"
+msgstr "Mollie"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:76
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:78
+msgid "Mollie: API Keys"
+msgstr "Mollie: API-sleutels"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:80
+msgid "API Keys"
+msgstr "API-sleutels"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:85
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:87
+msgid "Mollie: Payment Methods"
+msgstr "Mollie: Betaalmethodes"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:89
+msgid "Payment Methods"
+msgstr "Betaalmethodes"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:94
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:96
+msgid "Mollie: Advanced Settings"
+msgstr "Mollie: Geavanceerde instellingen"
+
+#: src/Environment/Plugins/MolliePaymentsForWoocommerce.php:98
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:85
+msgid "Advanced Settings"
+msgstr "Geavanceerde instellingen"
+
 #: src/Environment/Plugins/Nobuna.php:63
 msgid "Nobuna"
 msgstr ""
@@ -1397,7 +1524,7 @@ msgstr "Instellingen Redis Cache"
 
 #: src/Environment/Plugins/SenseiLms.php:64
 #: src/Environment/Plugins/SenseiLms.php:168
-#: src/Environment/Plugins/Woocommerce.php:167
+#: src/Environment/Plugins/Woocommerce.php:174
 msgid "Courses"
 msgstr "Cursussen"
 
@@ -2134,135 +2261,411 @@ msgstr "Zapier"
 msgid "Updraft Backups"
 msgstr "Updraft-back-ups"
 
-#: src/Environment/Plugins/Woocommerce.php:69
+#: src/Environment/Plugins/Woocommerce.php:76
 msgid "Shop Orders"
 msgstr "Winkelbestellingen"
 
-#: src/Environment/Plugins/Woocommerce.php:71
+#: src/Environment/Plugins/Woocommerce.php:78
 msgid "WooCommerce Orders"
 msgstr "WooCommerce-bestellingen"
 
-#: src/Environment/Plugins/Woocommerce.php:77
+#: src/Environment/Plugins/Woocommerce.php:84
+#: src/Environment/Plugins/Woocommerce.php:241
 msgid "Products"
 msgstr "Producten"
 
-#: src/Environment/Plugins/Woocommerce.php:79
+#: src/Environment/Plugins/Woocommerce.php:86
 msgid "WooCommerce Products"
 msgstr "WooCommerce-producten"
 
-#: src/Environment/Plugins/Woocommerce.php:84
+#: src/Environment/Plugins/Woocommerce.php:91
 msgid "Shop Coupons"
 msgstr "Winkelkortingsbonnen"
 
-#: src/Environment/Plugins/Woocommerce.php:86
+#: src/Environment/Plugins/Woocommerce.php:93
 msgid "WooCommerce Coupons"
 msgstr "WooCommerce-kortingsbonnen"
 
-#: src/Environment/Plugins/Woocommerce.php:88
+#: src/Environment/Plugins/Woocommerce.php:95
 msgid "Coupons"
 msgstr "Kortingsbonnen"
 
-#: src/Environment/Plugins/Woocommerce.php:92
+#: src/Environment/Plugins/Woocommerce.php:99
 msgid "Product Categories"
 msgstr "Productcategorieën"
 
-#: src/Environment/Plugins/Woocommerce.php:94
+#: src/Environment/Plugins/Woocommerce.php:101
 msgid "WooCommerce Product Categories"
 msgstr "WooCommerce-productcategorieën"
 
-#: src/Environment/Plugins/Woocommerce.php:100
+#: src/Environment/Plugins/Woocommerce.php:107
 msgid "Shop Statistics"
 msgstr "Winkelstatistieken"
 
-#: src/Environment/Plugins/Woocommerce.php:102
+#: src/Environment/Plugins/Woocommerce.php:109
 msgid "WooCommerce Sales Statistics"
 msgstr "WooCommerce-verkoopstatistieken"
 
-#: src/Environment/Plugins/Woocommerce.php:104
+#: src/Environment/Plugins/Woocommerce.php:111
 msgid "Statistics"
 msgstr "Statistieken"
 
-#: src/Environment/Plugins/Woocommerce.php:108
-#: src/Environment/Plugins/Woocommerce.php:110
+#: src/Environment/Plugins/Woocommerce.php:115
+#: src/Environment/Plugins/Woocommerce.php:117
 msgid "WooCommerce Settings"
 msgstr "WooCommerce-instellingen"
 
-#: src/Environment/Plugins/Woocommerce.php:117
+#: src/Environment/Plugins/Woocommerce.php:124
 msgid "Shop"
 msgstr "Winkel"
 
-#: src/Environment/Plugins/Woocommerce.php:118
+#: src/Environment/Plugins/Woocommerce.php:125
 msgid "/shop"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:119
+#: src/Environment/Plugins/Woocommerce.php:126
 msgid "WooCommerce Shop"
 msgstr "WooCommerce-winkel"
 
-#: src/Environment/Plugins/Woocommerce.php:124
-#: src/Environment/Plugins/Woocommerce.php:126
+#: src/Environment/Plugins/Woocommerce.php:131
+#: src/Environment/Plugins/Woocommerce.php:133
 msgid "My Account"
 msgstr "Mijn account"
 
-#: src/Environment/Plugins/Woocommerce.php:125
+#: src/Environment/Plugins/Woocommerce.php:132
 msgid "/myaccount"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:132
-#: src/Environment/Plugins/Woocommerce.php:134
+#: src/Environment/Plugins/Woocommerce.php:139
+#: src/Environment/Plugins/Woocommerce.php:141
 msgid "My Account: Orders"
 msgstr "Mijn account: bestellingen"
 
-#: src/Environment/Plugins/Woocommerce.php:133
+#: src/Environment/Plugins/Woocommerce.php:140
 msgid "/myaccount/orders/"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:141
-#: src/Environment/Plugins/Woocommerce.php:143
+#: src/Environment/Plugins/Woocommerce.php:148
+#: src/Environment/Plugins/Woocommerce.php:150
 msgid "My Account: Downloads"
 msgstr "Mijn account: downloads"
 
-#: src/Environment/Plugins/Woocommerce.php:142
+#: src/Environment/Plugins/Woocommerce.php:149
 msgid "/myaccount/downloads/"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:145
+#: src/Environment/Plugins/Woocommerce.php:152
 msgid "Downloads"
 msgstr "Downloads"
 
-#: src/Environment/Plugins/Woocommerce.php:150
-#: src/Environment/Plugins/Woocommerce.php:152
+#: src/Environment/Plugins/Woocommerce.php:157
+#: src/Environment/Plugins/Woocommerce.php:159
 msgid "My Account: Addresses"
 msgstr "Mijn account: adressen"
 
-#: src/Environment/Plugins/Woocommerce.php:151
+#: src/Environment/Plugins/Woocommerce.php:158
 msgid "/myaccount/edit-address/"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:154
+#: src/Environment/Plugins/Woocommerce.php:161
 msgid "Addresses"
 msgstr "Adressen"
 
-#: src/Environment/Plugins/Woocommerce.php:159
-#: src/Environment/Plugins/Woocommerce.php:161
+#: src/Environment/Plugins/Woocommerce.php:166
+#: src/Environment/Plugins/Woocommerce.php:168
 msgid "My Account: Account details"
 msgstr "Mijn account: accountgegevens"
 
-#: src/Environment/Plugins/Woocommerce.php:160
+#: src/Environment/Plugins/Woocommerce.php:167
 msgid "/myaccount/edit-account/"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:163
+#: src/Environment/Plugins/Woocommerce.php:170
 msgid "Account details"
 msgstr "Accountgegevens"
 
-#: src/Environment/Plugins/Woocommerce.php:169
+#: src/Environment/Plugins/Woocommerce.php:176
 msgid "cursus-opleiding"
 msgstr ""
 
-#: src/Environment/Plugins/Woocommerce.php:170
+#: src/Environment/Plugins/Woocommerce.php:177
 msgid "WooCommerce Courses"
 msgstr "WooCommerce-cursussen"
+
+#: src/Environment/Plugins/Woocommerce.php:190
+#: src/Environment/Plugins/Woocommerce.php:192
+msgid "WooCommerce Home"
+msgstr "WooCommerce Home"
+
+#: src/Environment/Plugins/Woocommerce.php:198
+#: src/Environment/Plugins/Woocommerce.php:200
+msgid "Customers"
+msgstr "Klanten"
+
+#: src/Environment/Plugins/Woocommerce.php:205
+#: src/Environment/Plugins/Woocommerce.php:207
+msgid "Shop Reports"
+msgstr "Winkelrapporten"
+
+#: src/Environment/Plugins/Woocommerce.php:213
+#: src/Environment/Plugins/Woocommerce.php:215
+msgid "WooCommerce Status"
+msgstr "WooCommerce-status"
+
+#: src/Environment/Plugins/Woocommerce.php:221
+#: src/Environment/Plugins/Woocommerce.php:223
+msgid "WooCommerce Extensions"
+msgstr "WooCommerce-extensies"
+
+#: src/Environment/Plugins/Woocommerce.php:225
+msgid "Extensions"
+msgstr "Extensies"
+
+#: src/Environment/Plugins/Woocommerce.php:229
+#: src/Environment/Plugins/Woocommerce.php:231
+msgid "WooCommerce Settings: General"
+msgstr "WooCommerce-instellingen: Algemeen"
+
+#: src/Environment/Plugins/Woocommerce.php:237
+#: src/Environment/Plugins/Woocommerce.php:239
+msgid "WooCommerce Settings: Products"
+msgstr "WooCommerce-instellingen: Producten"
+
+#: src/Environment/Plugins/Woocommerce.php:245
+#: src/Environment/Plugins/Woocommerce.php:247
+msgid "Product Settings: General"
+msgstr "Productinstellingen: Algemeen"
+
+#: src/Environment/Plugins/Woocommerce.php:253
+#: src/Environment/Plugins/Woocommerce.php:255
+msgid "Product Settings: Inventory"
+msgstr "Productinstellingen: Voorraad"
+
+#: src/Environment/Plugins/Woocommerce.php:257
+msgid "Inventory"
+msgstr "Voorraad"
+
+#: src/Environment/Plugins/Woocommerce.php:261
+#: src/Environment/Plugins/Woocommerce.php:263
+msgid "Product Settings: Downloadable Products"
+msgstr "Productinstellingen: Downloadbare producten"
+
+#: src/Environment/Plugins/Woocommerce.php:265
+msgid "Downloadable Products"
+msgstr "Downloadbare producten"
+
+#: src/Environment/Plugins/Woocommerce.php:269
+#: src/Environment/Plugins/Woocommerce.php:271
+msgid "Product Settings: Approved Download Directories"
+msgstr "Productinstellingen: Goedgekeurde downloadmappen"
+
+#: src/Environment/Plugins/Woocommerce.php:273
+msgid "Approved Download Directories"
+msgstr "Goedgekeurde downloadmappen"
+
+#: src/Environment/Plugins/Woocommerce.php:277
+#: src/Environment/Plugins/Woocommerce.php:279
+msgid "Product Settings: Advanced"
+msgstr "Productinstellingen: Geavanceerd"
+
+#: src/Environment/Plugins/Woocommerce.php:281
+#: src/Environment/Plugins/Woocommerce.php:400
+msgid "Advanced"
+msgstr "Geavanceerd"
+
+#: src/Environment/Plugins/Woocommerce.php:285
+#: src/Environment/Plugins/Woocommerce.php:287
+msgid "WooCommerce Settings: Tax"
+msgstr "WooCommerce-instellingen: Belasting"
+
+#: src/Environment/Plugins/Woocommerce.php:289
+msgid "Tax"
+msgstr "Belasting"
+
+#: src/Environment/Plugins/Woocommerce.php:293
+#: src/Environment/Plugins/Woocommerce.php:295
+msgid "Tax Settings: Options"
+msgstr "Belastinginstellingen: Opties"
+
+#: src/Environment/Plugins/Woocommerce.php:297
+msgid "Tax Options"
+msgstr "Belastingopties"
+
+#: src/Environment/Plugins/Woocommerce.php:301
+#: src/Environment/Plugins/Woocommerce.php:303
+msgid "Tax Settings: Standard Rates"
+msgstr "Belastinginstellingen: Standaardtarieven"
+
+#: src/Environment/Plugins/Woocommerce.php:305
+msgid "Standard Rates"
+msgstr "Standaardtarieven"
+
+#: src/Environment/Plugins/Woocommerce.php:309
+#: src/Environment/Plugins/Woocommerce.php:311
+msgid "WooCommerce Settings: Shipping"
+msgstr "WooCommerce-instellingen: Verzending"
+
+#: src/Environment/Plugins/Woocommerce.php:313
+msgid "Shipping"
+msgstr "Verzending"
+
+#: src/Environment/Plugins/Woocommerce.php:317
+#: src/Environment/Plugins/Woocommerce.php:319
+msgid "Shipping Settings: Zones"
+msgstr "Verzendinstellingen: Zones"
+
+#: src/Environment/Plugins/Woocommerce.php:321
+msgid "Shipping Zones"
+msgstr "Verzendzones"
+
+#: src/Environment/Plugins/Woocommerce.php:325
+#: src/Environment/Plugins/Woocommerce.php:327
+msgid "Shipping Settings: Options"
+msgstr "Verzendinstellingen: Opties"
+
+#: src/Environment/Plugins/Woocommerce.php:329
+msgid "Shipping Options"
+msgstr "Verzendinstellingen"
+
+#: src/Environment/Plugins/Woocommerce.php:333
+#: src/Environment/Plugins/Woocommerce.php:335
+msgid "Shipping Settings: Classes"
+msgstr "Verzendinstellingen: Klassen"
+
+#: src/Environment/Plugins/Woocommerce.php:337
+msgid "Classes"
+msgstr "Klassen"
+
+#: src/Environment/Plugins/Woocommerce.php:341
+#: src/Environment/Plugins/Woocommerce.php:343
+msgid "WooCommerce Settings: Payments"
+msgstr "WooCommerce-instellingen: Betalingen"
+
+#: src/Environment/Plugins/Woocommerce.php:345
+msgid "Payments"
+msgstr "Betalingen"
+
+#: src/Environment/Plugins/Woocommerce.php:349
+#: src/Environment/Plugins/Woocommerce.php:351
+msgid "WooCommerce Settings: Accounts & Privacy"
+msgstr "WooCommerce-instellingen: Accounts en privacy"
+
+#: src/Environment/Plugins/Woocommerce.php:353
+msgid "Accounts & Privacy"
+msgstr "Accounts en privacy"
+
+#: src/Environment/Plugins/Woocommerce.php:357
+#: src/Environment/Plugins/Woocommerce.php:359
+msgid "WooCommerce Settings: Emails"
+msgstr "WooCommerce-instellingen: E-mails"
+
+#: src/Environment/Plugins/Woocommerce.php:361
+msgid "Emails"
+msgstr "E-mails"
+
+#: src/Environment/Plugins/Woocommerce.php:365
+#: src/Environment/Plugins/Woocommerce.php:367
+msgid "WooCommerce Settings: Integration"
+msgstr "WooCommerce-instellingen: Integratie"
+
+#: src/Environment/Plugins/Woocommerce.php:369
+msgid "Integration"
+msgstr "Integratie"
+
+#: src/Environment/Plugins/Woocommerce.php:373
+#: src/Environment/Plugins/Woocommerce.php:375
+msgid "MaxMind Geolocation"
+msgstr "MaxMind geolocatie"
+
+#: src/Environment/Plugins/Woocommerce.php:380
+#: src/Environment/Plugins/Woocommerce.php:382
+msgid "WooCommerce Settings: Site Visibility"
+msgstr "WooCommerce-instellingen: Site-zichtbaarheid"
+
+#: src/Environment/Plugins/Woocommerce.php:384
+msgid "Site Visibility"
+msgstr "Site-zichtbaarheid"
+
+#: src/Environment/Plugins/Woocommerce.php:388
+#: src/Environment/Plugins/Woocommerce.php:390
+msgid "WooCommerce Settings: Point of Sale"
+msgstr "WooCommerce-instellingen: Verkooppunt"
+
+#: src/Environment/Plugins/Woocommerce.php:392
+msgid "Point of Sale"
+msgstr "Verkooppunt"
+
+#: src/Environment/Plugins/Woocommerce.php:396
+#: src/Environment/Plugins/Woocommerce.php:398
+msgid "WooCommerce Settings: Advanced"
+msgstr "WooCommerce-instellingen: Geavanceerd"
+
+#: src/Environment/Plugins/Woocommerce.php:404
+#: src/Environment/Plugins/Woocommerce.php:406
+msgid "WooCommerce Advanced: Page Setup"
+msgstr "WooCommerce geavanceerd: Paginasetup"
+
+#: src/Environment/Plugins/Woocommerce.php:408
+msgid "Page Setup"
+msgstr "Paginasetup"
+
+#: src/Environment/Plugins/Woocommerce.php:412
+#: src/Environment/Plugins/Woocommerce.php:414
+msgid "WooCommerce Advanced: REST API"
+msgstr "WooCommerce geavanceerd: REST API"
+
+#: src/Environment/Plugins/Woocommerce.php:416
+msgid "REST API"
+msgstr "REST API"
+
+#: src/Environment/Plugins/Woocommerce.php:420
+#: src/Environment/Plugins/Woocommerce.php:422
+msgid "WooCommerce Advanced: Webhooks"
+msgstr "WooCommerce geavanceerd: Webhooks"
+
+#: src/Environment/Plugins/Woocommerce.php:424
+msgid "Webhooks"
+msgstr "Webhooks"
+
+#: src/Environment/Plugins/Woocommerce.php:428
+#: src/Environment/Plugins/Woocommerce.php:430
+msgid "WooCommerce Advanced: WooCommerce.com"
+msgstr "WooCommerce geavanceerd: WooCommerce.com"
+
+#: src/Environment/Plugins/Woocommerce.php:432
+msgid "WooCommerce.com"
+msgstr "WooCommerce.com"
+
+#: src/Environment/Plugins/Woocommerce.php:436
+#: src/Environment/Plugins/Woocommerce.php:438
+msgid "WooCommerce Advanced: Blueprint"
+msgstr "WooCommerce geavanceerd: Blauwdruk"
+
+#: src/Environment/Plugins/Woocommerce.php:440
+msgid "Blueprint"
+msgstr "Blauwdruk"
+
+#: src/Environment/Plugins/Woocommerce.php:444
+#: src/Environment/Plugins/Woocommerce.php:446
+msgid "WooCommerce Advanced: Features"
+msgstr "WooCommerce geavanceerd: Functies"
+
+#: src/Environment/Plugins/Woocommerce.php:448
+msgid "Features"
+msgstr "Functies"
+
+#. translators: %s: name of a tax class.
+#: src/Environment/Plugins/Woocommerce.php:472
+#: src/Environment/Plugins/Woocommerce.php:475
+#, php-format
+msgid "Tax Settings: %s Rates"
+msgstr "Belastinginstellingen: %s tarieven"
+
+#. translators: %s: name of a tax class.
+#: src/Environment/Plugins/Woocommerce.php:478
+#, php-format
+msgid "%s Rates"
+msgstr "%s tarieven"
 
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:70
 #: src/Modules/ActiveWoo/ActiveWoo.php:41
@@ -2277,10 +2680,6 @@ msgstr "WooCommerce: ActiveWoo-instellingen"
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:77
 msgid "ActiveWoo Settings"
 msgstr "ActiveWoo-instellingen"
-
-#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:85
-msgid "Advanced Settings"
-msgstr "Geavanceerde instellingen"
 
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:87
 msgid "WooCommerce ActiveWoo Advanced Settings"
@@ -2301,6 +2700,24 @@ msgstr "Instellingen kortingsbonnen"
 #: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:101
 msgid "WooCommerce ActiveWoo Coupons Settings"
 msgstr "WooCommerce: ActiveWoo-instellingen kortingsbonnen"
+
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:107
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:109
+msgid "ActiveWoo License"
+msgstr "ActiveWoo-licentie"
+
+#: src/Environment/Plugins/WoocommerceActiveCampaignIntegration.php:111
+msgid "License"
+msgstr "Licentie"
+
+#: src/Environment/Plugins/WoocommerceChainedProducts.php:76
+#: src/Environment/Plugins/WoocommerceChainedProducts.php:78
+msgid "Product Settings: Chained Products"
+msgstr "Productinstellingen: Chained Products"
+
+#: src/Environment/Plugins/WoocommerceChainedProducts.php:80
+msgid "Chained Products"
+msgstr "Chained Products"
 
 #: src/Environment/Plugins/WoocommerceCustomerOrderCsvExport.php:59
 msgid "Shop Order CSV Export"
@@ -2328,8 +2745,16 @@ msgid "/myaccount/pre-orders/"
 msgstr ""
 
 #: src/Environment/Plugins/WoocommercePreOrders.php:64
+#: src/Environment/Plugins/WoocommercePreOrders.php:70
+#: src/Environment/Plugins/WoocommercePreOrders.php:72
+#: src/Environment/Plugins/WoocommercePreOrders.php:82
 msgid "Pre-orders"
 msgstr "Voorbestellingen"
+
+#: src/Environment/Plugins/WoocommercePreOrders.php:78
+#: src/Environment/Plugins/WoocommercePreOrders.php:80
+msgid "Pre-order Settings"
+msgstr "Pre-order-instellingen"
 
 #: src/Environment/Plugins/WoocommerceProductAddons.php:59
 #: src/Environment/Plugins/WoocommerceProductAddons.php:61
@@ -2339,6 +2764,15 @@ msgstr "Productopties"
 #: src/Environment/Plugins/WoocommerceProductAddons.php:61
 msgid "WooCommerce"
 msgstr ""
+
+#: src/Environment/Plugins/WoocommerceProductAddons.php:67
+#: src/Environment/Plugins/WoocommerceProductAddons.php:69
+msgid "Product Settings: Add-ons"
+msgstr "Productinstellingen: Extra opties"
+
+#: src/Environment/Plugins/WoocommerceProductAddons.php:71
+msgid "Add-ons"
+msgstr "Extra opties"
 
 #: src/Environment/Plugins/WoocommerceSmartCoupons.php:60
 #: src/Environment/Plugins/WoocommerceSmartCoupons.php:62
@@ -2355,6 +2789,7 @@ msgstr "Smart Coupons"
 
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:65
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:77
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:94
 msgid "Subscriptions"
 msgstr "Abonnementen"
 
@@ -2383,9 +2818,19 @@ msgstr ""
 msgid "WooCommerce Course Payment Plans"
 msgstr "WooCommerce: betaalplannen cursussen"
 
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:90
+#: src/Environment/Plugins/WoocommerceSubscriptions.php:92
+msgid "Subscription Settings"
+msgstr "Abonnementsinstellingen"
+
 #: src/Environment/Plugins/WpForms.php:65
 msgid "WPForms"
 msgstr ""
+
+#: src/Environment/Plugins/WpMenuCart.php:77
+#: src/Environment/Plugins/WpMenuCart.php:79
+msgid "Menu Cart"
+msgstr "Menu Cart"
 
 #: src/Environment/Plugins/WpServerStats.php:69
 msgid "WP Server Stats"

@@ -12,13 +12,19 @@ declare( strict_types=1 );
 
 namespace DeWittePrins\CoreFunctionality\Environment\Plugins;
 
+use DeWittePrins\CoreFunctionality\Enums\Orientation;
+use DeWittePrins\CoreFunctionality\DTO\ToolbarShortcut;
 use DeWittePrins\CoreFunctionality\Environment\DTO\ProofRequirement;
 use Override;
+
+use function __;
+use function admin_url;
 
 /**
  * Class MolliePaymentsForWoocommerce
  *
- * Reports whether Mollie Payments for WooCommerce is active and loaded. Supplies no admin links yet.
+ * Reports whether Mollie Payments for WooCommerce is active and loaded, and supplies its tab in the
+ * WooCommerce settings with its sections.
  *
  * @since 1.0.0
  */
@@ -54,7 +60,45 @@ class MolliePaymentsForWoocommerce extends AbstractPlugin {
 	 */
 	#[Override]
 	public function get_toolbar_nodes(): array {
-		return array();
+		return array(
+			// Its tab in the WooCommerce settings, with its sections.
+			new ToolbarShortcut(
+				id:          'cf-mollie',
+				title:       __( 'Mollie Settings', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=mollie_settings' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Mollie Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Mollie', 'core-functionality' ),
+				group:       'woocommerce',
+			),
+			new ToolbarShortcut(
+				id:          'cf-mollie-api-keys',
+				title:       __( 'Mollie: API Keys', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=mollie_settings&section=mollie_api_keys' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Mollie: API Keys', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'API Keys', 'core-functionality' ),
+				group:       'woocommerce',
+			),
+			new ToolbarShortcut(
+				id:          'cf-mollie-payment-methods',
+				title:       __( 'Mollie: Payment Methods', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=mollie_settings&section=mollie_payment_methods' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Mollie: Payment Methods', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Payment Methods', 'core-functionality' ),
+				group:       'woocommerce',
+			),
+			new ToolbarShortcut(
+				id:          'cf-mollie-advanced',
+				title:       __( 'Mollie: Advanced Settings', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=mollie_settings&section=mollie_advanced' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Mollie: Advanced Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Advanced Settings', 'core-functionality' ),
+				group:       'woocommerce',
+			),
+		);
 	}
 
 	/**

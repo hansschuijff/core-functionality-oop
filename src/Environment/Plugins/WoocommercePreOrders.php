@@ -64,6 +64,24 @@ class WoocommercePreOrders extends AbstractPlugin {
 				short_title: __( 'Pre-orders', 'core-functionality' ),
 				group:       'my-account',
 			),
+			// Its page and its tab in the WooCommerce settings.
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-pre-orders',
+				title:       __( 'Pre-orders', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc_pre_orders' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Pre-orders', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				group:       'woocommerce',
+			),
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-pre-orders-settings',
+				title:       __( 'Pre-order Settings', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=pre_orders' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Pre-order Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Pre-orders', 'core-functionality' ),
+				group:       'woocommerce',
+			),
 		);
 	}
 

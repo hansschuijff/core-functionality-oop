@@ -61,6 +61,16 @@ class WoocommerceProductAddons extends AbstractPlugin {
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce', 'core-functionality' ) . ' ' . __( 'Product Add-ons', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
+			// Its section in the product settings.
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-product-addons-settings',
+				title:       __( 'Product Settings: Add-ons', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=products&section=add_ons' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Product Settings: Add-ons', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Add-ons', 'core-functionality' ),
+				group:       'woocommerce',
+			),
 		);
 	}
 

@@ -65,6 +65,13 @@ return array(
 		'woocommerce-product-addons'              => 'woocommerce-product-addons/woocommerce-product-addons.php',
 		'woocommerce-smart-coupons'               => 'woocommerce-smart-coupons/woocommerce-smart-coupons.php',
 		'automatewoo'                             => 'automatewoo/automatewoo.php',
+		'woocommerce-chained-products'            => 'woocommerce-chained-products/woocommerce-chained-products.php',
+		'autocomplete-woocommerce-orders'         => 'autocomplete-woocommerce-orders/autocomplete-woocommerce-orders.php',
+		'genesis-connect-woocommerce'             => 'genesis-connect-woocommerce/genesis-connect-woocommerce.php',
+		'aelia-eu-vat-assistant'                  => 'woocommerce-eu-vat-assistant/woocommerce-eu-vat-assistant.php', // confirm: not on the development site.
+		'aelia-foundation-classes'                => 'wc-aelia-foundation-classes/wc-aelia-foundation-classes.php', // confirm: not on the development site.
+		'eu-vat-compliance'                       => 'woocommerce-eu-vat-compliance/eu-vat-compliance.php', // confirm: not on the development site; the premium version has another folder.
+		'wp-menu-cart'                            => 'wp-menu-cart/wp-menu-cart.php', // confirm: not on the development site; the pro version is wp-menu-cart-pro.
 
 		// The Events Calendar Stack.
 		'the-events-calendar'                     => 'the-events-calendar/the-events-calendar.php',

@@ -101,6 +101,15 @@ class WoocommerceActiveCampaignIntegration extends AbstractPlugin {
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce ActiveWoo Coupons Settings', 'core-functionality' ),
 				orientation: Orientation::ADMIN,
 			),
+			// Its license section.
+			new ToolbarShortcut(
+				id:          'cf-activewoo-license',
+				title:       __( 'ActiveWoo License', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=integration&section=active-woo-license' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'ActiveWoo License', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'License', 'core-functionality' ),
+			),
 		);
 	}
 

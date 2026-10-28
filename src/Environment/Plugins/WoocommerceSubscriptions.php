@@ -84,6 +84,16 @@ class WoocommerceSubscriptions extends AbstractPlugin {
 				label:   __( 'Link to', 'core-functionality' ) . ' ' . __( 'WooCommerce Course Payment Plans', 'core-functionality' ),
 				orientation: Orientation::FRONTEND,
 			),
+			// Its tab in the WooCommerce settings.
+			new ToolbarShortcut(
+				id:          'cf-woocommerce-subscriptions-settings',
+				title:       __( 'Subscription Settings', 'core-functionality' ),
+				href:        admin_url( 'admin.php?page=wc-settings&tab=subscriptions' ),
+				label:       __( 'Link to', 'core-functionality' ) . ' ' . __( 'Subscription Settings', 'core-functionality' ),
+				orientation: Orientation::ADMIN,
+				short_title: __( 'Subscriptions', 'core-functionality' ),
+				group:       'woocommerce',
+			),
 		);
 	}
 
