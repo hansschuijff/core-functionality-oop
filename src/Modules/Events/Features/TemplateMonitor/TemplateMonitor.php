@@ -339,7 +339,7 @@ class TemplateMonitor extends AbstractFeature {
 		$sources  = array(
 			'child'  => __( 'child theme', 'core-functionality' ),
 			'parent' => __( 'parent theme', 'core-functionality' ),
-			'site'   => __( 'site templates', 'core-functionality' ),
+			'site'   => __( 'site template', 'core-functionality' ),
 		);
 		$headings = array(
 			'outdated'         => __( 'These templates are out of date:', 'core-functionality' ),
@@ -354,14 +354,13 @@ class TemplateMonitor extends AbstractFeature {
 			$where = $sources[ $finding['source'] ] ?? $finding['source'];
 			$key   = 'redundant' === $finding['type'] ? 'redundant-' . $finding['source'] : $finding['type'];
 
+			// The path first, then whose copy it is, right next to its version.
 			$groups[ $key ][] = match ( $finding['type'] ) {
-				/* translators: 1: template path, 2: where it is (child theme, parent theme, site templates), 3: its version, 4: the plugin's version. */
-				'outdated'          => sprintf( __( '%1$s (%2$s): v%3$s, the plugin has v%4$s', 'core-functionality' ), $finding['path'], $where, $finding['version'], $finding['original'] ),
-				/* translators: 1: template path, 2: where it is. */
-				'missing'           => sprintf( __( '%1$s (%2$s)', 'core-functionality' ), $finding['path'], $where ),
-				/* translators: 1: template path, 2: its version, 3: the plugin's version. */
-				'site-outdated'     => sprintf( __( '%1$s: v%2$s, the plugin has v%3$s', 'core-functionality' ), $finding['path'], $finding['version'], $finding['original'] ),
-				default             => $finding['path'],
+				/* translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template), 3: its version, 4: the plugin's version. */
+				'outdated', 'site-outdated' => sprintf( __( '%1$s: %2$s has v%3$s, the plugin has v%4$s', 'core-functionality' ), $finding['path'], $where, $finding['version'], $finding['original'] ),
+				/* translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template). */
+				'missing'                   => sprintf( __( '%1$s: %2$s has it, the plugin no longer does', 'core-functionality' ), $finding['path'], $where ),
+				default                     => $finding['path'],
 			};
 		}
 
