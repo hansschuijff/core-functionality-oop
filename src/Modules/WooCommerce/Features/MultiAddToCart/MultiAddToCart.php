@@ -28,10 +28,10 @@ use function array_map;
 use function array_pad;
 use function class_exists;
 use function count;
+use function ctype_digit;
 use function explode;
 use function function_exists;
 use function get_option;
-use function implode;
 use function is_string;
 use function max;
 use function remove_action;
@@ -45,6 +45,7 @@ use function wc_add_to_cart_message;
 use function wc_get_cart_url;
 use function wc_get_product;
 use function wp_safe_redirect;
+use function wp_sprintf_l;
 use function wp_unslash;
 
 /**
@@ -132,7 +133,9 @@ class MultiAddToCart extends AbstractFeature {
 			}
 			list( $id, $quantity ) = array_pad( explode( ':', trim( $item ), 2 ), 2, '' );
 
-			$product_id = absint( apply_filters( 'woocommerce_add_to_cart_product_id', absint( $id ) ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook.
+			// Only a whole number is a product number: "123x" must not become product 123.
+			$id         = trim( $id );
+			$product_id = ctype_digit( $id ) ? absint( apply_filters( 'woocommerce_add_to_cart_product_id', absint( $id ) ) ) : 0; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook.
 			if ( 0 === $product_id || ! wc_get_product( $product_id ) ) {
 				$unknown[] = trim( $id );
 				continue;
@@ -155,12 +158,17 @@ class MultiAddToCart extends AbstractFeature {
 		// numbers it says nothing; a visitor gets a plain notice they can take back to whoever gave
 		// them the link.
 		if ( array() !== $unknown ) {
-			$numbers = implode( ', ', array_map( 'esc_html', $unknown ) );
+			// "999999, 123 and abc": WordPress's list, in the site's language.
+			$numbers = wp_sprintf_l( '%l', array_map( 'esc_html', $unknown ) );
 			wc_add_notice(
-				__( 'Not all products could be put in the cart.', 'core-functionality' ) . ' '
-				. sprintf(
-					/* translators: %s: the product number(s) from the link, separated by commas. */
-					_n( 'The product with number %s is not known.', 'The products with numbers %s are not known.', count( $unknown ), 'core-functionality' ),
+				sprintf(
+					/* translators: %s: the product number(s) from the link, as a list ("1, 2 and 3"). */
+					_n(
+						'The product with number %s could not be added. That product number does not exist.',
+						'The products with numbers %s could not be added. Those product numbers do not exist.',
+						count( $unknown ),
+						'core-functionality'
+					),
 					$numbers
 				),
 				'error'
