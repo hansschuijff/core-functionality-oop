@@ -23,7 +23,7 @@ use function admin_url;
 /**
  * Class WpMenuCart
  *
- * Reports whether WP Menu Cart is active, and supplies the links it adds to WooCommerce. Its basename in environment-index.php is not confirmed yet.
+ * Reports whether WP Menu Cart is active, and supplies the links it adds to WooCommerce.
  *
  * @since 1.0.0
  */
@@ -59,8 +59,7 @@ class WpMenuCart extends AbstractPlugin {
 	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		// Not installed on the development site, so no proof is known yet: being active counts.
-		return new ProofRequirement();
+		return new ProofRequirement( classes: 'WpMenuCart' );
 	}
 
 	/**

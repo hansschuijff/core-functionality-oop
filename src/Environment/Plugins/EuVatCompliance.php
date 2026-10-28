@@ -23,7 +23,7 @@ use function admin_url;
 /**
  * Class EuVatCompliance
  *
- * Reports whether EU VAT Compliance for WooCommerce is active, and supplies the links it adds to WooCommerce. Its basename in environment-index.php is not confirmed yet.
+ * Reports whether EU VAT Compliance for WooCommerce is active, and supplies the links it adds to WooCommerce.
  *
  * @since 1.0.0
  */
@@ -59,8 +59,7 @@ class EuVatCompliance extends AbstractPlugin {
 	 */
 	#[Override]
 	protected function get_proof_requirements(): ProofRequirement {
-		// Not installed on the development site, so no proof is known yet: being active counts.
-		return new ProofRequirement();
+		return new ProofRequirement( constants: 'WC_VAT_COMPLIANCE_DIR' );
 	}
 
 	/**
