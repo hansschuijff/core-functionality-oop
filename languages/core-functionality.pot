@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T14:21:16+01:00\n"
+"POT-Creation-Date: 2026-10-28T20:25:02+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -428,8 +428,8 @@ msgstr ""
 #: src/Environment/Core/WordPress.php:283
 #: src/Environment/Core/WordPress.php:295
 #: src/Environment/Core/WordPress.php:302
-#: src/Environment/Plugins/AeliaEuVatAssistant.php:79
-#: src/Environment/Plugins/AeliaFoundationClasses.php:79
+#: src/Environment/Plugins/AeliaEuVatAssistant.php:78
+#: src/Environment/Plugins/AeliaFoundationClasses.php:78
 #: src/Environment/Plugins/AutocompleteWoocommerceOrders.php:78
 #: src/Environment/Plugins/Automatewoo.php:76
 #: src/Environment/Plugins/Automatewoo.php:83
@@ -462,7 +462,7 @@ msgstr ""
 #: src/Environment/Plugins/BeaverBuilder.php:124
 #: src/Environment/Plugins/BrokenLinkChecker.php:65
 #: src/Environment/Plugins/CoreFunctionality.php:109
-#: src/Environment/Plugins/EuVatCompliance.php:79
+#: src/Environment/Plugins/EuVatCompliance.php:78
 #: src/Environment/Plugins/EventTickets.php:84
 #: src/Environment/Plugins/EventTickets.php:95
 #: src/Environment/Plugins/EventTickets.php:104
@@ -667,7 +667,7 @@ msgstr ""
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:84
 #: src/Environment/Plugins/WoocommerceSubscriptions.php:92
 #: src/Environment/Plugins/WpForms.php:65
-#: src/Environment/Plugins/WpMenuCart.php:79
+#: src/Environment/Plugins/WpMenuCart.php:78
 #: src/Environment/Plugins/WpServerStats.php:69
 #: src/Environment/Plugins/WpServerStats.php:76
 #: src/Environment/Plugins/WpServerStats.php:83
@@ -844,17 +844,17 @@ msgstr ""
 msgid "Testimonials"
 msgstr ""
 
-#: src/Environment/Plugins/AeliaEuVatAssistant.php:77
-#: src/Environment/Plugins/AeliaEuVatAssistant.php:79
+#: src/Environment/Plugins/AeliaEuVatAssistant.php:76
+#: src/Environment/Plugins/AeliaEuVatAssistant.php:78
 msgid "EU VAT Assistant"
 msgstr ""
 
-#: src/Environment/Plugins/AeliaFoundationClasses.php:77
-#: src/Environment/Plugins/AeliaFoundationClasses.php:79
+#: src/Environment/Plugins/AeliaFoundationClasses.php:76
+#: src/Environment/Plugins/AeliaFoundationClasses.php:78
 msgid "Aelia Settings"
 msgstr ""
 
-#: src/Environment/Plugins/AeliaFoundationClasses.php:81
+#: src/Environment/Plugins/AeliaFoundationClasses.php:80
 msgid "Aelia"
 msgstr ""
 
@@ -1136,8 +1136,8 @@ msgstr ""
 msgid "Debug Toolkit Diagnostics"
 msgstr ""
 
-#: src/Environment/Plugins/EuVatCompliance.php:77
-#: src/Environment/Plugins/EuVatCompliance.php:79
+#: src/Environment/Plugins/EuVatCompliance.php:76
+#: src/Environment/Plugins/EuVatCompliance.php:78
 msgid "VAT Compliance"
 msgstr ""
 
@@ -2760,6 +2760,7 @@ msgid "Product Add-ons"
 msgstr ""
 
 #: src/Environment/Plugins/WoocommerceProductAddons.php:61
+#: src/Modules/WooCommerce/WooCommerce.php:43
 msgid "WooCommerce"
 msgstr ""
 
@@ -2825,8 +2826,8 @@ msgstr ""
 msgid "WPForms"
 msgstr ""
 
-#: src/Environment/Plugins/WpMenuCart.php:77
-#: src/Environment/Plugins/WpMenuCart.php:79
+#: src/Environment/Plugins/WpMenuCart.php:76
+#: src/Environment/Plugins/WpMenuCart.php:78
 msgid "Menu Cart"
 msgstr ""
 
@@ -3701,6 +3702,18 @@ msgstr ""
 
 #: src/Modules/ReaderExperience/ReaderExperience.php:44
 msgid "Settings for the Reader Experience plugin: heading anchors, reading time and feedback."
+msgstr ""
+
+#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:72
+msgid "Several products in the cart at once"
+msgstr ""
+
+#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:73
+msgid "One add-to-cart link adds several products with their own quantities: ?add-to-cart=101:1,102:3. Used by the ticket forms of Remote Tickets."
+msgstr ""
+
+#: src/Modules/WooCommerce/WooCommerce.php:44
+msgid "Additions to WooCommerce."
 msgstr ""
 
 #: src/Notifiers/Drivers/Pushover.php:86

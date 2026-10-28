@@ -232,6 +232,16 @@ mu-plugin on a later priority still has the last word. Left out: the module list
 (objects and callables) and the heading id filter (a function, not a setting). It replaces the stopgap
 mu-plugin `dwp-reader-experience-setup.php`.
 
+### WooCommerce
+
+The module `WooCommerce` (dependency: the `woocommerce` guard, which covers its features) holds
+additions to WooCommerce. Feature `MultiAddToCart`: one link adds several products with their own
+quantities, `?add-to-cart=101:1,102:3`, used by the ticket forms of Remote Tickets. It runs on wp_loaded
+15, before WooCommerce's own handler (20), which it removes for such a request; each product passes
+`woocommerce_add_to_cart_validation`, and the customer gets WooCommerce's message and is sent to the
+cart. Taken over from Remote Tickets Server Add-ons (`WooCartExtension`): while both are active, the
+feature removes that plugin's hook; the class can go from that plugin when CF goes live.
+
 ## Settings and options
 
 - **Settings files** (`settings/`) hold defaults and site data as PHP files returning arrays. General files
