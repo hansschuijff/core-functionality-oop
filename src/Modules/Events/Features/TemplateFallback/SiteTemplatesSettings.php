@@ -167,7 +167,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_description(): string {
-		return __( 'Template overrides of The Events Calendar and Event Tickets for this site, apart from the theme. The Events Calendar looks in the child theme, the parent theme, these site templates and then its own original, so a theme can still override one.', 'core-functionality' );
+		return __( 'Here you can load custom templates that replace built-in templates of The Events Calendar and Event Tickets. It gives you a place to make changes independent of the theme. A template stored here is only loaded when the active theme does not have it built in. Make theme-specific changes the usual way in a parent or child theme; they take precedence.', 'core-functionality' );
 	}
 
 	/**
@@ -269,8 +269,8 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	public function render( bool $defaults_only = false ): void {
 		$this->render_templates();
 		$this->render_downloads();
-		$this->render_previous();
 		$this->render_upload();
+		$this->render_previous();
 	}
 
 	/**
@@ -331,20 +331,23 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Outputs the version before the last change and its restore button, when there is one.
+	 * Outputs the version before the last change and its restore button; or that there is none yet.
 	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
 	private function render_previous(): void {
 		$previous = self::previous_dir();
+
+		echo '<h2>' . esc_html__( 'Previous version', 'core-functionality' ) . '</h2>';
+
 		if ( ! is_dir( $previous ) ) {
+			echo '<p>' . esc_html__( 'There is no previous version yet. The next upload sets the current templates aside here, so you can go back to them.', 'core-functionality' ) . '</p>';
 			return;
 		}
 
 		$count = count( self::templates_in( $previous ) );
 
-		echo '<h2>' . esc_html__( 'Previous version', 'core-functionality' ) . '</h2>';
 		/* translators: %d: number of templates. */
 		echo '<p>' . esc_html( sprintf( _n( 'The version before the last change is kept (%d template). Restoring it swaps the two, so you can switch back.', 'The version before the last change is kept (%d templates). Restoring it swaps the two, so you can switch back.', $count, 'core-functionality' ), $count ) ) . '</p>';
 
@@ -356,14 +359,14 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Outputs the upload field.
+	 * Outputs the upload field and its button.
 	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
 	private function render_upload(): void {
-		echo '<h2>' . esc_html__( 'Replace', 'core-functionality' ) . '</h2>';
-		echo '<p>' . esc_html__( 'A zip replaces all site templates as a whole, like a theme or plugin update; the current version is kept as the previous version. The zip holds the folders tribe/… and tribe-events/… as in a theme (inside one enclosing folder is fine). Other files are skipped.', 'core-functionality' ) . '</p>';
+		echo '<h2>' . esc_html__( 'Upload', 'core-functionality' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Load a zip archive with custom templates for The Events Calendar and Event Tickets. Arrange the templates in folders and files the same way you would in a theme, and put them in the root of the zip or in one main folder inside it. All other files are skipped. The upload replaces all previously stored templates at once, like installing a theme or plugin. The previous version is set aside and can be restored.', 'core-functionality' ) . '</p>';
 
 		$reason = $this->cannot_modify();
 		if ( '' !== $reason ) {
@@ -371,7 +374,8 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 			return;
 		}
 
-		echo '<p><input type="file" name="' . esc_attr( self::UPLOAD ) . '" accept=".zip,application/zip" /></p>';
+		echo '<p><input type="file" name="' . esc_attr( self::UPLOAD ) . '" accept=".zip,application/zip" /> ';
+		echo $this->button( 'upload', __( 'Upload', 'core-functionality' ), __( 'Replace all site templates with the templates in this zip?', 'core-functionality' ), 'button button-primary' ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
 	}
 
 	/**
@@ -724,19 +728,14 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Returns the button under the form of this tab: replace, when the folder can be changed.
+	 * Returns no buttons under the form: each section has its own (an empty one keeps the page's
+	 * default Save and Reset away).
 	 *
 	 * @since  1.0.0
 	 * @return array The action buttons.
 	 */
 	#[Override]
 	public function get_action_buttons(): array {
-		if ( '' !== $this->cannot_modify() ) {
-			return array( 'none' => '' );
-		}
-
-		return array(
-			'upload' => $this->button( 'upload', __( 'Replace site templates', 'core-functionality' ), __( 'Replace all site templates with the templates in this zip?', 'core-functionality' ), 'button button-primary button-large' ),
-		);
+		return array( 'none' => '' );
 	}
 }

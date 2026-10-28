@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T23:53:22+01:00\n"
+"POT-Creation-Date: 2026-10-29T00:30:36+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -3577,7 +3577,7 @@ msgid "Event templates"
 msgstr ""
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:170
-msgid "Template overrides of The Events Calendar and Event Tickets for this site, apart from the theme. The Events Calendar looks in the child theme, the parent theme, these site templates and then its own original, so a theme can still override one."
+msgid "Here you can load custom templates that replace built-in templates of The Events Calendar and Event Tickets. It gives you a place to make changes independent of the theme. A template stored here is only loaded when the active theme does not have it built in. Make theme-specific changes the usual way in a parent or child theme; they take precedence."
 msgstr ""
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:249
@@ -3639,108 +3639,109 @@ msgstr ""
 msgid "Templates in use"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:347
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:342
 msgid "Previous version"
 msgstr ""
 
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:345
+msgid "There is no previous version yet. The next upload sets the current templates aside here, so you can go back to them."
+msgstr ""
+
 #. translators: %d: number of templates.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:349
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:352
 #, php-format
 msgid "The version before the last change is kept (%d template). Restoring it swaps the two, so you can switch back."
 msgid_plural "The version before the last change is kept (%d templates). Restoring it swaps the two, so you can switch back."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:355
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:358
 msgid "Restore previous version"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:355
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:358
 msgid "Swap the site templates for the previous version?"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:365
-msgid "Replace"
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:368
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:378
+msgid "Upload"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:366
-msgid "A zip replaces all site templates as a whole, like a theme or plugin update; the current version is kept as the previous version. The zip holds the folders tribe/… and tribe-events/… as in a theme (inside one enclosing folder is fine). Other files are skipped."
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:369
+msgid "Load a zip archive with custom templates for The Events Calendar and Event Tickets. Arrange the templates in folders and files the same way you would in a theme, and put them in the root of the zip or in one main folder inside it. All other files are skipped. The upload replaces all previously stored templates at once, like installing a theme or plugin. The previous version is set aside and can be restored."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:417
-msgid "Unknown action."
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:378
+msgid "Replace all site templates with the templates in this zip?"
 msgstr ""
 
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:421
+msgid "Unknown action."
+msgstr ""
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:425
 msgid "The server cannot make zip files (ZipArchive is missing)."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:442
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:446
 msgid "Choose a zip file first."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:445
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:449
 msgid "The upload failed. The file may be larger than the server allows."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:448
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:452
 msgid "Choose a .zip file."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:482
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:486
 msgid "There are no templates to download."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:488
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:492
 msgid "The zip file could not be made."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:517
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:657
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:521
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:661
 msgid "WordPress cannot write files here."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:534
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:538
 msgid "The zip holds no templates: no PHP files in tribe/… or tribe-events/…. Nothing was changed."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:538
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:542
 msgid "The site templates could not be replaced. Nothing was changed."
 msgstr ""
 
 #. translators: %s: the skipped files, separated by commas.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:544
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:548
 #, php-format
 msgid "Skipped, not a template: %s"
 msgstr ""
 
 #. translators: %d: number of templates.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:548
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:552
 #, php-format
 msgid "%d site template installed; the previous version is kept."
 msgid_plural "%d site templates installed; the previous version is kept."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:654
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:658
 msgid "There is no previous version."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:662
 #: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:666
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:670
 msgid "The previous version could not be restored. Nothing was changed."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:674
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:678
 msgid "The previous version is restored; the replaced version is now the previous one."
-msgstr ""
-
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:739
-msgid "Replace site templates"
-msgstr ""
-
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:739
-msgid "Replace all site templates with the templates in this zip?"
 msgstr ""
 
 #: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:86
