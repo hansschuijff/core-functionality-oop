@@ -18,4 +18,5 @@ return array(
 	'admin_toolbar'     => 'admin-toolbar/',
 	'active-woo'        => 'active-woo/',
 	'reader-experience' => 'reader-experience/',
+	'events'            => 'events/',
 );

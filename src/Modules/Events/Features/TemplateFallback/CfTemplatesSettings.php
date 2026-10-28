@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\Interfaces\SettingsSectionInterface;
+use DeWittePrins\CoreFunctionality\Modules\Events\Events;
 use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateMonitor\TemplateMonitor;
 use DeWittePrins\CoreFunctionality\Plugin;
 use Override;
@@ -35,6 +36,7 @@ use function class_exists;
 use function count;
 use function current_user_can;
 use function defined;
+use function checked;
 use function delete_transient;
 use function dirname;
 use function esc_attr;
@@ -81,19 +83,20 @@ use function wp_unslash;
 use function WP_Filesystem;
 
 /**
- * Class SiteTemplatesSettings
+ * Class CfTemplatesSettings
  *
- * The settings tab of the site event templates: shows what is in the folder and whether a theme
+ * The settings tab of the CF event templates: shows what is in the folder and whether a theme
  * overrides it, replaces the whole folder from a zip (like a theme or plugin is replaced, so it is
  * always clear what is there), keeps the version before as a backup that can be swapped back, and
- * downloads the site templates or every template the site uses now (themes included) as a zip.
+ * downloads the CF templates or every template the site uses now (themes included) as a zip. It
+ * also holds the choice whether the template check reports theme copies of CF templates.
  *
  * Changing the folder takes the right to install plugins, file changes allowed on the site and
- * direct file access; downloading only the rights of the settings page.
+ * direct file access; downloading and the report choice only the rights of the settings page.
  *
  * @since 1.0.0
  */
-class SiteTemplatesSettings implements SettingsSectionInterface {
+class CfTemplatesSettings implements SettingsSectionInterface {
 
 	/**
 	 * The name of the action buttons.
@@ -114,10 +117,24 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	 *
 	 * @var string[]
 	 */
-	private const ACTIONS = array( 'upload', 'restore', 'download-site', 'download-used' );
+	private const ACTIONS = array( 'upload', 'restore', 'download-cf', 'download-used', 'save-report' );
 
 	/**
-	 * SiteTemplatesSettings Constructor.
+	 * The settings key of the choices of this tab (defaults in settings/modules/events/).
+	 *
+	 * @var string
+	 */
+	public const SETTINGS_KEY = 'events-settings';
+
+	/**
+	 * The name of the report checkbox.
+	 *
+	 * @var string
+	 */
+	private const REPORT = 'dwp_cf_report_theme_copies';
+
+	/**
+	 * CfTemplatesSettings Constructor.
 	 *
 	 * @since 1.0.0
 	 * @param Plugin $plugin The main plugin instance.
@@ -134,7 +151,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	 */
 	#[Override]
 	public static function get_id(): string {
-		return 'cf-site-event-templates';
+		return 'cf-event-templates';
 	}
 
 	/**
@@ -199,7 +216,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	 * @return string The folder.
 	 */
 	private static function previous_dir(): string {
-		return TemplateLocations::site_dir() . '.previous';
+		return TemplateLocations::cf_dir() . '.previous';
 	}
 
 	/**
@@ -249,7 +266,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 			return __( 'File changes are turned off on this site (DISALLOW_FILE_MODS).', 'core-functionality' );
 		}
 		if ( ! current_user_can( 'install_plugins' ) ) {
-			return __( 'Only users who may install plugins can change the site templates.', 'core-functionality' );
+			return __( 'Only users who may install plugins can change the CF templates.', 'core-functionality' );
 		}
 		if ( 'direct' !== get_filesystem_method() ) {
 			return __( 'The server does not let WordPress write files directly.', 'core-functionality' );
@@ -271,24 +288,59 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 		$this->render_downloads();
 		$this->render_upload();
 		$this->render_previous();
+		$this->render_report( $defaults_only );
 	}
 
 	/**
-	 * Outputs the site templates and whether each is used or a theme overrides it.
+	 * Whether the template check reports templates that are in the active theme as well as in the
+	 * CF templates. Used by the tab and by the check.
+	 *
+	 * @since  1.0.0
+	 * @param  Plugin $plugin        The main plugin instance.
+	 * @param  bool   $defaults_only Whether to return the default instead of the saved choice.
+	 * @return bool True when reported.
+	 */
+	public static function reports_theme_copies( Plugin $plugin, bool $defaults_only = false ): bool {
+		$module   = Events::get_id();
+		$defaults = $plugin->settings->get_default( self::SETTINGS_KEY, $module );
+		$defaults = is_array( $defaults ) ? $defaults : array();
+		$saved    = $defaults_only ? $defaults : $plugin->settings->get_whole( self::SETTINGS_KEY, $module, $defaults );
+		$values   = ( is_array( $saved ) ? $saved : array() ) + $defaults;
+
+		return ! empty( $values['report_theme_copies'] ?? true );
+	}
+
+	/**
+	 * Outputs the choice what the template check reports, with its save button.
+	 *
+	 * @since  1.0.0
+	 * @param  bool $defaults_only Whether to show the default instead of the saved choice.
+	 * @return void
+	 */
+	private function render_report( bool $defaults_only ): void {
+		$checked = self::reports_theme_copies( $this->plugin, $defaults_only );
+
+		echo '<h2>' . esc_html__( 'Notice', 'core-functionality' ) . '</h2>';
+		echo '<p><label><input type="checkbox" name="' . esc_attr( self::REPORT ) . '" value="1"' . checked( $checked, true, false ) . ' /> ' . esc_html__( 'Report when a template is present in the active theme as well as in Core Functionality', 'core-functionality' ) . '</label></p>';
+		echo '<p>' . $this->button( 'save-report', __( 'Save', 'core-functionality' ), '', 'button button-primary' ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
+	}
+
+	/**
+	 * Outputs the CF templates and whether each is used or a theme overrides it.
 	 *
 	 * @since  1.0.0
 	 * @return void
 	 */
 	private function render_templates(): void {
-		$dir       = TemplateLocations::site_dir();
+		$dir       = TemplateLocations::cf_dir();
 		$templates = self::templates_in( $dir );
 
-		echo '<h2>' . esc_html__( 'Site templates', 'core-functionality' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'CF templates', 'core-functionality' ) . '</h2>';
 		/* translators: %s: the folder. */
 		echo '<p>' . sprintf( esc_html__( 'Folder: %s', 'core-functionality' ), '<code>' . esc_html( $dir ) . '</code>' ) . '</p>';
 
 		if ( array() === $templates ) {
-			echo '<p>' . esc_html__( 'There are no site templates yet. Upload a zip to add them.', 'core-functionality' ) . '</p>';
+			echo '<p>' . esc_html__( 'There are no CF templates yet. Upload a zip to add them.', 'core-functionality' ) . '</p>';
 			return;
 		}
 
@@ -302,16 +354,16 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Describes whether a site template is used.
+	 * Describes whether a CF template is used.
 	 *
 	 * @since  1.0.0
-	 * @param  string $source The source of the copy the site uses (child, parent, site), or '' when
+	 * @param  string $source The source of the copy the site uses (child, parent, cf), or '' when
 	 *                        the plugin it overrides is not active.
 	 * @return string The status.
 	 */
 	private function status( string $source ): string {
 		return match ( $source ) {
-			'site'   => __( 'In use', 'core-functionality' ),
+			'cf'   => __( 'In use', 'core-functionality' ),
 			'child'  => __( 'The child theme overrides it', 'core-functionality' ),
 			'parent' => __( 'The parent theme overrides it', 'core-functionality' ),
 			default  => __( 'Not used: the plugin is not active', 'core-functionality' ),
@@ -327,7 +379,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	private function render_downloads(): void {
 		echo '<h2>' . esc_html__( 'Download', 'core-functionality' ) . '</h2>';
 		echo '<p>' . esc_html__( 'As a zip with the same folders, ready to change and upload again. The second also holds the copies in the theme, each taken from where the site takes it.', 'core-functionality' ) . '</p>';
-		echo '<p>' . $this->button( 'download-site', __( 'Site templates', 'core-functionality' ) ) . ' ' . $this->button( 'download-used', __( 'Templates in use', 'core-functionality' ) ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
+		echo '<p>' . $this->button( 'download-cf', __( 'CF templates', 'core-functionality' ) ) . ' ' . $this->button( 'download-used', __( 'Templates in use', 'core-functionality' ) ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
 	}
 
 	/**
@@ -355,7 +407,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 			return;
 		}
 
-		echo '<p>' . $this->button( 'restore', __( 'Restore previous version', 'core-functionality' ), __( 'Swap the site templates for the previous version?', 'core-functionality' ) ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
+		echo '<p>' . $this->button( 'restore', __( 'Restore previous version', 'core-functionality' ), __( 'Swap the CF templates for the previous version?', 'core-functionality' ) ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
 	}
 
 	/**
@@ -375,7 +427,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 		}
 
 		echo '<p><input type="file" name="' . esc_attr( self::UPLOAD ) . '" accept=".zip,application/zip" /> ';
-		echo $this->button( 'upload', __( 'Upload', 'core-functionality' ), __( 'Replace all site templates with the templates in this zip?', 'core-functionality' ), 'button button-primary' ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
+		echo $this->button( 'upload', __( 'Upload', 'core-functionality' ), __( 'Replace all CF templates with the templates in this zip?', 'core-functionality' ), 'button button-primary' ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
 	}
 
 	/**
@@ -425,6 +477,11 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 			return class_exists( ZipArchive::class ) ? true : new WP_Error( 'dwp_cf_templates_zip', __( 'The server cannot make zip files (ZipArchive is missing).', 'core-functionality' ) );
 		}
 
+		// A choice of the settings page, not a change of files.
+		if ( 'save-report' === $action ) {
+			return true;
+		}
+
 		$reason = $this->cannot_modify();
 		if ( '' !== $reason ) {
 			return new WP_Error( 'dwp_cf_templates_denied', $reason );
@@ -465,8 +522,9 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	#[Override]
 	public function save( array $posted_data ): string|bool {
 		return match ( $this->action( $posted_data ) ) {
-			'download-site' => $this->download( self::templates_in( TemplateLocations::site_dir() ), 'site' ),
+			'download-cf' => $this->download( self::templates_in( TemplateLocations::cf_dir() ), 'cf' ),
 			'download-used' => $this->download( self::used_templates(), 'in-use' ),
+			'save-report'   => $this->plugin->settings->save( self::SETTINGS_KEY, array( 'report_theme_copies' => ! empty( $posted_data[ self::REPORT ] ) ) ),
 			'restore'       => $this->restore(),
 			'upload'        => $this->upload(),
 			default         => false,
@@ -478,7 +536,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	 *
 	 * @since  1.0.0
 	 * @param  array<string, string> $templates Path in the zip => file.
-	 * @param  string                $label     Part of the file name: site or in-use.
+	 * @param  string                $label     Part of the file name: cf or in-use.
 	 * @return bool False when there is nothing to send or the zip fails; otherwise it does not return.
 	 */
 	private function download( array $templates, string $label ): bool {
@@ -509,7 +567,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Replaces the site templates with the templates in the uploaded zip, as a whole.
+	 * Replaces the CF templates with the templates in the uploaded zip, as a whole.
 	 *
 	 * @since  1.0.0
 	 * @return string|bool A success message, or false on failure.
@@ -530,7 +588,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 
 		$root                   = $this->zip_root( $tmp );
 		[ $accepted, $skipped ] = $this->sort_files( $root );
-		$new                    = TemplateLocations::site_dir() . '.new';
+		$new                    = TemplateLocations::cf_dir() . '.new';
 		$copied                 = array() !== $accepted && $this->copy_templates( $root, $accepted, $new );
 		$wp_filesystem->delete( $tmp, true );
 
@@ -539,7 +597,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 		}
 		if ( ! $copied || ! $this->swap_in( $new ) ) {
 			$wp_filesystem->delete( $new, true );
-			return $this->fail( __( 'The site templates could not be replaced. Nothing was changed.', 'core-functionality' ) );
+			return $this->fail( __( 'The CF templates could not be replaced. Nothing was changed.', 'core-functionality' ) );
 		}
 
 		$this->after_change();
@@ -549,7 +607,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 		}
 
 		/* translators: %d: number of templates. */
-		return sprintf( _n( '%d site template installed; the previous version is kept.', '%d site templates installed; the previous version is kept.', count( $accepted ), 'core-functionality' ), count( $accepted ) );
+		return sprintf( _n( '%d CF template installed; the previous version is kept.', '%d CF templates installed; the previous version is kept.', count( $accepted ), 'core-functionality' ), count( $accepted ) );
 	}
 
 	/**
@@ -618,7 +676,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Puts a new folder in place of the site templates; the current ones become the previous version.
+	 * Puts a new folder in place of the CF templates; the current ones become the previous version.
 	 *
 	 * @since  1.0.0
 	 * @param  string $new The new folder.
@@ -627,7 +685,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	private function swap_in( string $new ): bool {
 		global $wp_filesystem;
 
-		$dir      = TemplateLocations::site_dir();
+		$dir      = TemplateLocations::cf_dir();
 		$previous = self::previous_dir();
 
 		$this->protect( dirname( $dir ) );
@@ -642,7 +700,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Swaps the site templates and the previous version.
+	 * Swaps the CF templates and the previous version.
 	 *
 	 * @since  1.0.0
 	 * @return string|bool A success message, or false on failure.
@@ -650,7 +708,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	private function restore(): string|bool {
 		global $wp_filesystem;
 
-		$dir      = TemplateLocations::site_dir();
+		$dir      = TemplateLocations::cf_dir();
 		$previous = self::previous_dir();
 		$swap     = $dir . '.swap';
 
@@ -682,7 +740,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 	 * Keeps the folder from being requested directly (the templates are only included by PHP).
 	 *
 	 * @since  1.0.0
-	 * @param  string $dir The folder that holds the site templates and the previous version.
+	 * @param  string $dir The folder that holds the CF templates and the previous version.
 	 * @return void
 	 */
 	private function protect( string $dir ): void {
@@ -709,7 +767,7 @@ class SiteTemplatesSettings implements SettingsSectionInterface {
 		if ( ! function_exists( 'opcache_invalidate' ) ) {
 			return;
 		}
-		foreach ( self::templates_in( TemplateLocations::site_dir() ) as $file ) {
+		foreach ( self::templates_in( TemplateLocations::cf_dir() ) as $file ) {
 			opcache_invalidate( $file, true );
 		}
 	}

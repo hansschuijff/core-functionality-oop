@@ -38,6 +38,11 @@ return array(
 	'reader-experience-settings'     => 'reader-experience-settings',
 
 	/**
+	 * Feature: Events->TemplateFallback. The defaults of the Event templates tab.
+	 */
+	'events-settings'                => 'events-settings',
+
+	/**
 	 * Feature: module->feature
 	 */
 

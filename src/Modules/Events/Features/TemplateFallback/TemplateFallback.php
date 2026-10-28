@@ -35,15 +35,15 @@ use function wp_normalize_path;
  * Class TemplateFallback
  *
  * Template overrides of The Events Calendar and Event Tickets kept for this site, apart from the
- * theme, in wp-content/core-functionality/templates/ (see TemplateLocations::site_dir()). They come
+ * theme, in wp-content/core-functionality/templates/ (see TemplateLocations::cf_dir()). They come
  * after the themes and before the plugins' own templates:
  *
- *   1. child theme   2. parent theme   3. site templates   4. the plugin's original
+ *   1. child theme   2. parent theme   3. CF templates   4. the plugin's original
  *
  * so a theme can still override a template when it needs its own, and a theme without overrides
  * gets these. The folders mirror a theme's: tribe/<plugin>/… for the current views and
  * tribe-events/… for the legacy (v1) ones. The folder is replaced as a whole from a zip on the
- * settings tab (SiteTemplatesSettings), never by a plugin release.
+ * settings tab (CfTemplatesSettings), never by a plugin release.
  *
  * @since 1.0.0
  */
@@ -83,13 +83,13 @@ class TemplateFallback extends AbstractFeature {
 	public static function get_meta(): ComponentMeta {
 		return new ComponentMeta(
 			id:          'events_template_fallback',
-			name:        __( 'Site event templates', 'core-functionality' ),
+			name:        __( 'CF event templates', 'core-functionality' ),
 			description: __( 'Template overrides of The Events Calendar and Event Tickets kept for this site apart from the theme, used when the theme has no override of its own. Upload and download them as a zip on the settings page.', 'core-functionality' ),
 		);
 	}
 
 	/**
-	 * Adds the site templates folder to both template lookups, and registers its settings tab.
+	 * Adds the CF templates folder to both template lookups, and registers its settings tab.
 	 *
 	 * @since  1.0.0
 	 * @return void
@@ -97,12 +97,12 @@ class TemplateFallback extends AbstractFeature {
 	#[Override]
 	public function launch(): void {
 		self::$running = true;
-		$dir           = TemplateLocations::site_dir();
+		$dir           = TemplateLocations::cf_dir();
 
 		add_action(
 			'core-functionality/register-settings-sections',
 			function ( $settings_factory ) {
-				$settings_factory->register_section( SiteTemplatesSettings::class );
+				$settings_factory->register_section( CfTemplatesSettings::class );
 			}
 		);
 
@@ -122,12 +122,12 @@ class TemplateFallback extends AbstractFeature {
 
 	/**
 	 * Current views: adds a folder after the themes. Its path is the child theme's path for this
-	 * template with the theme folder swapped for the site templates folder, so it also holds sub
+	 * template with the theme folder swapped for the CF templates folder, so it also holds sub
 	 * folders such as v2/ ("templates/tribe/events/v2").
 	 *
 	 * @since  1.0.0
 	 * @param  array  $folders The theme folders The Events Calendar looks in.
-	 * @param  string $dir     The site templates folder.
+	 * @param  string $dir     The CF templates folder.
 	 * @return array The folders.
 	 */
 	private function add_folder( array $folders, string $dir ): array {
@@ -151,13 +151,13 @@ class TemplateFallback extends AbstractFeature {
 
 	/**
 	 * Legacy (v1) views look in the theme first and then in the plugin's src/views/. A file of
-	 * the plugin itself is swapped for the site's version when there is one; a theme's file
+	 * the plugin itself is swapped for the CF version when there is one; a theme's file
 	 * is never touched, so a theme still overrides.
 	 *
 	 * @since  1.0.0
 	 * @param  mixed  $file     The file found (a theme's or a plugin's), or false.
 	 * @param  mixed  $template The template asked for, such as "modules/address.php".
-	 * @param  string $dir      The site templates folder.
+	 * @param  string $dir      The CF templates folder.
 	 * @return mixed The file.
 	 */
 	private function legacy_template( mixed $file, mixed $template, string $dir ): mixed {

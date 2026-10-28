@@ -36,15 +36,15 @@ use function wp_normalize_path;
  * Class TemplateLocations
  *
  * Where template overrides of The Events Calendar and Event Tickets are, in the order The Events
- * Calendar looks: child theme, parent theme, this site's template folder; and which plugin each
- * override folder belongs to. Used by the template check and by the site templates tab.
+ * Calendar looks: child theme, parent theme, the CF templates folder; and which plugin each
+ * override folder belongs to. Used by the template check and by the CF templates tab.
  *
  * @since 1.0.0
  */
 final class TemplateLocations {
 
 	/**
-	 * Override folders (relative to a theme or the site folder) and the plugin they override.
+	 * Override folders (relative to a theme or the CF templates folder) and the plugin they override.
 	 *
 	 * @var array<string, array{class: string, views: string}>
 	 */
@@ -77,13 +77,13 @@ final class TemplateLocations {
 	);
 
 	/**
-	 * Returns this site's template folder: outside the plugin, so a release or update leaves it
+	 * Returns the CF templates folder: outside the plugin, so a release or update leaves it
 	 * alone, and outside the uploads, where PHP files do not belong.
 	 *
 	 * @since  1.0.0
 	 * @return string The folder, normalized, without a trailing slash.
 	 */
-	public static function site_dir(): string {
+	public static function cf_dir(): string {
 		return wp_normalize_path( WP_CONTENT_DIR . '/core-functionality/templates' );
 	}
 
@@ -91,8 +91,8 @@ final class TemplateLocations {
 	 * Returns the places to look, in lookup order.
 	 *
 	 * @since  1.0.0
-	 * @param  bool $with_site Whether the site folder takes part (the fallback feature runs).
-	 * @return array<string, string> Source (child, parent, site) => folder.
+	 * @param  bool $with_site Whether the CF templates folder takes part (the fallback feature runs).
+	 * @return array<string, string> Source (child, parent, cf) => folder.
 	 */
 	public static function sources( bool $with_site ): array {
 		$sources = array( 'child' => get_stylesheet_directory() );
@@ -100,7 +100,7 @@ final class TemplateLocations {
 			$sources['parent'] = get_template_directory();
 		}
 		if ( $with_site ) {
-			$sources['site'] = self::site_dir();
+			$sources['cf'] = self::cf_dir();
 		}
 
 		return $sources;
@@ -110,7 +110,7 @@ final class TemplateLocations {
 	 * Finds every override, per template path, in lookup order; the first copy is the one used.
 	 *
 	 * @since  1.0.0
-	 * @param  bool $with_site Whether the site folder takes part.
+	 * @param  bool $with_site Whether the CF templates folder takes part.
 	 * @return array<string, array<int, array<string, string>>> Template path => copies (source, file, relative, views).
 	 */
 	public static function collect( bool $with_site ): array {
@@ -130,8 +130,8 @@ final class TemplateLocations {
 	 * Returns the overrides in one folder of one source, when the plugin they override is active.
 	 *
 	 * @since  1.0.0
-	 * @param  string $source child, parent or site.
-	 * @param  string $base   The theme's or the site's folder.
+	 * @param  string $source child, parent or cf.
+	 * @param  string $base   The theme's or the CF templates folder.
 	 * @param  string $folder The override folder, such as tribe/events/.
 	 * @param  array  $plugin The plugin it overrides: its main class and its views folder.
 	 * @return array<string, array<string, string>> Path relative to the folder => copy.
@@ -190,7 +190,7 @@ final class TemplateLocations {
 	}
 
 	/**
-	 * Whether a path inside a zip or the site folder is a template override this feature accepts:
+	 * Whether a path inside a zip or the CF templates folder is a template override this feature accepts:
 	 * a PHP file in one of the override folders.
 	 *
 	 * @since  1.0.0

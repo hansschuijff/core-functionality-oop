@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
-use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\SiteTemplatesSettings;
+use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\CfTemplatesSettings;
 use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\TemplateFallback;
 use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\TemplateLocations;
 use Override;
@@ -66,16 +66,16 @@ use function wp_verify_nonce;
  * Warns administrators when a template override of The Events Calendar or Event Tickets is out of
  * date, or overrides a template the plugin no longer has. Per template it checks the version the
  * site actually uses, found as The Events Calendar finds it (child theme, parent theme, then the
- * site templates folder), against the plugin's original.
+ * CF templates folder), against the plugin's original.
  *
- * Also reported, as less urgent: a site template that is out of date while a theme overrides it
- * (it is used again after a theme switch), and a theme copy identical to the site template (it
+ * Also reported, as less urgent: a CF template that is out of date while a theme overrides it
+ * (it is used again after a theme switch), and a theme copy identical to the CF template (it
  * can go). A template marked @custom-template has no original by design.
  *
  * Shown, and scanned for, only on the dashboard, the plugins and updates pages and the event
  * templates tab, to users who manage plugins; it can be closed for the page view. When only theme
  * copies that can go are left, it is informational instead of a warning. The result is kept for 12 hours and
- * renewed after updates, a theme switch, a site templates upload, or the notice's rescan button.
+ * renewed after updates, a theme switch, a CF templates upload, or the notice's rescan button.
  *
  * @since 1.0.0
  */
@@ -151,7 +151,7 @@ class TemplateMonitor extends AbstractFeature {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only picks the page.
 		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '';
 
-		return 'settings_page_' . AdminSettingsPage::SLUG === $screen->id && SiteTemplatesSettings::get_id() === $section;
+		return 'settings_page_' . AdminSettingsPage::SLUG === $screen->id && CfTemplatesSettings::get_id() === $section;
 	}
 
 	/**
@@ -189,6 +189,11 @@ class TemplateMonitor extends AbstractFeature {
 			set_transient( self::TRANSIENT, $report, 12 * HOUR_IN_SECONDS );
 		}
 
+		// Theme copies of CF templates are left out when the tab says so; the scan keeps them.
+		if ( ! CfTemplatesSettings::reports_theme_copies( $this->plugin ) ) {
+			$report = array_filter( $report, fn ( $finding ) => 'redundant' !== $finding['type'] );
+		}
+
 		if ( array() === $report ) {
 			return;
 		}
@@ -219,19 +224,19 @@ class TemplateMonitor extends AbstractFeature {
 				$report[] = $this->finding( 'outdated', $used['source'], $path, $this->version( $used['file'] ), $this->version( $original ) );
 			}
 
-			$site = $this->find_source( $found, 'site' );
-			if ( null === $site || 'site' === $used['source'] ) {
+			$cf = $this->find_source( $found, 'cf' );
+			if ( null === $cf || 'cf' === $used['source'] ) {
 				continue;
 			}
 
-			// A site template a theme overrides now, but used again after a theme switch.
-			if ( file_exists( $original ) && $this->is_older( $site['file'], $original ) ) {
-				$report[] = $this->finding( 'site-outdated', 'site', $path, $this->version( $site['file'] ), $this->version( $original ) );
+			// A CF template a theme overrides now, but used again after a theme switch.
+			if ( file_exists( $original ) && $this->is_older( $cf['file'], $original ) ) {
+				$report[] = $this->finding( 'cf-outdated', 'cf', $path, $this->version( $cf['file'] ), $this->version( $original ) );
 			}
 
-			// Theme copies identical to the site template can go.
+			// Theme copies identical to the CF template can go.
 			foreach ( $found as $copy ) {
-				if ( 'site' !== $copy['source'] && md5_file( $copy['file'] ) === md5_file( $site['file'] ) ) {
+				if ( 'cf' !== $copy['source'] && md5_file( $copy['file'] ) === md5_file( $cf['file'] ) ) {
 					$report[] = $this->finding( 'redundant', $copy['source'], $path );
 				}
 			}
@@ -320,8 +325,8 @@ class TemplateMonitor extends AbstractFeature {
 	 * Builds one finding.
 	 *
 	 * @since  1.0.0
-	 * @param  string $type     missing, outdated, site-outdated or redundant.
-	 * @param  string $source   child, parent or site.
+	 * @param  string $type     missing, outdated, cf-outdated or redundant.
+	 * @param  string $source   child, parent or cf.
 	 * @param  string $path     The template path, such as tribe/events/v2/list/event/venue.php.
 	 * @param  string $version  The override's version, or ''.
 	 * @param  string $original The plugin's version, or ''.
@@ -377,14 +382,14 @@ class TemplateMonitor extends AbstractFeature {
 		$sources  = array(
 			'child'  => __( 'child theme', 'core-functionality' ),
 			'parent' => __( 'parent theme', 'core-functionality' ),
-			'site'   => __( 'site template', 'core-functionality' ),
+			'cf'     => __( 'CF template', 'core-functionality' ),
 		);
 		$headings = array(
 			'outdated'         => __( 'These templates are out of date:', 'core-functionality' ),
 			'missing'          => __( 'These templates override one the plugin no longer has (moved or removed):', 'core-functionality' ),
-			'site-outdated'    => __( 'These site templates are out of date. A theme overrides them now, but they are used again after a theme switch:', 'core-functionality' ),
-			'redundant-child'  => __( 'These templates in the child theme are the same as the site templates and can be removed:', 'core-functionality' ),
-			'redundant-parent' => __( 'These templates in the parent theme are the same as the site templates and can be removed:', 'core-functionality' ),
+			'cf-outdated'      => __( 'These CF templates are out of date. A theme overrides them now, but they are used again after a theme switch:', 'core-functionality' ),
+			'redundant-child'  => __( 'These templates in the child theme are the same as the CF templates and can be removed:', 'core-functionality' ),
+			'redundant-parent' => __( 'These templates in the parent theme are the same as the CF templates and can be removed:', 'core-functionality' ),
 		);
 
 		$groups = array_fill_keys( array_keys( $headings ), array() );
@@ -394,9 +399,9 @@ class TemplateMonitor extends AbstractFeature {
 
 			// The path first, then whose copy it is, right next to its version.
 			$groups[ $key ][] = match ( $finding['type'] ) {
-				/* translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template), 3: its version, 4: the plugin's version. */
-				'outdated', 'site-outdated' => sprintf( __( '%1$s: %2$s has v%3$s, the plugin has v%4$s', 'core-functionality' ), $finding['path'], $where, $finding['version'], $finding['original'] ),
-				/* translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template). */
+				/* translators: 1: template path, 2: whose copy it is (child theme, parent theme, CF template), 3: its version, 4: the plugin's version. */
+				'outdated', 'cf-outdated' => sprintf( __( '%1$s: %2$s has v%3$s, the plugin has v%4$s', 'core-functionality' ), $finding['path'], $where, $finding['version'], $finding['original'] ),
+				/* translators: 1: template path, 2: whose copy it is (child theme, parent theme, CF template). */
 				'missing'                   => sprintf( __( '%1$s: %2$s has it, the plugin no longer does', 'core-functionality' ), $finding['path'], $where ),
 				default                     => $finding['path'],
 			};

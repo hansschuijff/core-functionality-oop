@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-29T00:30:36+01:00\n"
+"POT-Creation-Date: 2026-10-29T00:56:25+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -1032,7 +1032,7 @@ msgstr ""
 
 #: src/Environment/Plugins/Automatewoo.php:221
 #: src/Environment/Plugins/Woocommerce.php:217
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:297
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:349
 msgid "Status"
 msgstr ""
 
@@ -3571,239 +3571,252 @@ msgstr ""
 msgid "Additions to The Events Calendar and Event Tickets."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:159
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:317
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:176
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:360
 msgid "Event templates"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:170
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:187
 msgid "Here you can load custom templates that replace built-in templates of The Events Calendar and Event Tickets. It gives you a place to make changes independent of the theme. A template stored here is only loaded when the active theme does not have it built in. Make theme-specific changes the usual way in a parent or child theme; they take precedence."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:249
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:266
 msgid "File changes are turned off on this site (DISALLOW_FILE_MODS)."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:252
-msgid "Only users who may install plugins can change the site templates."
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:269
+msgid "Only users who may install plugins can change the CF templates."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:255
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:272
 msgid "The server does not let WordPress write files directly."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:286
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:330
-msgid "Site templates"
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:323
+msgid "Notice"
+msgstr ""
+
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:324
+msgid "Report when a template is present in the active theme as well as in Core Functionality"
+msgstr ""
+
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:325
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:517
+msgid "Save"
+msgstr ""
+
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:338
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:382
+msgid "CF templates"
 msgstr ""
 
 #. translators: %s: the folder.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:288
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:340
 #, php-format
 msgid "Folder: %s"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:291
-msgid "There are no site templates yet. Upload a zip to add them."
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:343
+msgid "There are no CF templates yet. Upload a zip to add them."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:297
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:349
 msgid "Template"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:314
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:366
 msgid "In use"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:315
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:367
 msgid "The child theme overrides it"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:316
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:368
 msgid "The parent theme overrides it"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:317
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:369
 msgid "Not used: the plugin is not active"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:328
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:380
 msgid "Download"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:329
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:381
 msgid "As a zip with the same folders, ready to change and upload again. The second also holds the copies in the theme, each taken from where the site takes it."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:330
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:382
 msgid "Templates in use"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:342
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:394
 msgid "Previous version"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:345
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:397
 msgid "There is no previous version yet. The next upload sets the current templates aside here, so you can go back to them."
 msgstr ""
 
 #. translators: %d: number of templates.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:352
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:404
 #, php-format
 msgid "The version before the last change is kept (%d template). Restoring it swaps the two, so you can switch back."
 msgid_plural "The version before the last change is kept (%d templates). Restoring it swaps the two, so you can switch back."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:358
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:410
 msgid "Restore previous version"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:358
-msgid "Swap the site templates for the previous version?"
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:410
+msgid "Swap the CF templates for the previous version?"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:368
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:378
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:420
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:430
 msgid "Upload"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:369
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:421
 msgid "Load a zip archive with custom templates for The Events Calendar and Event Tickets. Arrange the templates in folders and files the same way you would in a theme, and put them in the root of the zip or in one main folder inside it. All other files are skipped. The upload replaces all previously stored templates at once, like installing a theme or plugin. The previous version is set aside and can be restored."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:378
-msgid "Replace all site templates with the templates in this zip?"
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:430
+msgid "Replace all CF templates with the templates in this zip?"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:421
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:473
 msgid "Unknown action."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:425
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:477
 msgid "The server cannot make zip files (ZipArchive is missing)."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:446
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:503
 msgid "Choose a zip file first."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:449
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:506
 msgid "The upload failed. The file may be larger than the server allows."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:452
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:509
 msgid "Choose a .zip file."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:486
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:544
 msgid "There are no templates to download."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:492
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:550
 msgid "The zip file could not be made."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:521
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:661
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:579
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:719
 msgid "WordPress cannot write files here."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:538
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:596
 msgid "The zip holds no templates: no PHP files in tribe/… or tribe-events/…. Nothing was changed."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:542
-msgid "The site templates could not be replaced. Nothing was changed."
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:600
+msgid "The CF templates could not be replaced. Nothing was changed."
 msgstr ""
 
 #. translators: %s: the skipped files, separated by commas.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:548
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:606
 #, php-format
 msgid "Skipped, not a template: %s"
 msgstr ""
 
 #. translators: %d: number of templates.
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:552
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:610
 #, php-format
-msgid "%d site template installed; the previous version is kept."
-msgid_plural "%d site templates installed; the previous version is kept."
+msgid "%d CF template installed; the previous version is kept."
+msgid_plural "%d CF templates installed; the previous version is kept."
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:658
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:716
 msgid "There is no previous version."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:666
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:670
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:724
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:728
 msgid "The previous version could not be restored. Nothing was changed."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:678
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:736
 msgid "The previous version is restored; the replaced version is now the previous one."
 msgstr ""
 
 #: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:86
-msgid "Site event templates"
+msgid "CF event templates"
 msgstr ""
 
 #: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:87
 msgid "Template overrides of The Events Calendar and Event Tickets kept for this site apart from the theme, used when the theme has no override of its own. Upload and download them as a zip on the settings page."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:101
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:115
 msgid "Event template check"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:102
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:116
 msgid "Warns when a template override of The Events Calendar or Event Tickets is out of date or overrides a template the plugin no longer has."
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:318
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:361
 msgid "Scan again"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:340
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:383
 msgid "child theme"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:341
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:384
 msgid "parent theme"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:342
-msgid "site template"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:385
+msgid "CF template"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:345
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:388
 msgid "These templates are out of date:"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:346
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:389
 msgid "These templates override one the plugin no longer has (moved or removed):"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:347
-msgid "These site templates are out of date. A theme overrides them now, but they are used again after a theme switch:"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:390
+msgid "These CF templates are out of date. A theme overrides them now, but they are used again after a theme switch:"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:348
-msgid "These templates in the child theme are the same as the site templates and can be removed:"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:391
+msgid "These templates in the child theme are the same as the CF templates and can be removed:"
 msgstr ""
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:349
-msgid "These templates in the parent theme are the same as the site templates and can be removed:"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:392
+msgid "These templates in the parent theme are the same as the CF templates and can be removed:"
 msgstr ""
 
-#. translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template), 3: its version, 4: the plugin's version.
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:360
+#. translators: 1: template path, 2: whose copy it is (child theme, parent theme, CF template), 3: its version, 4: the plugin's version.
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:403
 #, php-format
 msgid "%1$s: %2$s has v%3$s, the plugin has v%4$s"
 msgstr ""
 
-#. translators: 1: template path, 2: whose copy it is (child theme, parent theme, site template).
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:362
+#. translators: 1: template path, 2: whose copy it is (child theme, parent theme, CF template).
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:405
 #, php-format
 msgid "%1$s: %2$s has it, the plugin no longer does"
 msgstr ""
@@ -3937,10 +3950,6 @@ msgstr ""
 #: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:484
 #, php-format
 msgid "Words per minute must be a number from %1$d to %2$d."
-msgstr ""
-
-#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:517
-msgid "Save"
 msgstr ""
 
 #: src/Modules/ReaderExperience/ReaderExperience.php:44
