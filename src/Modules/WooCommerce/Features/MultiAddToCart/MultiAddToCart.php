@@ -20,6 +20,7 @@ use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use Override;
 
 use function __;
+use function _n;
 use function absint;
 use function add_action;
 use function apply_filters;
@@ -29,11 +30,15 @@ use function explode;
 use function function_exists;
 use function is_string;
 use function remove_action;
+use function remove_query_arg;
 use function sanitize_text_field;
+use function sprintf;
 use function str_contains;
 use function trim;
+use function wc_add_notice;
 use function wc_add_to_cart_message;
 use function wc_get_cart_url;
+use function wc_get_product;
 use function wp_safe_redirect;
 use function wp_unslash;
 
@@ -90,7 +95,8 @@ class MultiAddToCart extends AbstractFeature {
 
 	/**
 	 * Adds the products of an add-to-cart request with a comma or a colon, then sends the customer
-	 * to the cart. When none could be added, the page shows WooCommerce's notices why.
+	 * to the cart. When none could be added, the customer goes back to the same page without the
+	 * request (a reload does not try again), where the notices say why.
 	 *
 	 * @since  1.0.0
 	 * @return void
@@ -110,13 +116,18 @@ class MultiAddToCart extends AbstractFeature {
 		// This request is ours: WooCommerce's own handler would read "101:1,102:3" as product 101.
 		remove_action( 'wp_loaded', array( 'WC_Form_Handler', 'add_to_cart_action' ), 20 );
 
-		$added = array();
+		$added   = array();
+		$skipped = 0; // Items WooCommerce would pass over without a word: no such product, no quantity.
 		foreach ( explode( ',', $request ) as $item ) {
+			if ( '' === trim( $item ) ) {
+				continue;
+			}
 			list( $id, $quantity ) = array_pad( explode( ':', trim( $item ), 2 ), 2, '1' );
 
 			$product_id = absint( apply_filters( 'woocommerce_add_to_cart_product_id', absint( $id ) ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook.
 			$quantity   = '' === trim( $quantity ) ? 1 : absint( $quantity );
-			if ( 0 === $product_id || 0 === $quantity ) {
+			if ( 0 === $product_id || 0 === $quantity || ! wc_get_product( $product_id ) ) {
+				++$skipped;
 				continue;
 			}
 
@@ -130,12 +141,26 @@ class MultiAddToCart extends AbstractFeature {
 			}
 		}
 
-		if ( array() === $added ) {
-			return;
+		// WooCommerce gives its own notices for products it refused (stock, validation); these ones say nothing.
+		if ( $skipped > 0 ) {
+			wc_add_notice(
+				sprintf(
+					/* translators: %d: number of items in the add-to-cart link that were skipped. */
+					_n( '%d item in the link could not be added: the product does not exist or the quantity is not valid.', '%d items in the link could not be added: the products do not exist or the quantities are not valid.', $skipped, 'core-functionality' ),
+					$skipped
+				),
+				'error'
+			);
 		}
 
-		wc_add_to_cart_message( $added, true );
-		wp_safe_redirect( wc_get_cart_url() );
+		if ( array() !== $added ) {
+			wc_add_to_cart_message( $added, true );
+			wp_safe_redirect( wc_get_cart_url() );
+			exit;
+		}
+
+		// Nothing added: the same page without the request, where the notices are shown.
+		wp_safe_redirect( remove_query_arg( 'add-to-cart' ) );
 		exit;
 	}
 }

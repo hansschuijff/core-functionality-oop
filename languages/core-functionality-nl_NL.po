@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T20:25:02+01:00\n"
+"POT-Creation-Date: 2026-10-28T21:04:54+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -3706,13 +3706,21 @@ msgstr "Opslaan"
 msgid "Settings for the Reader Experience plugin: heading anchors, reading time and feedback."
 msgstr "Instellingen voor de plugin Reader Experience: ankerlinks bij koppen, leestijd en feedback."
 
-#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:72
+#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:77
 msgid "Several products in the cart at once"
 msgstr "Meerdere producten tegelijk in de winkelwagen"
 
-#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:73
+#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:78
 msgid "One add-to-cart link adds several products with their own quantities: ?add-to-cart=101:1,102:3. Used by the ticket forms of Remote Tickets."
 msgstr "Eén add-to-cart-link legt meerdere producten met elk hun eigen aantal in de winkelwagen: ?add-to-cart=101:1,102:3. Gebruikt door de ticketformulieren van Remote Tickets."
+
+#. translators: %d: number of items in the add-to-cart link that were skipped.
+#: src/Modules/WooCommerce/Features/MultiAddToCart/MultiAddToCart.php:149
+#, php-format
+msgid "%d item in the link could not be added: the product does not exist or the quantity is not valid."
+msgid_plural "%d items in the link could not be added: the products do not exist or the quantities are not valid."
+msgstr[0] "%d item uit de link kon niet worden toegevoegd: het product bestaat niet of het aantal is ongeldig."
+msgstr[1] "%d items uit de link konden niet worden toegevoegd: de producten bestaan niet of de aantallen zijn ongeldig."
 
 #: src/Modules/WooCommerce/WooCommerce.php:44
 msgid "Additions to WooCommerce."
