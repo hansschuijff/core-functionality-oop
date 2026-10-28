@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-28T22:26:05+01:00\n"
+"POT-Creation-Date: 2026-10-28T23:37:02+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -43,7 +43,6 @@ msgstr "Instellingen Core Functionality"
 
 #: src/Admin/Services/Settings/AdminSettingsPage.php:131
 #: src/Environment/Plugins/CoreFunctionality.php:107
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:472
 msgid "Core Functionality"
 msgstr "Core Functionality"
 
@@ -1035,6 +1034,7 @@ msgstr "AutomateWoo-instellingen: Status"
 
 #: src/Environment/Plugins/Automatewoo.php:221
 #: src/Environment/Plugins/Woocommerce.php:217
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:297
 msgid "Status"
 msgstr "Status"
 
@@ -3573,72 +3573,244 @@ msgstr "Transients nu opschonen"
 msgid "Additions to The Events Calendar and Event Tickets."
 msgstr "Aanvullingen op The Events Calendar en Event Tickets."
 
-#: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:83
-msgid "Event templates for every theme"
-msgstr "Evenementtemplates voor elk thema"
-
-#: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:84
-msgid "Template overrides of The Events Calendar and Event Tickets kept in this plugin, used when the theme has no override of its own."
-msgstr "Aangepaste templates van The Events Calendar en Event Tickets die in deze plugin staan, gebruikt als het thema geen eigen versie heeft."
-
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:145
-msgid "Event template check"
-msgstr "Controle evenementtemplates"
-
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:146
-msgid "Warns when a template override of The Events Calendar or Event Tickets is out of date or overrides a template the plugin no longer has."
-msgstr "Waarschuwt als een aangepaste template van The Events Calendar of Event Tickets verouderd is of een template vervangt die de plugin niet meer heeft."
-
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:447
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:159
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:317
 msgid "Event templates"
 msgstr "Evenementtemplates"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:448
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:170
+msgid "Template overrides of The Events Calendar and Event Tickets for this site, apart from the theme. The Events Calendar looks in the child theme, the parent theme, these site templates and then its own original, so a theme can still override one."
+msgstr "Eigen templates voor The Events Calendar en Event Tickets voor deze site, los van het thema. The Events Calendar zoekt in het child-thema, het parent-thema, deze sitetemplates en dan in zijn eigen origineel, dus een thema kan er nog steeds een vervangen."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:249
+msgid "File changes are turned off on this site (DISALLOW_FILE_MODS)."
+msgstr "Bestandswijzigingen staan uit op deze site (DISALLOW_FILE_MODS)."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:252
+msgid "Only users who may install plugins can change the site templates."
+msgstr "Alleen gebruikers die plugins mogen installeren, kunnen de sitetemplates wijzigen."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:255
+msgid "The server does not let WordPress write files directly."
+msgstr "De server laat WordPress niet rechtstreeks bestanden schrijven."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:286
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:330
+msgid "Site templates"
+msgstr "Sitetemplates"
+
+#. translators: %s: the folder.
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:288
+#, php-format
+msgid "Folder: %s"
+msgstr "Map: %s"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:291
+msgid "There are no site templates yet. Upload a zip to add them."
+msgstr "Er zijn nog geen sitetemplates. Upload een zip om ze toe te voegen."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:297
+msgid "Template"
+msgstr "Template"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:314
+msgid "In use"
+msgstr "In gebruik"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:315
+msgid "The child theme overrides it"
+msgstr "Het child-thema vervangt hem"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:316
+msgid "The parent theme overrides it"
+msgstr "Het parent-thema vervangt hem"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:317
+msgid "Not used: the plugin is not active"
+msgstr "Niet gebruikt: de plugin is niet actief"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:328
+msgid "Download"
+msgstr "Downloaden"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:329
+msgid "As a zip with the same folders, ready to change and upload again. The second also holds the copies in the theme, each taken from where the site takes it."
+msgstr "Als zip met dezelfde mappen, klaar om aan te passen en weer te uploaden. De tweede bevat ook de kopieën in het thema, elk van de plek waar de site hem vandaan haalt."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:330
+msgid "Templates in use"
+msgstr "Templates in gebruik"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:347
+msgid "Previous version"
+msgstr "Vorige versie"
+
+#. translators: %d: number of templates.
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:349
+#, php-format
+msgid "The version before the last change is kept (%d template). Restoring it swaps the two, so you can switch back."
+msgid_plural "The version before the last change is kept (%d templates). Restoring it swaps the two, so you can switch back."
+msgstr[0] "De versie van voor de laatste wijziging is bewaard (%d template). Terugzetten verwisselt de twee, dus je kunt weer terug."
+msgstr[1] "De versie van voor de laatste wijziging is bewaard (%d templates). Terugzetten verwisselt de twee, dus je kunt weer terug."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:355
+msgid "Restore previous version"
+msgstr "Vorige versie terugzetten"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:355
+msgid "Swap the site templates for the previous version?"
+msgstr "De sitetemplates verwisselen met de vorige versie?"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:365
+msgid "Replace"
+msgstr "Vervangen"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:366
+msgid "A zip replaces all site templates as a whole, like a theme or plugin update; the current version is kept as the previous version. The zip holds the folders tribe/… and tribe-events/… as in a theme (inside one enclosing folder is fine). Other files are skipped."
+msgstr "Een zip vervangt alle sitetemplates als geheel, zoals bij een thema- of plugin-update; de huidige versie blijft bewaard als vorige versie. De zip bevat de mappen tribe/… en tribe-events/… zoals in een thema (binnen één omringende map mag ook). Andere bestanden worden overgeslagen."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:417
+msgid "Unknown action."
+msgstr "Onbekende actie."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:421
+msgid "The server cannot make zip files (ZipArchive is missing)."
+msgstr "De server kan geen zipbestanden maken (ZipArchive ontbreekt)."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:442
+msgid "Choose a zip file first."
+msgstr "Kies eerst een zipbestand."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:445
+msgid "The upload failed. The file may be larger than the server allows."
+msgstr "Het uploaden is mislukt. Misschien is het bestand groter dan de server toestaat."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:448
+msgid "Choose a .zip file."
+msgstr "Kies een .zip-bestand."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:482
+msgid "There are no templates to download."
+msgstr "Er zijn geen templates om te downloaden."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:488
+msgid "The zip file could not be made."
+msgstr "Het zipbestand kon niet worden gemaakt."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:517
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:657
+msgid "WordPress cannot write files here."
+msgstr "WordPress kan hier geen bestanden schrijven."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:534
+msgid "The zip holds no templates: no PHP files in tribe/… or tribe-events/…. Nothing was changed."
+msgstr "De zip bevat geen templates: geen PHP-bestanden in tribe/… of tribe-events/…. Er is niets gewijzigd."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:538
+msgid "The site templates could not be replaced. Nothing was changed."
+msgstr "De sitetemplates konden niet worden vervangen. Er is niets gewijzigd."
+
+#. translators: %s: the skipped files, separated by commas.
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:544
+#, php-format
+msgid "Skipped, not a template: %s"
+msgstr "Overgeslagen, geen template: %s"
+
+#. translators: %d: number of templates.
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:548
+#, php-format
+msgid "%d site template installed; the previous version is kept."
+msgid_plural "%d site templates installed; the previous version is kept."
+msgstr[0] "%d sitetemplate geïnstalleerd; de vorige versie is bewaard."
+msgstr[1] "%d sitetemplates geïnstalleerd; de vorige versie is bewaard."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:654
+msgid "There is no previous version."
+msgstr "Er is geen vorige versie."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:662
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:666
+msgid "The previous version could not be restored. Nothing was changed."
+msgstr "De vorige versie kon niet worden teruggezet. Er is niets gewijzigd."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:674
+msgid "The previous version is restored; the replaced version is now the previous one."
+msgstr "De vorige versie is teruggezet; de vervangen versie is nu de vorige."
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:739
+msgid "Replace site templates"
+msgstr "Sitetemplates vervangen"
+
+#: src/Modules/Events/Features/TemplateFallback/SiteTemplatesSettings.php:739
+msgid "Replace all site templates with the templates in this zip?"
+msgstr "Alle sitetemplates vervangen door de templates in deze zip?"
+
+#: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:86
+msgid "Site event templates"
+msgstr "Site-evenementtemplates"
+
+#: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:87
+msgid "Template overrides of The Events Calendar and Event Tickets kept for this site apart from the theme, used when the theme has no override of its own. Upload and download them as a zip on the settings page."
+msgstr "Eigen templates voor The Events Calendar en Event Tickets voor deze site, los van het thema, gebruikt als het thema geen eigen versie heeft. Upload en download ze als zip op de instellingenpagina."
+
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:101
+msgid "Event template check"
+msgstr "Controle evenementtemplates"
+
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:102
+msgid "Warns when a template override of The Events Calendar or Event Tickets is out of date or overrides a template the plugin no longer has."
+msgstr "Waarschuwt als een aangepaste template van The Events Calendar of Event Tickets verouderd is of een template vervangt die de plugin niet meer heeft."
+
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:318
 msgid "Scan again"
 msgstr "Opnieuw scannen"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:470
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:340
 msgid "child theme"
 msgstr "child-thema"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:471
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:341
 msgid "parent theme"
 msgstr "parent-thema"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:475
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:342
+msgid "site templates"
+msgstr "sitetemplates"
+
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:345
 msgid "These templates are out of date:"
 msgstr "Deze templates zijn verouderd:"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:476
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:346
 msgid "These templates override one the plugin no longer has (moved or removed):"
 msgstr "Deze templates vervangen er een die de plugin niet meer heeft (verplaatst of verwijderd):"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:477
-msgid "These templates in Core Functionality are out of date. A theme overrides them now, but they are used again after a theme switch:"
-msgstr "Deze templates in Core Functionality zijn verouderd. Nu gebruikt een thema een eigen versie, maar na een themawissel worden ze weer gebruikt:"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:347
+msgid "These site templates are out of date. A theme overrides them now, but they are used again after a theme switch:"
+msgstr "Deze sitetemplates zijn verouderd. Nu gebruikt een thema een eigen versie, maar na een themawissel worden ze weer gebruikt:"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:478
-msgid "These templates in the child theme are the same as in Core Functionality and can be removed:"
-msgstr "Deze templates in het child-thema zijn gelijk aan die in Core Functionality en kunnen weg:"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:348
+msgid "These templates in the child theme are the same as the site templates and can be removed:"
+msgstr "Deze templates in het child-thema zijn gelijk aan de sitetemplates en kunnen weg:"
 
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:479
-msgid "These templates in the parent theme are the same as in Core Functionality and can be removed:"
-msgstr "Deze templates in het parent-thema zijn gelijk aan die in Core Functionality en kunnen weg:"
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:349
+msgid "These templates in the parent theme are the same as the site templates and can be removed:"
+msgstr "Deze templates in het parent-thema zijn gelijk aan de sitetemplates en kunnen weg:"
 
-#. translators: 1: template path, 2: where it is (child theme, parent theme, Core Functionality), 3: its version, 4: the plugin's version.
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:489
+#. translators: 1: template path, 2: where it is (child theme, parent theme, site templates), 3: its version, 4: the plugin's version.
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:359
 #, php-format
 msgid "%1$s (%2$s): v%3$s, the plugin has v%4$s"
 msgstr "%1$s (%2$s): v%3$s, de plugin heeft v%4$s"
 
 #. translators: 1: template path, 2: where it is.
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:491
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:361
 #, php-format
 msgid "%1$s (%2$s)"
 msgstr "%1$s (%2$s)"
 
 #. translators: 1: template path, 2: its version, 3: the plugin's version.
-#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:493
+#: src/Modules/Events/Features/TemplateMonitor/TemplateMonitor.php:363
 #, php-format
 msgid "%1$s: v%2$s, the plugin has v%3$s"
 msgstr "%1$s: v%2$s, de plugin heeft v%3$s"

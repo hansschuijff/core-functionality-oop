@@ -246,14 +246,32 @@ feature removes that plugin's hook; the class can go from that plugin when CF go
 
 The module `Events` runs when The Events Calendar or Event Tickets is ready (an "or" dependency:
 `array( 'or' => array( array( 'the-events-calendar' ), array( 'event-tickets' ) ) )`; a flat list would
-mean "and"). Feature `TemplateFallback` keeps Hans's template overrides in `templates/` (same layout as
-in a theme: `tribe/<plugin>/…`, legacy `tribe-events/…`), shared by every theme. The lookup order is
-child theme (10), parent theme (15), this folder (16), the plugin's original (20): a theme can still
-override, a theme without overrides gets these. Current views get the folder through
-`tribe_template_theme_path_list`; legacy views through `tribe_events_template`, swapping only a plugin's
-own file. Feature `TemplateMonitor` (admin only, for users who manage plugins, kept 12 hours) finds per
-template the copy the site uses, in that order, and compares its `@version` with the original; it also
-reports an outdated fallback a theme overrides now, and theme copies identical to the fallback (they
+mean "and"). Feature `TemplateFallback` adds the site's own template overrides, kept apart from the
+theme in `wp-content/core-functionality/templates/` (same layout as in a theme: `tribe/<plugin>/…`, legacy
+`tribe-events/…`). They are site data, not part of a release: which changes a site needs differs per
+site, so the plugin ships none. The lookup order is child theme (10), parent theme (15), site templates
+(16), the plugin's original (20): a theme can still override, a theme without overrides gets these.
+Current views get the folder through `tribe_template_theme_path_list`; legacy views through
+`tribe_events_template`, swapping only a plugin's own file. `TemplateLocations` holds the override
+folders, the lookup order and the collecting, shared by the check and the settings tab.
+
+The settings tab `SiteTemplatesSettings` lists the site templates (in use, or which theme overrides
+them), and downloads a zip of the site templates or of every template the site uses now (themes
+included). A zip upload replaces the whole folder as a block, like a theme or plugin update, so it is
+always clear what is there: only PHP files under the override folders are taken (one enclosing folder
+in the zip is fine; other files are reported as skipped), the new set is built in `templates.new` and
+swapped in, and the version before is kept in `templates.previous`; restoring swaps the two. Changing
+the folder takes `install_plugins`, no `DISALLOW_FILE_MODS` and direct file access; the parent folder
+gets an `index.php` and an `.htaccess` that denies direct requests. After a change the template check
+result is cleared and opcache is told to reread the templates. Downloads are answered in `save()`,
+which runs on `admin_init` before any output. The settings form posts as `multipart/form-data` for this.
+The site folder was chosen over the uploads folder because many hosts and security plugins refuse PHP
+there, and over copying templates into the theme on a theme switch because copies would mix with the
+theme's own overrides and be lost on a theme update.
+
+Feature `TemplateMonitor` (admin only, for users who manage plugins, kept 12 hours) finds per template
+the copy the site uses, in that order, and compares its `@version` with the original; it also reports
+an outdated site template a theme overrides now, and theme copies identical to the site template (they
 can go). It replaces the monitor in the Twenty Twenty-Five child theme, which only looked at the child.
 
 ## Settings and options

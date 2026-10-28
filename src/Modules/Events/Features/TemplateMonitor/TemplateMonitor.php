@@ -18,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
 use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\TemplateFallback;
+use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\TemplateLocations;
 use Override;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use UnexpectedValueException;
 
 use const HOUR_IN_SECONDS;
 
@@ -31,7 +29,6 @@ use function add_query_arg;
 use function array_fill_keys;
 use function array_filter;
 use function array_keys;
-use function class_exists;
 use function current_user_can;
 use function delete_transient;
 use function esc_html;
@@ -41,12 +38,9 @@ use function fclose;
 use function file_exists;
 use function fopen;
 use function fread;
-use function get_stylesheet_directory;
-use function get_template_directory;
 use function get_transient;
 use function is_admin;
 use function is_array;
-use function is_dir;
 use function is_readable;
 use function md5_file;
 use function preg_match;
@@ -55,13 +49,8 @@ use function sanitize_key;
 use function set_transient;
 use function sprintf;
 use function str_contains;
-use function str_starts_with;
-use function strlen;
-use function substr;
-use function trailingslashit;
 use function version_compare;
 use function wp_nonce_url;
-use function wp_normalize_path;
 use function wp_safe_redirect;
 use function wp_unslash;
 use function wp_verify_nonce;
@@ -71,15 +60,15 @@ use function wp_verify_nonce;
  *
  * Warns administrators when a template override of The Events Calendar or Event Tickets is out of
  * date, or overrides a template the plugin no longer has. Per template it checks the version the
- * site actually uses, found as The Events Calendar finds it (child theme, parent theme, then this
- * plugin's fallback folder), against the plugin's original.
+ * site actually uses, found as The Events Calendar finds it (child theme, parent theme, then the
+ * site templates folder), against the plugin's original.
  *
- * Also reported, as less urgent: a fallback template of this plugin that is out of date while a
- * theme overrides it (it is used again after a theme switch), and a theme copy identical to the
- * fallback (it can go). A template marked @custom-template has no original by design.
+ * Also reported, as less urgent: a site template that is out of date while a theme overrides it
+ * (it is used again after a theme switch), and a theme copy identical to the site template (it
+ * can go). A template marked @custom-template has no original by design.
  *
  * Runs in the admin only, for users who manage plugins; the result is kept for 12 hours and
- * renewed after updates, a theme switch, or the notice's rescan button.
+ * renewed after updates, a theme switch, a site templates upload, or the notice's rescan button.
  *
  * @since 1.0.0
  */
@@ -90,7 +79,7 @@ class TemplateMonitor extends AbstractFeature {
 	 *
 	 * @var string
 	 */
-	private const TRANSIENT = 'dwp_cf_event_template_report';
+	public const TRANSIENT = 'dwp_cf_event_template_report';
 
 	/**
 	 * The query arg and nonce action of the rescan button.
@@ -98,39 +87,6 @@ class TemplateMonitor extends AbstractFeature {
 	 * @var string
 	 */
 	private const RESCAN = 'dwp_cf_rescan_event_templates';
-
-	/**
-	 * Override folders (relative to a theme or the fallback folder) and the plugin they override.
-	 *
-	 * @var array<string, array{class: string, views: string}>
-	 */
-	private const FOLDERS = array(
-		'tribe/events/'       => array(
-			'class' => 'Tribe__Events__Main',
-			'views' => 'the-events-calendar/src/views/',
-		),
-		'tribe/events-pro/'   => array(
-			'class' => 'Tribe__Events__Pro__Main',
-			'views' => 'events-calendar-pro/src/views/',
-		),
-		'tribe/tickets/'      => array(
-			'class' => 'Tribe__Tickets__Main',
-			'views' => 'event-tickets/src/views/',
-		),
-		'tribe/tickets-plus/' => array(
-			'class' => 'Tribe__Tickets_Plus__Main',
-			'views' => 'event-tickets-plus/src/views/',
-		),
-		// Legacy (v1) views; Pro's v1 templates sit in its own src/views/pro/.
-		'tribe-events/pro/'   => array(
-			'class' => 'Tribe__Events__Pro__Main',
-			'views' => 'events-calendar-pro/src/views/pro/',
-		),
-		'tribe-events/'       => array(
-			'class' => 'Tribe__Events__Main',
-			'views' => 'the-events-calendar/src/views/',
-		),
-	);
 
 	/**
 	 * Returns the descriptive data of this feature.
@@ -213,7 +169,7 @@ class TemplateMonitor extends AbstractFeature {
 	 * @return array<int, array<string, string>> The findings: type, source, path and versions.
 	 */
 	private function scan(): array {
-		$copies = $this->collect_copies();
+		$copies = TemplateLocations::collect( TemplateFallback::is_running() );
 		$report = array();
 
 		foreach ( $copies as $path => $found ) {
@@ -229,111 +185,25 @@ class TemplateMonitor extends AbstractFeature {
 				$report[] = $this->finding( 'outdated', $used['source'], $path, $this->version( $used['file'] ), $this->version( $original ) );
 			}
 
-			$fallback = $this->find_source( $found, 'fallback' );
-			if ( null === $fallback || 'fallback' === $used['source'] ) {
+			$site = $this->find_source( $found, 'site' );
+			if ( null === $site || 'site' === $used['source'] ) {
 				continue;
 			}
 
-			// A fallback a theme overrides now, but used again after a theme switch.
-			if ( file_exists( $original ) && $this->is_older( $fallback['file'], $original ) ) {
-				$report[] = $this->finding( 'fallback-outdated', 'fallback', $path, $this->version( $fallback['file'] ), $this->version( $original ) );
+			// A site template a theme overrides now, but used again after a theme switch.
+			if ( file_exists( $original ) && $this->is_older( $site['file'], $original ) ) {
+				$report[] = $this->finding( 'site-outdated', 'site', $path, $this->version( $site['file'] ), $this->version( $original ) );
 			}
 
-			// Theme copies identical to the fallback can go.
+			// Theme copies identical to the site template can go.
 			foreach ( $found as $copy ) {
-				if ( 'fallback' !== $copy['source'] && md5_file( $copy['file'] ) === md5_file( $fallback['file'] ) ) {
+				if ( 'site' !== $copy['source'] && md5_file( $copy['file'] ) === md5_file( $site['file'] ) ) {
 					$report[] = $this->finding( 'redundant', $copy['source'], $path );
 				}
 			}
 		}
 
 		return $report;
-	}
-
-	/**
-	 * Finds every override, per template path, in lookup order: child theme, parent theme, fallback.
-	 *
-	 * @since  1.0.0
-	 * @return array<string, array<int, array<string, string>>> Template path => copies (source, file, relative, views).
-	 */
-	private function collect_copies(): array {
-		$sources = array( 'child' => get_stylesheet_directory() );
-		if ( get_template_directory() !== get_stylesheet_directory() ) {
-			$sources['parent'] = get_template_directory();
-		}
-		if ( TemplateFallback::is_running() ) {
-			$sources['fallback'] = TemplateFallback::get_templates_dir( $this->plugin->get_data( 'plugin-dir' ) );
-		}
-
-		$copies = array();
-		foreach ( $sources as $source => $base ) {
-			foreach ( self::FOLDERS as $folder => $plugin ) {
-				foreach ( $this->copies_in( $source, $base, $folder, $plugin ) as $relative => $copy ) {
-					$copies[ $folder . $relative ][] = $copy;
-				}
-			}
-		}
-
-		return $copies;
-	}
-
-	/**
-	 * Returns the overrides in one folder of one source, when the plugin they override is active.
-	 *
-	 * @since  1.0.0
-	 * @param  string $source child, parent or fallback.
-	 * @param  string $base   The theme's or the fallback's folder.
-	 * @param  string $folder The override folder, such as tribe/events/.
-	 * @param  array  $plugin The plugin it overrides: its main class and its views folder.
-	 * @return array<string, array<string, string>> Path relative to the folder => copy.
-	 */
-	private function copies_in( string $source, string $base, string $folder, array $plugin ): array {
-		$dir = trailingslashit( wp_normalize_path( $base ) ) . $folder;
-		if ( ! class_exists( $plugin['class'] ) || ! is_dir( $dir ) ) {
-			return array();
-		}
-
-		$copies = array();
-		foreach ( $this->php_files( $dir ) as $file ) {
-			$relative = substr( $file, strlen( $dir ) );
-
-			// tribe-events/pro/ has its own entry: keep it out of tribe-events/.
-			if ( 'tribe-events/' === $folder && str_starts_with( $relative, 'pro/' ) ) {
-				continue;
-			}
-
-			$copies[ $relative ] = array(
-				'source'   => $source,
-				'file'     => $file,
-				'relative' => $relative,
-				'views'    => trailingslashit( wp_normalize_path( WP_PLUGIN_DIR ) ) . $plugin['views'],
-			);
-		}
-
-		return $copies;
-	}
-
-	/**
-	 * Lists the PHP files under a folder.
-	 *
-	 * @since  1.0.0
-	 * @param  string $dir The folder.
-	 * @return string[] Normalized file paths.
-	 */
-	private function php_files( string $dir ): array {
-		$files = array();
-		try {
-			$iterator = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $dir, RecursiveDirectoryIterator::SKIP_DOTS ) );
-			foreach ( $iterator as $file ) {
-				if ( 'php' === $file->getExtension() ) {
-					$files[] = wp_normalize_path( $file->getPathname() );
-				}
-			}
-		} catch ( UnexpectedValueException $e ) {
-			return array();
-		}
-
-		return $files;
 	}
 
 	/**
@@ -416,8 +286,8 @@ class TemplateMonitor extends AbstractFeature {
 	 * Builds one finding.
 	 *
 	 * @since  1.0.0
-	 * @param  string $type     missing, outdated, fallback-outdated or redundant.
-	 * @param  string $source   child, parent or fallback.
+	 * @param  string $type     missing, outdated, site-outdated or redundant.
+	 * @param  string $source   child, parent or site.
 	 * @param  string $path     The template path, such as tribe/events/v2/list/event/venue.php.
 	 * @param  string $version  The override's version, or ''.
 	 * @param  string $original The plugin's version, or ''.
@@ -467,16 +337,16 @@ class TemplateMonitor extends AbstractFeature {
 	 */
 	private function group( array $report ): array {
 		$sources  = array(
-			'child'    => __( 'child theme', 'core-functionality' ),
-			'parent'   => __( 'parent theme', 'core-functionality' ),
-			'fallback' => __( 'Core Functionality', 'core-functionality' ),
+			'child'  => __( 'child theme', 'core-functionality' ),
+			'parent' => __( 'parent theme', 'core-functionality' ),
+			'site'   => __( 'site templates', 'core-functionality' ),
 		);
 		$headings = array(
-			'outdated'          => __( 'These templates are out of date:', 'core-functionality' ),
-			'missing'           => __( 'These templates override one the plugin no longer has (moved or removed):', 'core-functionality' ),
-			'fallback-outdated' => __( 'These templates in Core Functionality are out of date. A theme overrides them now, but they are used again after a theme switch:', 'core-functionality' ),
-			'redundant-child'   => __( 'These templates in the child theme are the same as in Core Functionality and can be removed:', 'core-functionality' ),
-			'redundant-parent'  => __( 'These templates in the parent theme are the same as in Core Functionality and can be removed:', 'core-functionality' ),
+			'outdated'         => __( 'These templates are out of date:', 'core-functionality' ),
+			'missing'          => __( 'These templates override one the plugin no longer has (moved or removed):', 'core-functionality' ),
+			'site-outdated'    => __( 'These site templates are out of date. A theme overrides them now, but they are used again after a theme switch:', 'core-functionality' ),
+			'redundant-child'  => __( 'These templates in the child theme are the same as the site templates and can be removed:', 'core-functionality' ),
+			'redundant-parent' => __( 'These templates in the parent theme are the same as the site templates and can be removed:', 'core-functionality' ),
 		);
 
 		$groups = array_fill_keys( array_keys( $headings ), array() );
@@ -485,12 +355,12 @@ class TemplateMonitor extends AbstractFeature {
 			$key   = 'redundant' === $finding['type'] ? 'redundant-' . $finding['source'] : $finding['type'];
 
 			$groups[ $key ][] = match ( $finding['type'] ) {
-				/* translators: 1: template path, 2: where it is (child theme, parent theme, Core Functionality), 3: its version, 4: the plugin's version. */
+				/* translators: 1: template path, 2: where it is (child theme, parent theme, site templates), 3: its version, 4: the plugin's version. */
 				'outdated'          => sprintf( __( '%1$s (%2$s): v%3$s, the plugin has v%4$s', 'core-functionality' ), $finding['path'], $where, $finding['version'], $finding['original'] ),
 				/* translators: 1: template path, 2: where it is. */
 				'missing'           => sprintf( __( '%1$s (%2$s)', 'core-functionality' ), $finding['path'], $where ),
 				/* translators: 1: template path, 2: its version, 3: the plugin's version. */
-				'fallback-outdated' => sprintf( __( '%1$s: v%2$s, the plugin has v%3$s', 'core-functionality' ), $finding['path'], $finding['version'], $finding['original'] ),
+				'site-outdated'     => sprintf( __( '%1$s: v%2$s, the plugin has v%3$s', 'core-functionality' ), $finding['path'], $finding['version'], $finding['original'] ),
 				default             => $finding['path'],
 			};
 		}
