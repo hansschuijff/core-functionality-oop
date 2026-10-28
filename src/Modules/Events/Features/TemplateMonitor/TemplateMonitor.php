@@ -16,10 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use DeWittePrins\CoreFunctionality\Abstracts\AbstractFeature;
+use DeWittePrins\CoreFunctionality\Admin\Services\Settings\AdminSettingsPage;
 use DeWittePrins\CoreFunctionality\DTO\ComponentMeta;
+use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\SiteTemplatesSettings;
 use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\TemplateFallback;
 use DeWittePrins\CoreFunctionality\Modules\Events\Features\TemplateFallback\TemplateLocations;
 use Override;
+use WP_Screen;
 
 use const HOUR_IN_SECONDS;
 
@@ -31,6 +34,7 @@ use function array_filter;
 use function array_keys;
 use function current_user_can;
 use function delete_transient;
+use function esc_attr;
 use function esc_html;
 use function esc_html__;
 use function esc_url;
@@ -39,6 +43,7 @@ use function file_exists;
 use function fopen;
 use function fread;
 use function get_transient;
+use function in_array;
 use function is_admin;
 use function is_array;
 use function is_readable;
@@ -67,7 +72,9 @@ use function wp_verify_nonce;
  * (it is used again after a theme switch), and a theme copy identical to the site template (it
  * can go). A template marked @custom-template has no original by design.
  *
- * Runs in the admin only, for users who manage plugins; the result is kept for 12 hours and
+ * Shown, and scanned for, only on the dashboard, the plugins and updates pages and the event
+ * templates tab, to users who manage plugins; it can be closed for the page view. When only theme
+ * copies that can go are left, it is informational instead of a warning. The result is kept for 12 hours and
  * renewed after updates, a theme switch, a site templates upload, or the notice's rescan button.
  *
  * @since 1.0.0
@@ -87,6 +94,13 @@ class TemplateMonitor extends AbstractFeature {
 	 * @var string
 	 */
 	private const RESCAN = 'dwp_cf_rescan_event_templates';
+
+	/**
+	 * The admin pages that show the notice (besides the event templates tab), single site and network.
+	 *
+	 * @var string[]
+	 */
+	private const SCREENS = array( 'dashboard', 'plugins', 'update-core', 'dashboard-network', 'plugins-network', 'update-core-network' );
 
 	/**
 	 * Returns the descriptive data of this feature.
@@ -118,7 +132,26 @@ class TemplateMonitor extends AbstractFeature {
 			return;
 		}
 
-		add_action( 'admin_init', array( $this, 'check' ) );
+		add_action( 'current_screen', array( $this, 'check' ) );
+	}
+
+	/**
+	 * Whether the notice belongs on this admin page: the dashboard, the plugins and updates pages,
+	 * and the event templates tab. Other pages neither scan nor show it.
+	 *
+	 * @since  1.0.0
+	 * @param  WP_Screen $screen The current admin page.
+	 * @return bool True on those pages.
+	 */
+	private function is_notice_page( WP_Screen $screen ): bool {
+		if ( in_array( $screen->id, self::SCREENS, true ) ) {
+			return true;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Only picks the page.
+		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : '';
+
+		return 'settings_page_' . AdminSettingsPage::SLUG === $screen->id && SiteTemplatesSettings::get_id() === $section;
 	}
 
 	/**
@@ -135,10 +168,11 @@ class TemplateMonitor extends AbstractFeature {
 	 * Handles the rescan button, gets the (kept) result and shows it when there is anything to report.
 	 *
 	 * @since  1.0.0
+	 * @param  WP_Screen $screen The current admin page.
 	 * @return void
 	 */
-	public function check(): void {
-		if ( ! current_user_can( 'activate_plugins' ) ) {
+	public function check( WP_Screen $screen ): void {
+		if ( ! current_user_can( 'activate_plugins' ) || ! $this->is_notice_page( $screen ) ) {
 			return;
 		}
 
@@ -314,7 +348,11 @@ class TemplateMonitor extends AbstractFeature {
 	private function render_notice( array $report ): void {
 		$rescan = wp_nonce_url( add_query_arg( self::RESCAN, '1' ), self::RESCAN );
 
-		echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Event templates', 'core-functionality' ) . '</strong> ';
+		// Theme copies that can go ask no action; only then the notice is informational.
+		$type = array() === array_filter( $report, fn ( $finding ) => 'redundant' !== $finding['type'] ) ? 'info' : 'warning';
+
+		// Dismissible for this page view only: it returns on the next one.
+		echo '<div class="notice notice-' . esc_attr( $type ) . ' is-dismissible"><p><strong>' . esc_html__( 'Event templates', 'core-functionality' ) . '</strong> ';
 		echo '<a class="button button-small" href="' . esc_url( $rescan ) . '">' . esc_html__( 'Scan again', 'core-functionality' ) . '</a></p>';
 
 		foreach ( $this->group( $report ) as $heading => $items ) {
