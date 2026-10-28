@@ -242,6 +242,20 @@ quantities, `?add-to-cart=101:1,102:3`, used by the ticket forms of Remote Ticke
 cart. Taken over from Remote Tickets Server Add-ons (`WooCartExtension`): while both are active, the
 feature removes that plugin's hook; the class can go from that plugin when CF goes live.
 
+### Events
+
+The module `Events` runs when The Events Calendar or Event Tickets is ready (an "or" dependency:
+`array( 'or' => array( array( 'the-events-calendar' ), array( 'event-tickets' ) ) )`; a flat list would
+mean "and"). Feature `TemplateFallback` keeps Hans's template overrides in `templates/` (same layout as
+in a theme: `tribe/<plugin>/…`, legacy `tribe-events/…`), shared by every theme. The lookup order is
+child theme (10), parent theme (15), this folder (16), the plugin's original (20): a theme can still
+override, a theme without overrides gets these. Current views get the folder through
+`tribe_template_theme_path_list`; legacy views through `tribe_events_template`, swapping only a plugin's
+own file. Feature `TemplateMonitor` (admin only, for users who manage plugins, kept 12 hours) finds per
+template the copy the site uses, in that order, and compares its `@version` with the original; it also
+reports an outdated fallback a theme overrides now, and theme copies identical to the fallback (they
+can go). It replaces the monitor in the Twenty Twenty-Five child theme, which only looked at the child.
+
 ## Settings and options
 
 - **Settings files** (`settings/`) hold defaults and site data as PHP files returning arrays. General files
