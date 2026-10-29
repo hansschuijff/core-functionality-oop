@@ -256,6 +256,20 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
+	 * Returns the folder that must be writable: wp-content/core-functionality/, which holds the
+	 * templates, the new set and the previous version. Only when it does not exist yet, wp-content
+	 * itself, where it is to be made; an administrator need not give more than that.
+	 *
+	 * @since  1.0.0
+	 * @return string The folder.
+	 */
+	private static function write_context(): string {
+		$dir = dirname( TemplateLocations::cf_dir() );
+
+		return is_dir( $dir ) ? $dir : wp_normalize_path( WP_CONTENT_DIR );
+	}
+
+	/**
 	 * Tells why the folder cannot be changed here, if it cannot.
 	 *
 	 * @since  1.0.0
@@ -268,11 +282,20 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 		if ( ! current_user_can( 'install_plugins' ) ) {
 			return __( 'Only users who may install plugins can change the CF templates.', 'core-functionality' );
 		}
-		if ( 'direct' !== get_filesystem_method() ) {
-			return __( 'The server does not let WordPress write files directly.', 'core-functionality' );
+
+		$context = self::write_context();
+		if ( 'direct' === get_filesystem_method( array(), $context ) ) {
+			return '';
 		}
 
-		return '';
+		$dir = dirname( TemplateLocations::cf_dir() );
+		if ( $context === $dir ) {
+			/* translators: %s: the folder. */
+			return sprintf( __( 'WordPress cannot write in %s. Make this folder writable for the web server.', 'core-functionality' ), $dir );
+		}
+
+		/* translators: %s: the folder. */
+		return sprintf( __( 'WordPress cannot create %s. Create this folder and make it writable for the web server.', 'core-functionality' ), $dir );
 	}
 
 	/**
@@ -574,7 +597,7 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 	private function upload(): string|bool {
 		global $wp_filesystem;
 
-		if ( ! WP_Filesystem() ) {
+		if ( ! WP_Filesystem( false, self::write_context() ) ) {
 			return $this->fail( __( 'WordPress cannot write files here.', 'core-functionality' ) );
 		}
 
@@ -714,7 +737,7 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 		if ( ! is_dir( $previous ) ) {
 			return $this->fail( __( 'There is no previous version.', 'core-functionality' ) );
 		}
-		if ( ! WP_Filesystem() ) {
+		if ( ! WP_Filesystem( false, self::write_context() ) ) {
 			return $this->fail( __( 'WordPress cannot write files here.', 'core-functionality' ) );
 		}
 
