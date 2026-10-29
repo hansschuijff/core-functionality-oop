@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-29T00:56:25+01:00\n"
+"POT-Creation-Date: 2026-10-29T01:08:17+01:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: core-functionality\n"
@@ -37,7 +37,7 @@ msgid "https://dewitteprins.nl"
 msgstr ""
 
 #: src/Admin/Services/Settings/AdminSettingsPage.php:130
-#: src/Admin/Services/Settings/AdminSettingsPage.php:463
+#: src/Admin/Services/Settings/AdminSettingsPage.php:482
 msgid "Core Functionality Settings"
 msgstr "Instellingen Core Functionality"
 
@@ -46,11 +46,8 @@ msgstr "Instellingen Core Functionality"
 msgid "Core Functionality"
 msgstr "Core Functionality"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:345
-msgid "Type to search... (↑↓ to navigate, Enter)"
-msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
-
-#: src/Admin/Services/Settings/AdminSettingsPage.php:376
+#: src/Admin/Services/Settings/AdminSettingsPage.php:350
+#: src/Admin/Services/Settings/AdminSettingsPage.php:395
 #: src/Environment/Plugins/Automatewoo.php:156
 #: src/Environment/Plugins/EventTickets.php:86
 #: src/Environment/Plugins/FestingerVault.php:111
@@ -67,47 +64,55 @@ msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
 msgid "Settings"
 msgstr "Instellingen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:446
+#: src/Admin/Services/Settings/AdminSettingsPage.php:351
+msgid "This section does not exist (any more). Choose a section in the menu."
+msgstr "Deze sectie bestaat niet (meer). Kies een sectie in het menu."
+
+#: src/Admin/Services/Settings/AdminSettingsPage.php:364
+msgid "Type to search... (↑↓ to navigate, Enter)"
+msgstr "Typ om te zoeken… (↑↓ om te navigeren, Enter)"
+
+#: src/Admin/Services/Settings/AdminSettingsPage.php:465
 msgid "Search... (/)"
 msgstr "Zoeken… (/)"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:447
+#: src/Admin/Services/Settings/AdminSettingsPage.php:466
 msgid "Collapse menu"
 msgstr "Menu inklappen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:475
+#: src/Admin/Services/Settings/AdminSettingsPage.php:494
 msgid "Active Components"
 msgstr "Actieve onderdelen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:484
+#: src/Admin/Services/Settings/AdminSettingsPage.php:503
 msgid "No items found"
 msgstr "Geen items gevonden"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:571
+#: src/Admin/Services/Settings/AdminSettingsPage.php:590
 msgid "Save Settings"
 msgstr "Instellingen opslaan"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:628
+#: src/Admin/Services/Settings/AdminSettingsPage.php:647
 msgid "Reset to Factory Defaults"
 msgstr "Terug naar fabrieksinstellingen"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:629
+#: src/Admin/Services/Settings/AdminSettingsPage.php:648
 msgid "🚨 CRITICAL WARNING:\\n\\nAre you sure you want to trigger a settings reset for this section?"
 msgstr "🚨 BELANGRIJKE WAARSCHUWING:\\n\\nWeet je zeker dat je de instellingen van dit onderdeel wilt terugzetten?"
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:670
+#: src/Admin/Services/Settings/AdminSettingsPage.php:689
 msgid "Security check failed. Please try again."
 msgstr "Beveiligingscontrole mislukt. Probeer het opnieuw."
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:675
+#: src/Admin/Services/Settings/AdminSettingsPage.php:694
 msgid "You do not have sufficient permissions to update this settings."
 msgstr "Je hebt onvoldoende rechten om deze instellingen te wijzigen."
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:697
+#: src/Admin/Services/Settings/AdminSettingsPage.php:716
 msgid "Validation failed. Please double-check your entries."
 msgstr "Validatie mislukt. Controleer je invoer."
 
-#: src/Admin/Services/Settings/AdminSettingsPage.php:704
+#: src/Admin/Services/Settings/AdminSettingsPage.php:723
 msgid "Settings saved successfully."
 msgstr "Instellingen opgeslagen."
 
@@ -1034,7 +1039,7 @@ msgstr "AutomateWoo-instellingen: Status"
 
 #: src/Environment/Plugins/Automatewoo.php:221
 #: src/Environment/Plugins/Woocommerce.php:217
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:349
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:348
 msgid "Status"
 msgstr "Status"
 
@@ -3595,169 +3600,169 @@ msgid "The server does not let WordPress write files directly."
 msgstr "De server laat WordPress niet rechtstreeks bestanden schrijven."
 
 #: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:323
-msgid "Notice"
-msgstr "Melding"
+msgid "Options"
+msgstr "Opties"
 
 #: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:324
 msgid "Report when a template is present in the active theme as well as in Core Functionality"
 msgstr "Melden als een template zowel in het actieve thema als in Core Functionality aanwezig is"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:325
-#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:517
-msgid "Save"
-msgstr "Opslaan"
-
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:338
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:382
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:337
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:381
 msgid "CF templates"
 msgstr "CF-templates"
 
 #. translators: %s: the folder.
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:340
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:339
 #, php-format
 msgid "Folder: %s"
 msgstr "Map: %s"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:343
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:342
 msgid "There are no CF templates yet. Upload a zip to add them."
 msgstr "Er zijn nog geen CF-templates. Upload een zip om ze toe te voegen."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:349
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:348
 msgid "Template"
 msgstr "Template"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:366
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:365
 msgid "In use"
 msgstr "In gebruik"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:367
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:366
 msgid "The child theme overrides it"
 msgstr "Het subthema vervangt hem"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:368
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:367
 msgid "The parent theme overrides it"
 msgstr "Het hoofdthema vervangt hem"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:369
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:368
 msgid "Not used: the plugin is not active"
 msgstr "Niet gebruikt: de plugin is niet actief"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:380
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:379
 msgid "Download"
 msgstr "Downloaden"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:381
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:380
 msgid "As a zip with the same folders, ready to change and upload again. The second also holds the copies in the theme, each taken from where the site takes it."
 msgstr "Als zip met dezelfde mappen, klaar om aan te passen en weer te uploaden. De tweede bevat ook de kopieën in het thema, elk van de plek waar de site hem vandaan haalt."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:382
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:381
 msgid "Templates in use"
 msgstr "Templates in gebruik"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:394
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:393
 msgid "Previous version"
 msgstr "Vorige versie"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:397
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:396
 msgid "There is no previous version yet. The next upload sets the current templates aside here, so you can go back to them."
 msgstr "Er is nog geen vorige versie. De volgende upload zet de huidige templates hier apart, zodat je ernaar terug kunt."
 
 #. translators: %d: number of templates.
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:404
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:403
 #, php-format
 msgid "The version before the last change is kept (%d template). Restoring it swaps the two, so you can switch back."
 msgid_plural "The version before the last change is kept (%d templates). Restoring it swaps the two, so you can switch back."
 msgstr[0] "De versie van voor de laatste wijziging is bewaard (%d template). Terugzetten verwisselt de twee, dus je kunt weer terug."
 msgstr[1] "De versie van voor de laatste wijziging is bewaard (%d templates). Terugzetten verwisselt de twee, dus je kunt weer terug."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:410
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:409
 msgid "Restore previous version"
 msgstr "Vorige versie terugzetten"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:410
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:409
 msgid "Swap the CF templates for the previous version?"
 msgstr "De CF-templates verwisselen met de vorige versie?"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:420
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:430
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:419
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:429
 msgid "Upload"
 msgstr "Uploaden"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:421
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:420
 msgid "Load a zip archive with custom templates for The Events Calendar and Event Tickets. Arrange the templates in folders and files the same way you would in a theme, and put them in the root of the zip or in one main folder inside it. All other files are skipped. The upload replaces all previously stored templates at once, like installing a theme or plugin. The previous version is set aside and can be restored."
 msgstr "Laad een zip-archief met aangepaste templates voor The Events Calendar en Event Tickets. Orden de templates in mappen en bestanden zoals je dat in een thema zou doen, en zet ze in de root van de zip of in één hoofdmap daarbinnen. Alle andere bestanden worden overgeslagen. De upload vervangt alle eerder opgeslagen templates in één keer, vergelijkbaar met het installeren van een thema of plugin. De vorige versie wordt apart gezet en kan worden teruggezet."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:430
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:429
 msgid "Replace all CF templates with the templates in this zip?"
 msgstr "Alle CF-templates vervangen door de templates in deze zip?"
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:473
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:472
 msgid "Unknown action."
 msgstr "Onbekende actie."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:477
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:476
 msgid "The server cannot make zip files (ZipArchive is missing)."
 msgstr "De server kan geen zipbestanden maken (ZipArchive ontbreekt)."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:503
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:502
 msgid "Choose a zip file first."
 msgstr "Kies eerst een zipbestand."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:506
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:505
 msgid "The upload failed. The file may be larger than the server allows."
 msgstr "Het uploaden is mislukt. Misschien is het bestand groter dan de server toestaat."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:509
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:508
 msgid "Choose a .zip file."
 msgstr "Kies een .zip-bestand."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:544
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:543
 msgid "There are no templates to download."
 msgstr "Er zijn geen templates om te downloaden."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:550
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:549
 msgid "The zip file could not be made."
 msgstr "Het zipbestand kon niet worden gemaakt."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:579
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:719
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:578
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:718
 msgid "WordPress cannot write files here."
 msgstr "WordPress kan hier geen bestanden schrijven."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:596
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:595
 msgid "The zip holds no templates: no PHP files in tribe/… or tribe-events/…. Nothing was changed."
 msgstr "De zip bevat geen templates: geen PHP-bestanden in tribe/… of tribe-events/…. Er is niets gewijzigd."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:600
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:599
 msgid "The CF templates could not be replaced. Nothing was changed."
 msgstr "De CF-templates konden niet worden vervangen. Er is niets gewijzigd."
 
 #. translators: %s: the skipped files, separated by commas.
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:606
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:605
 #, php-format
 msgid "Skipped, not a template: %s"
 msgstr "Overgeslagen, geen template: %s"
 
 #. translators: %d: number of templates.
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:610
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:609
 #, php-format
 msgid "%d CF template installed; the previous version is kept."
 msgid_plural "%d CF templates installed; the previous version is kept."
 msgstr[0] "%d CF-template geïnstalleerd; de vorige versie is bewaard."
 msgstr[1] "%d CF-templates geïnstalleerd; de vorige versie is bewaard."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:716
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:715
 msgid "There is no previous version."
 msgstr "Er is geen vorige versie."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:724
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:728
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:723
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:727
 msgid "The previous version could not be restored. Nothing was changed."
 msgstr "De vorige versie kon niet worden teruggezet. Er is niets gewijzigd."
 
-#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:736
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:735
 msgid "The previous version is restored; the replaced version is now the previous one."
 msgstr "De vorige versie is teruggezet; de vervangen versie is nu de vorige."
+
+#: src/Modules/Events/Features/TemplateFallback/CfTemplatesSettings.php:797
+#: src/Modules/ReaderExperience/Features/Configuration/ConfigurationSettings.php:517
+msgid "Save"
+msgstr "Opslaan"
 
 #: src/Modules/Events/Features/TemplateFallback/TemplateFallback.php:86
 msgid "CF event templates"

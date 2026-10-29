@@ -117,7 +117,7 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 	 *
 	 * @var string[]
 	 */
-	private const ACTIONS = array( 'upload', 'restore', 'download-cf', 'download-used', 'save-report' );
+	private const ACTIONS = array( 'upload', 'restore', 'download-cf', 'download-used', 'save-options' );
 
 	/**
 	 * The settings key of the choices of this tab (defaults in settings/modules/events/).
@@ -311,18 +311,17 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Outputs the choice what the template check reports, with its save button.
+	 * Outputs the options; their save button is in the bar under the form.
 	 *
 	 * @since  1.0.0
-	 * @param  bool $defaults_only Whether to show the default instead of the saved choice.
+	 * @param  bool $defaults_only Whether to show the defaults instead of the saved choices.
 	 * @return void
 	 */
 	private function render_report( bool $defaults_only ): void {
 		$checked = self::reports_theme_copies( $this->plugin, $defaults_only );
 
-		echo '<h2>' . esc_html__( 'Notice', 'core-functionality' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Options', 'core-functionality' ) . '</h2>';
 		echo '<p><label><input type="checkbox" name="' . esc_attr( self::REPORT ) . '" value="1"' . checked( $checked, true, false ) . ' /> ' . esc_html__( 'Report when a template is present in the active theme as well as in Core Functionality', 'core-functionality' ) . '</label></p>';
-		echo '<p>' . $this->button( 'save-report', __( 'Save', 'core-functionality' ), '', 'button button-primary' ) . '</p>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in button().
 	}
 
 	/**
@@ -478,7 +477,7 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 		}
 
 		// A choice of the settings page, not a change of files.
-		if ( 'save-report' === $action ) {
+		if ( 'save-options' === $action ) {
 			return true;
 		}
 
@@ -524,7 +523,7 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 		return match ( $this->action( $posted_data ) ) {
 			'download-cf' => $this->download( self::templates_in( TemplateLocations::cf_dir() ), 'cf' ),
 			'download-used' => $this->download( self::used_templates(), 'in-use' ),
-			'save-report'   => $this->plugin->settings->save( self::SETTINGS_KEY, array( 'report_theme_copies' => ! empty( $posted_data[ self::REPORT ] ) ) ),
+			'save-options'   => $this->plugin->settings->save( self::SETTINGS_KEY, array( 'report_theme_copies' => ! empty( $posted_data[ self::REPORT ] ) ) ),
 			'restore'       => $this->restore(),
 			'upload'        => $this->upload(),
 			default         => false,
@@ -786,14 +785,16 @@ class CfTemplatesSettings implements SettingsSectionInterface {
 	}
 
 	/**
-	 * Returns no buttons under the form: each section has its own (an empty one keeps the page's
-	 * default Save and Reset away).
+	 * Returns the button in the bar under the form: saving the options. Upload, download and
+	 * restore stay with their sections.
 	 *
 	 * @since  1.0.0
 	 * @return array The action buttons.
 	 */
 	#[Override]
 	public function get_action_buttons(): array {
-		return array( 'none' => '' );
+		return array(
+			'save' => $this->button( 'save-options', __( 'Save', 'core-functionality' ), '', 'button button-primary button-large' ),
+		);
 	}
 }
