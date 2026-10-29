@@ -175,18 +175,18 @@ class AdminSettingsPage {
 			return;
 		}
 
+		// The page's own assets also serve an unknown section, which still shows the menu.
+		$this->enqueue_styles( self::get_stylesheets() );
+		$this->enqueue_scripts( self::get_scripts() );
+
 		$unchecked_id = $_GET['section'] ?? '';
 		$section_fqcn = $this->get_active_section_fqcn( $unchecked_id );
 		if ( ! $section_fqcn ) {
-			echo 'No section-id or invalid section.';
 			return;
 		}
 
 		$this->enqueue_styles( $section_fqcn::get_stylesheets() );
 		$this->enqueue_scripts( $section_fqcn::get_scripts() );
-
-		$this->enqueue_styles( self::get_stylesheets() );
-		$this->enqueue_scripts( self::get_scripts() );
 	}
 
 	/**
@@ -310,7 +310,7 @@ class AdminSettingsPage {
 		$unchecked_id = $_GET['section'] ?? '';
 		$section_fqcn = $this->get_active_section_fqcn( $unchecked_id );
 		if ( ! $section_fqcn ) {
-			echo 'No section-id or invalid section.';
+			$this->render_unknown_section_page();
 			return;
 		}
 
@@ -331,6 +331,25 @@ class AdminSettingsPage {
 		$this->render_content_area( $this->current_section(), $reset_to_defaults );
 
 		echo '</div>';
+
+		$this->render_command_pallette_modal();
+	}
+
+	/**
+	 * Renders the page for a section that does not exist (an old link, a module switched off): the
+	 * menu stays, so another section can be chosen, and the canvas says what happened.
+	 *
+	 * @since  1.0.0
+	 * @return void
+	 */
+	private function render_unknown_section_page(): void {
+		self::render_sidebar_flash_prevention();
+
+		echo '<div class="dwp-gutenberg-frame">';
+		$this->render_navigation_sidebar( '' );
+		echo '<main class="dwp-gutenberg-canvas"><div class="dwp-gutenberg-sticky-header"><h1>' . esc_html__( 'Settings', 'core-functionality' ) . '</h1></div>';
+		echo '<div class="dwp-gutenberg-scroll-content"><div class="notice notice-warning inline"><p>' . esc_html__( 'This section does not exist (any more). Choose a section in the menu.', 'core-functionality' ) . '</p></div></div>';
+		echo '</main></div>';
 
 		$this->render_command_pallette_modal();
 	}
